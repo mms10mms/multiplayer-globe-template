@@ -23,5 +23,39 @@
 	<body>
 		<div id="root">Loading...</div>
 		<script type="module" src="/dist/index.js"></script>
+
+		<!-- Minecraft Style CVE Randomizer Box Layout -->
+		<div id="cve-widget" style="padding: 20px; background: #16161a; color: #ffffff; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; border-top: 3px solid #ff4a4a; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); margin: 40px auto 20px auto; max-width: 900px; width: 90%;">
+			<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
+				<strong style="letter-spacing: 0.5px;">⚡ RANDOM CVE OF THE MOMENT:</strong> 
+				<span id="cve-id" style="color: #ff4a4a; font-weight: 700; background: rgba(255, 74, 74, 0.1); padding: 2px 8px; border-radius: 4px;">Loading...</span>
+				<button onclick="loadRandomCve()" style="background: #24242b; border: 1px solid #3f3f46; color: #d4d4d8; cursor: pointer; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; transition: all 0.2s ease;" onmouseover="this.style.background='#ff4a4a'; this.style.color='#fff';" onmouseout="this.style.background='#24242b'; this.style.color='#d4d4d8';">Roll Next ↻</button>
+			</div>
+			<p id="cve-summary" style="margin: 0; font-size: 13px; color: #a1a1aa; line-height: 1.5; min-height: 18px;"></p>
+		</div>
+
+		<!-- Script to dynamically load data from your backend plumbing -->
+		<script>
+			async function loadRandomCve() {
+				try {
+					document.getElementById('cve-id').textContent = "Rolling...";
+					document.getElementById('cve-summary').textContent = "";
+					
+					const response = await fetch('/api/cve'); 
+					if (!response.ok) throw new Error();
+					
+					const data = await response.json();
+					
+					document.getElementById('cve-id').innerHTML = `<a href="https://nist.gov{data.id}" target="_blank" style="color: #ff4a4a; text-decoration: none; border-bottom: 1px dashed rgba(255, 74, 74, 0.4);">${data.id}</a>`;
+					document.getElementById('cve-summary').textContent = data.summary;
+				} catch (error) {
+					document.getElementById('cve-id').textContent = "Error";
+					document.getElementById('cve-summary').textContent = "Could not pull a fresh vulnerability from the matrix.";
+				}
+			}
+
+			// Fire the logic the millisecond the page handles its layout initialization
+			window.addEventListener('DOMContentLoaded', loadRandomCve);
+		</script>
 	</body>
 </html>
