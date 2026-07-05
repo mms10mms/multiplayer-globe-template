@@ -56,11 +56,39 @@
 				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
-
 			// 1. Dynamic DOM Builder mapping directly above layout layers
 			function buildTerminalWidget() {
 				if (document.getElementById('cve-widget')) return;
 
+				// Create TOP LEFT Navigation Link Container
+				const topLeftNav = document.createElement('div');
+				topLeftNav.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
+				
+				const leftLink = document.createElement('a');
+				leftLink.href = "/dashboard";
+				leftLink.textContent = "[ACCESS_DASHBOARD]";
+				leftLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
+				leftLink.onmouseover = () => { leftLink.style.background='#ff4a4a'; leftLink.style.color='#0a0a0e'; leftLink.style.boxShadow='0 0 15px #ff4a4a'; leftLink.style.borderColor='#ff4a4a'; };
+				leftLink.onmouseout = () => { leftLink.style.background='rgba(255, 74, 74, 0.05)'; leftLink.style.color='#ff4a4a'; leftLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; leftLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
+				
+				topLeftNav.appendChild(leftLink);
+				document.body.appendChild(topLeftNav);
+
+				// Create TOP RIGHT Navigation Link Container
+				const topRightNav = document.createElement('div');
+				topRightNav.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
+				
+				const rightLink = document.createElement('a');
+				rightLink.href = "#"; // Acts as a placeholder link for your live feed toggle later
+				rightLink.textContent = "[LIVE_INTEL_STREAM]";
+				rightLink.style.cssText = "color: #00ff66; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 255, 102, 0.1); transition: all 0.2s ease;";
+				rightLink.onmouseover = () => { rightLink.style.background='#00ff66'; rightLink.style.color='#0a0a0e'; rightLink.style.boxShadow='0 0 15px #00ff66'; rightLink.style.borderColor='#00ff66'; };
+				rightLink.onmouseout = () => { rightLink.style.background='rgba(0, 255, 102, 0.05)'; rightLink.style.color='#00ff66'; rightLink.style.boxShadow='0 0 10px rgba(0, 255, 102, 0.1)'; rightLink.style.borderColor='rgba(0, 255, 102, 0.3)'; };
+				
+				topRightNav.appendChild(rightLink);
+				document.body.appendChild(topRightNav);
+
+				// Bottom CVE Widget Box Layout Container
 				const widget = document.createElement('div');
 				widget.id = 'cve-widget';
 				widget.style.cssText = "position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 14, 0.95); color: #00ff66; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #ff4a4a; border-radius: 4px; box-shadow: 0 0 20px rgba(255, 74, 74, 0.2), inset 0 0 10px rgba(0, 255, 102, 0.05); width: 90%; max-width: 900px; z-index: 9999; backdrop-filter: blur(4px);";
@@ -109,10 +137,8 @@
 				if (idEl) idEl.textContent = "ROLLING...";
 				if (summaryEl) summaryEl.textContent = "Querying internal mainframe core arrays...";
 				
-				// Pick a completely random index item directly out of your 25 arrays above
 				const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
 
-				// Deliver instant rendering with zero network latency or network blocks
 				setTimeout(() => {
 					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #00ff66; text-decoration: none; border-bottom: 1px dotted #00ff66;">${randomCve.id}</a>`;
 					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
@@ -124,7 +150,6 @@
 				cycleTimer = setInterval(loadRandomCve, 15000);
 			}
 
-			// Resets intervals safely if a user chooses to force a manual skip command
 			function manualRoll() {
 				loadRandomCve();
 				startAutoCycle();
