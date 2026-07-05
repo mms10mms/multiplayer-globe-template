@@ -75,25 +75,26 @@
 
 			// 2. Data pipeline synchronization handler pointing directly to your live backend worker
 			async function loadRandomCve() {
-				try {
-					const idEl = document.getElementById('cve-id');
-					const summaryEl = document.getElementById('cve-summary');
-					
-					if (idEl) idEl.textContent = "ROLLING...";
-					if (summaryEl) summaryEl.textContent = "Connecting to intelligence matrices...";
-					
-					const response = await fetch('https://corsproxy.com'); 
-					if (!response.ok) throw new Error();
-					
-					const data = await response.json();
-					
-					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{data.id}" target="_blank" style="color: #00ff66; text-decoration: none; border-bottom: 1px dotted #00ff66;">${data.id}</a>`;
-					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${data.summary}`;
-				} catch (error) {
-					if (document.getElementById('cve-id')) document.getElementById('cve-id').textContent = "ERR_FAIL";
-					if (document.getElementById('cve-summary')) document.getElementById('cve-summary').textContent = "> CRITICAL: Failed to poll intelligence streaming matrix network infrastructure.";
-				}
-			}
+	try {
+		const idEl = document.getElementById('cve-id');
+		const summaryEl = document.getElementById('cve-summary');
+		
+		if (idEl) idEl.textContent = "ROLLING...";
+		if (summaryEl) summaryEl.textContent = "Connecting to intelligence matrices...";
+		
+		// Points directly to your perfectly working custom api subdomain address
+		const response = await fetch('https://slaughter-sec.com'); 
+		if (!response.ok) throw new Error();
+		
+		const data = await response.json();
+		
+		if (idEl) idEl.innerHTML = `<a href="https://nist.gov{data.id}" target="_blank" style="color: #00ff66; text-decoration: none; border-bottom: 1px dotted #00ff66;">${data.id}</a>`;
+		if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${data.summary}`;
+	} catch (error) {
+		if (document.getElementById('cve-id')) document.getElementById('cve-id').textContent = "ERR_FAIL";
+		if (document.getElementById('cve-summary')) document.getElementById('cve-summary').textContent = "> CRITICAL: Failed to poll intelligence streaming matrix network infrastructure.";
+	}
+}
 
 			function startAutoCycle() {
 				clearInterval(cycleTimer);
