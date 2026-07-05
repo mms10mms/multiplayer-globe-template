@@ -57,38 +57,39 @@
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
 			// 1. Dynamic DOM Builder mapping directly above layout layers
+						
 			function buildTerminalWidget() {
 				if (document.getElementById('cve-widget')) return;
 
-				// Create TOP LEFT Navigation Link Container (Electric Cyan Theme)
+				// Create TOP LEFT Navigation Link Container (Cyber-Red Theme)
 				const topLeftNav = document.createElement('div');
 				topLeftNav.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
 				const leftLink = document.createElement('a');
 				leftLink.href = "/dashboard";
 				leftLink.textContent = "[ACCESS_DASHBOARD]";
-				leftLink.style.cssText = "color: #00f0ff; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;";
-				leftLink.onmouseover = () => { leftLink.style.background='#00f0ff'; leftLink.style.color='#0a0a0f'; leftLink.style.boxShadow='0 0 15px #00f0ff'; leftLink.style.borderColor='#00f0ff'; };
-				leftLink.onmouseout = () => { leftLink.style.background='rgba(0, 240, 255, 0.05)'; leftLink.style.color='#00f0ff'; leftLink.style.boxShadow='0 0 10px rgba(0, 240, 255, 0.1)'; leftLink.style.borderColor='rgba(0, 240, 255, 0.3)'; };
+				leftLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
+				leftLink.onmouseover = () => { leftLink.style.background='#ff4a4a'; leftLink.style.color='#0a0a0f'; leftLink.style.boxShadow='0 0 15px #ff4a4a'; leftLink.style.borderColor='#ff4a4a'; };
+				leftLink.onmouseout = () => { leftLink.style.background='rgba(255, 74, 74, 0.05)'; leftLink.style.color='#ff4a4a'; leftLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; leftLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
 				
 				topLeftNav.appendChild(leftLink);
 				document.body.appendChild(topLeftNav);
 
-				// Create TOP RIGHT Navigation Link Container (Electric Cyan Theme)
+				// Create TOP RIGHT Navigation Link Container (Cyber-Red Theme)
 				const topRightNav = document.createElement('div');
 				topRightNav.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
 				const rightLink = document.createElement('a');
 				rightLink.href = "#"; 
 				rightLink.textContent = "[LIVE_INTEL_STREAM]";
-				rightLink.style.cssText = "color: #00f0ff; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;";
-				rightLink.onmouseover = () => { rightLink.style.background='#00f0ff'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #00f0ff'; rightLink.style.borderColor='#00f0ff'; };
-				rightLink.onmouseout = () => { rightLink.style.background='rgba(0, 240, 255, 0.05)'; rightLink.style.color='#00f0ff'; rightLink.style.boxShadow='0 0 10px rgba(0, 240, 255, 0.1)'; rightLink.style.borderColor='rgba(0, 240, 255, 0.3)'; };
+				rightLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
+				rightLink.onmouseover = () => { rightLink.style.background='#ff4a4a'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #ff4a4a'; rightLink.style.borderColor='#ff4a4a'; };
+				rightLink.onmouseout = () => { rightLink.style.background='rgba(255, 74, 74, 0.05)'; rightLink.style.color='#ff4a4a'; rightLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; rightLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
 				
 				topRightNav.appendChild(rightLink);
 				document.body.appendChild(topRightNav);
 
-				// Bottom CVE Widget Box Layout Container (Obsidian & Cyan Frame)
+				// Bottom CVE Widget Box Layout Container (Obsidian & Cyan Frame with Matrix Green Text)
 				const widget = document.createElement('div');
 				widget.id = 'cve-widget';
 				widget.style.cssText = "position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); width: 90%; max-width: 900px; z-index: 9999; backdrop-filter: blur(4px);";
