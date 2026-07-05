@@ -24,19 +24,37 @@
 		<div id="root">Loading...</div>
 		<script type="module" src="/dist/index.js"></script>
 
-		<!-- Script to handle injection and tracking -->
+		<!-- Terminal Tracking and Self-Contained Dataset Engine -->
 		<script>
 			let cycleTimer = null;
 
-			// 1. Runtime DOM Generation script to bypass the template layout engine
+			// Localized Cyber Intelligence Array Matrix (Exactly 15 High-Profile Real CVEs)
+			const cveDataset = [
+				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
+				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
+				{ id: "CVE-2023-38606", summary: "Apple iOS kernel verification bypass exploit allowing localized processes to execute unauthorized root privileges." },
+				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
+				{ id: "CVE-2022-22965", summary: "Spring Framework Core feature sets vulnerable to remote data binding injection routines via specific JVM environments." },
+				{ id: "CVE-2020-0601", summary: "Windows CryptoAPI spoofing vulnerability allowing attackers to bypass system security validation to trust malicious certificates." },
+				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." },
+				{ id: "CVE-2019-0708", summary: "Remote code execution vulnerability inside Windows Remote Desktop Services (RDS) architecture via pre-auth states (BlueKeep)." },
+				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
+				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." },
+				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
+				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
+				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
+				{ id: "CVE-2021-26855", summary: "Microsoft Exchange Server SSRF vulnerability permitting untrusted attackers to bypass proxy parameters (ProxyLogon Core)." },
+				{ id: "CVE-2020-5902", summary: "F5 BIG-IP Traffic Management User Interface command execution flaw permitting complete root administrative system compromise." }
+			];
+
+			// 1. Dynamic DOM Builder mapping directly above layout layers
 			function buildTerminalWidget() {
-				if (document.getElementById('cve-widget')) return; // Stop double-loading
+				if (document.getElementById('cve-widget')) return;
 
 				const widget = document.createElement('div');
 				widget.id = 'cve-widget';
 				widget.style.cssText = "position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 14, 0.95); color: #00ff66; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #ff4a4a; border-radius: 4px; box-shadow: 0 0 20px rgba(255, 74, 74, 0.2), inset 0 0 10px rgba(0, 255, 102, 0.05); width: 90%; max-width: 900px; z-index: 9999; backdrop-filter: blur(4px);";
 
-				// CRT Line Glow overlay effect
 				const scanline = document.createElement('div');
 				scanline.style.cssText = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;";
 				widget.appendChild(scanline);
@@ -73,28 +91,23 @@
 				document.body.appendChild(widget);
 			}
 
-			// 2. Data pipeline synchronization handler pointing directly to your live backend worker
-			async function loadRandomCve() {
-	try {
-		const idEl = document.getElementById('cve-id');
-		const summaryEl = document.getElementById('cve-summary');
-		
-		if (idEl) idEl.textContent = "ROLLING...";
-		if (summaryEl) summaryEl.textContent = "Connecting to intelligence matrices...";
-		
-		// Points directly to your perfectly working custom api subdomain address
-		const response = await fetch('https://slaughter-sec.com'); 
-		if (!response.ok) throw new Error();
-		
-		const data = await response.json();
-		
-		if (idEl) idEl.innerHTML = `<a href="https://nist.gov{data.id}" target="_blank" style="color: #00ff66; text-decoration: none; border-bottom: 1px dotted #00ff66;">${data.id}</a>`;
-		if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${data.summary}`;
-	} catch (error) {
-		if (document.getElementById('cve-id')) document.getElementById('cve-id').textContent = "ERR_FAIL";
-		if (document.getElementById('cve-summary')) document.getElementById('cve-summary').textContent = "> CRITICAL: Failed to poll intelligence streaming matrix network infrastructure.";
-	}
-}
+			// 2. Self-sufficient indexing selection logic running 100% locally
+			function loadRandomCve() {
+				const idEl = document.getElementById('cve-id');
+				const summaryEl = document.getElementById('cve-summary');
+				
+				if (idEl) idEl.textContent = "ROLLING...";
+				if (summaryEl) summaryEl.textContent = "Querying internal mainframe core arrays...";
+				
+				// Pick a completely random index item directly out of your 15 arrays above
+				const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
+
+				// Deliver instant rendering with zero network latency or network blocks
+				setTimeout(() => {
+					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #00ff66; text-decoration: none; border-bottom: 1px dotted #00ff66;">${randomCve.id}</a>`;
+					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
+				}, 200);
+			}
 
 			function startAutoCycle() {
 				clearInterval(cycleTimer);
@@ -106,7 +119,7 @@
 				startAutoCycle();
 			}
 
-			// 3. Execution wrapper to run only after the main site scripts initialize
+			// 3. Mount trigger executing once web template environment settles
 			window.addEventListener('load', () => {
 				buildTerminalWidget();
 				loadRandomCve();
