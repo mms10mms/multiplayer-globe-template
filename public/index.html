@@ -28,7 +28,7 @@
 		<script>
 			let cycleTimer = null;
 
-			// Localized Cyber Intelligence Array Matrix (Exactly 15 High-Profile Real CVEs)
+			// Localized Cyber Intelligence Array Matrix (Exactly 25 High-Profile Real CVEs)
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
@@ -44,7 +44,17 @@
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
 				{ id: "CVE-2021-26855", summary: "Microsoft Exchange Server SSRF vulnerability permitting untrusted attackers to bypass proxy parameters (ProxyLogon Core)." },
-				{ id: "CVE-2020-5902", summary: "F5 BIG-IP Traffic Management User Interface command execution flaw permitting complete root administrative system compromise." }
+				{ id: "CVE-2020-5902", summary: "F5 BIG-IP Traffic Management User Interface command execution flaw permitting complete root administrative system compromise." },
+				{ id: "CVE-2024-21626", summary: "runc container breakout vulnerability leaking file descriptors, enabling containers to escape isolation limits to the host system." },
+				{ id: "CVE-2022-0847", summary: "Linux kernel pipe buffer flag tracking failure enabling overwrite capabilities on protected read-only system files (Dirty Pipe)." },
+				{ id: "CVE-2023-44487", summary: "HTTP/2 protocol frame streaming manipulation enabling catastrophic stream multiplexing server resource exhaustion (Rapid Reset DDoS)." },
+				{ id: "CVE-2019-11510", summary: "Pulse Connect Secure VPN gateway directory traversal vulnerability exposing active user corporate authentication caches." },
+				{ id: "CVE-2021-21972", summary: "VMware vCenter Server plugin parameter handling vulnerability permitting untrusted file upload pathways and shell execution." },
+				{ id: "CVE-2023-4966", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
+				{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool (MSDT) remote code execution loop triggered via malicious Office document macros (Follina)." },
+				{ id: "CVE-2020-1066", summary: "Microsoft Windows unauthenticated remote code execution flaw in the parsing routines of specific GDI layout components." },
+				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
+				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
 
 			// 1. Dynamic DOM Builder mapping directly above layout layers
@@ -99,7 +109,7 @@
 				if (idEl) idEl.textContent = "ROLLING...";
 				if (summaryEl) summaryEl.textContent = "Querying internal mainframe core arrays...";
 				
-				// Pick a completely random index item directly out of your 15 arrays above
+				// Pick a completely random index item directly out of your 25 arrays above
 				const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
 
 				// Deliver instant rendering with zero network latency or network blocks
@@ -114,6 +124,7 @@
 				cycleTimer = setInterval(loadRandomCve, 15000);
 			}
 
+			// Resets intervals safely if a user chooses to force a manual skip command
 			function manualRoll() {
 				loadRandomCve();
 				startAutoCycle();
