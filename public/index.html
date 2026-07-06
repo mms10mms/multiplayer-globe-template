@@ -7,28 +7,27 @@
 			content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
 		/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>Globe</title>
+		<title>Slaughter-Sec Matrix</title>
 		<!-- Favicon -->
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<!-- Primary Meta Tags -->
-		<meta name="title" content="PartyServer" />
-		<meta name="description" content="Everything's better with friends!" />
-		<meta name="author" content="PartyServer" />
-		<!-- Theme Colour -->
-		<meta name="theme-color" content="#ffffff" />
+		<meta name="title" content="Slaughter-Sec Core" />
+		<meta name="description" content="Global Threat Mapping and Vulnerability Intelligence." />
+		<meta name="theme-color" content="#060608" />
 
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 	</head>
 	<body>
-		<div id="root">Loading...</div>
+		<!-- Main Homepage Root Container (Holding your 3D canvas map) -->
+		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 
-		<!-- Terminal Tracking and Self-Contained Dataset Engine -->
+		<!-- Full-Stack Interface Router and Local Intel Datasets -->
 		<script>
 			let cycleTimer = null;
 
-			// Localized Cyber Intelligence Array Matrix (Exactly 25 High-Profile Real CVEs)
+			// Localized Cyber Intelligence Library Array Matrix (25 Records)
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
@@ -56,12 +55,58 @@
 				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
-			// 1. Dynamic DOM Builder mapping directly above layout layers
-						
-			function buildTerminalWidget() {
+			// 1. Core Front-End URL Router to handle switching between pages dynamically
+			function initializeAppRouter() {
+				const currentPath = window.location.pathname;
+
+				// Router Case A: If user path is exactly /dashboard, wipe the home elements and build the page
+				if (currentPath === "/dashboard" || currentPath === "/dashboard/") {
+					// Hide the main homepage globe rendering layer completely
+					const rootHomeNode = document.getElementById('root');
+					if (rootHomeNode) rootHomeNode.style.display = 'none';
+					
+					buildPhysicalDashboardPage();
+				} 
+				// Router Case B: Default Homepage view configuration
+				else {
+					buildHomepageWidgets();
+					loadRandomCve();
+					startAutoCycle();
+				}
+			}
+
+			// 2. Physical Page Builder for the Dashboard Sub-Page view
+			function buildPhysicalDashboardPage() {
+				if (document.getElementById('dash-page-container')) return;
+
+				const container = document.createElement('div');
+				container.id = 'dash-page-container';
+				container.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; color: #39ff14; font-family: 'Courier New', Courier, monospace; padding: 30px; box-sizing: border-box; z-index: 100000; overflow-y: auto;";
+
+				// Dashboard Layout Content
+				container.innerHTML = `
+					<div style="border: 1px solid #ff4a4a; background: rgba(255, 74, 74, 0.03); padding: 15px 25px; border-radius: 4px; box-shadow: 0 0 15px rgba(255, 74, 74, 0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+						<div>
+							<h1 style="color: #ff4a4a; margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255, 74, 74, 0.4);">SLAUGHTER_SEC // HONEYPOT_INTELLIGENCE</h1>
+							<div style="font-size: 11px; color: #555; margin-top: 3px;">PORT_LISTENER: ACTIVE // STANDING BY FOR NETWORK HANDSHAKE METRICS...</div>
+						</div>
+						<a href="/" style="color: #ff4a4a; text-decoration: none; border: 1px solid #ff4a4a; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; background: rgba(255,74,74,0.05);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(255,74,74,0.05)'; this.style.color='#ff4a4a';">RETURN_TO_CORE</a>
+					</div>
+
+					<div style="background: rgba(20,20,30,0.6); border: 1px dashed rgba(57,255,20,0.2); border-radius: 4px; padding: 40px; text-align: center; margin-top: 15vh;">
+						<div style="font-size: 24px; color: #ff4a4a; font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 8px rgba(255,74,74,0.2);">[!] ENGINE_INITIALIZATION_PENDING</div>
+						<p style="color: #88ffaa; font-size: 13px; max-width: 600px; margin: 0 auto; line-height: 1.6;">Mainframe endpoint workspace detected. Ready to attach live honeypot log capture arrays. Paste custom backend pipeline socket streaming hooks inside this template container object to populate real-world threat telemetry.</p>
+					</div>
+				`;
+
+				document.body.appendChild(container);
+			}
+
+			// 3. UI Element Builder for the main Homepage HUD layout layers
+			function buildHomepageWidgets() {
 				if (document.getElementById('cve-widget')) return;
 
-				// Create TOP LEFT Navigation Link Container (Cyber-Red Theme)
+				// Top Left Navigation Button (Cyber-Red)
 				const topLeftNav = document.createElement('div');
 				topLeftNav.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
@@ -75,7 +120,7 @@
 				topLeftNav.appendChild(leftLink);
 				document.body.appendChild(topLeftNav);
 
-				// Create TOP RIGHT Navigation Link Container (Cyber-Red Theme)
+				// Top Right Navigation Button (Cyber-Red)
 				const topRightNav = document.createElement('div');
 				topRightNav.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
@@ -89,7 +134,7 @@
 				topRightNav.appendChild(rightLink);
 				document.body.appendChild(topRightNav);
 
-				// Bottom CVE Widget Box Layout Container (Obsidian & Cyan Frame with Matrix Green Text)
+				// Bottom CVE Widget Box Layout Container (Tactical Cyan Border / Green Text)
 				const widget = document.createElement('div');
 				widget.id = 'cve-widget';
 				widget.style.cssText = "position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); width: 90%; max-width: 900px; z-index: 9999; backdrop-filter: blur(4px);";
@@ -130,16 +175,13 @@
 				document.body.appendChild(widget);
 			}
 
-			// 2. Self-sufficient indexing selection logic running 100% locally
+			// 4. Local Ticker Handler
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id');
 				const summaryEl = document.getElementById('cve-summary');
-				
 				if (idEl) idEl.textContent = "ROLLING...";
-				if (summaryEl) summaryEl.textContent = "Querying internal mainframe core arrays...";
 				
 				const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
-
 				setTimeout(() => {
 					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none; border-bottom: 1px dotted #39ff14;">${randomCve.id}</a>`;
 					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
@@ -156,12 +198,8 @@
 				startAutoCycle();
 			}
 
-			// 3. Mount trigger executing once web template environment settles
-			window.addEventListener('load', () => {
-				buildTerminalWidget();
-				loadRandomCve();
-				startAutoCycle();
-			});
+			// 5. Fire App Router the absolute millisecond page environment loads
+			window.addEventListener('load', initializeAppRouter);
 		</script>
 	</body>
 </html>
