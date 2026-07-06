@@ -87,14 +87,14 @@
 				container.innerHTML = `
 					<div style="border: 1px solid #ff4a4a; background: rgba(255, 74, 74, 0.03); padding: 15px 25px; border-radius: 4px; box-shadow: 0 0 15px rgba(255, 74, 74, 0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
 						<div>
-							<h1 style="color: #ff4a4a; margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255, 74, 74, 0.4);">SLAUGHTER_SEC // HONEYPOT_INTELLIGENCE</h1>
-							<div style="font-size: 11px; color: #555; margin-top: 3px;">PORT_LISTENER: ACTIVE // STANDING BY FOR NETWORK HANDSHAKE METRICS...</div>
+							<h1 style="color: #ff4a4a; margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255, 74, 74, 0.4);">SLAUGHTER SEC // HONEYPOT INTELLIGENCE</h1>
+							<div style="font-size: 11px; color: #555; margin-top: 3px;">PORT LISTENER: ACTIVE // STANDING BY FOR NETWORK HANDSHAKE METRICS...</div>
 						</div>
-						<a href="/" style="color: #ff4a4a; text-decoration: none; border: 1px solid #ff4a4a; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; background: rgba(255,74,74,0.05);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(255,74,74,0.05)'; this.style.color='#ff4a4a';">RETURN_TO_CORE</a>
+						<a href="/" style="color: #ff4a4a; text-decoration: none; border: 1px solid #ff4a4a; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; background: rgba(255,74,74,0.05);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(255,74,74,0.05)'; this.style.color='#ff4a4a';">RETURN TO CORE</a>
 					</div>
 
 					<div style="background: rgba(20,20,30,0.6); border: 1px dashed rgba(57,255,20,0.2); border-radius: 4px; padding: 40px; text-align: center; margin-top: 15vh;">
-						<div style="font-size: 24px; color: #ff4a4a; font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 8px rgba(255,74,74,0.2);">[!] ENGINE_INITIALIZATION_PENDING</div>
+						<div style="font-size: 24px; color: #ff4a4a; font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 8px rgba(255,74,74,0.2);">[!] ENGINE INITIALIZATION PENDING</div>
 						<p style="color: #88ffaa; font-size: 13px; max-width: 600px; margin: 0 auto; line-height: 1.6;">Mainframe endpoint workspace detected. Ready to attach live honeypot log capture arrays. Paste custom backend pipeline socket streaming hooks inside this template container object to populate real-world threat telemetry.</p>
 					</div>
 				`;
@@ -106,27 +106,24 @@
 			function buildHomepageWidgets() {
 				if (document.getElementById('cve-widget')) return;
 
-				// Top Left Navigation Button (Cyber-Red)
+				// Create TOP LEFT Navigation Title Block (Static Non-Clickable Header)
 				const topLeftNav = document.createElement('div');
 				topLeftNav.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
-				const leftLink = document.createElement('a');
-				leftLink.href = "/dashboard";
-				leftLink.textContent = "[ACCESS_DASHBOARD]";
-				leftLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
-				leftLink.onmouseover = () => { leftLink.style.background='#ff4a4a'; leftLink.style.color='#0a0a0f'; leftLink.style.boxShadow='0 0 15px #ff4a4a'; leftLink.style.borderColor='#ff4a4a'; };
-				leftLink.onmouseout = () => { leftLink.style.background='rgba(255, 74, 74, 0.05)'; leftLink.style.color='#ff4a4a'; leftLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; leftLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
+				const leftHeader = document.createElement('div');
+				leftHeader.textContent = "[ACCESS DASHBOARD]";
+				leftHeader.style.cssText = "color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none;";
 				
-				topLeftNav.appendChild(leftLink);
+				topLeftNav.appendChild(leftHeader);
 				document.body.appendChild(topLeftNav);
 
-				// Top Right Navigation Button (Cyber-Red)
+				// Create TOP RIGHT Navigation Link Container (Clickable Hyperlink Route)
 				const topRightNav = document.createElement('div');
 				topRightNav.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
 				const rightLink = document.createElement('a');
-				rightLink.href = "#"; 
-				rightLink.textContent = "[LIVE_INTEL_STREAM]";
+				rightLink.href = "/dashboard"; // Moves the sub-page route trigger over to this button
+				rightLink.textContent = "[LIVE INTEL STREAM]";
 				rightLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
 				rightLink.onmouseover = () => { rightLink.style.background='#ff4a4a'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #ff4a4a'; rightLink.style.borderColor='#ff4a4a'; };
 				rightLink.onmouseout = () => { rightLink.style.background='rgba(255, 74, 74, 0.05)'; rightLink.style.color='#ff4a4a'; rightLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; rightLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
@@ -148,7 +145,7 @@
 				
 				const promptTitle = document.createElement('strong');
 				promptTitle.style.cssText = "letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);";
-				promptTitle.textContent = "[SLAUGHTER_SEC@CORE]:~$ FETCH_VULN";
+				promptTitle.textContent = "[SLAUGHTER SEC@CORE]:~$ FETCH_VULN";
 				
 				const labelId = document.createElement('span');
 				labelId.id = 'cve-id';
