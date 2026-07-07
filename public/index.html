@@ -17,6 +17,13 @@
 
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
+
+		<!-- Global CSS Layout Override to fix stacking bugs -->
+		<style>
+			#root, canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
+			.hud-element { z-index: 99999 !important; pointer-events: auto !important; position: fixed !important; }
+			body { margin: 0; padding: 0; background-color: #060608 !important; overflow: hidden !important; }
+		</style>
 	</head>
 	<body>
 		<!-- Main Homepage Root Container (Holding your 3D canvas map) -->
@@ -239,13 +246,14 @@
 				}
 				requestAnimationFrame(renderLoop);
 			}
-			// 4. UI Element Builder for the main Homepage HUD layout layers
+			// 4. UI Element Builder for the main Homepage HUD layout layers (Injected with .hud-element class strings)
 			function buildHomepageWidgets() {
 				if (document.getElementById('cve-widget')) return;
 
-				// Create TOP LEFT Navigation Title Block (Static Header)
+				// Create TOP LEFT Navigation Title Block (Static Header with Overlay fixes)
 				const topLeftNav = document.createElement('div');
-				topLeftNav.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
+				topLeftNav.className = 'hud-element';
+				topLeftNav.style.cssText = "top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace;";
 				
 				const leftHeader = document.createElement('div');
 				leftHeader.textContent = "[ACCESS DASHBOARD]";
@@ -254,9 +262,10 @@
 				topLeftNav.appendChild(leftHeader);
 				document.body.appendChild(topLeftNav);
 
-				// Create TOP RIGHT Navigation Link Container (Clickable Route Link)
+				// Create TOP RIGHT Navigation Link Container (Clickable Route Link with Overlay fixes)
 				const topRightNav = document.createElement('div');
-				topRightNav.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
+				topRightNav.className = 'hud-element';
+				topRightNav.style.cssText = "top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace;";
 				
 				const rightLink = document.createElement('a');
 				rightLink.href = "/dashboard"; 
@@ -268,10 +277,11 @@
 				topRightNav.appendChild(rightLink);
 				document.body.appendChild(topRightNav);
 
-				// Bottom CVE Widget Box Layout Container (Tactical Cyan Border / Green Text)
+				// Bottom CVE Widget Box Layout Container (Tactical Cyan Border / Green Text with Overlay fixes)
 				const widget = document.createElement('div');
 				widget.id = 'cve-widget';
-				widget.style.cssText = "position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); width: 90%; max-width: 900px; z-index: 9999; backdrop-filter: blur(4px);";
+				widget.className = 'hud-element';
+				widget.style.cssText = "bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); width: 90%; max-width: 900px; backdrop-filter: blur(4px);";
 
 				const scanline = document.createElement('div');
 				scanline.style.cssText = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;";
