@@ -18,15 +18,15 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 
-		<!-- Global CSS Layout Override to fix stacking bugs -->
+		<!-- Clean HUD Layering with zero framework positioning interference -->
 		<style>
-			#root, canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
-			.hud-element { z-index: 99999 !important; pointer-events: auto !important; position: fixed !important; }
-			body { margin: 0; padding: 0; background-color: #060608 !important; overflow: hidden !important; }
+			body { margin: 0; padding: 0; background-color: #060608 !important; }
+			.hud-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; }
+			.hud-overlay * { pointer-events: auto; }
 		</style>
 	</head>
 	<body>
-		<!-- Main Homepage Root Container (Holding your 3D canvas map) -->
+		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 
@@ -47,7 +47,8 @@
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
-			// Localized Cyber Intelligence Library Array Matrix (Part B)
+
+						// Localized Cyber Intelligence Library Array Matrix (Part B)
 			const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
@@ -87,7 +88,8 @@
 					startAutoCycle();
 				}
 			}
-			// 2. Physical Page Builder for the Live Intel Stream Sub-Page View
+
+						// 2. Physical Page Builder for the Live Intel Stream Sub-Page View
 			function buildPhysicalDashboardPage() {
 				if (document.getElementById('dash-page-container')) return;
 
@@ -146,7 +148,8 @@
 				// Initialize the 2D Canvas Map Graphics Pipeline
 				setTimeout(runDashboardMapEngine, 100);
 			}
-			// 3. Automated 2D Projectile Threat Mapping Simulation Engine
+
+						// 3. Automated 2D Projectile Threat Mapping Simulation Engine
 			function runDashboardMapEngine() {
 				const canvas = document.getElementById('attackMap');
 				if (!canvas) return;
@@ -246,42 +249,43 @@
 				}
 				requestAnimationFrame(renderLoop);
 			}
-			// 4. UI Element Builder for the main Homepage HUD layout layers (Injected with .hud-element class strings)
-			function buildHomepageWidgets() {
-				if (document.getElementById('cve-widget')) return;
 
-				// Create TOP LEFT Navigation Title Block (Static Header with Overlay fixes)
-				const topLeftNav = document.createElement('div');
-				topLeftNav.className = 'hud-element';
-				topLeftNav.style.cssText = "top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace;";
-				
+						// 4. UI Element Builder for the main Homepage HUD layout layers (Wrapped safely inside an overlay container)
+			function buildHomepageWidgets() {
+				if (document.getElementById('hud-master-layer')) return;
+
+				// Master Container Layer that floats silently on top of your default centered globe canvas
+				const hudLayer = document.createElement('div');
+				hudLayer.id = 'hud-master-layer';
+				hudLayer.className = 'hud-overlay';
+
+				// Create TOP LEFT Navigation Title Block (Static Header)
+				const leftBlock = document.createElement('div');
+				leftBlock.style.cssText = "position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace;";
 				const leftHeader = document.createElement('div');
 				leftHeader.textContent = "[ACCESS DASHBOARD]";
 				leftHeader.style.cssText = "color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none;";
-				
-				topLeftNav.appendChild(leftHeader);
-				document.body.appendChild(topLeftNav);
+				leftBlock.appendChild(leftHeader);
+				hudLayer.appendChild(leftBlock);
 
-				// Create TOP RIGHT Navigation Link Container (Clickable Route Link with Overlay fixes)
-				const topRightNav = document.createElement('div');
-				topRightNav.className = 'hud-element';
-				topRightNav.style.cssText = "top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace;";
-				
+				// Create TOP RIGHT Navigation Link Container (Clickable Route Link)
+				const rightBlock = document.createElement('div');
+				rightBlock.style.cssText = "position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace;";
 				const rightLink = document.createElement('a');
 				rightLink.href = "/dashboard"; 
 				rightLink.textContent = "[LIVE INTEL STREAM]";
 				rightLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
 				rightLink.onmouseover = () => { rightLink.style.background='#ff4a4a'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #ff4a4a'; rightLink.style.borderColor='#ff4a4a'; };
 				rightLink.onmouseout = () => { rightLink.style.background='rgba(255, 74, 74, 0.05)'; rightLink.style.color='#ff4a4a'; rightLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; rightLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
-				
-				topRightNav.appendChild(rightLink);
-				document.body.appendChild(topRightNav);
+				rightBlock.appendChild(rightLink);
+				hudLayer.appendChild(rightBlock);
 
-				// Bottom CVE Widget Box Layout Container (Tactical Cyan Border / Green Text with Overlay fixes)
+				// Bottom CVE Widget Box Layout Container (Tactical Cyan Border / Green Text)
+				const bottomBlock = document.createElement('div');
+				bottomBlock.style.cssText = "position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;";
 				const widget = document.createElement('div');
 				widget.id = 'cve-widget';
-				widget.className = 'hud-element';
-				widget.style.cssText = "bottom: 15px; left: 50%; transform: translateX(-50%); padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); width: 90%; max-width: 900px; backdrop-filter: blur(4px);";
+				widget.style.cssText = "padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px);";
 
 				const scanline = document.createElement('div');
 				scanline.style.cssText = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;";
@@ -316,7 +320,10 @@
 
 				widget.appendChild(contentContainer);
 				widget.appendChild(summaryText);
-				document.body.appendChild(widget);
+				bottomBlock.appendChild(widget);
+				hudLayer.appendChild(bottomBlock);
+
+				document.body.appendChild(hudLayer);
 			}
 
 			// 5. Local Ticker Data Selector Rules
