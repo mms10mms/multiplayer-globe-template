@@ -18,23 +18,50 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 
-		<!-- Clean HUD Layering with zero framework positioning interference -->
+		<!-- Hardcoded styles forcing the interface HUD to stay layered on top -->
 		<style>
 			body { margin: 0; padding: 0; background-color: #060608 !important; }
-			.hud-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; }
-			.hud-overlay * { pointer-events: auto; }
+			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vw; pointer-events: none; z-index: 99999 !important; display: block !important; }
+			#hud-master-layer * { pointer-events: auto; }
+			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease; font-family: 'Courier New', Courier, monospace; }
+			.nav-btn:hover { background: #ff4a4a; color: #0a0a0f; box-shadow: 0 0 15px #ff4a4a; border-color: #ff4a4a; }
 		</style>
 	</head>
 	<body>
-		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
+		<!-- Main Homepage Root Container (Your centered 3D map) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 
-		<!-- Full-Stack Interface Router and Local Intel Datasets -->
+				<!-- Hardcoded Static HUD Overlay Structure -->
+		<div id="hud-master-layer">
+			<!-- Top Left Access Dashboard Header -->
+			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace;">
+				<div style="color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none;">[ACCESS DASHBOARD]</div>
+			</div>
+
+			<!-- Top Right Clickable Route Link -->
+			<div style="position: absolute; top: 20px; right: 20px;">
+				<a href="/dashboard" class="nav-btn">[LIVE INTEL STREAM]</a>
+			</div>
+
+			<!-- Bottom Cyan/Green Cyber Terminal Container -->
+			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
+				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
+					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
+					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
+						<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
+						<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
+						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f'; this.style.boxShadow='0 0 10px #00f0ff';" onmouseout="this.style.background='#14141f'; this.style.color='#00f0ff'; this.style.boxShadow='none';">EXECUTE_ROLL ↻</button>
+					</div>
+					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
+				</div>
+			</div>
+		</div>
+
 		<script>
 			let cycleTimer = null;
 
-			// Localized Cyber Intelligence Library Array Matrix (Part A)
+			// Localized Cyber Intelligence Pool (Part A)
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
@@ -47,8 +74,7 @@
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
-
-						// Localized Cyber Intelligence Library Array Matrix (Part B)
+			// Localized Cyber Intelligence Pool (Part B)
 			const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
@@ -67,46 +93,39 @@
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
 
-			// Merge the extended array securely into the core pool template
 			const masterDataset = cveDataset.concat(cveDatasetExtended);
 
-			// 1. Core Front-End URL Router to handle switching between pages dynamically
+			// URL Router mapping controller variables
 			function initializeAppRouter() {
 				const currentPath = window.location.pathname;
 
-				// Router Case A: If user path matches /dashboard, wipe home nodes and render 2D tracking matrix
 				if (currentPath === "/dashboard" || currentPath === "/dashboard/") {
 					const rootHomeNode = document.getElementById('root');
 					if (rootHomeNode) rootHomeNode.style.display = 'none';
 					
+					const hudHomeNode = document.getElementById('hud-master-layer');
+					if (hudHomeNode) hudHomeNode.style.display = 'none';
+					
 					buildPhysicalDashboardPage();
-				} 
-				// Router Case B: Default Homepage view configuration
-				else {
-					buildHomepageWidgets();
+				} else {
 					loadRandomCve();
 					startAutoCycle();
 				}
 			}
 
-						// 2. Physical Page Builder for the Live Intel Stream Sub-Page View
+			// Natively sets up sub-page environment canvas frame nodes
 			function buildPhysicalDashboardPage() {
 				if (document.getElementById('dash-page-container')) return;
 
-				// Inject page baseline styles
 				const styles = document.createElement('style');
 				styles.textContent = `
 					body { background-color: #060608 !important; overflow: hidden !important; height: 100vh !important; }
-					.log-entry { margin-bottom: 5px; border-left: 2px solid #39ff14; padding-left: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
-					.log-entry.alert { border-left-color: #ff4a4a; color: #ff7777; font-weight: bold; }
 				`;
 				document.head.appendChild(styles);
 
 				const container = document.createElement('div');
 				container.id = 'dash-page-container';
 				container.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; color: #39ff14; font-family: 'Courier New', Courier, monospace; padding: 20px; box-sizing: border-box; z-index: 100000; display: flex; flex-direction: column;";
-
-				// Generate Tactical Workspace Grid inner layout components
 				container.innerHTML = `
 					<div style="border: 1px solid #ff4a4a; background: rgba(255, 74, 74, 0.03); padding: 12px 20px; border-radius: 4px; box-shadow: 0 0 15px rgba(255, 74, 74, 0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0;">
 						<div>
@@ -117,12 +136,10 @@
 					</div>
 
 					<div style="display: grid; grid-template-columns: 3fr 1fr; gap: 15px; flex-grow: 1; min-height: 0;">
-						<!-- Map Canvas Area -->
 						<div id="map-frame" style="background: #09090e; border: 1px solid rgba(255, 74, 74, 0.15); border-radius: 4px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; overflow: hidden;">
 							<canvas id="attackMap" style="width: 100%; height: 100%; display: block;"></canvas>
 						</div>
 
-						<!-- Intel Sidebar Area -->
 						<div style="display: flex; flex-direction: column; gap: 15px; min-height: 0;">
 							<div style="background: rgba(12, 12, 18, 0.9); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 4px; padding: 12px; flex-shrink: 0;">
 								<div style="color: #ff4a4a; font-weight: bold; font-size: 11px; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 4px;">[+] INTEL METRICS</div>
@@ -135,8 +152,8 @@
 							<div style="background: rgba(12, 12, 18, 0.9); border: 1px solid rgba(0, 250, 255, 0.15); border-radius: 4px; padding: 12px; flex-grow: 1; display: flex; flex-direction: column; min-height: 0;">
 								<div style="color: #ff4a4a; font-weight: bold; font-size: 11px; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 4px;">[+] INTRUSIONS INTERCEPT STREAM</div>
 								<div id="live-log" style="flex-grow: 1; background: #020203; border: 1px solid rgba(0, 240, 255, 0.08); border-radius: 3px; padding: 8px; overflow-y: auto; color: #77ee99;">
-									<div class="log-entry">Initializing threat grid matrices...</div>
-									<div class="log-entry">Awaiting localized target honeypot link bindings...</div>
+									<div style="margin-bottom: 5px; border-left: 2px solid #39ff14; padding-left: 6px; font-size: 11px;">Initializing threat grid matrices...</div>
+									<div style="margin-bottom: 5px; border-left: 2px solid #39ff14; padding-left: 6px; font-size: 11px;">Awaiting localized target honeypot link bindings...</div>
 								</div>
 							</div>
 						</div>
@@ -144,12 +161,9 @@
 				`;
 
 				document.body.appendChild(container);
-
-				// Initialize the 2D Canvas Map Graphics Pipeline
 				setTimeout(runDashboardMapEngine, 100);
 			}
-
-						// 3. Automated 2D Projectile Threat Mapping Simulation Engine
+			// Interactive Sub-Page Canvas Simulation Array Loops
 			function runDashboardMapEngine() {
 				const canvas = document.getElementById('attackMap');
 				if (!canvas) return;
@@ -162,10 +176,8 @@
 				resizeCanvas();
 				window.addEventListener('resize', resizeCanvas);
 
-				let targetX = canvas.width * 0.25;
-				let targetY = canvas.height * 0.32;
-				let lasersPool = [];
-				let impactExplosions = [];
+				let targetX = canvas.width * 0.25; let targetY = canvas.height * 0.32;
+				let lasersPool = []; let impactExplosions = [];
 
 				const sourceNodes = [
 					{ name: "Moscow, RU", x: 0.58, y: 0.24 }, { name: "Beijing, CN", x: 0.78, y: 0.30 },
@@ -194,7 +206,8 @@
 					const logBox = document.getElementById('live-log');
 					const entry = document.createElement('div');
 					const isAlert = Math.random() > 0.85;
-					entry.className = isAlert ? "log-entry alert" : "log-entry";
+					entry.style.cssText = "margin-bottom: 5px; padding-left: 6px; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 2px solid " + (isAlert ? "#ff4a4a" : "#39ff14");
+					if (isAlert) entry.style.color = "#ff7777";
 					entry.textContent = "[" + new Date().toTimeString().split(' ') + "] TRACE: " + origin.name + " -> PORT: " + port + (isAlert ? " [CRIT_ALARM]" : " [PROBE_DROP]");
 					logBox.appendChild(entry);
 					logBox.scrollTop = logBox.scrollHeight;
@@ -206,21 +219,16 @@
 				function renderLoop() {
 					if (!document.getElementById('attackMap')) return;
 					targetX = canvas.width * 0.25; targetY = canvas.height * 0.32;
-
 					ctx.fillStyle = '#09090e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-					// Draw Blueprint grid backgrounds
 					ctx.strokeStyle = 'rgba(0, 240, 255, 0.02)'; ctx.lineWidth = 1;
 					for (let x = 0; x < canvas.width; x += 30) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
 					for (let y = 0; y < canvas.height; y += 30) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
 
-					// Draw central monitoring honeypot target point node
 					ctx.shadowBlur = 15; ctx.shadowColor = '#00f0ff'; ctx.fillStyle = '#00f0ff';
 					ctx.beginPath(); ctx.arc(targetX, targetY, 5, 0, Math.PI * 2); ctx.fill();
-					ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)'; ctx.beginPath(); ctx.arc(targetX, targetY, 8 + Math.sin(Date.now() / 150) * 3, 0, Math.PI * 2); ctx.stroke();
 					ctx.shadowBlur = 0;
 
-					// Animate projectile beam arcs across world vectors
 					for (let i = lasersPool.length - 1; i >= 0; i--) {
 						const beam = lasersPool[i]; beam.progress += beam.speed;
 						const p = beam.progress;
@@ -230,7 +238,7 @@
 						ctx.strokeStyle = beam.color; ctx.lineWidth = 2; ctx.shadowBlur = 6; ctx.shadowColor = beam.color;
 						ctx.beginPath(); ctx.moveTo(beam.sx, beam.sy);
 						ctx.quadraticCurveTo((beam.sx + targetX)/2, ((beam.sy + targetY)/2) - 70, cx, cy); ctx.stroke();
-						ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(cx, cy, 2.5, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+						ctx.shadowBlur = 0;
 
 						if (beam.progress >= 1) {
 							impactExplosions.push({ x: targetX, y: targetY, r: 2, alpha: 1, color: beam.color });
@@ -238,7 +246,6 @@
 						}
 					}
 
-					// Blast waves handling loops
 					for (let i = impactExplosions.length - 1; i >= 0; i--) {
 						const r = impactExplosions[i]; r.r += 1.2; r.alpha -= 0.05;
 						ctx.strokeStyle = r.color; ctx.globalAlpha = Math.max(0, r.alpha); ctx.lineWidth = 1.5;
@@ -250,83 +257,7 @@
 				requestAnimationFrame(renderLoop);
 			}
 
-						// 4. UI Element Builder for the main Homepage HUD layout layers (Wrapped safely inside an overlay container)
-			function buildHomepageWidgets() {
-				if (document.getElementById('hud-master-layer')) return;
-
-				// Master Container Layer that floats silently on top of your default centered globe canvas
-				const hudLayer = document.createElement('div');
-				hudLayer.id = 'hud-master-layer';
-				hudLayer.className = 'hud-overlay';
-
-				// Create TOP LEFT Navigation Title Block (Static Header)
-				const leftBlock = document.createElement('div');
-				leftBlock.style.cssText = "position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace;";
-				const leftHeader = document.createElement('div');
-				leftHeader.textContent = "[ACCESS DASHBOARD]";
-				leftHeader.style.cssText = "color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none;";
-				leftBlock.appendChild(leftHeader);
-				hudLayer.appendChild(leftBlock);
-
-				// Create TOP RIGHT Navigation Link Container (Clickable Route Link)
-				const rightBlock = document.createElement('div');
-				rightBlock.style.cssText = "position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace;";
-				const rightLink = document.createElement('a');
-				rightLink.href = "/dashboard"; 
-				rightLink.textContent = "[LIVE INTEL STREAM]";
-				rightLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
-				rightLink.onmouseover = () => { rightLink.style.background='#ff4a4a'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #ff4a4a'; rightLink.style.borderColor='#ff4a4a'; };
-				rightLink.onmouseout = () => { rightLink.style.background='rgba(255, 74, 74, 0.05)'; rightLink.style.color='#ff4a4a'; rightLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; rightLink.style.borderColor='rgba(255, 74, 74, 0.3)'; };
-				rightBlock.appendChild(rightLink);
-				hudLayer.appendChild(rightBlock);
-
-				// Bottom CVE Widget Box Layout Container (Tactical Cyan Border / Green Text)
-				const bottomBlock = document.createElement('div');
-				bottomBlock.style.cssText = "position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;";
-				const widget = document.createElement('div');
-				widget.id = 'cve-widget';
-				widget.style.cssText = "padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px);";
-
-				const scanline = document.createElement('div');
-				scanline.style.cssText = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;";
-				widget.appendChild(scanline);
-
-				const contentContainer = document.createElement('div');
-				contentContainer.style.cssText = "margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;";
-				
-				const promptTitle = document.createElement('strong');
-				promptTitle.style.cssText = "letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);";
-				promptTitle.textContent = "[SLAUGHTER SEC@CORE]:~$ FETCH_VULN";
-				
-				const labelId = document.createElement('span');
-				labelId.id = 'cve-id';
-				labelId.style.cssText = "color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);";
-				labelId.textContent = "SYS_INIT";
-
-				const rollBtn = document.createElement('button');
-				rollBtn.style.cssText = "background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;";
-				rollBtn.textContent = "EXECUTE_ROLL ↻";
-				rollBtn.onclick = manualRoll;
-				rollBtn.onmouseover = () => { rollBtn.style.background='#00f0ff'; rollBtn.style.color='#0a0a0f'; rollBtn.style.boxShadow='0 0 10px #00f0ff'; };
-				rollBtn.onmouseout = () => { rollBtn.style.background='#14141f'; rollBtn.style.color='#00f0ff'; rollBtn.style.boxShadow='none'; };
-
-				contentContainer.appendChild(promptTitle);
-				contentContainer.appendChild(labelId);
-				contentContainer.appendChild(rollBtn);
-
-				const summaryText = document.createElement('p');
-				summaryText.id = 'cve-summary';
-				summaryText.style.cssText = "margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;";
-
-				widget.appendChild(contentContainer);
-				widget.appendChild(summaryText);
-				bottomBlock.appendChild(widget);
-				hudLayer.appendChild(bottomBlock);
-
-				document.body.appendChild(hudLayer);
-			}
-
-			// 5. Local Ticker Data Selector Rules
+			// Local ticker controller initialization rules
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id');
 				const summaryEl = document.getElementById('cve-summary');
@@ -353,3 +284,4 @@
 		</script>
 	</body>
 </html>
+
