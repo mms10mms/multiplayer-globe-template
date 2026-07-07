@@ -27,7 +27,7 @@
 		<script>
 			let cycleTimer = null;
 
-			// Localized Cyber Intelligence Library Array Matrix (25 Records)
+			// Localized Cyber Intelligence Library Array Matrix (Part A)
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
@@ -38,7 +38,10 @@
 				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." },
 				{ id: "CVE-2019-0708", summary: "Remote code execution vulnerability inside Windows Remote Desktop Services (RDS) architecture via pre-auth states (BlueKeep)." },
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
-				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." },
+				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
+			];
+			// Localized Cyber Intelligence Library Array Matrix (Part B)
+			const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
@@ -55,13 +58,16 @@
 				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
+
+			// Merge the extended array securely into the core pool template
+			const masterDataset = cveDataset.concat(cveDatasetExtended);
+
 			// 1. Core Front-End URL Router to handle switching between pages dynamically
 			function initializeAppRouter() {
 				const currentPath = window.location.pathname;
 
-				// Router Case A: If user path is exactly /dashboard, wipe the home elements and build the page
+				// Router Case A: If user path matches /dashboard, wipe home nodes and render 2D tracking matrix
 				if (currentPath === "/dashboard" || currentPath === "/dashboard/") {
-					// Hide the main homepage globe rendering layer completely
 					const rootHomeNode = document.getElementById('root');
 					if (rootHomeNode) rootHomeNode.style.display = 'none';
 					
@@ -74,39 +80,170 @@
 					startAutoCycle();
 				}
 			}
-
-			// 2. Physical Page Builder for the Dashboard Sub-Page view
+			// 2. Physical Page Builder for the Live Intel Stream Sub-Page View
 			function buildPhysicalDashboardPage() {
 				if (document.getElementById('dash-page-container')) return;
 
+				// Inject page baseline styles
+				const styles = document.createElement('style');
+				styles.textContent = `
+					body { background-color: #060608 !important; overflow: hidden !important; height: 100vh !important; }
+					.log-entry { margin-bottom: 5px; border-left: 2px solid #39ff14; padding-left: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
+					.log-entry.alert { border-left-color: #ff4a4a; color: #ff7777; font-weight: bold; }
+				`;
+				document.head.appendChild(styles);
+
 				const container = document.createElement('div');
 				container.id = 'dash-page-container';
-				container.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; color: #39ff14; font-family: 'Courier New', Courier, monospace; padding: 30px; box-sizing: border-box; z-index: 100000; overflow-y: auto;";
+				container.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; color: #39ff14; font-family: 'Courier New', Courier, monospace; padding: 20px; box-sizing: border-box; z-index: 100000; display: flex; flex-direction: column;";
 
-				// Dashboard Layout Content
+				// Generate Tactical Workspace Grid inner layout components
 				container.innerHTML = `
-					<div style="border: 1px solid #ff4a4a; background: rgba(255, 74, 74, 0.03); padding: 15px 25px; border-radius: 4px; box-shadow: 0 0 15px rgba(255, 74, 74, 0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+					<div style="border: 1px solid #ff4a4a; background: rgba(255, 74, 74, 0.03); padding: 12px 20px; border-radius: 4px; box-shadow: 0 0 15px rgba(255, 74, 74, 0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0;">
 						<div>
-							<h1 style="color: #ff4a4a; margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255, 74, 74, 0.4);">SLAUGHTER SEC // HONEYPOT INTELLIGENCE</h1>
-							<div style="font-size: 11px; color: #555; margin-top: 3px;">PORT LISTENER: ACTIVE // STANDING BY FOR NETWORK HANDSHAKE METRICS...</div>
+							<h1 style="color: #ff4a4a; margin: 0; font-size: 1.4rem; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255, 74, 74, 0.4);">SLAUGHTER SEC // LIVE THREAT MAP</h1>
+							<div style="font-size: 10px; color: #555; margin-top: 2px;">SYS STATUS: ACTIVE // INTERCEPTING MALICIOUS VECTOR PROBES...</div>
 						</div>
 						<a href="/" style="color: #ff4a4a; text-decoration: none; border: 1px solid #ff4a4a; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; background: rgba(255,74,74,0.05);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(255,74,74,0.05)'; this.style.color='#ff4a4a';">RETURN TO CORE</a>
 					</div>
 
-					<div style="background: rgba(20,20,30,0.6); border: 1px dashed rgba(57,255,20,0.2); border-radius: 4px; padding: 40px; text-align: center; margin-top: 15vh;">
-						<div style="font-size: 24px; color: #ff4a4a; font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 8px rgba(255,74,74,0.2);">[!] ENGINE INITIALIZATION PENDING</div>
-						<p style="color: #88ffaa; font-size: 13px; max-width: 600px; margin: 0 auto; line-height: 1.6;">Mainframe endpoint workspace detected. Ready to attach live honeypot log capture arrays. Paste custom backend pipeline socket streaming hooks inside this template container object to populate real-world threat telemetry.</p>
+					<div style="display: grid; grid-template-columns: 3fr 1fr; gap: 15px; flex-grow: 1; min-height: 0;">
+						<!-- Map Canvas Area -->
+						<div id="map-frame" style="background: #09090e; border: 1px solid rgba(255, 74, 74, 0.15); border-radius: 4px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+							<canvas id="attackMap" style="width: 100%; height: 100%; display: block;"></canvas>
+						</div>
+
+						<!-- Intel Sidebar Area -->
+						<div style="display: flex; flex-direction: column; gap: 15px; min-height: 0;">
+							<div style="background: rgba(12, 12, 18, 0.9); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 4px; padding: 12px; flex-shrink: 0;">
+								<div style="color: #ff4a4a; font-weight: bold; font-size: 11px; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 4px;">[+] INTEL METRICS</div>
+								<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+									<div style="background: #020203; border: 1px solid rgba(0,240,255,0.08); padding: 8px; text-align: center; border-radius: 3px;"><div id="m-total" style="font-size: 1.3rem; font-weight: bold; color: #39ff14;">4,192</div><div style="font-size: 9px; color: #555; margin-top: 2px;">TOTAL LOGS</div></div>
+									<div style="background: #020203; border: 1px solid rgba(0,240,255,0.08); padding: 8px; text-align: center; border-radius: 3px;"><div id="m-pps" style="font-size: 1.3rem; font-weight: bold; color: #39ff14;">0.0</div><div style="font-size: 9px; color: #555; margin-top: 2px;">ATTACKS/SEC</div></div>
+								</div>
+							</div>
+
+							<div style="background: rgba(12, 12, 18, 0.9); border: 1px solid rgba(0, 250, 255, 0.15); border-radius: 4px; padding: 12px; flex-grow: 1; display: flex; flex-direction: column; min-height: 0;">
+								<div style="color: #ff4a4a; font-weight: bold; font-size: 11px; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 4px;">[+] INTRUSIONS INTERCEPT STREAM</div>
+								<div id="live-log" style="flex-grow: 1; background: #020203; border: 1px solid rgba(0, 240, 255, 0.08); border-radius: 3px; padding: 8px; overflow-y: auto; color: #77ee99;">
+									<div class="log-entry">Initializing threat grid matrices...</div>
+									<div class="log-entry">Awaiting localized target honeypot link bindings...</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				`;
 
 				document.body.appendChild(container);
-			}
 
-			// 3. UI Element Builder for the main Homepage HUD layout layers
+				// Initialize the 2D Canvas Map Graphics Pipeline
+				setTimeout(runDashboardMapEngine, 100);
+			}
+			// 3. Automated 2D Projectile Threat Mapping Simulation Engine
+			function runDashboardMapEngine() {
+				const canvas = document.getElementById('attackMap');
+				if (!canvas) return;
+				const ctx = canvas.getContext('2d');
+
+				function resizeCanvas() {
+					const rect = canvas.parentElement.getBoundingClientRect();
+					canvas.width = rect.width; canvas.height = rect.height;
+				}
+				resizeCanvas();
+				window.addEventListener('resize', resizeCanvas);
+
+				let targetX = canvas.width * 0.25;
+				let targetY = canvas.height * 0.32;
+				let lasersPool = [];
+				let impactExplosions = [];
+
+				const sourceNodes = [
+					{ name: "Moscow, RU", x: 0.58, y: 0.24 }, { name: "Beijing, CN", x: 0.78, y: 0.30 },
+					{ name: "Amsterdam, NL", x: 0.51, y: 0.26 }, { name: "Sao Paulo, BR", x: 0.34, y: 0.64 },
+					{ name: "Frankfurt, DE", x: 0.53, y: 0.28 }, { name: "Seoul, KR", x: 0.82, y: 0.32 },
+					{ name: "Tehran, IR", x: 0.64, y: 0.36 }, { name: "Pyongyang, KP", x: 0.80, y: 0.30 }
+				];
+				const ports =;
+				let attackCounter = 4192;
+
+				function spawnLaser() {
+					if (!document.getElementById('attackMap')) return;
+					const origin = sourceNodes[Math.floor(Math.random() * sourceNodes.length)];
+					const port = ports[Math.floor(Math.random() * ports.length)];
+					
+					lasersPool.push({
+						sx: origin.x * canvas.width, sy: origin.y * canvas.height,
+						progress: 0, speed: 0.02 + Math.random() * 0.015,
+						color: Math.random() > 0.8 ? '#39ff14' : '#ff4a4a'
+					});
+
+					attackCounter++;
+					document.getElementById('m-total').textContent = attackCounter.toLocaleString();
+					document.getElementById('m-pps').textContent = (Math.random() * 1.5 + 0.3).toFixed(1);
+
+					const logBox = document.getElementById('live-log');
+					const entry = document.createElement('div');
+					const isAlert = Math.random() > 0.85;
+					entry.className = isAlert ? "log-entry alert" : "log-entry";
+					entry.textContent = "[" + new Date().toTimeString().split(' ') + "] TRACE: " + origin.name + " -> PORT: " + port + (isAlert ? " [CRIT_ALARM]" : " [PROBE_DROP]");
+					logBox.appendChild(entry);
+					logBox.scrollTop = logBox.scrollHeight;
+
+					setTimeout(spawnLaser, Math.random() * 1000 + 400);
+				}
+				spawnLaser();
+
+				function renderLoop() {
+					if (!document.getElementById('attackMap')) return;
+					targetX = canvas.width * 0.25; targetY = canvas.height * 0.32;
+
+					ctx.fillStyle = '#09090e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+					// Draw Blueprint grid backgrounds
+					ctx.strokeStyle = 'rgba(0, 240, 255, 0.02)'; ctx.lineWidth = 1;
+					for (let x = 0; x < canvas.width; x += 30) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+					for (let y = 0; y < canvas.height; y += 30) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+					// Draw central monitoring honeypot target point node
+					ctx.shadowBlur = 15; ctx.shadowColor = '#00f0ff'; ctx.fillStyle = '#00f0ff';
+					ctx.beginPath(); ctx.arc(targetX, targetY, 5, 0, Math.PI * 2); ctx.fill();
+					ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)'; ctx.beginPath(); ctx.arc(targetX, targetY, 8 + Math.sin(Date.now() / 150) * 3, 0, Math.PI * 2); ctx.stroke();
+					ctx.shadowBlur = 0;
+
+					// Animate projectile beam arcs across world vectors
+					for (let i = lasersPool.length - 1; i >= 0; i--) {
+						const beam = lasersPool[i]; beam.progress += beam.speed;
+						const p = beam.progress;
+						const cx = beam.sx + (targetX - beam.sx) * p;
+						const cy = beam.sy + (targetY - beam.sy) * p + Math.sin(p * Math.PI) * -70;
+
+						ctx.strokeStyle = beam.color; ctx.lineWidth = 2; ctx.shadowBlur = 6; ctx.shadowColor = beam.color;
+						ctx.beginPath(); ctx.moveTo(beam.sx, beam.sy);
+						ctx.quadraticCurveTo((beam.sx + targetX)/2, ((beam.sy + targetY)/2) - 70, cx, cy); ctx.stroke();
+						ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(cx, cy, 2.5, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+
+						if (beam.progress >= 1) {
+							impactExplosions.push({ x: targetX, y: targetY, r: 2, alpha: 1, color: beam.color });
+							lasersPool.splice(i, 1);
+						}
+					}
+
+					// Blast waves handling loops
+					for (let i = impactExplosions.length - 1; i >= 0; i--) {
+						const r = impactExplosions[i]; r.r += 1.2; r.alpha -= 0.05;
+						ctx.strokeStyle = r.color; ctx.globalAlpha = Math.max(0, r.alpha); ctx.lineWidth = 1.5;
+						ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1.0;
+						if (r.alpha <= 0) impactExplosions.splice(i, 1);
+					}
+					requestAnimationFrame(renderLoop);
+				}
+				requestAnimationFrame(renderLoop);
+			}
+			// 4. UI Element Builder for the main Homepage HUD layout layers
 			function buildHomepageWidgets() {
 				if (document.getElementById('cve-widget')) return;
 
-				// Create TOP LEFT Navigation Title Block (Static Non-Clickable Header)
+				// Create TOP LEFT Navigation Title Block (Static Header)
 				const topLeftNav = document.createElement('div');
 				topLeftNav.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
@@ -117,12 +254,12 @@
 				topLeftNav.appendChild(leftHeader);
 				document.body.appendChild(topLeftNav);
 
-				// Create TOP RIGHT Navigation Link Container (Clickable Hyperlink Route)
+				// Create TOP RIGHT Navigation Link Container (Clickable Route Link)
 				const topRightNav = document.createElement('div');
 				topRightNav.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Courier New', Courier, monospace;";
 				
 				const rightLink = document.createElement('a');
-				rightLink.href = "/dashboard"; // Moves the sub-page route trigger over to this button
+				rightLink.href = "/dashboard"; 
 				rightLink.textContent = "[LIVE INTEL STREAM]";
 				rightLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s ease;";
 				rightLink.onmouseover = () => { rightLink.style.background='#ff4a4a'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #ff4a4a'; rightLink.style.borderColor='#ff4a4a'; };
@@ -172,13 +309,13 @@
 				document.body.appendChild(widget);
 			}
 
-			// 4. Local Ticker Handler
+			// 5. Local Ticker Data Selector Rules
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id');
 				const summaryEl = document.getElementById('cve-summary');
 				if (idEl) idEl.textContent = "ROLLING...";
 				
-				const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
+				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
 				setTimeout(() => {
 					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none; border-bottom: 1px dotted #39ff14;">${randomCve.id}</a>`;
 					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
@@ -195,7 +332,6 @@
 				startAutoCycle();
 			}
 
-			// 5. Fire App Router the absolute millisecond page environment loads
 			window.addEventListener('load', initializeAppRouter);
 		</script>
 	</body>
