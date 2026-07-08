@@ -29,7 +29,7 @@
 			
 			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			
-			/* Modal Popup Workspace Templates */
+			/* Modal Popup Terminal Styling */
 			.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 6, 8, 0.9); backdrop-filter: blur(6px); z-index: 200000 !important; display: none; align-items: center; justify-content: center; font-family: 'Courier New', Courier, monospace; }
 			.terminal-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 90%; max-width: 420px; padding: 30px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
 			.terminal-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 10px; width: 100%; margin-bottom: 15px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
@@ -38,38 +38,26 @@
 		</style>
 	</head>
 	<body>
-		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
-		
-		
+
+				<!-- Hardcoded Static HUD Overlay Structure -->
 		<div id="hud-master-layer">
-			<!-- Top Left: Access Dashboard with Placeholder Sub-buttons -->
+			<!-- Top Left: Activated Access Dashboard Action Trigger -->
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div style="color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
-			</div>
-		<!-- Hardcoded Static HUD Overlay Structure -->
-		<div id="hud-master-layer">
-			<!-- Top Left: Access Dashboard with Placeholder Sub-buttons -->
-			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div style="color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
+				<div onclick="toggleModal('dash-modal', true)" class="nav-btn" style="font-size: 12px; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
 			</div>
 
-			<!-- Top Right: Student Gateway Options Triggering Modals Natively -->
+			<!-- Top Right: Stacked Login/Signup Triggers with Student Portal Header Removed -->
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div style="color: #00f0ff; font-size: 11px; font-weight: bold; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 5px 10px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[STUDENT_PORTAL]</div>
 				<div onclick="toggleModal('login-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> AUTH_LOGIN</div>
 				<div onclick="toggleModal('register-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> ACCT_SIGNUP</div>
 				<div style="height: 15px; border-right: 1px dashed rgba(255,74,74,0.2); margin: 5px auto; width: 1px;"></div>
-				<!-- This button starts hidden and automatically pops up ONLY for @students.columbusstate.edu operatives -->
+				<!-- This button automatically reveals itself ONLY when an authorized @students.columbusstate.edu credentials match parses -->
 				<div id="intel-stream-btn" onclick="toggleModal('dash-modal', true)" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05); box-shadow: 0 0 10px rgba(255,74,74,0.1);">[LIVE INTEL STREAM]</div>
 			</div>
 
@@ -87,7 +75,7 @@
 			</div>
 		</div>
 
-		<!-- MODAL A: LOGIN TERMINAL POPUP (Fixed Return Handler) -->
+		<!-- MODAL A: LOGIN TERMINAL POPUP -->
 		<div id="login-modal" class="modal-overlay">
 			<div class="terminal-box">
 				<h2 style="margin-top:0;">[SECURE_STUDENT_AUTH]</h2>
@@ -101,7 +89,7 @@
 			</div>
 		</div>
 
-		<!-- MODAL B: SIGNUP TERMINAL POPUP (Fixed Return Handler) -->
+		<!-- MODAL B: SIGNUP TERMINAL POPUP -->
 		<div id="register-modal" class="modal-overlay">
 			<div class="terminal-box">
 				<h2 style="margin-top:0;">[NEW_USER_ENROLLMENT]</h2>
@@ -143,8 +131,8 @@
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
-			
-			const cveDatasetExtended = [
+
+						const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
@@ -171,37 +159,32 @@
 				}
 			}
 
-			// Localized Sign-up account initialization mapping
 			function executeStudentValidation() {
 				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
 				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
 
-				// Cache user details inside standard local browser storage keys
 				localStorage.setItem('sl_cached_handle', handleVal);
 				localStorage.setItem('sl_cached_email', emailVal);
 
-				alert("[+] ACCOUNT CREATED\\n\\nProfile successfully mapped into terminal array memory workspace. Please travel to AUTH_LOGIN to synchronize your security clearance.");
+				alert("[+] ACCOUNT CREATED\\n\\nProfile mapped inside core framework template. Navigate to AUTH_LOGIN to synchronize your security clearance.");
 				toggleModal('register-modal', false);
 				toggleModal('login-modal', true);
 			}
 
-			// Localized Login checking logic that reads for your strict Columbus State student suffix
 			function executeLoginAuthentication() {
 				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
 				const targetSuffix = "@students.columbusstate.edu";
 
-				// Check if the handle matches your exact target rule criteria
 				if (loginEmail.endsWith(targetSuffix)) {
-					alert("[🟢 CLEARANCE LEVEL 2 APPROVED]\\n\\nWelcome Columbus State Operative. Secure threat map assets have been decrypted for your session layout workspace.");
+					alert("[🟢 ACCESS PRIVILEGE LEVEL 2 APPROVED]\\n\\nWelcome Columbus State Operative. Secure threat map assets have been decrypted for your session layout workspace.");
 					toggleModal('login-modal', false);
 					
-					// Dynamic HUD modifier: Make the red [LIVE INTEL STREAM] button appear live on screen!
+					// Turn on the hidden [LIVE INTEL STREAM] action link button instantly
 					document.getElementById('intel-stream-btn').style.display = 'block';
 				} else {
 					alert("[🔵 GUEST ACCESS GRANTED]\\n\\nAuthentication cleared for standard visitor credentials. NOTE: Live threat stream modules are masked outside the columbusstate.edu subnet.");
 					toggleModal('login-modal', false);
 					
-					// Keep button hidden if it's an outside user
 					document.getElementById('intel-stream-btn').style.display = 'none';
 				}
 			}
