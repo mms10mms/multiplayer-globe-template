@@ -41,6 +41,17 @@
 		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
+		
+		
+		<div id="hud-master-layer">
+			<!-- Top Left: Access Dashboard with Placeholder Sub-buttons -->
+			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
+				<div style="color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
+				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
+				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
+				<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
+				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
+			</div>
 		<!-- Hardcoded Static HUD Overlay Structure -->
 		<div id="hud-master-layer">
 			<!-- Top Left: Access Dashboard with Placeholder Sub-buttons -->
@@ -76,7 +87,7 @@
 			</div>
 		</div>
 
-		<!-- MODAL A: LOGIN TERMINAL POPUP -->
+		<!-- MODAL A: LOGIN TERMINAL POPUP (Fixed Return Handler) -->
 		<div id="login-modal" class="modal-overlay">
 			<div class="terminal-box">
 				<h2 style="margin-top:0;">[SECURE_STUDENT_AUTH]</h2>
@@ -86,11 +97,11 @@
 				<br><br>
 				<button onclick="executeLoginAuthentication()">EXECUTE_LOGIN</button>
 				<br><br>
-				<div onclick="toggleModal('login-modal', false)" style="color:#555; font-size:11px; cursor:pointer;"><- CANCEL_AND_RETURN</div>
+				<div onclick="toggleModal('login-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
 			</div>
 		</div>
 
-		<!-- MODAL B: SIGNUP TERMINAL POPUP -->
+		<!-- MODAL B: SIGNUP TERMINAL POPUP (Fixed Return Handler) -->
 		<div id="register-modal" class="modal-overlay">
 			<div class="terminal-box">
 				<h2 style="margin-top:0;">[NEW_USER_ENROLLMENT]</h2>
@@ -101,7 +112,7 @@
 				<br><br>
 				<button onclick="executeStudentValidation()">CREATE_ACCOUNT</button>
 				<br><br>
-				<div onclick="toggleModal('register-modal', false)" style="color:#555; font-size:11px; cursor:pointer;"><- CANCEL_AND_RETURN</div>
+				<div onclick="toggleModal('register-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
 			</div>
 		</div>
 
@@ -132,6 +143,7 @@
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
+			
 			const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
