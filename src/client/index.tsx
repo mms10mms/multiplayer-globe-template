@@ -90,7 +90,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<h1>security is an illusion</h1>
+			<h1>slaughter-sec.com</h1>
 			{counter !== 0 ? (
 				<p>
 					<b>{counter}</b> {counter === 1 ? "person" : "people"} connected.
