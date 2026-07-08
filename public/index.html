@@ -18,21 +18,14 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 
-		<!-- Hardcoded styles forcing the interface HUD to stay layered on top -->
 		<style>
 			body { margin: 0; padding: 0; background-color: #060608 !important; }
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block !important; }
-			#hud-master-layer * { pointer-events: auto; }
-			
-			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; }
-			.nav-btn:hover { background: #ff4a4a; color: #0a0a0f; box-shadow: 0 0 12px #ff4a4a; border-color: #ff4a4a; }
-			
-			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 6px; user-select: none; }
-			
-			/* Modal Popup Terminal Styling */
-			.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 6, 8, 0.85); backdrop-filter: blur(5px); z-index: 200000 !important; display: none; align-items: center; justify-content: center; }
-			.terminal-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 90%; max-width: 420px; padding: 30px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); font-family: 'Courier New', monospace; text-align: center; color: #00f0ff; }
-			.terminal-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 10px; width: 90%; margin-bottom: 15px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
+			.hud-element { position: fixed !important; z-index: 99999 !important; pointer-events: auto !important; font-family: 'Courier New', Courier, monospace; }
+			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
+			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
+			.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 6, 8, 0.85); backdrop-filter: blur(5px); z-index: 200000 !important; display: none; align-items: center; justify-content: center; font-family: 'Courier New', Courier, monospace; }
+			.terminal-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 90%; max-width: 420px; padding: 30px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
+			.terminal-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 10px; width: 100%; margin-bottom: 15px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
 			.terminal-box button { background: rgba(0,240,255,0.1); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 10px 24px; cursor: pointer; border-radius: 3px; }
 			.terminal-box button:hover { background: #00f0ff; color: #0a0a0f; }
 		</style>
@@ -41,87 +34,10 @@
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 
-				<!-- Hardcoded Static HUD Overlay Structure -->
-		<div id="hud-master-layer">
-			<!-- Top Left: Access Dashboard with Placeholder Sub-buttons -->
-			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div style="color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
-			</div>
-
-			<!-- Top Right: Student Gateway Options Triggering Modals Natively -->
-			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div style="color: #00f0ff; font-size: 11px; font-weight: bold; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 5px 10px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[STUDENT_PORTAL]</div>
-				
-				<!-- Javascript Toggles to completely route around URL clicks -->
-				<div onclick="toggleModal('login-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> AUTH_LOGIN</div>
-				<div onclick="toggleModal('register-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> ACCT_SIGNUP</div>
-				
-				<div style="height: 15px; border-right: 1px dashed rgba(255,74,74,0.2); margin: 5px auto; width: 1px;"></div>
-				<div onclick="toggleModal('dash-modal', true)" class="nav-btn">[LIVE INTEL STREAM]</div>
-			</div>
-
-			<!-- Bottom CVE Widget Box Layout -->
-			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
-				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
-					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
-					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
-						<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
-						<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
-						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='#14141f'; this.style.color='#00f0ff';">EXECUTE_ROLL ↻</button>
-					</div>
-					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
-				</div>
-			</div>
-		</div>
-
-		<!-- MODAL A: LOGIN TERMINAL POPUP -->
-		<div id="login-modal" class="modal-overlay">
-			<div class="terminal-box">
-				<h2 style="margin-top:0;">[SECURE_STUDENT_AUTH]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">ENTER ACADEMIC ENCRYPTION KEY CREDENTIALS</p>
-				<input type="text" placeholder="STUDENT_ID_UID" />
-				<input type="password" placeholder="PASS_HASH_KEY" />
-				<br><br>
-				<button onclick="alert('Login pipeline initialized.'); toggleModal('login-modal', false)">EXECUTE_LOGIN</button>
-				<br><br>
-				<div onclick="toggleModal('login-modal', false)" style="color:#555; font-size:11px; cursor:pointer;"><- CANCEL_AND_RETURN</div>
-			</div>
-		</div>
-
-		<!-- MODAL B: SIGNUP TERMINAL POPUP WITH LIVE .EDU SECURITY FILTER -->
-		<div id="register-modal" class="modal-overlay">
-			<div class="terminal-box">
-				<h2 style="margin-top:0;">[NEW_USER_ENROLLMENT]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW ROSTER ACCOUNT CREDENTIALS</p>
-				<input type="text" placeholder="DESIRED_USER_HANDLE" />
-				<input id="student-email-input" type="email" placeholder="ACADEMIC_EMAIL_ADDR" />
-				<input type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
-				<br><br>
-				<button onclick="executeStudentValidation()">CREATE_ACCOUNT</button>
-				<br><br>
-				<div onclick="toggleModal('register-modal', false)" style="color:#555; font-size:11px; cursor:pointer;"><- CANCEL_AND_RETURN</div>
-			</div>
-		</div>
-
-		<!-- MODAL C: LIVE THREAT WORKSPACE POPUP -->
-		<div id="dash-modal" class="modal-overlay">
-			<div class="terminal-box" style="border-color:#ff4a4a; box-shadow:0 0 20px rgba(255,74,74,0.15); max-width:550px;">
-				<h2 style="color:#ff4a4a; margin-top:0;">[LIVE THREAT MATRIX MODULE]</h2>
-				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
-					Operative workspace successfully loaded within core memory layers. This window is armed and ready to host active socket stream bindings pointing directly to your live production honeypot framework tracking arrays.
-				</p>
-				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('dash-modal', false)">DISCONNECT_SESSION</button>
-			</div>
-		</div>
-
 		<script>
 			let cycleTimer = null;
 
-			// Localized Cyber Intelligence Pool (25 entries)
+			// Core Intelligence Library Array (Part A)
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
@@ -135,7 +51,8 @@
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
 
-						const cveDatasetExtended = [
+						// Core Intelligence Library Array (Part B)
+			const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
@@ -155,15 +72,13 @@
 
 			const masterDataset = cveDataset.concat(cveDatasetExtended);
 
-			// Core UI Toggle engine to slide modals open and shut natively
+			// Runtime Popup Toggle Engine
 			function toggleModal(modalId, show) {
 				const target = document.getElementById(modalId);
-				if (target) {
-					target.style.display = show ? 'flex' : 'none';
-				}
+				if (target) target.style.display = show ? 'flex' : 'none';
 			}
 
-			// Localized Client-Side .EDU Security Verification Fence Gate
+			// Localized Client-Side Email Suffix Validator
 			function executeStudentValidation() {
 				const emailVal = (document.getElementById('student-email-input').value || "").trim();
 				const eduPattern = /\.edu$/i;
@@ -171,14 +86,70 @@
 				if (eduPattern.test(emailVal)) {
 					alert("[🟢 ACCESS APPROVED] Academic clearance verified successfully. Session key mapped to: " + emailVal);
 					toggleModal('register-modal', false);
-					// Natively auto-slides open the target threat map directly for the student
 					toggleModal('dash-modal', true);
 				} else {
 					alert("[🔴 REGISTRATION REJECTED] Access Denied. Platform system asset tracking streams are strictly isolated to verified .edu email domains.");
 				}
 			}
 
-			function loadRandomCve() {
+						// Dynamic DOM Builder to append widgets straight into memory after canvas builds
+			function injectHUDLayersNatively() {
+				if (document.getElementById('cve-widget')) return;
+
+				// 1. TOP LEFT DASHBOARD PANEL
+				const topLeft = document.createElement('div');
+				topLeft.className = 'hud-element';
+				topLeft.style.cssText = "top: 20px; left: 20px; width: 180px;";
+				topLeft.innerHTML = `
+					<div style="color: #ff4a4a; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
+					<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
+					<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
+					<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
+					<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
+				`;
+				document.body.appendChild(topLeft);
+
+				// 2. TOP RIGHT STUDENT SEPARATOR PORTAL
+				const topRight = document.createElement('div');
+				topRight.className = 'hud-element';
+				topRight.style.cssText = "top: 20px; right: 20px; width: 180px;";
+				topRight.innerHTML = `
+					<div style="color: #00f0ff; font-size: 11px; font-weight: bold; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 5px 10px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); user-select: none; text-align: center; margin-bottom: 10px;">[STUDENT PORTAL]</div>
+					<div onclick="toggleModal('login-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> AUTH LOGIN</div>
+					<div onclick="toggleModal('register-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> ACCT SIGNUP</div>
+					<div style="height: 15px; border-right: 1px dashed rgba(255,74,74,0.2); margin: 5px auto; width: 1px;"></div>
+					<div onclick="toggleModal('dash-modal', true)" class="nav-btn">[LIVE INTEL STREAM]</div>
+				`;
+				document.body.appendChild(topRight);
+
+				// 3. BOTTOM CYAN / TERMINAL FRAME
+				const bottomHUD = document.createElement('div');
+				bottomHUD.className = 'hud-element';
+				bottomHUD.style.cssText = "bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;";
+				bottomHUD.innerHTML = `
+					<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
+						<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
+						<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
+							<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
+							<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
+							<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='#14141f'; this.style.color='#00f0ff';">EXECUTE_ROLL ↻</button>
+						</div>
+						<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
+					</div>
+				`;
+				document.body.appendChild(bottomHUD);
+
+				// 4. MODALS CONTAINER STACKS INJECTION
+				const modals = document.createElement('div');
+				modals.innerHTML = `
+					<div id="login-modal" class="modal-overlay"><div class="terminal-box"><h2 style="margin-top:0;">[SECURE STUDENT AUTH]</h2><p style="font-size:11px; color:#555; margin-bottom:20px;">ENTER ACADEMIC ENCRYPTION KEY CREDENTIALS</p><input type="text" placeholder="STUDENT_ID_UID" /><input type="password" placeholder="PASS_HASH_KEY" /><br><br><button onclick="alert('Login pipeline initialized.'); toggleModal('login-modal', false)">EXECUTE_LOGIN</button><br><br><div onclick="toggleModal('login-modal', false)" style="color:#555; font-size:11px; cursor:pointer;"><- CANCEL AND RETURN</div></div></div>
+					<div id="register-modal" class="modal-overlay"><div class="terminal-box"><h2 style="margin-top:0;">[NEW USER ENROLLMENT]</h2><p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW ROSTER ACCOUNT CREDENTIALS</p><input type="text" placeholder="DESIRED_USER_HANDLE" /><input id="student-email-input" type="email" placeholder="ACADEMIC_EMAIL_ADDR" /><input type="password" placeholder="CREATE_SECRET_PASSPHRASE" /><br><br><button onclick="executeStudentValidation()">CREATE_ACCOUNT</button><br><br><div onclick="toggleModal('register-modal', false)" style="color:#555; font-size:11px; cursor:pointer;"><- CANCEL AND RETURN</div></div></div>
+					<div id="dash-modal" class="modal-overlay"><div class="terminal-box" style="border-color:#ff4a4a; box-shadow:0 0 20px rgba(255,74,74,0.15); max-width:550px;"><h2 style="color:#ff4a4a; margin-top:0;">[LIVE THREAT MATRIX MODULE]</h2><p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">Operative workspace successfully loaded within core memory layers. This window is armed and ready to host active socket stream bindings pointing directly to your live production honeypot framework tracking arrays.</p><button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('dash-modal', false)">DISCONNECT SESSION</button></div></div>
+				`;
+				document.body.appendChild(modals);
+			}
+
+						function loadRandomCve() {
 				const idEl = document.getElementById('cve-id');
 				const summaryEl = document.getElementById('cve-summary');
 				if (idEl) idEl.textContent = "ROLLING...";
@@ -200,9 +171,13 @@
 				startAutoCycle();
 			}
 
+			// Core Runtime Listener: Mount layers AFTER the 3D globe completes its canvas cycle
 			window.addEventListener('load', () => {
-				loadRandomCve();
-				startAutoCycle();
+				setTimeout(() => {
+					injectHUDLayersNatively();
+					loadRandomCve();
+					startAutoCycle();
+				}, 500); // 500ms safety window buffer to guarantee framework completion
 			});
 		</script>
 	</body>
