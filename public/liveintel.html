@@ -14,13 +14,27 @@
             overflow: hidden;
             font-family: monospace;
         }
+        /* Flex layout changes to stack the placeholder and the canvas map vertically */
         #canvas-container {
             width: 100%;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
+        }
+        /* Big styled placeholder text banner */
+        .big-placeholder {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            padding: 10px 40px;
+            background: rgba(255, 255, 255, 0.02);
         }
         canvas {
             border: 2px solid #ff4a4a;
@@ -52,7 +66,10 @@
             <div class="status-box" style="border-color:#ff4a4a; color:#ff4a4a;">[ENGINE: FRONTEND_CANVAS_2D]</div>
         </div>
 
-        <!-- The canvas element where JavaScript will draw -->
+        <!-- NEW: Big PLACEHOLDER text elements stacked directly above the map container box -->
+        <div class="big-placeholder">PLACEHOLDER</div>
+
+        <!-- The canvas element where JavaScript draws -->
         <canvas id="mapCanvas" width="800" height="500"></canvas>
     </div>
 
@@ -61,18 +78,16 @@
             const canvas = document.getElementById('mapCanvas');
             const ctx = canvas.getContext('2d');
 
-            // 1. Draw grid background lines (Cyberpunk/Matrix style)
+            // 1. Draw grid background lines
             ctx.strokeStyle = 'rgba(57, 255, 20, 0.15)';
             ctx.lineWidth = 1;
             
-            // Vertical grid lines
             for (let x = 0; x < canvas.width; x += 40) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, canvas.height);
                 ctx.stroke();
             }
-            // Horizontal grid lines
             for (let y = 0; y < canvas.height; y += 40) {
                 ctx.beginPath();
                 ctx.moveTo(0, y);
@@ -80,22 +95,19 @@
                 ctx.stroke();
             }
 
-            // 2. Draw a quick 2D blocky "World Map" mockup shape
+            // 2. Draw map shapes
             ctx.fillStyle = 'rgba(255, 74, 74, 0.2)';
             ctx.strokeStyle = '#ff4a4a';
             ctx.lineWidth = 2;
 
             ctx.beginPath();
-            // Mock Continent 1 (Left side)
             ctx.rect(100, 100, 200, 250);
-            // Mock Continent 2 (Right side)
             ctx.rect(450, 150, 250, 200);
             ctx.fill();
             ctx.stroke();
 
-            // 3. Drop blinking map target points
+            // 3. Render target dots
             function drawTargets() {
-                // Target A (North)
                 ctx.fillStyle = '#39ff14';
                 ctx.beginPath();
                 ctx.arc(200, 180, 6, 0, Math.PI * 2);
@@ -103,7 +115,6 @@
                 ctx.fillStyle = '#ffffff';
                 ctx.fillText("NODE_01", 215, 184);
 
-                // Target B (South)
                 ctx.fillStyle = '#39ff14';
                 ctx.beginPath();
                 ctx.arc(580, 280, 6, 0, Math.PI * 2);
