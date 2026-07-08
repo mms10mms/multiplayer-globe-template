@@ -18,10 +18,10 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 
-		<!-- Hardcoded styles forcing the interface HUD to stay layered on top -->
+		<!-- Fixed HUD overlay parameters protecting layout centers -->
 		<style>
 			body { margin: 0; padding: 0; background-color: #060608 !important; overflow: hidden !important; }
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block !important; }
+			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block; }
 			#hud-master-layer * { pointer-events: auto; }
 			
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
@@ -29,35 +29,37 @@
 			
 			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			
-			/* Modal Popup Terminal Styling */
-			.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 6, 8, 0.9); backdrop-filter: blur(6px); z-index: 200000 !important; display: none; align-items: center; justify-content: center; font-family: 'Courier New', Courier, monospace; }
-			.terminal-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 90%; max-width: 420px; padding: 30px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
-			.terminal-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 10px; width: 100%; margin-bottom: 15px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
-			.terminal-box button { background: rgba(0,240,255,0.1); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 10px 24px; cursor: pointer; border-radius: 3px; }
-			.terminal-box button:hover { background: #00f0ff; color: #0a0a0f; }
+			/* Dedicated Standalone Sub-Page View Layer Panels */
+			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; z-index: 200000 !important; display: none; align-items: center; justify-content: center; font-family: 'Courier New', Courier, monospace; box-sizing: border-box; padding: 20px; }
+			.terminal-grid-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 25px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
+			.terminal-grid-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
+			.terminal-grid-box button { background: rgba(0,240,255,0.1); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 11px 26px; cursor: pointer; border-radius: 3px; }
+			.terminal-grid-box button:hover { background: #00f0ff; color: #0a0a0f; }
+			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 		</style>
 	</head>
 	<body>
+		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 		<!-- Hardcoded Static HUD Overlay Structure -->
 		<div id="hud-master-layer">
-			<!-- Top Left: Access Dashboard Action Link -->
+			<!-- Top Left: Access Dashboard Navigation Hook -->
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div onclick="toggleModal('dash-modal', true)" class="nav-btn" style="font-size: 12px; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
+				<div onclick="navigateToPath('/dashboard')" class="nav-btn" style="font-size: 12px; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
 			</div>
 
-			<!-- Top Right: Stacked Sanitized Handshake Terminals -->
+			<!-- Top Right: Clean stacked path routing action buttons -->
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div onclick="toggleModal('login-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> CORE_INITIALIZE</div>
-				<div onclick="toggleModal('register-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> OPERATIVE_REG</div>
+				<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> CORE_INITIALIZE</div>
+				<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> OPERATIVE_REG</div>
 				<div style="height: 15px; border-right: 1px dashed rgba(255,74,74,0.2); margin: 5px auto; width: 1px;"></div>
-				<!-- Masked button identifier: Uses a strict encryption layout code string -->
-				<div id="intel-stream-btn" onclick="toggleModal('quantum-modal', true)" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05); box-shadow: 0 0 10px rgba(255,74,74,0.1);">[SECURE STREAM // L2]</div>
+				<!-- Masked Tier-2 privileged action link button -->
+				<div id="intel-stream-btn" onclick="navigateToPath('/quantum-stream')" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05); box-shadow: 0 0 10px rgba(255,74,74,0.1);">[SECURE STREAM // L2]</div>
 			</div>
 
 			<!-- Bottom Cyan/Green Cyber Terminal Container -->
@@ -74,23 +76,24 @@
 			</div>
 		</div>
 
-		<!-- MODAL A: LOGIN TERMINAL POPUP (Sanitized Phrasing) -->
-		<div id="login-modal" class="modal-overlay">
-			<div class="terminal-box">
+		<!-- SEPARATE FULL PAGE Environment A: CORE INITIALIZE LOGIN PAGE -->
+		<div id="view-login" class="standalone-page-view">
+			<div class="terminal-grid-box">
 				<h2 style="margin-top:0;">[CORE_INITIALIZE_HANDSHAKE]</h2>
 				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
 				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input type="password" placeholder="PASS_HASH_KEY" />
 				<br><br>
 				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<br><br>
-				<div onclick="toggleModal('login-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
+				<br>
+				<div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN HOME</div>
 			</div>
 		</div>
 
-		<!-- MODAL B: SIGNUP TERMINAL POPUP (Sanitized Phrasing) -->
-		<div id="register-modal" class="modal-overlay">
-			<div class="terminal-box">
+		<!-- SEPARATE FULL PAGE Environment B: OPERATIVE SIGNUP REGISTRATION PAGE -->
+		<div id="view-register" class="standalone-page-view">
+			<div class="terminal-grid-box">
 				<h2 style="margin-top:0;">[MAIN_NODE_DEPLOYMENT]</h2>
 				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
 				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
@@ -98,30 +101,31 @@
 				<input type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
 				<br><br>
 				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
-				<br><br>
-				<div onclick="toggleModal('register-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
+				<br>
+				<div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN HOME</div>
 			</div>
 		</div>
 
-		<!-- MODAL C: STANDARD ACCESS DASHBOARD VIEW -->
-		<div id="dash-modal" class="modal-overlay">
-			<div class="terminal-box" style="border-color:#ff4a4a; box-shadow:0 0 20px rgba(255,74,74,0.15); max-width:550px;">
+		<!-- SEPARATE FULL PAGE Environment C: ACCESS DASHBOARD LEVEL 1 PAGE -->
+		<div id="view-dashboard" class="standalone-page-view">
+			<div class="terminal-grid-box" style="border-color:#ff4a4a; box-shadow:0 0 25px rgba(255,74,74,0.15); max-width:550px;">
 				<h2 style="color:#ff4a4a; margin-top:0;">[STANDARD MATRIX OVERVIEW // L1]</h2>
 				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
 					Baseline monitoring environment initialized. Perimeter tracking vector nodes successfully synchronized inside core volatile storage arrays. Clearance mapping is currently flagged as Level 1.
 				</p>
-				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('dash-modal', false)">CLOSE_INTERFACE</button>
+				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="navigateToPath('/')">RETURN TO MAIN CORE MAP</button>
 			</div>
 		</div>
 
-		<!-- MODAL D: SYSTEM LEVEL 02 PRIVILEGED WORKSPACE (Hidden Columbus Map) -->
-		<div id="quantum-modal" class="modal-overlay">
-			<div class="terminal-box" style="border-color:#ff4a4a; box-shadow:0 0 20px rgba(255,74,74,0.25); max-width:550px;">
+		<!-- SEPARATE FULL PAGE Environment D: LEVEL 2 PRIVILEGED HONEYPOT WORKSPACE PAGE -->
+		<div id="view-quantum" class="standalone-page-view">
+			<div class="terminal-grid-box" style="border-color:#ff4a4a; box-shadow:0 0 25px rgba(255,74,74,0.25); max-width:550px;">
 				<h2 style="color:#ff4a4a; margin-top:0;">[QUANTUM PROTOCOL MATRIX // L2]</h2>
 				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
 					CRITICAL PRIVILEGE VERIFIED. Level 2 localized intelligence pipeline decrypted successfully. Workspace channels are armed and ready to host active socket stream bindings pointing directly to your live production honeypot appliances.
 				</p>
-				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('quantum-modal', false)">DISCONNECT_STREAM</button>
+				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="navigateToPath('/')">DISCONNECT STREAM AND RETURN HOME</button>
 			</div>
 		</div>
 
@@ -152,7 +156,7 @@
 				{ id: "CVE-2023-44487", summary: "HTTP/2 protocol frame streaming manipulation enabling catastrophic stream multiplexing server resource exhaustion (Rapid Reset DDoS)." },
 				{ id: "CVE-2019-11510", summary: "Pulse Connect Secure VPN gateway directory traversal vulnerability exposing active user corporate authentication caches." },
 				{ id: "CVE-2021-21972", summary: "VMware vCenter Server plugin parameter handling vulnerability permitting untrusted file upload pathways and shell execution." },
-				{ id: "CVE-2023-44487", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
+				{ id: "CVE-2023-4966", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
 				{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool (MSDT) remote code execution loop triggered via malicious Office document macros (Follina)." },
 				{ id: "CVE-2020-1066", summary: "Microsoft Windows unauthenticated remote code execution flaw in the parsing routines of specific GDI layout components." },
 				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
@@ -161,43 +165,94 @@
 
 			const masterDataset = cveDataset.concat(cveDatasetExtended);
 
-			function toggleModal(modalId, show) {
-				const target = document.getElementById(modalId);
-				if (target) {
-					target.style.display = show ? 'flex' : 'none';
+			// 🔀 THE FRONTEND APP ROUTER: Evaluates the browser URL to render separate page frames natively
+			function routeSubDirectoriesNatively() {
+				const path = window.location.pathname;
+
+				// Hide all pages by default first
+				document.getElementById('view-login').style.display = 'none';
+				document.getElementById('view-register').style.display = 'none';
+				document.getElementById('view-dashboard').style.display = 'none';
+				document.getElementById('view-quantum').style.display = 'none';
+				
+				// Make home globe layers visible
+				document.getElementById('root').style.display = 'block';
+				document.getElementById('hud-master-layer').style.display = 'block';
+
+				// Page Route Checks
+				if (path === "/login" || path === "/login/") {
+					document.getElementById('root').style.display = 'none';
+					document.getElementById('hud-master-layer').style.display = 'none';
+					document.getElementById('view-login').style.display = 'flex';
+				} else if (path === "/register" || path === "/register/") {
+					document.getElementById('root').style.display = 'none';
+					document.getElementById('hud-master-layer').style.display = 'none';
+					document.getElementById('view-register').style.display = 'flex';
+				} else if (path === "/dashboard" || path === "/dashboard/") {
+					document.getElementById('root').style.display = 'none';
+					document.getElementById('hud-master-layer').style.display = 'none';
+					document.getElementById('view-dashboard').style.display = 'flex';
+				} else if (path === "/quantum-stream" || path === "/quantum-stream/") {
+					document.getElementById('root').style.display = 'none';
+					document.getElementById('hud-master-layer').style.display = 'none';
+					document.getElementById('view-quantum').style.display = 'flex';
 				}
+			}
+
+			// Natively changes the URL pathname and fires the page swapper instantly
+			function navigateToPath(targetUrlPath) {
+				window.history.pushState({}, '', targetUrlPath);
+				routeSubDirectoriesNatively();
+				resetTickers();
+			}
+
+			function resetTickers() {
+				const loginT = document.getElementById('login-ticker');
+				const registerT = document.getElementById('register-ticker');
+				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
+				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
 			}
 
 			function executeStudentValidation() {
 				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
 				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
+				const ticker = document.getElementById('register-ticker');
+
+				if (!emailVal) {
+					if (ticker) { ticker.textContent = "[-] ERROR: ARCHIVE_NOT_FOUND"; ticker.style.color = "#ff4a4a"; }
+					return;
+				}
 
 				localStorage.setItem('sl_cached_handle', handleVal);
 				localStorage.setItem('sl_cached_email', emailVal);
 
-				alert("[SYS_STATUS: RECORD_STORED]\\n\\nProfile identity alias successfully mapped into mainframe volatility layers. Please travel to CORE_INITIALIZE to establish active handshake synchronization.");
-				toggleModal('register-modal', false);
-				toggleModal('login-modal', true);
+				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. ROUTING TO VALIDATION..."; ticker.style.color = "#39ff14"; }
+
+				setTimeout(() => { navigateToPath('/login'); }, 1200);
 			}
 
-			// Hidden Verification Fence: Performs the secret domain assessment completely silently
 			function executeLoginAuthentication() {
 				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
-				
-				// The classified validation target string boundary is kept completely hidden from layout text panels
+				const ticker = document.getElementById('login-ticker');
 				const targetSuffix = "@students.columbusstate.edu";
 
+				if (!loginEmail) {
+					if (ticker) { ticker.textContent = "[-] ERROR: ARCHIVE_NOT_FOUND"; ticker.style.color = "#ff4a4a"; }
+					return;
+				}
+
 				if (loginEmail.endsWith(targetSuffix)) {
-					alert("[🟢 PROTOCOL_SYNC: COMPLETE]\\n\\nHandshake established successfully. Allocating privileged level-02 layout matrix parameters onto your local terminal console container.");
-					toggleModal('login-modal', false);
-					
-					// Secret payoff: Dynamically turns on the hidden privileged [SECURE STREAM // L2] button container
-					document.getElementById('intel-stream-btn').style.display = 'block';
+					if (ticker) { ticker.textContent = "[🟢 ACCESS APPROVED] CLEARANCE L2 GRANTED"; ticker.style.color = "#39ff14"; }
+					setTimeout(() => {
+						navigateToPath('/'); // Redirect straight back to homepage map!
+						document.getElementById('intel-stream-btn').style.display = 'block'; // Reveal secret L2 button
+					}, 1000);
 				} else {
-					alert("[🔵 PROTOCOL_SYNC: COMPLETE]\\n\\nHandshake established successfully. Allocating standard baseline level-01 layout parameters onto your console.");
-					toggleModal('login-modal', false);
-					
-					document.getElementById('intel-stream-btn').style.display = 'none';
+					if (ticker) { ticker.textContent = "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED"; ticker.style.color = "#00f0ff"; }
+					setTimeout(() => {
+						navigateToPath('/'); // Redirect straight back to homepage map!
+						document.getElementById('intel-stream-btn').style.display = 'none';
+					}, 1000);
 				}
 			}
 
@@ -223,7 +278,10 @@
 				startAutoCycle();
 			}
 
+			// Pop the router configuration live on load checks and back button clicks
+			window.addEventListener('popstate', routeSubDirectoriesNatively);
 			window.addEventListener('load', () => {
+				routeSubDirectoriesNatively();
 				loadRandomCve();
 				startAutoCycle();
 			});
