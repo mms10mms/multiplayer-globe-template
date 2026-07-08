@@ -1,84 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-		<title>2D Intel Map</title>
-		
-		<!-- Leaflet CSS for 2D Map Drawing -->
-		<link rel="stylesheet" href="https://unpkg.com" />
-		
-		<style>
-			html, body {
-				margin: 0;
-				padding: 0;
-				width: 100%;
-				height: 100%;
-				background-color: #0a0a0f;
-				overflow: hidden;
-				font-family: monospace;
-			}
-			/* The map container MUST have an explicit height and width to render */
-			#map {
-				width: 100%;
-				height: 100vh;
-				background: #0a0a0f;
-				z-index: 1;
-			}
-			.map-nav {
-				position: fixed;
-				top: 20px;
-				left: 20px;
-				z-index: 9999;
-			}
-			.nav-link {
-				color: #ff4a4a;
-				text-decoration: none;
-				font-size: 12px;
-				font-weight: bold;
-				background: rgba(10, 10, 15, 0.9);
-				border: 1px solid #ff4a4a;
-				padding: 8px 16px;
-				border-radius: 4px;
-			}
-		</style>
-	</head>
-	<body>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Map Test Screen</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0f;
+            overflow: hidden;
+            font-family: monospace;
+        }
+        #canvas-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        canvas {
+            border: 2px solid #ff4a4a;
+            background: #111118;
+            box-shadow: 0 0 20px rgba(255, 74, 74, 0.2);
+        }
+        .ui-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            pointer-events: none;
+        }
+        .status-box {
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid #39ff14;
+            color: #39ff14;
+            padding: 10px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
 
-		<div class="map-nav">
-			<a class="nav-link" href="/index.html">[RETURN_HOME]</a>
-		</div>
+    <div id="canvas-container">
+        <!-- The UI box over the canvas -->
+        <div class="ui-overlay">
+            <div class="status-box">[SYSTEM_STATUS: ONLINE]</div>
+            <div class="status-box" style="border-color:#ff4a4a; color:#ff4a4a;">[ENGINE: FRONTEND_CANVAS_2D]</div>
+        </div>
 
-		<!-- This is the box where the map draws itself -->
-		<div id="map"></div>
+        <!-- The canvas element where JavaScript will draw -->
+        <canvas id="mapCanvas" width="800" height="500"></canvas>
+    </div>
 
-		<!-- Leaflet JavaScript library -->
-		<script src="https://unpkg.com"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('mapCanvas');
+            const ctx = canvas.getContext('2d');
 
-		<script>
-			// Make sure the script runs only after the full page loads
-			window.addEventListener('DOMContentLoaded', () => {
-				try {
-					// 1. Initialize map pointing to London coordinates [51.5, -0.09] at zoom level 3
-					const map = L.map('map').setView([51.5, -0.09], 3);
+            // 1. Draw grid background lines (Cyberpunk/Matrix style)
+            ctx.strokeStyle = 'rgba(57, 255, 20, 0.15)';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let x = 0; x < canvas.width; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            // Horizontal grid lines
+            for (let y = 0; y < canvas.height; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
 
-					// 2. Load Dark Cyber style map tiles
-					L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-						attribution: '&copy; OpenStreetMap &copy; CARTO',
-						subdomains: 'abcd',
-						maxZoom: 20
-					}).addTo(map);
+            // 2. Draw a quick 2D blocky "World Map" mockup shape
+            ctx.fillStyle = 'rgba(255, 74, 74, 0.2)';
+            ctx.strokeStyle = '#ff4a4a';
+            ctx.lineWidth = 2;
 
-					// 3. Add a test pin marker
-					L.marker([51.5, -0.09])
-						.addTo(map)
-						.bindPopup("<b style='color:#000;'>Node Online</b>")
-						.openPopup();
-						
-				} catch (error) {
-					console.error("Map initialization failed: ", error);
-				}
-			});
-		</script>
-	</body>
+            ctx.beginPath();
+            // Mock Continent 1 (Left side)
+            ctx.rect(100, 100, 200, 250);
+            // Mock Continent 2 (Right side)
+            ctx.rect(450, 150, 250, 200);
+            ctx.fill();
+            ctx.stroke();
+
+            // 3. Drop blinking map target points
+            function drawTargets() {
+                // Target A (North)
+                ctx.fillStyle = '#39ff14';
+                ctx.beginPath();
+                ctx.arc(200, 180, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText("NODE_01", 215, 184);
+
+                // Target B (South)
+                ctx.fillStyle = '#39ff14';
+                ctx.beginPath();
+                ctx.arc(580, 280, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText("NODE_02", 595, 284);
+            }
+
+            drawTargets();
+        });
+    </script>
+</body>
 </html>
