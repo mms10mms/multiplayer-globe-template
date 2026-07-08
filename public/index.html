@@ -79,13 +79,13 @@
 		<!-- SEPARATE FULL PAGE Environment A: CORE INITIALIZE LOGIN PAGE -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
-				<h2 style="margin-top:0;">[CORE_INITIALIZE_HANDSHAKE]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
-				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
-				<input type="password" placeholder="PASS_HASH_KEY" />
+				<h2 style="margin-top:0;">[Login Terminal]</h2>
+				<p style="font-size:11px; color:#555; margin-bottom:20px;">Enter your credentials</p>
+				<input id="login-email-input" type="email" placeholder="email" />
+				<input type="password" placeholder="password" />
 				<br><br>
 				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
+				<div id="login-ticker" class="status-log-line" style="color: #666;">system-standby</div>
 				<br>
 				<div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN HOME</div>
 			</div>
@@ -94,14 +94,14 @@
 		<!-- SEPARATE FULL PAGE Environment B: OPERATIVE SIGNUP REGISTRATION PAGE -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
-				<h2 style="margin-top:0;">[MAIN_NODE_DEPLOYMENT]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
-				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
-				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
-				<input type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
+				<h2 style="margin-top:0;">[Agent Registration]</h2>
+				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW IDENTIFIER</p>
+				<input id="student-handle-input" type="text" placeholder="AGENT ID" />
+				<input id="student-email-input" type="email" placeholder="Email" />
+				<input type="password" placeholder="Password" />
 				<br><br>
-				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
-				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
+				<button onclick="executeStudentValidation()">Signup_Conformation</button>
+				<div id="register-ticker" class="status-log-line" style="color: #666;">Slaughter-Sec Welcomes You</div>
 				<br>
 				<div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN HOME</div>
 			</div>
