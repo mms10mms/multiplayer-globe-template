@@ -34,7 +34,8 @@
 		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
-		<!-- Hardcoded Static HUD Overlay Structure -->
+
+				<!-- Hardcoded Static HUD Overlay Structure -->
 		<div id="hud-master-layer">
 			
 			<!-- Top Left: Access Dashboard with Placeholder Sub-buttons -->
@@ -92,7 +93,8 @@
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
-			const cveDatasetExtended = [
+
+						const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
@@ -126,6 +128,7 @@
 				}
 			}
 
+			// Corrected Variable Mapping Function to fix the compiler errors
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id');
 				const summaryEl = document.getElementById('cve-summary');
@@ -133,7 +136,7 @@
 				
 				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
 				setTimeout(() => {
-					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{random際に}" target="_blank" style="color: #39ff14; text-decoration: none; border-bottom: 1px dotted #39ff14;">${randomCve.id}</a>`;
+					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none; border-bottom: 1px dotted #39ff14;">${randomCve.id}</a>`;
 					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
 				}, 200);
 			}
