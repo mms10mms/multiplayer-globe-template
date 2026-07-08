@@ -40,10 +40,9 @@
 	<body>
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
-
-				<!-- Hardcoded Static HUD Overlay Structure -->
+		<!-- Hardcoded Static HUD Overlay Structure -->
 		<div id="hud-master-layer">
-			<!-- Top Left: Activated Access Dashboard Action Trigger -->
+			<!-- Top Left: Access Dashboard Action Link -->
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
 				<div onclick="toggleModal('dash-modal', true)" class="nav-btn" style="font-size: 12px; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
@@ -52,13 +51,13 @@
 				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
 			</div>
 
-			<!-- Top Right: Stacked Login/Signup Triggers with Student Portal Header Removed -->
+			<!-- Top Right: Stacked Sanitized Handshake Terminals -->
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div onclick="toggleModal('login-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> AUTH_LOGIN</div>
-				<div onclick="toggleModal('register-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> ACCT_SIGNUP</div>
+				<div onclick="toggleModal('login-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> CORE_INITIALIZE</div>
+				<div onclick="toggleModal('register-modal', true)" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> OPERATIVE_REG</div>
 				<div style="height: 15px; border-right: 1px dashed rgba(255,74,74,0.2); margin: 5px auto; width: 1px;"></div>
-				<!-- This button automatically reveals itself ONLY when an authorized @students.columbusstate.edu credentials match parses -->
-				<div id="intel-stream-btn" onclick="toggleModal('dash-modal', true)" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05); box-shadow: 0 0 10px rgba(255,74,74,0.1);">[LIVE INTEL STREAM]</div>
+				<!-- Masked button identifier: Uses a strict encryption layout code string -->
+				<div id="intel-stream-btn" onclick="toggleModal('quantum-modal', true)" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05); box-shadow: 0 0 10px rgba(255,74,74,0.1);">[SECURE STREAM // L2]</div>
 			</div>
 
 			<!-- Bottom Cyan/Green Cyber Terminal Container -->
@@ -75,43 +74,54 @@
 			</div>
 		</div>
 
-		<!-- MODAL A: LOGIN TERMINAL POPUP -->
+		<!-- MODAL A: LOGIN TERMINAL POPUP (Sanitized Phrasing) -->
 		<div id="login-modal" class="modal-overlay">
 			<div class="terminal-box">
-				<h2 style="margin-top:0;">[SECURE_STUDENT_AUTH]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">ENTER ACADEMIC ENCRYPTION KEY CREDENTIALS</p>
-				<input id="login-email-input" type="email" placeholder="REGISTERED_EMAIL_ADDR" />
+				<h2 style="margin-top:0;">[CORE_INITIALIZE_HANDSHAKE]</h2>
+				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
+				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input type="password" placeholder="PASS_HASH_KEY" />
 				<br><br>
-				<button onclick="executeLoginAuthentication()">EXECUTE_LOGIN</button>
+				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
 				<br><br>
-				<div onclick="toggleModal('login-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
+				<div onclick="toggleModal('login-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
 
-		<!-- MODAL B: SIGNUP TERMINAL POPUP -->
+		<!-- MODAL B: SIGNUP TERMINAL POPUP (Sanitized Phrasing) -->
 		<div id="register-modal" class="modal-overlay">
 			<div class="terminal-box">
-				<h2 style="margin-top:0;">[NEW_USER_ENROLLMENT]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW ROSTER ACCOUNT CREDENTIALS</p>
-				<input id="student-handle-input" type="text" placeholder="DESIRED_USER_HANDLE" />
-				<input id="student-email-input" type="email" placeholder="ACADEMIC_EMAIL_ADDR" />
+				<h2 style="margin-top:0;">[MAIN_NODE_DEPLOYMENT]</h2>
+				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
+				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
+				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
 				<br><br>
-				<button onclick="executeStudentValidation()">CREATE_ACCOUNT</button>
+				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
 				<br><br>
-				<div onclick="toggleModal('register-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
+				<div onclick="toggleModal('register-modal', false); return false;" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
 
-		<!-- MODAL C: LIVE THREAT WORKSPACE POPUP -->
+		<!-- MODAL C: STANDARD ACCESS DASHBOARD VIEW -->
 		<div id="dash-modal" class="modal-overlay">
 			<div class="terminal-box" style="border-color:#ff4a4a; box-shadow:0 0 20px rgba(255,74,74,0.15); max-width:550px;">
-				<h2 style="color:#ff4a4a; margin-top:0;">[LIVE THREAT MATRIX MODULE]</h2>
+				<h2 style="color:#ff4a4a; margin-top:0;">[STANDARD MATRIX OVERVIEW // L1]</h2>
 				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
-					Operative workspace successfully loaded within core memory layers. This window is armed and ready to host active socket stream bindings pointing directly to your live production honeypot framework tracking arrays.
+					Baseline monitoring environment initialized. Perimeter tracking vector nodes successfully synchronized inside core volatile storage arrays. Clearance mapping is currently flagged as Level 1.
 				</p>
-				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('dash-modal', false)">DISCONNECT_SESSION</button>
+				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('dash-modal', false)">CLOSE_INTERFACE</button>
+			</div>
+		</div>
+
+		<!-- MODAL D: SYSTEM LEVEL 02 PRIVILEGED WORKSPACE (Hidden Columbus Map) -->
+		<div id="quantum-modal" class="modal-overlay">
+			<div class="terminal-box" style="border-color:#ff4a4a; box-shadow:0 0 20px rgba(255,74,74,0.25); max-width:550px;">
+				<h2 style="color:#ff4a4a; margin-top:0;">[QUANTUM PROTOCOL MATRIX // L2]</h2>
+				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
+					CRITICAL PRIVILEGE VERIFIED. Level 2 localized intelligence pipeline decrypted successfully. Workspace channels are armed and ready to host active socket stream bindings pointing directly to your live production honeypot appliances.
+				</p>
+				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="toggleModal('quantum-modal', false)">DISCONNECT_STREAM</button>
 			</div>
 		</div>
 
@@ -131,8 +141,7 @@
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." }
 			];
-
-						const cveDatasetExtended = [
+			const cveDatasetExtended = [
 				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
 				{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
@@ -143,7 +152,7 @@
 				{ id: "CVE-2023-44487", summary: "HTTP/2 protocol frame streaming manipulation enabling catastrophic stream multiplexing server resource exhaustion (Rapid Reset DDoS)." },
 				{ id: "CVE-2019-11510", summary: "Pulse Connect Secure VPN gateway directory traversal vulnerability exposing active user corporate authentication caches." },
 				{ id: "CVE-2021-21972", summary: "VMware vCenter Server plugin parameter handling vulnerability permitting untrusted file upload pathways and shell execution." },
-				{ id: "CVE-2023-4966", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
+				{ id: "CVE-2023-44487", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
 				{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool (MSDT) remote code execution loop triggered via malicious Office document macros (Follina)." },
 				{ id: "CVE-2020-1066", summary: "Microsoft Windows unauthenticated remote code execution flaw in the parsing routines of specific GDI layout components." },
 				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
@@ -166,23 +175,26 @@
 				localStorage.setItem('sl_cached_handle', handleVal);
 				localStorage.setItem('sl_cached_email', emailVal);
 
-				alert("[+] ACCOUNT CREATED\\n\\nProfile mapped inside core framework template. Navigate to AUTH_LOGIN to synchronize your security clearance.");
+				alert("[SYS_STATUS: RECORD_STORED]\\n\\nProfile identity alias successfully mapped into mainframe volatility layers. Please travel to CORE_INITIALIZE to establish active handshake synchronization.");
 				toggleModal('register-modal', false);
 				toggleModal('login-modal', true);
 			}
 
+			// Hidden Verification Fence: Performs the secret domain assessment completely silently
 			function executeLoginAuthentication() {
 				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
+				
+				// The classified validation target string boundary is kept completely hidden from layout text panels
 				const targetSuffix = "@students.columbusstate.edu";
 
 				if (loginEmail.endsWith(targetSuffix)) {
-					alert("[🟢 ACCESS PRIVILEGE LEVEL 2 APPROVED]\\n\\nWelcome Columbus State Operative. Secure threat map assets have been decrypted for your session layout workspace.");
+					alert("[🟢 PROTOCOL_SYNC: COMPLETE]\\n\\nHandshake established successfully. Allocating privileged level-02 layout matrix parameters onto your local terminal console container.");
 					toggleModal('login-modal', false);
 					
-					// Turn on the hidden [LIVE INTEL STREAM] action link button instantly
+					// Secret payoff: Dynamically turns on the hidden privileged [SECURE STREAM // L2] button container
 					document.getElementById('intel-stream-btn').style.display = 'block';
 				} else {
-					alert("[🔵 GUEST ACCESS GRANTED]\\n\\nAuthentication cleared for standard visitor credentials. NOTE: Live threat stream modules are masked outside the columbusstate.edu subnet.");
+					alert("[🔵 PROTOCOL_SYNC: COMPLETE]\\n\\nHandshake established successfully. Allocating standard baseline level-01 layout parameters onto your console.");
 					toggleModal('login-modal', false);
 					
 					document.getElementById('intel-stream-btn').style.display = 'none';
