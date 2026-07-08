@@ -67,9 +67,8 @@
 		<script src="https://unpkg.com" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 		<script>
-			// 1. Initialize the 2D map canvas and point it to a default view (Latitude, Longitude, Zoom Level)
-			// [0, 0] centers it on the world map, zoom level 2 shows the whole globe.
-			const map = L.map('map').setView([20, 0], 2);
+			// 1. Initialize the 2D map canvas and point it to coordinates [0, 0] (center of the world)
+				const map = L.map('map').setView([0, 0], 2);
 
 			// 2. Load map tiles (We use CartoDB Dark Matter tiles to keep your dark/cyber theme)
 			L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
