@@ -13,9 +13,9 @@
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
 			.nav-btn:hover { background: #ff4a4a; color: #0a0a0f; box-shadow: 0 0 12px #ff4a4a; border-color: #ff4a4a; }
 			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
-			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(10,10,15,0.9); border: 1px solid rgba(0,240,255,0.25); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; }
+			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(10,10,15,0.9); border: 1px solid rgba(0,240,255,0.25); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; text-shadow: 0 0 5px rgba(57,255,20,0.2); }
 			
-			/* Dedicated Standalone Sub-Page View Layer Panels */
+			/* Dynamic View Panes Configuration */
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 25px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
@@ -23,22 +23,22 @@
 			.terminal-grid-box button:hover { background: #00f0ff; color: #0a0a0f; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 			
-			/* Public Intro Gateway Landing Panel View Layout */
+			/* Redesigned Public Landing Page Screen Layout */
 			#view-landing-public { display: flex; flex-direction: column; background: radial-gradient(circle at center, #0e0e14 0%, #060608 100%); }
 			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 74, 74, 0.3); margin: 0 0 10px 0; }
 		</style>
 	</head>
 	<body>
-		<!-- Isolated Private Core: 3D Map Root Container (Only mounts visible when router hits /matrix) -->
+		<!-- Private Core: 3D Map Root Container (Only displays if authenticated inside /matrix) -->
 		<div id="root" style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
-		<!-- NEW CLEAN PUBLIC GATEWAY LANDING PAGE (Loads instantly at root / path) -->
+		<!-- REDESIGNED PUBLIC LANDING SCREEN (Loads immediately at root / path) -->
 		<div id="view-landing-public" class="standalone-page-view">
 			<div class="terminal-grid-box" style="border-color: rgba(255,74,74,0.3); box-shadow: 0 0 30px rgba(255,74,74,0.1); max-width: 460px;">
 				<h1 class="landing-title">// SLAUGHTER SEC</h1>
 				<div style="font-size: 10px; color: #555; margin-bottom: 25px; letter-spacing: 1px;">GLOBAL CYBER INTELLIGENCE ARCHIVE NODE</div>
 				<p style="color: #88ffaa; font-size: 12px; line-height: 1.6; text-align: left; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 12px; border: 1px solid rgba(0,240,255,0.05); border-radius: 3px;">
-					Welcome operative. Access to localized vector telemetry records, multiplayer radar mark points, and security platform matrices requires valid credential verification.
+					Welcome operative. Access to localized vector telemetry records, multiplayer radar mark points, and live vulnerability streaming matrices requires active authentication.
 				</p>
 				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
 					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.3);">[ AUTH_LOGIN ]</div>
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 
-		<!-- STANDALONE SUBSURFACE PAGE A: LOGIN CONTROL PANEL -->
+		<!-- SEPARATE PAGE Environment A: LOGIN WORKSPACE PANEL -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -60,7 +60,7 @@
 			</div>
 		</div>
 
-		<!-- STANDALONE SUBSURFACE PAGE B: REGISTRATION CONTROL PANEL -->
+		<!-- SEPARATE PAGE Environment B: REGISTER WORKSPACE PANEL -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
@@ -74,22 +74,51 @@
 			</div>
 		</div>
 
-		<!-- THE PRIVATE DASHBOARD HUD (Only overlays on top of the 3D globe at path /matrix) -->
+		<!-- PRIVATE HUB OVERLAY WORKSPACE (Only renders on top of the 3D map AFTER logging in) -->
 		<div id="hud-master-layer">
-			<!-- Top Left Player Tracking Display Panel -->
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
-				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
+				<div id="user-status-hud">> OPERATIVE: MIKE<br>> STATUS: CLEARANCE_L2</div>
 				<div style="margin-top:12px;" class="placeholder-btn">[MATRIX_EMPTY_01]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
 			</div>
 
-			<!-- Top Right Disconnect Session Link Action Button -->
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
 				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #888; border-color: rgba(255,255,255,0.1); background: rgba(0,0,0,0.2);">[ DISCONNECT_CORE ]</div>
+			</div>
+
+			<!-- Dynamic CVE Ticker Randomizer (Safely isolated inside your private dashboard layer) -->
+			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
+				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
+					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
+					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
+						<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
+						<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
+						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;">EXECUTE_ROLL ↻</button>
+					</div>
+					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
+				</div>
 			</div>
 		</div>
 
 		<script>
+			let cycleTimer = null;
+			const cveDataset = [
+				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
+				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
+				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
+				{ id: "CVE-2022-22965", summary: "Spring Framework Core feature sets vulnerable to remote data binding injection routines via specific JVM environments." },
+				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." }
+			];
+			const cveDatasetExtended = [
+				{ id: "CVE-2019-0708", summary: "Remote code execution vulnerability inside Windows Remote Desktop Services (RDS) architecture via pre-auth states (BlueKeep)." },
+				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
+				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." },
+				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
+				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
+			];
+
+			const masterDataset = cveDataset.concat(cveDatasetExtended);
+
 			function navigateToPath(targetUrlPath) {
 				window.history.pushState({}, '', targetUrlPath);
 				routeSubDirectoriesNatively();
@@ -103,51 +132,58 @@
 				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
 			}
 
-			// 🛡️ SECURITY MAP ACCESS CONTROLLER GATE
-			function routeSubDirectoriesNatively() {
-				const path = window.location.pathname;
+			// 🛡️ RECONFIGURED SECURE PERSISTENCE ROUTER
+			function executePersistentSessionRecovery() {
 				const cachedHandle = localStorage.getItem('sl_saved_handle');
 				const cachedEmail = localStorage.getItem('sl_saved_email');
+				const currentPath = window.location.pathname;
 
-				// Hide all standalone views by default first
-				document.getElementById('view-landing-public').style.display = 'none';
-				document.getElementById('view-login').style.display = 'none';
-				document.getElementById('view-register').style.display = 'none';
-				document.getElementById('hud-master-layer').style.display = 'none';
-				document.getElementById('root').style.display = 'none';
+				const publicLanding = document.getElementById('view-landing-public');
+				const privateMapCanvas = document.getElementById('root');
+				const privateHudOverlay = document.getElementById('hud-master-layer');
+				const statusHud = document.getElementById('user-status-hud');
 
-				// Route Case A: Login Interface Pane Open
-				if (path === "/login" || path === "/login/") {
-					document.getElementById('view-login').style.display = 'flex';
-				} 
-				// Route Case B: Registration Interface Pane Open
-				else if (path === "/register" || path === "/register/") {
-					document.getElementById('view-register').style.display = 'flex';
-				} 
-				// Route Case C: Private Dashboard Path—Only accessible with active user tokens
-				else if (path === "/matrix" || path === "/matrix/") {
+				// Condition: Operative Token successfully found in memory
+				if (currentPath === "/matrix" || currentPath === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						document.getElementById('root').style.display = 'block';
-						document.getElementById('hud-master-layer').style.display = 'block';
+						// Wipe out public intro screen layouts completely
+						if (publicLanding) publicLanding.style.display = 'none';
 
-						const statusHud = document.getElementById('user-status-hud');
+						// Render 3D Globe and its private top overlay modules cleanly
+						if (privateMapCanvas) {
+							privateMapCanvas.style.display = 'block';
+							// Dispatch standard browser window resize event to force ThreeJS to re-render the canvas sizing
+							window.dispatchEvent(new Event('resize'));
+						}
+						if (privateHudOverlay) privateHudOverlay.style.display = 'block';
+
+						// Update the display readout node parameters with their cached username handle string
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
 							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
 							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
 						}
+
+						loadRandomCve();
+						startAutoCycle();
 					} else {
 						// Security Bypass Prevention: If unauthenticated visitor hits /matrix, yank them back home immediately
 						navigateToPath('/');
 					}
 				} 
-				// Route Case D: Baseline Root Path / (Public Landing Page)
+				// Condition: No token exists (Wipe map view out, completely lock them onto the new intro page)
 				else {
-					if (cachedHandle && cachedEmail) {
-						// Auto-Forwarding Optimization: If an operative is already signed in, auto-boot them into their map dashboard
-						navigateToPath('/matrix');
-					} else {
-						document.getElementById('view-landing-public').style.display = 'flex';
+					if (privateHudOverlay) privateHudOverlay.style.display = 'none';
+					if (privateMapCanvas) privateMapCanvas.style.display = 'none';
+					clearInterval(cycleTimer);
+
+					if (currentPath === "/" || currentPath === "") {
+						if (cachedHandle && cachedEmail) {
+							// Auto-Forwarding Optimization: If already logged in, auto-boot them into their dashboard
+							navigateToPath('/matrix');
+						} else {
+							if (publicLanding) publicLanding.style.display = 'flex';
+						}
 					}
 				}
 			}
@@ -157,9 +193,7 @@
 				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
 				const ticker = document.getElementById('register-ticker');
 				if (!emailVal) { if (ticker) { ticker.textContent = "[-] ERROR: INVALID_PAYLOAD"; ticker.style.color = "#ff4a4a"; } return; }
-				
 				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
-
 				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
 				setTimeout(() => { navigateToPath('/login'); }, 1200);
 			}
@@ -179,7 +213,6 @@
 					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
 				}
 				setTimeout(() => {
-					// Successful authentication shifts them securely onto the private sub-directory page asset track!
 					navigateToPath('/matrix');
 				}, 1000);
 			}
@@ -187,12 +220,46 @@
 			function executeProfileLogout() {
 				localStorage.removeItem('sl_saved_handle');
 				localStorage.removeItem('sl_saved_email');
+				executePersistentSessionRecovery();
 				navigateToPath('/');
 			}
+
+			function routeSubDirectoriesNatively() {
+				const path = window.location.pathname;
+				document.getElementById('view-login').style.display = 'none';
+				document.getElementById('view-register').style.display = 'none';
+				
+				// Re-verify visibility states
+				executePersistentSessionRecovery();
+
+				if (path === "/login" || path === "/login/") {
+					document.getElementById('view-landing-public').style.display = 'none';
+					document.getElementById('view-login').style.display = 'flex';
+				} else if (path === "/register" || path === "/register/") {
+					document.getElementById('view-landing-public').style.display = 'none';
+					document.getElementById('view-register').style.display = 'flex';
+				}
+			}
+
+			function loadRandomCve() {
+				const idEl = document.getElementById('cve-id');
+				const summaryEl = document.getElementById('cve-summary');
+				if (!idEl || !document.getElementById('hud-master-layer') || document.getElementById('hud-master-layer').style.display === 'none') return;
+				idEl.textContent = "ROLLING...";
+				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
+				setTimeout(() => {
+					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`;
+					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
+				}, 200);
+			}
+
+			function startAutoCycle() { clearInterval(cycleTimer); cycleTimer = setInterval(loadRandomCve, 15000); }
+			function manualRoll() { loadRandomCve(); startAutoCycle(); }
 
 			window.addEventListener('popstate', routeSubDirectoriesNatively);
 			window.addEventListener('load', () => {
 				routeSubDirectoriesNatively();
+				executePersistentSessionRecovery();
 			});
 		</script>
 	</body>
