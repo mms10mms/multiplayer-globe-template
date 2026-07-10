@@ -11,15 +11,12 @@
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
 			
-			/* Universal Premium Cyber Buttons */
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 7px 14px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
 			.nav-btn:hover { background: #ff4a4a; color: #0a0a0f; box-shadow: 0 0 12px #ff4a4a; border-color: #ff4a4a; }
 			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			
-			/* Tactical Private Dashboard Layout components */
 			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(10,10,15,0.9); border: 1px solid rgba(0,240,255,0.25); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; text-shadow: 0 0 5px rgba(57,255,20,0.2); }
 			
-			/* View Panes & Multi-Page Configurations */
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 25px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
@@ -27,7 +24,6 @@
 			.terminal-grid-box button:hover { background: #00f0ff; color: #0a0a0f; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 			
-			/* Brand New Full-Screen Public Landing Console */
 			#view-landing-public { display: flex; flex-direction: row; background: radial-gradient(circle at center, #0c0c12 0%, #050507 100%); justify-content: flex-start; align-items: stretch; padding: 0; }
 			.sidebar-panel { width: 320px; background: rgba(10, 10, 15, 0.95); border-right: 1px solid rgba(0, 240, 255, 0.15); padding: 35px 25px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; height: 100%; z-index: 5; box-shadow: 5px 0 25px rgba(0,0,0,0.5); }
 			.display-panel { flex-grow: 1; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; box-sizing: border-box; background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.01), rgba(0, 0, 0, 0), rgba(0, 240, 255, 0.01)); background-size: 100% 4px, 6px 100%; }
@@ -36,12 +32,11 @@
 		</style>
 	</head>
 	<body>
-		<!-- Volatile Private Workspace: 3D Globe App (Hidden on startup by default) -->
+		<!-- Volatile Private Workspace Container -->
 		<div id="root" style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 		<!-- RE-ENGINEERED PREMIUM FULL-SCREEN PUBLIC LANDING TERMINAL WORKSPACE -->
 		<div id="view-landing-public" class="standalone-page-view">
-			<!-- Control Sidebar -->
 			<div class="sidebar-panel">
 				<div>
 					<div style="font-size: 10px; color: #555; letter-spacing: 2px; margin-bottom: 5px;">SYS_NODE_V3</div>
@@ -53,21 +48,18 @@
 					<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
 				</div>
 				
-				<!-- Stacked Action Input Entrance Buttons -->
 				<div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
 					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); padding: 11px 0;">[ AUTH_LOGIN ]</div>
 					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); padding: 11px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
 
-			<!-- Visual Telemetry Terminal Body Pane -->
 			<div class="display-panel">
 				<div>
 					<h1 class="landing-title">// SLAUGHTER SEC SYSTEM MAIN_CORE</h1>
 					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
 				</div>
 
-				<!-- Live Automated Terminal Description Log Container -->
 				<div class="telemetry-log">
 					<span style="color: #ff4a4a; font-weight: bold;">[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY</span><br>
 					----------------───────────────────────────────────────────────<br>
@@ -81,7 +73,7 @@
 			</div>
 		</div>
 
-		<!-- STANDALONE SUBSURFACE PAGE A: LOGIN CONTROL PANEL -->
+		<!-- STANDALONE SUBSURFACE PAGE A: LOGIN CONTROL PANEL (Verifies input passphrase elements) -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -94,7 +86,7 @@
 			</div>
 		</div>
 
-		<!-- STANDALONE SUBSURFACE PAGE B: REGISTRATION CONTROL PANEL -->
+		<!-- STANDALONE SUBSURFACE PAGE B: REGISTRATION CONTROL PANEL (Saves password strings securely) -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
@@ -108,16 +100,14 @@
 			</div>
 		</div>
 
-		<!-- THE PRIVATE DASHBOARD HUD (Only overlays on top of the 3D globe at path /matrix) -->
+		<!-- THE PRIVATE DASHBOARD HUD Overlay -->
 		<div id="hud-master-layer">
-			<!-- Top Left Player Tracking Display Panel -->
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
 				<div style="margin-top:12px;" class="placeholder-btn">[MATRIX_EMPTY_01]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
 			</div>
 
-			<!-- Top Right: Restored Glowing Red Tactical Logout Button Container -->
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
 				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f'; this.style.boxShadow='0 0 15px #ff4a4a';" onmouseout="this.style.background='rgba(255, 74, 74, 0.05)'; this.style.color='#ff4a4a'; this.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.15)';">[ LOG_OUT ]</div>
 			</div>
@@ -129,6 +119,13 @@
 				routeSubDirectoriesNatively();
 				resetTickers();
 			}
+
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Enter") {
+					if (document.getElementById("view-login").style.display === "flex") executeLoginAuthentication();
+					if (document.getElementById("view-register").style.display === "flex") executeStudentValidation();
+				}
+			});
 
 			function resetTickers() {
 				const loginT = document.getElementById('login-ticker');
@@ -176,28 +173,59 @@
 				}
 			}
 
+			// Active Registration storage writer mapping password inputs
 			function executeStudentValidation() {
 				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
 				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
+				const passVal = document.getElementById('student-password-input').value || "";
 				const ticker = document.getElementById('register-ticker');
-				if (!emailVal) { if (ticker) { ticker.textContent = "[-] ERROR: INVALID_PAYLOAD"; ticker.style.color = "#ff4a4a"; } return; }
+
+				if (!emailVal || !passVal) { 
+					if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } 
+					return; 
+				}
+
+				// Map both data parameters into memory indexes
 				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
+				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
+
 				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
 				setTimeout(() => { navigateToPath('/login'); }, 1200);
 			}
 
+			// Cryptographic Password Verification Engine Block
 			function executeLoginAuthentication() {
 				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
+				const loginPass = document.getElementById('login-password-input').value || "";
 				const ticker = document.getElementById('login-ticker');
-				if (!loginEmail) { if (ticker) { ticker.textContent = "[-] ERROR: ARCHIVE_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
+
+				if (!loginEmail || !loginPass) { 
+					if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } 
+					return; 
+				}
 				
+				// Pull stored validation credentials out of memory
+				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
 				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
+
+				if (!storedPass) {
+					if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; }
+					return;
+				}
+
+				// 🛡️ VETTED PASS-KEY STRING MATCHING INTERCEPTOR CHECK
+				if (loginPass !== storedPass) {
+					if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; }
+					return; // Violent interruption: Drops execution loop completely to block access mapping keys
+				}
+
+				// Credentials passed match perfectly! Lock current active session survival keys
 				localStorage.setItem('sl_saved_handle', storedHandle);
 				localStorage.setItem('sl_saved_email', loginEmail);
 
 				if (ticker) {
 					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
-					ticker.textContent = isL2 ? "[ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[ACCESS APPROVED] CLEARANCE L1 MOUNTED";
+					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
 					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
 				}
 				setTimeout(() => { navigateToPath('/matrix'); }, 1000);
