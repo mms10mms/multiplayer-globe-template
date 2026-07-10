@@ -2,34 +2,18 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Slaughter-Sec Matrix</title>
-		<!-- Favicon -->
-		<link rel="icon" href="/favicon.ico" sizes="any" />
-		<!-- Primary Meta Tags -->
-		<meta name="title" content="Slaughter-Sec Core" />
-		<meta name="description" content="Global Threat Mapping and Vulnerability Intelligence." />
-		<meta name="theme-color" content="#060608" />
-
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
-
-		<!-- Fixed HUD overlay parameters protecting layout centers -->
 		<style>
 			body { margin: 0; padding: 0; background-color: #060608 !important; overflow: hidden !important; }
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block; }
 			#hud-master-layer * { pointer-events: auto; }
-			
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
 			.nav-btn:hover { background: #ff4a4a; color: #0a0a0f; box-shadow: 0 0 12px #ff4a4a; border-color: #ff4a4a; }
-			
 			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
-			
-			/* Dedicated Standalone Sub-Page View Layer Panels */
+			#user-status-hud { color: #39ff14; font-size: 11px; font-family: 'Courier New', monospace; background: rgba(10,10,15,0.9); border: 1px solid rgba(0,240,255,0.25); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; }
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; z-index: 200000 !important; display: none; align-items: center; justify-content: center; font-family: 'Courier New', Courier, monospace; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 25px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
@@ -39,107 +23,83 @@
 		</style>
 	</head>
 	<body>
-		<!-- Main Homepage Root Container (Holding your centered 3D canvas map untouched) -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 		<!-- Hardcoded Static HUD Overlay Structure -->
 		<div id="hud-master-layer">
-			<!-- Top Left: Access Dashboard Navigation Hook -->
-			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div onclick="navigateToPath('/dashboard')" class="nav-btn" style="font-size: 12px; margin-bottom: 10px;">[ACCESS DASHBOARD]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
+			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
+				<div onclick="navigateToPath('/dashboard')" class="nav-btn" style="font-size:12px;">[ACCESS DASHBOARD]</div>
+				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
+				<div style="margin-top:12px;" class="placeholder-btn">[MATRIX_EMPTY_01]</div>
 				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
-				<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
 			</div>
 
-			<!-- Top Right: Clean stacked path routing action buttons -->
-			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', Courier, monospace; width: 180px;">
-				<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> Login</div>
-				<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.03);" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='rgba(0, 240, 255, 0.03)'; this.style.color='#00f0ff';">> Register</div>
+			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
+				<div id="btn-login-route" onclick="navigateToPath('/login')" class="nav-btn">> LOGIN</div>
+				<div id="btn-signup-route" onclick="navigateToPath('/register')" class="nav-btn">> SIGNUP</div>
+				<div id="btn-logout-action" onclick="executeProfileLogout()" class="nav-btn" style="display: none; color: #888;">> LOGOUT</div>
 				<div style="height: 15px; border-right: 1px dashed rgba(255,74,74,0.2); margin: 5px auto; width: 1px;"></div>
-				<!-- Masked Tier-2 privileged action link button -->
-				<div id="intel-stream-btn" onclick="navigateToPath('/quantum-stream')" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05); box-shadow: 0 0 10px rgba(255,74,74,0.1);">[SECURE STREAM // L2]</div>
+				<div id="intel-stream-btn" onclick="navigateToPath('/quantum-stream')" class="nav-btn" style="display: none; color: #ff4a4a;">[SECURE STREAM // L2]</div>
 			</div>
 
-			<!-- Bottom Cyan/Green Cyber Terminal Container -->
 			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
-				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
-					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
-					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
-						<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
-						<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
-						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='#00f0ff'; this.style.color='#0a0a0f';" onmouseout="this.style.background='#14141f'; this.style.color='#00f0ff';">EXECUTE_ROLL ↻</button>
+				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; position: relative;">
+					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px;">
+						<strong>[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
+						<span id="cve-id" style="color: #39ff14; font-weight: 700;">SYS_INIT</span>
+						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; padding: 4px 12px; border-radius: 3px; cursor: pointer;">EXECUTE_ROLL ↻</button>
 					</div>
-					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
+					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px;">Connecting to system arrays...</p>
 				</div>
 			</div>
 		</div>
 
-		<!-- SEPARATE FULL PAGE Environment A: CORE INITIALIZE LOGIN PAGE -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
-				<h2 style="margin-top:0;">[Login Terminal]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">Enter your credentials</p>
-				<input id="login-email-input" type="email" placeholder="email" />
-				<input type="password" placeholder="password" />
-				<br><br>
+				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
+				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
+				<input id="login-password-input" type="password" placeholder="PASS_HASH_KEY" />
 				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<div id="login-ticker" class="status-log-line" style="color: #666;">system-standby</div>
-				<br>
-				<div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN HOME</div>
+				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN HOME</div>
 			</div>
 		</div>
 
-		<!-- SEPARATE FULL PAGE Environment B: OPERATIVE SIGNUP REGISTRATION PAGE -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
-				<h2 style="margin-top:0;">[Agent Registration]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW IDENTIFIER</p>
-				<input id="student-handle-input" type="text" placeholder="AGENT ID" />
-				<input id="student-email-input" type="email" placeholder="Email" />
-				<input type="password" placeholder="Password" />
-				<br><br>
-				<button onclick="executeStudentValidation()">Signup_Conformation</button>
-				<div id="register-ticker" class="status-log-line" style="color: #666;">Slaughter-Sec Welcomes You</div>
-				<br>
-				<div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN HOME</div>
+				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
+				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
+				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
+				<input id="student-password-input" type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
+				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
+				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN HOME</div>
 			</div>
 		</div>
 
-		<!-- SEPARATE FULL PAGE Environment C: ACCESS DASHBOARD LEVEL 1 PAGE -->
 		<div id="view-dashboard" class="standalone-page-view">
-			<div class="terminal-grid-box" style="border-color:#ff4a4a; box-shadow:0 0 25px rgba(255,74,74,0.15); max-width:550px;">
-				<h2 style="color:#ff4a4a; margin-top:0;">[STANDARD MATRIX OVERVIEW // L1]</h2>
-				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
-					Baseline monitoring environment initialized. Perimeter tracking vector nodes successfully synchronized inside core volatile storage arrays. Clearance mapping is currently flagged as Level 1.
-				</p>
+			<div class="terminal-grid-box" style="border-color:#ff4a4a; max-width:550px;">
+				<h2 style="color:#ff4a4a;">[STANDARD MATRIX OVERVIEW // L1]</h2>
+				<p style="color:#88ffaa; text-align:left; font-size:12px;">Baseline monitoring environment initialized. Perimeter tracking vector nodes successfully synchronized. Clearance mapping is flagged as Level 1.</p>
 				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="navigateToPath('/')">RETURN TO MAIN CORE MAP</button>
 			</div>
 		</div>
 
-		<!-- SEPARATE FULL PAGE Environment D: LEVEL 2 PRIVILEGED HONEYPOT WORKSPACE PAGE -->
 		<div id="view-quantum" class="standalone-page-view">
-			<div class="terminal-grid-box" style="border-color:#ff4a4a; box-shadow:0 0 25px rgba(255,74,74,0.25); max-width:550px;">
-				<h2 style="color:#ff4a4a; margin-top:0;">[QUANTUM PROTOCOL MATRIX // L2]</h2>
-				<p style="color:#88ffaa; line-height:1.6; font-size:12px; margin-bottom:25px; text-align:left;">
-					CRITICAL PRIVILEGE VERIFIED. Level 2 localized intelligence pipeline decrypted successfully. Workspace channels are armed and ready to host active socket stream bindings pointing directly to your live production honeypot appliances.
-				</p>
+			<div class="terminal-grid-box" style="border-color:#ff4a4a; max-width:550px;">
+				<h2 style="color:#ff4a4a;">[QUANTUM PROTOCOL MATRIX // L2]</h2>
+				<p style="color:#88ffaa; text-align:left; font-size:12px;">CRITICAL PRIVILEGE VERIFIED. Level 2 localized intelligence pipeline decrypted successfully. Workspace channels are armed and ready to host active tracking loops.</p>
 				<button style="border-color:#ff4a4a; color:#ff4a4a;" onclick="navigateToPath('/')">DISCONNECT STREAM AND RETURN HOME</button>
 			</div>
 		</div>
 
 		<script>
 			let cycleTimer = null;
-
-			// Localized Cyber Intelligence Pool (25 entries)
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
-				{ id: "CVE-2023-38606", summary: "Apple iOS kernel verification bypass exploit allowing localized processes to execute unauthorized root privileges." },
 				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
 				{ id: "CVE-2022-22965", summary: "Spring Framework Core feature sets vulnerable to remote data binding injection routines via specific JVM environments." },
-				{ id: "CVE-2020-0601", summary: "Windows CryptoAPI spoofing vulnerability allowing attackers to bypass system security validation to trust malicious certificates." },
 				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." },
 				{ id: "CVE-2019-0708", summary: "Remote code execution vulnerability inside Windows Remote Desktop Services (RDS) architecture via pre-auth states (BlueKeep)." },
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
@@ -153,33 +113,104 @@
 				{ id: "CVE-2020-5902", summary: "F5 BIG-IP Traffic Management User Interface command execution flaw permitting complete root administrative system compromise." },
 				{ id: "CVE-2024-21626", summary: "runc container breakout vulnerability leaking file descriptors, enabling containers to escape isolation limits to the host system." },
 				{ id: "CVE-2022-0847", summary: "Linux kernel pipe buffer flag tracking failure enabling overwrite capabilities on protected read-only system files (Dirty Pipe)." },
-				{ id: "CVE-2023-44487", summary: "HTTP/2 protocol frame streaming manipulation enabling catastrophic stream multiplexing server resource exhaustion (Rapid Reset DDoS)." },
 				{ id: "CVE-2019-11510", summary: "Pulse Connect Secure VPN gateway directory traversal vulnerability exposing active user corporate authentication caches." },
 				{ id: "CVE-2021-21972", summary: "VMware vCenter Server plugin parameter handling vulnerability permitting untrusted file upload pathways and shell execution." },
 				{ id: "CVE-2023-4966", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
 				{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool (MSDT) remote code execution loop triggered via malicious Office document macros (Follina)." },
 				{ id: "CVE-2020-1066", summary: "Microsoft Windows unauthenticated remote code execution flaw in the parsing routines of specific GDI layout components." },
-				{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 			];
 
 			const masterDataset = cveDataset.concat(cveDatasetExtended);
 
-			// 🔀 THE FRONTEND APP ROUTER: Evaluates the browser URL to render separate page frames natively
+			function toggleModal(modalId, show) {
+				const target = document.getElementById(modalId);
+				if (target) target.style.display = show ? 'flex' : 'none';
+			}
+
+			function navigateToPath(targetUrlPath) {
+				window.history.pushState({}, '', targetUrlPath);
+				routeSubDirectoriesNatively();
+				resetTickers();
+			}
+
+			function resetTickers() {
+				const loginT = document.getElementById('login-ticker');
+				const registerT = document.getElementById('register-ticker');
+				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
+				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
+			}
+
+			function executePersistentSessionRecovery() {
+				const cachedHandle = localStorage.getItem('sl_saved_handle');
+				const cachedEmail = localStorage.getItem('sl_saved_email');
+				const loginBtn = document.getElementById('btn-login-route');
+				const signupBtn = document.getElementById('btn-signup-route');
+				const logoutBtn = document.getElementById('btn-logout-action');
+				const statusHud = document.getElementById('user-status-hud');
+				const streamBtn = document.getElementById('intel-stream-btn');
+
+				if (cachedHandle && cachedEmail) {
+					if (statusHud) {
+						const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
+						statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
+						statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
+						if (isL2 && streamBtn) streamBtn.style.display = 'block';
+					}
+					if (loginBtn) loginBtn.style.display = 'none';
+					if (signupBtn) signupBtn.style.display = 'none';
+					if (logoutBtn) logoutBtn.style.display = 'block';
+				} else {
+					if (statusHud) { statusHud.innerHTML = `> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1`; statusHud.style.color = "#39ff14"; }
+					if (loginBtn) loginBtn.style.display = 'block';
+					if (signupBtn) signupBtn.style.display = 'block';
+					if (logoutBtn) logoutBtn.style.display = 'none';
+					if (streamBtn) streamBtn.style.display = 'none';
+				}
+			}
+
+			function executeStudentValidation() {
+				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
+				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
+				const ticker = document.getElementById('register-ticker');
+				if (!emailVal) { if (ticker) { ticker.textContent = "[-] ERROR: INVALID_PAYLOAD"; ticker.style.color = "#ff4a4a"; } return; }
+				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
+				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
+				setTimeout(() => { navigateToPath('/login'); }, 1200);
+			}
+
+			function executeLoginAuthentication() {
+				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
+				const ticker = document.getElementById('login-ticker');
+				if (!loginEmail) { if (ticker) { ticker.textContent = "[-] ERROR: ARCHIVE_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
+				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
+				localStorage.setItem('sl_saved_handle', storedHandle);
+				localStorage.setItem('sl_saved_email', loginEmail);
+
+				if (ticker) {
+					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
+					ticker.textContent = isL2 ? "[ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[ACCESS APPROVED] CLEARANCE L1 MOUNTED";
+					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
+				}
+				setTimeout(() => { navigateToPath('/'); executePersistentSessionRecovery(); }, 1000);
+			}
+
+			function executeProfileLogout() {
+				localStorage.removeItem('sl_saved_handle');
+				localStorage.removeItem('sl_saved_email');
+				executePersistentSessionRecovery();
+				navigateToPath('/');
+			}
+
 			function routeSubDirectoriesNatively() {
 				const path = window.location.pathname;
-
-				// Hide all pages by default first
 				document.getElementById('view-login').style.display = 'none';
 				document.getElementById('view-register').style.display = 'none';
 				document.getElementById('view-dashboard').style.display = 'none';
 				document.getElementById('view-quantum').style.display = 'none';
-				
-				// Make home globe layers visible
 				document.getElementById('root').style.display = 'block';
 				document.getElementById('hud-master-layer').style.display = 'block';
 
-				// Page Route Checks
 				if (path === "/login" || path === "/login/") {
 					document.getElementById('root').style.display = 'none';
 					document.getElementById('hud-master-layer').style.display = 'none';
@@ -199,92 +230,22 @@
 				}
 			}
 
-			// Natively changes the URL pathname and fires the page swapper instantly
-			function navigateToPath(targetUrlPath) {
-				window.history.pushState({}, '', targetUrlPath);
-				routeSubDirectoriesNatively();
-				resetTickers();
-			}
-
-			function resetTickers() {
-				const loginT = document.getElementById('login-ticker');
-				const registerT = document.getElementById('register-ticker');
-				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
-				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
-			}
-
-			function executeStudentValidation() {
-				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
-				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
-				const ticker = document.getElementById('register-ticker');
-
-				if (!emailVal) {
-					if (ticker) { ticker.textContent = "[-] ERROR: ARCHIVE_NOT_FOUND"; ticker.style.color = "#ff4a4a"; }
-					return;
-				}
-
-				localStorage.setItem('sl_cached_handle', handleVal);
-				localStorage.setItem('sl_cached_email', emailVal);
-
-				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. ROUTING TO VALIDATION..."; ticker.style.color = "#39ff14"; }
-
-				setTimeout(() => { navigateToPath('/login'); }, 1200);
-			}
-
-			function executeLoginAuthentication() {
-				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
-				const ticker = document.getElementById('login-ticker');
-				const targetSuffix = "@students.columbusstate.edu";
-
-				if (!loginEmail) {
-					if (ticker) { ticker.textContent = "[-] ERROR: ARCHIVE_NOT_FOUND"; ticker.style.color = "#ff4a4a"; }
-					return;
-				}
-
-				if (loginEmail.endsWith(targetSuffix)) {
-					if (ticker) { ticker.textContent = "[🟢 ACCESS APPROVED] CLEARANCE L2 GRANTED"; ticker.style.color = "#39ff14"; }
-					setTimeout(() => {
-						navigateToPath('/'); // Redirect straight back to homepage map!
-						document.getElementById('intel-stream-btn').style.display = 'block'; // Reveal secret L2 button
-					}, 1000);
-				} else {
-					if (ticker) { ticker.textContent = "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED"; ticker.style.color = "#00f0ff"; }
-					setTimeout(() => {
-						navigateToPath('/'); // Redirect straight back to homepage map!
-						document.getElementById('intel-stream-btn').style.display = 'none';
-					}, 1000);
-				}
-			}
-
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id');
 				const summaryEl = document.getElementById('cve-summary');
 				if (idEl) idEl.textContent = "ROLLING...";
-				
 				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
 				setTimeout(() => {
-					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none; border-bottom: 1px dotted #39ff14;">${randomCve.id}</a>`;
+					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`;
 					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
 				}, 200);
 			}
 
-			function startAutoCycle() {
-				clearInterval(cycleTimer);
-				cycleTimer = setInterval(loadRandomCve, 15000);
-			}
+			function startAutoCycle() { clearInterval(cycleTimer); cycleTimer = setInterval(loadRandomCve, 15000); }
+			function manualRoll() { loadRandomCve(); startAutoCycle(); }
 
-			function manualRoll() {
-				loadRandomCve();
-				startAutoCycle();
-			}
-
-			// Pop the router configuration live on load checks and back button clicks
 			window.addEventListener('popstate', routeSubDirectoriesNatively);
-			window.addEventListener('load', () => {
-				routeSubDirectoriesNatively();
-				loadRandomCve();
-				startAutoCycle();
-			});
+			window.addEventListener('load', () => { routeSubDirectoriesNatively(); executePersistentSessionRecovery(); loadRandomCve(); startAutoCycle(); });
 		</script>
 	</body>
 </html>
