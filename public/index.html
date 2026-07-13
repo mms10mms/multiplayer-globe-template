@@ -7,23 +7,18 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			html, body { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
-			
-			/* Enforces absolute full-screen canvas tracking for the ThreeJS globe root */
-			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; z-index: 1 !important; }
-			#root canvas { width: 100% !important; height: 100% !important; display: block; }
-			
+			body { margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
+			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; }
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
 			
-			/* Polished Terminal Navigation Action Buttons */
+			/* Universal Premium Cyber Buttons */
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
 			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); border-color: #ff4a4a; }
 			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			
 			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
 			
-			/* Form Containers */
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; transition: all 0.2s ease; }
@@ -32,16 +27,21 @@
 			.terminal-grid-box button:hover { background: #00f0ff; color: #040406; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 			
-			/* Polished Content Centering Layouts */
+			/* Polished Full-Screen Content Centering Engine */
+			#view-landing-public { display: flex; flex-direction: column; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%); padding: 40px; box-sizing: border-box; justify-content: flex-start; align-items: center; position: relative; }
+			#view-landing-public::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01)); z-index: 2; background-size: 100% 4px, 6px 100%; pointer-events: none; }
+			
 			.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 950px; z-index: 5; position: relative; margin-bottom: 20px; }
 			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255, 74, 74, 0.35); margin: 0 0 6px 0; text-transform: uppercase; }
 			
-			/* Central Telemetry Command Terminal */
+			/* Centered Interactive Telemetry Container Box */
 			.telemetry-log { background: #050508; border: 1px solid rgba(255, 74, 74, 0.2); padding: 30px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; width: 100%; max-width: 950px; min-height: 480px; box-sizing: border-box; overflow: hidden; border-left: 4px solid #ff4a4a; box-shadow: inset 0 0 20px rgba(0,0,0,0.9); font-family: 'Courier New', monospace; position: relative; z-index: 5; display: flex; flex-direction: column; justify-content: flex-start; }
 			
-			/* Typing Simulation Parameters */
+			/* Micro Typing Cursor Effect Indicator */
 			#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: #88ffaa; margin-left: 2px; }
 			#typing-field.done::after { content: ""; display: none; }
+			
+			/* Fade-In Animation Rules for the Bat Crest Layout */
 			#art-container { opacity: 0; transition: opacity 1.5s ease-in-out; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 25px; }
 			
 			@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -49,23 +49,30 @@
 	</head>
 	<body>
 		<script type="module" src="/dist/index.js"></script>
-		<!-- REPAIRED PUBLIC HOME GATEWAY (Completely separated from background map elements) -->
-		<div id="view-home-public" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%); padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000;">
+		<!-- RE-CENTERED WIDESCREEN COMMAND LOG CONSOLE GATEWAY -->
+		<div id="view-landing-public" class="standalone-page-view">
+			<!-- Centered Top Header Wrapper -->
 			<div class="header-container">
 				<div>
 					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
 					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
 				</div>
+				
+				<!-- Top Right Stacked Access triggers -->
 				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
 					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ AUTH_LOGIN ]</div>
 					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
-			
+
+			<!-- Core System Telemetry Workspace Box (Targeted for Typing Engine script injections) -->
 			<div class="telemetry-log">
 				<div id="typing-field"></div>
+				
+				<!-- The Bat Crest starts completely invisible and fades in once text typing finishes -->
 				<div id="art-container">
 					<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 10px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4); margin: 0;">
+                // SLTR - SEC //
                ,-.                               
        ___,---.__          /'|`\          __,---,___          
     ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
@@ -85,15 +92,13 @@
 
            |   |     /'\_\_\ | /_/_/`\     |   |                
             \   \__, \_     `~'     _/ .__/   /            
-             `-._,-'   `-._______,-'   `-._,-'
-
-                // SLTR - SEC //</pre>
+             `-._,-'   `-._______,-'   `-._,-'</pre>
 				</div>
 			</div>
-			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px; position: relative; z-index: 5;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
-		</div>
 
-		<!-- Standalone Forms Framework -->
+			<!-- Centered Footer Parameter Row -->
+			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
+		</div>
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -118,31 +123,31 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
-		
-		<div id="root">Loading application layers...</div>
-
-		<!-- Private HUD Workspace Layout (Upgraded with Functional Links) -->
-		<div id="hud-master-layer" style="display: none;">
+		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
+				
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
 					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
-					<div onclick="alert('Telemetry Node Panel running.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
-					<div onclick="alert('Labs environment standing by.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ LABS ]</div>
+					<div onclick="alert('Telemetry Node Analytics Panel initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
+					<div onclick="alert('Advanced Sandbox Labs Environment staged on standing port.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ LABS ]</div>
 					<div onclick="manualRoll()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.25); background: rgba(255,74,74,0.02); margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
 				</div>
 			</div>
+
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
 				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f'; this.style.boxShadow='0 0 15px #ff4a4a';" onmouseout="this.style.background='rgba(255, 74, 74, 0.05)'; this.style.color='#ff4a4a'; this.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.15)';">[ LOG_OUT ]</div>
 			</div>
+
 			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
-				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);">
-					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;">
-						<strong style="letter-spacing: 1px; color: #00f0ff;">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
-						<span id="cve-id" style="color: #39ff14; font-weight: 700;">SYS_INIT</span>
-						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; padding: 4px 12px; border-radius: 3px;">EXECUTE_ROLL ↻</button>
+				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
+					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
+					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
+						<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
+						<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
+						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;">EXECUTE_ROLL ↻</button>
 					</div>
-					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px;">Connecting to system arrays...</p>
+					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
 				</div>
 			</div>
 		</div>
@@ -150,34 +155,51 @@
 			let cycleTimer = null;
 			let isTypingActive = false;
 			
+			// Raw String Logs Sequence parsed by the text compositor engine
 			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
 
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
-				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
+				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." }
+			];
+			const cveDatasetExtended = [
 				{ id: "CVE-2022-22965", summary: "Spring Framework Core feature sets vulnerable to remote data binding injection routines via specific JVM environments." },
 				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." }
 			];
 
-			// Slow typewriter console iterator engine (~35ms per key character)
+			const masterDataset = cveDataset.concat(cveDatasetExtended);
+
+			// Asynchronous character iterator engine simulating a live console terminal
 			function triggerTerminalTypingSimulation() {
 				if (isTypingActive) return;
 				isTypingActive = true;
+
 				const targetField = document.getElementById("typing-field");
 				const artContainer = document.getElementById("art-container");
+				
 				if (!targetField) return;
+				
 				targetField.innerHTML = "";
 				targetField.className = "";
 				if (artContainer) artContainer.style.opacity = "0";
+
 				let index = 0;
+				
 				function typeNextCharacter() {
 					if (index < terminalLogText.length) {
 						const char = terminalLogText.charAt(index);
-						if (char === "\n") { targetField.innerHTML += "<br>"; } else { targetField.innerHTML += char; }
+						// Parse raw newline breaks cleanly into structural HTML tags
+						if (char === "\n") {
+							targetField.innerHTML += "<br>";
+						} else {
+							targetField.innerHTML += char;
+						}
 						index++;
-						setTimeout(typeNextCharacter, 35);
+						// ~15ms character rate matches standardized Linux boot logs timing
+						setTimeout(typeNextCharacter, 15);
 					} else {
+						// Text complete: Remove cursor element and trigger smooth art fade-in transition
 						targetField.className = "done";
 						if (artContainer) artContainer.style.opacity = "1";
 					}
@@ -209,10 +231,8 @@
 				const path = window.location.pathname;
 				const cachedHandle = localStorage.getItem('sl_saved_handle');
 				const cachedEmail = localStorage.getItem('sl_saved_email');
-				
-				const publicHomePanel = document.getElementById('view-home-public');
-				if (publicHomePanel) publicHomePanel.style.display = 'none';
-				
+
+				document.getElementById('view-landing-public').style.display = 'none';
 				document.getElementById('view-login').style.display = 'none';
 				document.getElementById('view-register').style.display = 'none';
 				document.getElementById('hud-master-layer').style.display = 'none';
@@ -231,19 +251,25 @@
 						if (mapTarget) mapTarget.style.display = 'block';
 						window.dispatchEvent(new Event('resize'));
 						document.getElementById('hud-master-layer').style.display = 'block';
+
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
 							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
 							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
 						}
+
 						loadRandomCve();
-						cycleTimer = setInterval(loadRandomCve, 15000);
-					} else { navigateToPath('/'); }
+						startAutoCycle();
+					} else {
+						navigateToPath('/');
+					}
 				} else {
-					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } else {
-						if (publicHomePanel) publicHomePanel.style.display = 'flex';
-						triggerTerminalTypingSimulation();
+					if (cachedHandle && cachedEmail) {
+						navigateToPath('/matrix');
+					} else {
+						document.getElementById('view-landing-public').style.display = 'flex';
+						triggerTerminalTypingSimulation(); // Ignite the typing matrix when home loads
 					}
 				}
 			}
@@ -253,9 +279,11 @@
 				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
 				const passVal = document.getElementById('student-password-input').value || "";
 				const ticker = document.getElementById('register-ticker');
+
 				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
 				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
 				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
+
 				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
 				setTimeout(() => { navigateToPath('/login'); }, 1200);
 			}
@@ -264,13 +292,17 @@
 				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
 				const loginPass = document.getElementById('login-password-input').value || "";
 				const ticker = document.getElementById('login-ticker');
+
 				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
 				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
 				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
+
 				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
 				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
+
 				localStorage.setItem('sl_saved_handle', storedHandle);
 				localStorage.setItem('sl_saved_email', loginEmail);
+
 				if (ticker) {
 					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
 					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
@@ -279,15 +311,32 @@
 				setTimeout(() => { navigateToPath('/matrix'); }, 1000);
 			}
 
-			function executeProfileLogout() { localStorage.removeItem('sl_saved_handle'); localStorage.removeItem('sl_saved_email'); isTypingActive = false; routeSubDirectoriesNatively(); }
-			function loadRandomCve() {
-				const idEl = document.getElementById('cve-id'); const summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
-				idEl.textContent = "ROLLING..."; const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
-				setTimeout(() => { idEl.textContent = randomCve.id; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
+			function executeProfileLogout() {
+				localStorage.removeItem('sl_saved_handle');
+				localStorage.removeItem('sl_saved_email');
+				isTypingActive = false; // Reset toggle state parameters
+				routeSubDirectoriesNatively();
 			}
-			function manualRoll() { loadRandomCve(); }
+
+			function loadRandomCve() {
+				const idEl = document.getElementById('cve-id');
+				const summaryEl = document.getElementById('cve-summary');
+				if (!idEl || !document.getElementById('hud-master-layer') || document.getElementById('hud-master-layer').style.display === 'none') return;
+				idEl.textContent = "ROLLING...";
+				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
+				setTimeout(() => {
+					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`;
+					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
+				}, 200);
+			}
+
+			function startAutoCycle() { clearInterval(cycleTimer); cycleTimer = setInterval(loadRandomCve, 15000); }
+			function manualRoll() { loadRandomCve(); startAutoCycle(); }
+
 			window.addEventListener('popstate', routeSubDirectoriesNatively);
-			window.addEventListener('load', routeSubDirectoriesNatively);
+			window.addEventListener('load', () => {
+				routeSubDirectoriesNatively();
+			});
 		</script>
 	</body>
 </html>
