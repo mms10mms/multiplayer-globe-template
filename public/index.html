@@ -49,58 +49,74 @@
 	</head>
 	<body>
 		<script type="module" src="/dist/index.js"></script>
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Slaughter-Sec Matrix</title>
-		<link rel="stylesheet" href="/normalize.css" />
-		<link rel="stylesheet" href="/dist/index.css" />
-		<style>
-			body { margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
-			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; }
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
-			#hud-master-layer * { pointer-events: auto; }
-			
-			/* Universal Premium Cyber Buttons */
-			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
-			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); border-color: #ff4a4a; }
-			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
-			
-			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
-			
-			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
-			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; transition: all 0.2s ease; }
-			.terminal-grid-box input:focus { border-color: #39ff14; box-shadow: 0 0 10px rgba(57, 255, 20, 0.15); background: #11111a; }
-			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; transition: all 0.2s ease; font-size: 12px; letter-spacing: 0.5px; }
-			.terminal-grid-box button:hover { background: #00f0ff; color: #040406; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
-			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
-			
-			/* Polished Full-Screen Content Centering Engine */
-			#view-landing-public { display: flex; flex-direction: column; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%); padding: 40px; box-sizing: border-box; justify-content: flex-start; align-items: center; position: relative; }
-			#view-landing-public::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01)); z-index: 2; background-size: 100% 4px, 6px 100%; pointer-events: none; }
-			
-			.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 950px; z-index: 5; position: relative; margin-bottom: 20px; }
-			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255, 74, 74, 0.35); margin: 0 0 6px 0; text-transform: uppercase; }
-			
-			/* Centered Interactive Telemetry Container Box */
-			.telemetry-log { background: #050508; border: 1px solid rgba(255, 74, 74, 0.2); padding: 30px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; width: 100%; max-width: 950px; min-height: 480px; box-sizing: border-box; overflow: hidden; border-left: 4px solid #ff4a4a; box-shadow: inset 0 0 20px rgba(0,0,0,0.9); font-family: 'Courier New', monospace; position: relative; z-index: 5; display: flex; flex-direction: column; justify-content: flex-start; }
-			
-			/* Micro Typing Cursor Effect Indicator */
-			#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: #88ffaa; margin-left: 2px; }
-			#typing-field.done::after { content: ""; display: none; }
-			
-			/* Fade-In Animation Rules for the Bat Crest Layout */
-			#art-container { opacity: 0; transition: opacity 1.5s ease-in-out; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 25px; }
-			
-			@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-		</style>
-	</head>
-	<body>
-		<script type="module" src="/dist/index.js"></script>
-		<div id="view-login" class="standalone-page-view">
+		<!-- RE-CENTERED WIDESCREEN COMMAND LOG CONSOLE GATEWAY -->
+		<div id="view-landing-public" class="standalone-page-view">
+			<!-- Centered Top Header Wrapper -->
+			<div class="header-container">
+				<div>
+					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
+					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
+				</div>
+				
+				<!-- Top Right Stacked Access triggers -->
+				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
+					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ AUTH_LOGIN ]</div>
+					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
+				</div>
+			</div>
+
+			<!-- Core System Telemetry Workspace Box -->
+			<div class="telemetry-log">
+				<div id="typing-field"></div>
+				
+				<!-- The Bat Crest (Label moved perfectly beneath the canvas vectors) -->
+				<div id="art-container">
+					<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 10px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4); margin: 0;">
+               ,-.                               
+       ___,---.__          /'|`\          __,---,___          
+    ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
+  ,'        |           ~'\     /`~           |        `.      
+ /      ___//              `. ,'          ,  , \___      \    
+
+|    ,-'   `-.__   _         |        ,    __,-'   `-.    |    
+|   /          /\_  `   .    |    ,      _/\          \   |   
+\  |           \ \`-.___ \   |   / ___,-'/ /           |  /  
+ \  \           | `._   `\\  |  //'   _,' |           /  /      
+  `-.\         /'  _ `---'' , . ``---' _  `\         /,-'     
+     ``       /     \    ,='/ \`=.    /     \       ''          
+
+             |__   /|\_,--.,-.--,--._/|\   __|                  
+             /  `./  \\`\ |  |  | /,//' \,'  \                  
+            /   /     ||--+--|--+-/-|     \   \                 
+
+           |   |     /'\_\_\ | /_/_/`\     |   |                
+            \   \__, \_     `~'     _/ .__/   /            
+             `-._,-'   `-._______,-'   `-._,-'
+
+                // SLTR - SEC //</pre>
+				</div>
+			</div>
+
+			<!-- Centered Footer Parameter Row -->
+			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
+		</div>
+		<!-- RE-CENTERED WIDESCREEN COMMAND LOG CONSOLE GATEWAY -->
+		<div id="view-landing-public" class="standalone-page-view">
+			<!-- Centered Top Header Wrapper -->
+			<div class="header-container">
+				<div>
+					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
+					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
+				</div>
+				
+				<!-- Top Right Stacked Access triggers -->
+				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
+					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ AUTH_LOGIN ]</div>
+					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
+				</div>
+			</div>
+
+					<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
 				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
@@ -122,34 +138,6 @@
 				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
 				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
-			</div>
-		</div>
-		<div id="hud-master-layer">
-			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
-				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
-				
-				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
-					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
-					<div onclick="alert('Telemetry Node Analytics Panel initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
-					<div onclick="alert('Advanced Sandbox Labs Environment staged on standing port.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ LABS ]</div>
-					<div onclick="manualRoll()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.25); background: rgba(255,74,74,0.02); margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
-				</div>
-			</div>
-
-			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
-				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f'; this.style.boxShadow='0 0 15px #ff4a4a';" onmouseout="this.style.background='rgba(255, 74, 74, 0.05)'; this.style.color='#ff4a4a'; this.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.15)';">[ LOG_OUT ]</div>
-			</div>
-
-			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
-				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
-					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
-					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2;">
-						<strong style="letter-spacing: 1px; color: #00f0ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
-						<span id="cve-id" style="color: #39ff14; font-weight: 700; background: rgba(57, 255, 20, 0.08); border: 1px solid rgba(57, 255, 20, 0.2); padding: 2px 10px; border-radius: 3px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">SYS_INIT</span>
-						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 240, 255, 0.1); transition: all 0.2s ease;">EXECUTE_ROLL ↻</button>
-					</div>
-					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; line-height: 1.6; min-height: 36px; max-height: 60px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0, 240, 255, 0.1); position: relative; z-index: 2; font-weight: 500;">Connecting to system arrays...</p>
-				</div>
 			</div>
 		</div>
 		<div id="hud-master-layer">
