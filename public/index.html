@@ -108,3 +108,134 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
 			</div>
 		</div>
+		<script>
+			let cycleTimer = null;
+			const cveDataset = [
+				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
+				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
+				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." }
+			];
+
+			function navigateToPath(targetUrlPath) {
+				window.history.pushState({}, '', targetUrlPath);
+				routeSubDirectoriesNatively();
+				resetTickers();
+			}
+
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Enter") {
+					if (document.getElementById("view-login").style.display === "flex") executeLoginAuthentication();
+					if (document.getElementById("view-register").style.display === "flex") executeStudentValidation();
+				}
+			});
+
+			function resetTickers() {
+				const loginT = document.getElementById('login-ticker');
+				const registerT = document.getElementById('register-ticker');
+				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
+				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
+			}
+
+			function routeSubDirectoriesNatively() {
+				const path = window.location.pathname;
+				const cachedHandle = localStorage.getItem('sl_saved_handle');
+				const cachedEmail = localStorage.getItem('sl_saved_email');
+
+				document.getElementById('view-login').style.display = 'none';
+				document.getElementById('view-register').style.display = 'none';
+				
+				const loginBtn = document.getElementById('btn-login-route');
+				const signupBtn = document.getElementById('btn-signup-route');
+				const logoutBtn = document.getElementById('btn-logout-action');
+				const statusHud = document.getElementById('user-status-hud');
+
+				clearInterval(cycleTimer);
+
+				// Re-synchronize menu options visibility flags based on token states
+				if (cachedHandle && cachedEmail) {
+					if (loginBtn) loginBtn.style.display = 'none';
+					if (signupBtn) signupBtn.style.display = 'none';
+					if (logoutBtn) logoutBtn.style.display = 'block';
+					if (statusHud) {
+						const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
+						statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
+						statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
+					}
+					loadRandomCve();
+					cycleTimer = setInterval(loadRandomCve, 15000);
+				} else {
+					if (loginBtn) loginBtn.style.display = 'block';
+					if (signupBtn) signupBtn.style.display = 'block';
+					if (logoutBtn) logoutBtn.style.display = 'none';
+					if (statusHud) { statusHud.innerHTML = `> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1`; statusHud.style.color = "#39ff14"; }
+				}
+
+				if (path === "/login" || path === "/login/") {
+					document.getElementById('view-login').style.display = 'flex';
+				} else if (path === "/register" || path === "/register/") {
+					document.getElementById('view-register').style.display = 'flex';
+				}
+			}
+
+			function executeStudentValidation() {
+				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
+				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
+				const passVal = document.getElementById('student-password-input').value || "";
+				const ticker = document.getElementById('register-ticker');
+
+				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
+				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
+				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
+
+				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
+				setTimeout(() => { navigateToPath('/login'); }, 1200);
+			}
+
+			function executeLoginAuthentication() {
+				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
+				const loginPass = document.getElementById('login-password-input').value || "";
+				const ticker = document.getElementById('login-ticker');
+
+				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
+				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
+				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
+
+				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
+				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
+
+				localStorage.setItem('sl_saved_handle', storedHandle);
+				localStorage.setItem('sl_saved_email', loginEmail);
+
+				if (ticker) {
+					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
+					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
+					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
+				}
+				setTimeout(() => { navigateToPath('/'); }, 1000);
+			}
+
+			function executeProfileLogout() {
+				localStorage.removeItem('sl_saved_handle');
+				localStorage.removeItem('sl_saved_email');
+				routeSubDirectoriesNatively();
+			}
+
+			function loadRandomCve() {
+				const idEl = document.getElementById('cve-id');
+				const summaryEl = document.getElementById('cve-summary');
+				if (!idEl || !summaryEl) return;
+				idEl.textContent = "ROLLING...";
+				const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
+				setTimeout(() => {
+					idEl.textContent = randomCve.id;
+					summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary;
+				}, 200);
+			}
+
+			function manualRoll() { loadRandomCve(); }
+
+			window.addEventListener('popstate', routeSubDirectoriesNatively);
+			window.addEventListener('load', routeSubDirectoriesNatively);
+		</script>
+	</body>
+</html>
