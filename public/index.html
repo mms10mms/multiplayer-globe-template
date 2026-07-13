@@ -7,42 +7,24 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			/* Critical Core Dimensions: Keeps the 3D Globe fully alive in the background */
-			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			
-			/* Base Layer Canvas parameters for the ThreeJS globe root */
-			#root { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; z-index: 1 !important; }
-			#root canvas { width: 100% !important; height: 100% !important; display: block !important; }
-			
-			/* Overlay HUD elements sitting securely over the map background */
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
+			html, body { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
+			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: block; z-index: 1; }
+			#root canvas { width: 100% !important; height: 100% !important; display: block; }
+			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block; }
 			#hud-master-layer * { pointer-events: auto; }
-			
-			/* Polished Terminal Navigation Action Buttons */
-			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255,74,74,0.02); border: 1px solid rgba(255,74,74,0.3); padding: 8px 14px; border-radius: 4px; transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; }
-			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px #ff4a4a; }
-			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7,7,10,0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; }
-			
-			/* Modular Pop-Up Panel Configurations */
+			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
+			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 12px #ff4a4a; }
+			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 5px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
+			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; }
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(0,240,255,0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; text-align: center; }
-			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; outline: none; box-sizing: border-box; }
-			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
-			
-			/* Full-Screen Home Page Curtain Mask Layer */
-			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000 !important; }
-			.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 950px; z-index: 5; position: relative; margin-bottom: 20px; }
-			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255,74,74,0.35); margin: 0; text-transform: uppercase; }
-			.telemetry-log { background: #050508; border: 1px solid rgba(255,74,74,0.2); padding: 30px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; width: 100%; max-width: 950px; min-height: 480px; box-sizing: border-box; border-left: 4px solid #ff4a4a; z-index: 5; display: flex; flex-direction: column; }
-			
-			#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: #88ffaa; }
-			#typing-field.done::after { content: ""; display: none; }
-			#art-container { opacity: 0; transition: opacity 1.5s ease-in-out; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 20px; }
-			@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; text-align: center; color: #00f0ff; }
+			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
+			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 11px 26px; cursor: pointer; border-radius: 3px; }
+			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 		</style>
 	</head>
 	<body>
-		<!-- Base Root App Mounting Vector -->
+		<!-- Base Root Mounting Vector Container -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 <!doctype html>
@@ -54,133 +36,75 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			/* Critical Core Dimensions: Keeps the 3D Globe fully alive in the background */
-			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			
-			/* Base Layer Canvas parameters for the ThreeJS globe root */
-			#root { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; z-index: 1 !important; }
-			#root canvas { width: 100% !important; height: 100% !important; display: block !important; }
-			
-			/* Overlay HUD elements sitting securely over the map background */
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
+			html, body { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
+			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: block; z-index: 1; }
+			#root canvas { width: 100% !important; height: 100% !important; display: block; }
+			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block; }
 			#hud-master-layer * { pointer-events: auto; }
-			
-			/* Polished Terminal Navigation Action Buttons */
-			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255,74,74,0.02); border: 1px solid rgba(255,74,74,0.3); padding: 8px 14px; border-radius: 4px; transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; }
-			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px #ff4a4a; }
-			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7,7,10,0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; }
-			
-			/* Modular Pop-Up Panel Configurations */
+			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 5px 12px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
+			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 12px #ff4a4a; }
+			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 5px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
+			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; }
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(0,240,255,0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; text-align: center; }
-			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; outline: none; box-sizing: border-box; }
-			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
-			
-			/* Full-Screen Home Page Curtain Mask Layer */
-			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000 !important; }
-			.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 950px; z-index: 5; position: relative; margin-bottom: 20px; }
-			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255,74,74,0.35); margin: 0; text-transform: uppercase; }
-			.telemetry-log { background: #050508; border: 1px solid rgba(255,74,74,0.2); padding: 30px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; width: 100%; max-width: 950px; min-height: 480px; box-sizing: border-box; border-left: 4px solid #ff4a4a; z-index: 5; display: flex; flex-direction: column; }
-			
-			#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: #88ffaa; }
-			#typing-field.done::after { content: ""; display: none; }
-			#art-container { opacity: 0; transition: opacity 1.5s ease-in-out; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 20px; }
-			@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; text-align: center; color: #00f0ff; }
+			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
+			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 11px 26px; cursor: pointer; border-radius: 3px; }
+			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 		</style>
 	</head>
 	<body>
-		<!-- Base Root App Mounting Vector -->
+		<!-- Base Root Mounting Vector Container -->
 		<div id="root">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
-		<!-- Full-Screen Public Cover Curtain Overlay Mask Layer -->
-		<div id="view-home-public" style="display: flex;">
-			<div class="header-container">
-				<div>
-					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
-					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
-				</div>
-				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
-					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.35);">[ AUTH_LOGIN ]</div>
-					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.35);">[ OPERATIVE_REG ]</div>
+		<!-- Standard HUD Overlay Interface Layers -->
+		<div id="hud-master-layer">
+			<!-- Top Left Player Tracking Display Panel -->
+			<div id="left-sidebar-hud" style="position: absolute; top: 20px; left: 20px; width: 190px;">
+				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
+				<div style="margin-top:12px;" class="placeholder-btn">[MATRIX_EMPTY_01]</div>
+				<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
+			</div>
+
+			<!-- Top Right Authorization Entry Action Panel Modules -->
+			<div id="right-sidebar-hud" style="position: absolute; top: 20px; right: 20px; width: 180px;">
+				<div id="btn-login-route" onclick="navigateToPath('/login')" class="nav-btn">> LOGIN</div>
+				<div id="btn-signup-route" onclick="navigateToPath('/register')" class="nav-btn">> SIGNUP</div>
+				<div id="btn-logout-action" onclick="executeProfileLogout()" class="nav-btn" style="display: none; color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05);">[ LOG_OUT ]</div>
+			</div>
+
+			<!-- Bottom Core CVE Ticker Container Widget -->
+			<div id="bottom-widget-hud" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
+				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; border: 1px solid #00f0ff; border-radius: 4px;">
+					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;">
+						<strong style="letter-spacing: 1px; color: #00f0ff;">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
+						<span id="cve-id" style="color: #39ff14; font-weight: 700;">SYS_INIT</span>
+						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-size: 11px; padding: 4px 12px; border-radius: 3px;">EXECUTE_ROLL ↻</button>
+					</div>
+					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px;">Connecting to system arrays...</p>
 				</div>
 			</div>
-			<div class="telemetry-log">
-				<div id="typing-field"></div>
-				<div id="art-container">
-					<pre style="color: #ff4a4a; font-family: monospace; font-size: 10px; line-height: 1.05; font-weight: 900; white-space: pre; text-align: left; user-select: none; margin: 0;">
-               ,-.                               
-       ___,---.__          /'|`\          __,---,___          
-    ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
-  ,'        |           ~'\     /`~           |        `.      
- /      ___//              `. ,'          ,  , \___      \    
-
-|    ,-'   `-.__   _         |        ,    __,-'   `-.    |    
-|   /          /\_  `   .    |    ,      _/\          \   |   
-\  |           \ \`-.___ \   |   / ___,-'/ /           |  /  
- \  \           | `._   `\\  |  //'   _,' |           /  /      
-  `-.\         /'  _ `---'' , . ``---' _  `\         /,-'     
-     ``       /     \    ,='/ \`=.    /     \       ''          
-
-             |__   /|\_,--.,-.--,--._/|\   __|                  
-             /  `./  \\`\ |  |  | /,//' \,'  \                  
-            /   /     ||--+--|--+-/-|     \   \                 
-
-           |   |     /'\_\_\ | /_/_/`\     |   |                
-            \   \__, \_     `~'     _/ .__/   /            
-             `-._,-'   `-._______,-'   `-._,-'
-
-                // SLTR - SEC //</pre>
-				</div>
-			</div>
-			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
 
-		<!-- Standalone Subpage Routing Modules -->
+		<!-- Standalone Sub-Directory Views -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
-				<h2 style="color:#00f0ff;">[CORE_INITIALIZE_HANDSHAKE]</h2>
+				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
 				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input id="login-password-input" type="password" placeholder="PASS_HASH_KEY" />
 				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<div id="login-ticker" style="margin-top:15px; font-size:11px; font-weight:bold; color:#666;">READY_FOR_HANDSHAKE</div>
-				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
 			</div>
 		</div>
 
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
-				<h2 style="color:#00f0ff;">[MAIN_NODE_DEPLOYMENT]</h2>
+				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
 				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
 				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input id="student-password-input" type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
 				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
-				<div id="register-ticker" style="margin-top:15px; font-size:11px; font-weight:bold; color:#666;">AWAITING_PARAMETER_INTRUSION</div>
-				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
-			</div>
-		</div>
-
-		<!-- Private HUD Interface HUD Layer Array Modules -->
-		<div id="hud-master-layer">
-			<div style="position: absolute; top: 20px; left: 20px; width: 190px;">
-				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
-				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
-					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25);">[ LIVE MAP ]</div>
-					<div onclick="alert('Dashboard connection standing by.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ DASHBOARD ]</div>
-					<div onclick="alert('Sandbox labs runtime environment ready.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ LABS ]</div>
-					<div onclick="manualRoll()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.25);">[ THREAT INTEL ]</div>
-				</div>
-			</div>
-			<div style="position: absolute; top: 20px; right: 20px; width: 180px;">
-				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.4); background: rgba(255,74,74,0.05);">[ LOG_OUT ]</div>
-			</div>
-			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
-				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10,10,15,0.95); color: #39ff14; text-align: center; border: 1px solid #00f0ff; border-radius: 4px;">
-					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px;">
-						<strong style="letter-spacing: 1px; color: #00f0ff;">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> 
-						<span id="cve-id" style="color: #39ff14; font-weight: 700;">SYS_INIT</span>
-						<button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; padding: 4px 12px; border-radius: 3px;">EXECUTE_ROLL ↻</button>
-					</div>
-					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px;">Connecting to system arrays...</p>
-				</div>
+				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- CANCEL AND RETURN</div>
 			</div>
 		</div>
