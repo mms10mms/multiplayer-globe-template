@@ -7,12 +7,10 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			/* Keeps the 3D Globe layer fully scaled and alive at all times */
-			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			
-			/* Base Layer: Enforces full viewport dimensions on the ThreeJS map canvas */
-			#root { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; z-index: 1 !important; }
+			/* Enforces absolute full-screen canvas parameters for the ThreeJS globe root */
+			html, body, #root { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
 			#root canvas { width: 100% !important; height: 100% !important; display: block !important; }
+			
 			/* Top HUD Menu Layer Box sitting securely over the base map canvas layout */
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
@@ -25,7 +23,8 @@
 			.terminal-grid-box { border: 1px solid rgba(0,240,255,0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; text-align: center; }
 			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; outline: none; box-sizing: border-box; }
 			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
-			/* Widescreen Public Cover Curtain (Sits over map layer until an operative signs in) */
+			
+			/* Full-Screen Public Cover Curtain (Sits over map layer until an operative signs in) */
 			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000 !important; }
 			#view-home-public::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01)); z-index: 2; background-size: 100% 4px, 6px 100%; pointer-events: none; }
 			
@@ -43,7 +42,7 @@
 		<!-- Base Layer Container holding your active working 3D globe elements -->
 		<div id="root">Loading global mapping components...</div>
 		<script type="module" src="/dist/index.js"></script>
-		<!-- Full-Screen Public Gate Cover Curtain Layer Overlay (Dissolves completely on login) -->
+		<!-- Full-Screen Public Curtain Overlay Mask Layer -->
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
 				<div>
@@ -86,7 +85,7 @@
 			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
 
-		<!-- Standalone Sign-In View Interface Panel -->
+		<!-- Standalone Views Framework -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2 style="color:#00f0ff;">[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -98,7 +97,6 @@
 			</div>
 		</div>
 
-		<!-- Standalone Sign-Up View Interface Panel -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2 style="color:#00f0ff;">[MAIN_NODE_DEPLOYMENT]</h2>
@@ -110,14 +108,15 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
-		<!-- Private HUD Interface HUD Layer Array Modules -->
+
+		<!-- Private HUD Display Overlay Menu Framework -->
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
 					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25);">[ LIVE MAP ]</div>
-					<div onclick="alert('Dashboard data layer connection standby.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ DASHBOARD ]</div>
-					<div onclick="alert('Sandbox labs initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ LABS ]</div>
+					<div onclick="alert('Dashboard connection standby.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ DASHBOARD ]</div>
+					<div onclick="alert('Labs sandbox initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ LABS ]</div>
 					<div onclick="manualRoll()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.25);">[ THREAT INTEL ]</div>
 				</div>
 			</div>
@@ -135,24 +134,81 @@
 				</div>
 			</div>
 		</div>
+		<!-- Full-Screen Public Curtain Overlay Mask Layer -->
+		<div id="view-home-public" style="display: flex;">
+			<div class="header-container">
+				<div>
+					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
+					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
+				</div>
+				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
+					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.35);">[ AUTH_LOGIN ]</div>
+					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.35);">[ OPERATIVE_REG ]</div>
+				</div>
+			</div>
+			<div class="telemetry-log">
+				<div id="typing-field"></div>
+				<div id="art-container">
+					<pre style="color: #ff4a4a; font-family: monospace; font-size: 10px; line-height: 1.05; font-weight: 900; white-space: pre; text-align: left; user-select: none; margin: 0;">
+               ,-.                               
+       ___,---.__          /'|`\          __,---,___          
+    ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
+  ,'        |           ~'\     /`~           |        `.      
+ /      ___//              `. ,'          ,  , \___      \    
 
-		<script>
-			let cycleTimer = null;
-			let isTypingActive = false;
-			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
-			const cveDataset = [
-				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
-				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
-				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." }
-			];
-		<!-- Private HUD Interface HUD Layer Array Modules -->
+|    ,-'   `-.__   _         |        ,    __,-'   `-.    |    
+|   /          /\_  `   .    |    ,      _/\          \   |   
+\  |           \ \`-.___ \   |   / ___,-'/ /           |  /  
+ \  \           | `._   `\\  |  //'   _,' |           /  /      
+  `-.\         /'  _ `---'' , . ``---' _  `\         /,-'     
+     ``       /     \    ,='/ \`=.    /     \       ''          
+
+             |__   /|\_,--.,-.--,--._/|\   __|                  
+             /  `./  \\`\ |  |  | /,//' \,'  \                  
+            /   /     ||--+--|--+-/-|     \   \                 
+
+           |   |     /'\_\_\ | /_/_/`\     |   |                
+            \   \__, \_     `~'     _/ .__/   /            
+             `-._,-'   `-._______,-'   `-._,-'
+
+                // SLTR - SEC //</pre>
+				</div>
+			</div>
+			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
+		</div>
+
+		<!-- Standalone Views Framework -->
+		<div id="view-login" class="standalone-page-view">
+			<div class="terminal-grid-box">
+				<h2 style="color:#00f0ff;">[CORE_INITIALIZE_HANDSHAKE]</h2>
+				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
+				<input id="login-password-input" type="password" placeholder="PASS_HASH_KEY" />
+				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
+				<div id="login-ticker" style="margin-top:15px; font-size:11px; font-weight:bold; color:#666;">READY_FOR_HANDSHAKE</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+			</div>
+		</div>
+
+		<div id="view-register" class="standalone-page-view">
+			<div class="terminal-grid-box">
+				<h2 style="color:#00f0ff;">[MAIN_NODE_DEPLOYMENT]</h2>
+				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
+				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
+				<input id="student-password-input" type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
+				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
+				<div id="register-ticker" style="margin-top:15px; font-size:11px; font-weight:bold; color:#666;">AWAITING_PARAMETER_INTRUSION</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+			</div>
+		</div>
+
+		<!-- Private HUD Display Overlay Menu Framework -->
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
 					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25);">[ LIVE MAP ]</div>
-					<div onclick="alert('Dashboard data layer connection standby.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ DASHBOARD ]</div>
-					<div onclick="alert('Sandbox labs initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ LABS ]</div>
+					<div onclick="alert('Dashboard connection standby.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ DASHBOARD ]</div>
+					<div onclick="alert('Labs sandbox initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25);">[ LABS ]</div>
 					<div onclick="manualRoll()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.25);">[ THREAT INTEL ]</div>
 				</div>
 			</div>
@@ -170,137 +226,3 @@
 				</div>
 			</div>
 		</div>
-
-		<script>
-			let cycleTimer = null;
-			let isTypingActive = false;
-			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
-			const cveDataset = [
-				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
-				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
-				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." }
-			];
-			function triggerTerminalTypingSimulation() {
-				if (isTypingActive) return;
-				isTypingActive = true;
-				const targetField = document.getElementById("typing-field");
-				const artContainer = document.getElementById("art-container");
-				if (!targetField) return;
-				targetField.innerHTML = "";
-				targetField.className = "";
-				if (artContainer) artContainer.style.opacity = "0";
-				let index = 0;
-				function typeNextCharacter() {
-					if (index < terminalLogText.length) {
-						const char = terminalLogText.charAt(index);
-						if (char === "\n") { targetField.innerHTML += "<br>"; } else { targetField.innerHTML += char; }
-						index++;
-						setTimeout(typeNextCharacter, 35);
-					} else {
-						targetField.className = "done";
-						if (artContainer) artContainer.style.opacity = "1";
-					}
-				}
-				typeNextCharacter();
-			}
-
-			function navigateToPath(targetUrlPath) {
-				window.history.pushState({}, '', targetUrlPath);
-				routeSubDirectoriesNatively();
-				resetTickers();
-			}
-
-			document.addEventListener("keydown", (e) => {
-				if (e.key === "Enter") {
-					if (document.getElementById("view-login").style.display === "flex") executeLoginAuthentication();
-					if (document.getElementById("view-register").style.display === "flex") executeStudentValidation();
-				}
-			});
-
-			function resetTickers() {
-				const loginT = document.getElementById('login-ticker');
-				const registerT = document.getElementById('register-ticker');
-				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
-				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
-			}
-
-			function routeSubDirectoriesNatively() {
-				const path = window.location.pathname;
-				const cachedHandle = localStorage.getItem('sl_saved_handle');
-				const cachedEmail = localStorage.getItem('sl_saved_email');
-				const publicHomeOverlay = document.getElementById('view-home-public');
-
-				if (publicHomeOverlay) publicHomeOverlay.style.display = 'none';
-				document.getElementById('view-login').style.display = 'none';
-				document.getElementById('view-register').style.display = 'none';
-				document.getElementById('hud-master-layer').style.display = 'none';
-				clearInterval(cycleTimer);
-
-				if (path === "/login" || path === "/login/") {
-					document.getElementById('view-login').style.display = 'flex';
-				} else if (path === "/register" || path === "/register/") {
-					document.getElementById('view-register').style.display = 'flex';
-				} else if (path === "/matrix" || path === "/matrix/") {
-					if (cachedHandle && cachedEmail) {
-						window.dispatchEvent(new Event('resize'));
-						document.getElementById('hud-master-layer').style.display = 'block';
-						const statusHud = document.getElementById('user-status-hud');
-						if (statusHud) {
-							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
-							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
-							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
-						}
-						loadRandomCve();
-						cycleTimer = setInterval(loadRandomCve, 15000);
-					} else { navigateToPath('/'); }
-				} else {
-					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } else {
-						if (publicHomeOverlay) publicHomeOverlay.style.display = 'flex';
-						triggerTerminalTypingSimulation();
-					}
-				}
-			}
-
-			function executeStudentValidation() {
-				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
-				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
-				const passVal = document.getElementById('student-password-input').value || "";
-				const ticker = document.getElementById('register-ticker');
-				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
-				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
-				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
-				setTimeout(() => { navigateToPath('/login'); }, 1200);
-			}
-
-			function executeLoginAuthentication() {
-				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
-				const loginPass = document.getElementById('login-password-input').value || "";
-				const ticker = document.getElementById('login-ticker');
-				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
-				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
-				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
-				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_saved_handle', storedHandle);
-				localStorage.setItem('sl_saved_email', loginEmail);
-				if (ticker) {
-					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
-					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
-					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
-				}
-				setTimeout(() => { navigateToPath('/matrix'); }, 1000);
-			}
-
-			function executeProfileLogout() { localStorage.removeItem('sl_saved_handle'); localStorage.removeItem('sl_saved_email'); isTypingActive = false; routeSubDirectoriesNatively(); }
-			function loadRandomCve() {
-				const idEl = document.getElementById('cve-id'); const summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
-				idEl.textContent = "ROLLING..."; const randomCve = cveDataset[Math.floor(Math.random() * cveDataset.length)];
-				setTimeout(() => { idEl.textContent = randomCve.id; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
-			}
-			function manualRoll() { loadRandomCve(); }
-			window.addEventListener('popstate', routeSubDirectoriesNatively);
-			window.addEventListener('load', routeSubDirectoriesNatively);
-		</script>
-	</body>
-</html>
