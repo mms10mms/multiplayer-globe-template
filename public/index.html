@@ -7,9 +7,14 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			body { margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
-			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; }
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
+			/* Critical Canvas Maps Override: Forces your 3D multiplayer globe to scale perfectly post-login */
+			html, body { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
+			
+			/* Enforces absolute full-screen canvas parameters for the ThreeJS globe root */
+			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; z-index: 1 !important; }
+			#root canvas { width: 100% !important; height: 100% !important; display: block; }
+			
+			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block; }
 			#hud-master-layer * { pointer-events: auto; }
 			
 			/* Universal Premium Cyber Buttons */
@@ -19,6 +24,7 @@
 			
 			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
 			
+			/* Form Grid Component Frameworks */
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; transition: all 0.2s ease; }
@@ -48,6 +54,8 @@
 		</style>
 	</head>
 	<body>
+		<!-- Volatile Private Workspace Container -->
+		<div id="root" style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
 		<!-- RE-CENTERED WIDESCREEN COMMAND LOG CONSOLE GATEWAY -->
 		<div id="view-landing-public" class="standalone-page-view">
@@ -100,6 +108,8 @@
 			<!-- Centered Footer Parameter Row -->
 			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
+
+		<!-- STANDALONE SUBSURFACE PAGE A: LOGIN CONTROL PANEL -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -112,6 +122,7 @@
 			</div>
 		</div>
 
+		<!-- STANDALONE SUBSURFACE PAGE B: REGISTRATION CONTROL PANEL -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
@@ -124,10 +135,13 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
+
+		<!-- THE PRIVATE DASHBOARD HUD Overlay (Upgraded with Functional Sidebar Controls) -->
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
 				
+				<!-- Functional Sidebar Matrix Array Buttons -->
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
 					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
 					<div onclick="alert('Telemetry Node Analytics Panel initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
@@ -136,10 +150,12 @@
 				</div>
 			</div>
 
+			<!-- Top Right Disconnect Token Key Trigger -->
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
 				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f'; this.style.boxShadow='0 0 15px #ff4a4a';" onmouseout="this.style.background='rgba(255, 74, 74, 0.05)'; this.style.color='#ff4a4a'; this.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.15)';">[ LOG_OUT ]</div>
 			</div>
 
+			<!-- Dynamic Private Ticker Row Frame -->
 			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
 				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
 					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
@@ -308,34 +324,3 @@
 					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
 				}
 				setTimeout(() => { navigateToPath('/matrix'); }, 1000);
-			}
-
-			function executeProfileLogout() {
-				localStorage.removeItem('sl_saved_handle');
-				localStorage.removeItem('sl_saved_email');
-				isTypingActive = false;
-				routeSubDirectoriesNatively();
-			}
-
-			function loadRandomCve() {
-				const idEl = document.getElementById('cve-id');
-				const summaryEl = document.getElementById('cve-summary');
-				if (!idEl || !document.getElementById('hud-master-layer') || document.getElementById('hud-master-layer').style.display === 'none') return;
-				idEl.textContent = "ROLLING...";
-				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-				setTimeout(() => {
-					if (idEl) idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`;
-					if (summaryEl) summaryEl.textContent = `> DESCRIPTION: ${randomCve.summary}`;
-				}, 200);
-			}
-
-			function startAutoCycle() { clearInterval(cycleTimer); cycleTimer = setInterval(loadRandomCve, 15000); }
-			function manualRoll() { loadRandomCve(); startAutoCycle(); }
-
-			window.addEventListener('popstate', routeSubDirectoriesNatively);
-			window.addEventListener('load', () => {
-				routeSubDirectoriesNatively();
-			});
-		</script>
-	</body>
-</html>
