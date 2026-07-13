@@ -7,75 +7,59 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			body { margin: 0; padding: 0; background-color: #060608 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: block; }
+			body { margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', Courier, monospace; color: #00f0ff; }
+			#root { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; }
+			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
 			
-			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.03); border: 1px solid rgba(255, 74, 74, 0.25); padding: 7px 14px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.05); transition: all 0.2s ease; display: block; text-align: center; margin-bottom: 8px; cursor: pointer; width: 100%; box-sizing: border-box; }
-			.nav-btn:hover { background: #ff4a4a; color: #0a0a0f; box-shadow: 0 0 12px #ff4a4a; border-color: #ff4a4a; }
-			.placeholder-btn { color: #555; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.01); border: 1px dashed rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
+			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
+			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); border-color: #ff4a4a; }
+			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			
-			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(10,10,15,0.9); border: 1px solid rgba(0,240,255,0.25); padding: 8px 14px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; text-shadow: 0 0 5px rgba(57,255,20,0.2); }
+			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
 			
-			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid #00f0ff; background: #0a0a0f; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 25px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; }
-			.terminal-grid-box input { background: #14141f; border: 1px solid rgba(0,240,255,0.3); color: #39ff14; padding: 11px; width: 100%; margin-bottom: 16px; border-radius: 3px; font-family: monospace; outline: none; box-sizing: border-box; }
-			.terminal-grid-box button { background: rgba(0,240,255,0.1); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 11px 26px; cursor: pointer; border-radius: 3px; }
-			.terminal-grid-box button:hover { background: #00f0ff; color: #0a0a0f; }
+			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
+			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
+			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0,240,255,0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; transition: all 0.2s ease; }
+			.terminal-grid-box input:focus { border-color: #39ff14; box-shadow: 0 0 10px rgba(57, 255, 20, 0.15); background: #11111a; }
+			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; transition: all 0.2s ease; font-size: 12px; letter-spacing: 0.5px; }
+			.terminal-grid-box button:hover { background: #00f0ff; color: #040406; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 			
-			#view-landing-public { display: flex; flex-direction: row; background: radial-gradient(circle at center, #0c0c12 0%, #050507 100%); justify-content: flex-start; align-items: stretch; padding: 0; }
-			.sidebar-panel { width: 320px; background: rgba(10, 10, 15, 0.95); border-right: 1px solid rgba(0, 240, 255, 0.15); padding: 35px 25px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; height: 100%; z-index: 5; box-shadow: 5px 0 25px rgba(0,0,0,0.5); }
-			.display-panel { flex-grow: 1; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; box-sizing: border-box; background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.01), rgba(0, 0, 0, 0), rgba(0, 240, 255, 0.01)); background-size: 100% 4px, 6px 100%; }
-			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 3px; text-shadow: 0 0 12px rgba(255, 74, 74, 0.4); margin: 0 0 5px 0; }
-			.telemetry-log { background: rgba(2, 2, 4, 0.7); border: 1px solid rgba(255, 74, 74, 0.15); padding: 20px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; flex-grow: 1; margin: 30px 0; overflow: hidden; border-left: 4px solid #ff4a4a; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
+			#view-landing-public { display: flex; flex-direction: column; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%); padding: 40px; box-sizing: border-box; justify-content: space-between; position: relative; }
+			#view-landing-public::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01)); z-index: 2; background-size: 100% 4px, 6px 100%; pointer-events: none; }
+			
+			.header-container { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; z-index: 5; position: relative; }
+			.landing-title { color: #ff4a4a; font-size: 2.4rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255, 74, 74, 0.35); margin: 0 0 6px 0; text-transform: uppercase; }
+			.telemetry-log { background: #050508; border: 1px solid rgba(255, 74, 74, 0.2); padding: 25px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; flex-grow: 1; margin: 35px 0; overflow: hidden; border-left: 4px solid #ff4a4a; box-shadow: inset 0 0 20px rgba(0,0,0,0.9); font-family: 'Courier New', monospace; position: relative; z-index: 5; }
 		</style>
 	</head>
 	<body>
-		<!-- Volatile Private Workspace Container -->
-		<div id="root" style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;">Loading application layers...</div>
 		<script type="module" src="/dist/index.js"></script>
-		<!-- RE-ENGINEERED PREMIUM FULL-SCREEN PUBLIC LANDING TERMINAL WORKSPACE -->
-					<!-- RE-ENGINEERED PREMIUM FULL-SCREEN PUBLIC LANDING TERMINAL WORKSPACE -->
+		<!-- NEW SIDEBARLESS WIDESCREEN COMMAND LOG CONSOLE GATEWAY -->
 		<div id="view-landing-public" class="standalone-page-view">
-			<!-- Control Sidebar -->
-			<div class="sidebar-panel">
+			<div class="header-container">
 				<div>
-					<div style="font-size: 10px; color: #555; letter-spacing: 2px; margin-bottom: 5px;">SYS_NODE_V3</div>
-					<h2 style="color: #00f0ff; font-size: 1.4rem; font-weight: bold; margin: 0 0 25px 0; letter-spacing: 1px;">SL-SEC // GATE</h2>
-					
-					<div class="placeholder-btn">[MATRIX_EMPTY_01]</div>
-					<div class="placeholder-btn">[MATRIX_EMPTY_02]</div>
-					<div class="placeholder-btn">[MATRIX_EMPTY_03]</div>
-					<div class="placeholder-btn">[MATRIX_EMPTY_04]</div>
+					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
+					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
 				</div>
 				
-				<!-- Stacked Action Input Entrance Buttons -->
-				<div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
-					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); padding: 11px 0;">[ AUTH_LOGIN ]</div>
-					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); padding: 11px 0;">[ OPERATIVE_REG ]</div>
+				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
+					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ AUTH_LOGIN ]</div>
+					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
 
-			<!-- Visual Telemetry Terminal Body Pane -->
-			<div class="display-panel">
-				<div>
-					<h1 class="landing-title">// SLAUGHTER SEC SYSTEM MAIN_CORE</h1>
-					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
-				</div>
-
-				<!-- Live Automated Terminal Description Log Container -->
-				<div class="telemetry-log" style="display: flex; flex-direction: column; min-height: 520px; justify-content: flex-start; overflow-y: auto;">
-					<span style="color: #ff4a4a; font-weight: bold;">[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY</span><br>
-					----------------───────────────────────────────────────────────<br>
-					> STATUS: INITIALIZING MEMORY FENCE OVERLAY...<br>
-					> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]<br>
-					> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]<br>
-					> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.<br>
-					
-					<!-- Escaped Double-Stitched ASCII Crest Layer Stack -->
-					<div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px; padding-bottom: 10px;">
-						<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 10px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4); margin: 0;">
+			<div class="telemetry-log">
+				<span style="color: #ff4a4a; font-weight: bold;">[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY</span><br>
+				----------------───────────────────────────────────────────────<br>
+				> STATUS: INITIALIZING MEMORY FENCE OVERLAY...<br>
+				> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]<br>
+				> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]<br>
+				> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.<br>
+				
+				<div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px; padding-bottom: 10px;">
+					<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 10px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4); margin: 0;">
                 // SLTR - SEC //
                ,-.                               
        ___,---.__          /'|`\          __,---,___          
@@ -96,16 +80,12 @@
 
            |   |     /'\_\_\ | /_/_/`\     |   |                
             \   \__, \_     `~'     _/ .__/   /            
-             `-._,-'   `-._______,-'   `-._,-'
-                        </pre>
-					</div>
+             `-._,-'   `-._______,-'   `-._,-'</pre>
 				</div>
-
-				<div style="font-size: 10px; color: #333; letter-spacing: 2px;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 			</div>
-		</div>
 
-		<!-- STANDALONE SUBSURFACE PAGE A: LOGIN CONTROL PANEL -->
+			<div style="font-size: 10px; color: #222; letter-spacing: 2px; z-index: 5; position: relative;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
+		</div>
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -118,7 +98,6 @@
 			</div>
 		</div>
 
-		<!-- STANDALONE SUBSURFACE PAGE B: REGISTRATION CONTROL PANEL -->
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
@@ -131,8 +110,6 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
-
-		<!-- THE PRIVATE DASHBOARD HUD Overlay -->
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
@@ -149,7 +126,6 @@
 				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#0a0a0f'; this.style.boxShadow='0 0 15px #ff4a4a';" onmouseout="this.style.background='rgba(255, 74, 74, 0.05)'; this.style.color='#ff4a4a'; this.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.15)';">[ LOG_OUT ]</div>
 			</div>
 
-			<!-- Dynamic Private Ticker Row Frame -->
 			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
 				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(57, 255, 20, 0.03); backdrop-filter: blur(4px); position: relative;">
 					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.03), rgba(57, 255, 20, 0.01), rgba(0, 240, 255, 0.03)); background-size: 100% 4px, 6px 100%; pointer-events: none; opacity: 0.4;"></div>
@@ -162,7 +138,6 @@
 				</div>
 			</div>
 		</div>
-
 		<script>
 			let cycleTimer = null;
 			const cveDataset = [
@@ -211,7 +186,10 @@
 				document.getElementById('view-login').style.display = 'none';
 				document.getElementById('view-register').style.display = 'none';
 				document.getElementById('hud-master-layer').style.display = 'none';
-				document.getElementById('root').style.display = 'none';
+				
+				const mapTarget = document.getElementById('root');
+				if (mapTarget) mapTarget.style.display = 'none';
+				
 				clearInterval(cycleTimer);
 
 				if (path === "/login" || path === "/login/") {
@@ -220,7 +198,7 @@
 					document.getElementById('view-register').style.display = 'flex';
 				} else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						document.getElementById('root').style.display = 'block';
+						if (mapTarget) mapTarget.style.display = 'block';
 						window.dispatchEvent(new Event('resize'));
 						document.getElementById('hud-master-layer').style.display = 'block';
 
@@ -251,11 +229,7 @@
 				const passVal = document.getElementById('student-password-input').value || "";
 				const ticker = document.getElementById('register-ticker');
 
-				if (!emailVal || !passVal) { 
-					if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } 
-					return; 
-				}
-
+				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
 				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
 				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
 
@@ -268,30 +242,19 @@
 				const loginPass = document.getElementById('login-password-input').value || "";
 				const ticker = document.getElementById('login-ticker');
 
-				if (!loginEmail || !loginPass) { 
-					if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } 
-					return; 
-				}
-				
+				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
 				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
 				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
 
-				if (!storedPass) {
-					if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; }
-					return;
-				}
-
-				if (loginPass !== storedPass) {
-					if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; }
-					return;
-				}
+				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
+				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
 
 				localStorage.setItem('sl_saved_handle', storedHandle);
 				localStorage.setItem('sl_saved_email', loginEmail);
 
 				if (ticker) {
 					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
-					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
+					ticker.textContent = isL2 ? "[ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[ACCESS APPROVED] CLEARANCE L1 MOUNTED";
 					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
 				}
 				setTimeout(() => { navigateToPath('/matrix'); }, 1000);
