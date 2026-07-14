@@ -86,6 +86,7 @@
 		<!-- DYNAMIC FLOATING RED TEAM TERMINAL WINDOW BOX -->
 				<!-- INTERNAL RED TEAM CONSOLE VIEW PANEL (Centered layout overlay floating above matrix rain) -->
 				<!-- INTERNAL RED TEAM CONSOLE VIEW PANEL (Enforced Full-Center Workspace Layout) -->
+				<!-- INTERNAL RED TEAM CONSOLE VIEW PANEL (Enforced Full-Center Workspace Layout) -->
 		<div id="view-internal-redteam" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: transparent !important; box-sizing: border-box; display: none !important; align-items: center !important; justify-content: center !important; z-index: 5 !important; padding: 20px 20px 20px 260px !important;">
 			<!-- Console Inner Floating Core Card -->
 			<div style="background: radial-gradient(circle at 50% 50%, #150505 0%, #030101 100%) !important; width: 100%; max-width: 750px; padding: 35px; border-radius: 6px; border: 2px solid rgba(255, 74, 74, 0.25); box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 30px rgba(21, 5, 5, 0.85); display: flex; flex-direction: column; align-items: center; margin: 0 auto !important;">
@@ -255,16 +256,21 @@
 						}
 						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
-				} else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
+				} 	else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) rainTarget.style.display = 'block'; document.getElementById('hud-master-layer').style.display = 'block';
-						if (redteamView) redteamView.style.display = 'flex';
+						if (rainTarget) rainTarget.style.display = 'block'; 
+						document.getElementById('hud-master-layer').style.display = 'block';
+						
+						/* ENFORCES GRID VIEW DISPLAY TARGETS */
+						if (redteamView) redteamView.setAttribute('style', 'display: grid !important;');
+						
 						if (typeof rainTimer === 'undefined' || !rainTimer) startMatrixRainfallEngine();
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) { statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; statusHud.style.color = "#ff4a4a"; }
 						isTypingActive = false; triggerTerminalTypingSimulation();
 						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
+				}
 				} else {
 					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } else { if (publicHomeOverlay) publicHomeOverlay.style.display = 'flex'; clearInterval(rainTimer); if (rainTarget) rainTarget.style.display = 'none'; }
 				}
