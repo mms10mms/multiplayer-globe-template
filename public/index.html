@@ -167,7 +167,7 @@
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." },
 				{ id: "CVE-2023-38831", summary: "WinRAR arbitrary code execution flaw triggered when a user attempts to open a specially crafted ZIP archive file." }
 			];
-			const cveDatasetExtended = [
+						const cveDatasetExtended = [
 				{ id: "CVE-2023-22515", summary: "Critical privilege escalation flaw in Atlassian Confluence Data Center exposing administrative creation access endpoints." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated remote code execution vulnerability via specialized OGNL expression inputs." },
 				{ id: "CVE-2023-46604", summary: "Apache ActiveMQ remote code execution flaw allowing attackers to run arbitrary shell strings via OpenWire protocol vectors." },
@@ -244,8 +244,13 @@
 					document.getElementById('view-register').style.display = 'flex';
 				} else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						window.dispatchEvent(new Event('resize'));
 						document.getElementById('hud-master-layer').style.display = 'block';
+						
+						/* Calibrated rendering delay engine loop hook */
+						setTimeout(() => {
+							window.dispatchEvent(new Event('resize'));
+						}, 50);
+
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
