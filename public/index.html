@@ -8,8 +8,8 @@
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
 			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			#root { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; z-index: 1 !important; }
-			#root canvas { width: 100% !important; height: 100% !important; display: block !important; }
+			#root-2d-map { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: none; background: #040406; z-index: 1 !important; overflow: hidden; }
+			.map-svg-frame { width: 100%; height: 100%; display: block; }
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
@@ -19,6 +19,7 @@
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0, 240, 255, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
+			.terminal-grid-box input:focus { border-color: #39ff14; box-shadow: 0 0 10px rgba(57, 255, 20, 0.15); }
 			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000 !important; }
@@ -33,10 +34,33 @@
 		</style>
 	</head>
 	<body>
-		<!-- Base Interactive 3D Globe Vector Container Mount Point -->
-		<div id="root">Loading global tracking array telemetry components...</div>
-		<script type="module" src="/dist/index.js"></script>
-
+		<!-- Threatbutt Inspired 2D Retro SVG Global Attack Map Grid -->
+		<div id="root-2d-map">
+			<svg class="map-svg-frame" viewBox="0 0 1000 500" xmlns="http://w3.org">
+				<g stroke="#111" stroke-width="0.5">
+					<path d="M 0 100 L 1000 100 M 0 200 L 1000 200 M 0 300 L 1000 300 M 0 400 L 1000 400" />
+					<path d="M 200 0 L 200 500 M 400 0 L 400 500 M 600 0 L 600 500 M 800 0 L 800 500" />
+				</g>
+				<g fill="none" stroke="#39ff14" stroke-width="1.2" filter="drop-shadow(0 0 3px rgba(57,255,20,0.4))">
+					<path d="M 50,80 L 120,60 L 250,70 L 280,110 L 200,180 L 170,220 L 120,160 L 100,160 L 70,120 Z" />
+					<path d="M 170,230 L 210,250 L 240,290 L 260,350 L 230,420 L 200,450 L 180,380 L 160,300 L 150,250 Z" />
+					<path d="M 380,80 L 450,50 L 600,40 L 800,60 L 850,120 L 750,220 L 620,240 L 520,180 L 480,240 L 440,320 L 480,380 L 460,420 L 400,400 L 380,300 L 340,220 L 360,150 Z" />
+					<path d="M 760,320 L 820,310 L 850,360 L 810,410 L 750,380 Z" />
+				</g>
+				<g fill="none" stroke="#ff4a4a" stroke-width="2" filter="drop-shadow(0 0 4px rgba(255,74,74,0.6))">
+					<path d="M 120,120 Q 250,90 440,110" stroke-dasharray="5 3" />
+					<path d="M 120,120 Q 150,180 180,260" />
+					<path d="M 120,120 Q 400,200 780,360" />
+					<path d="M 220,100 L 120,120" />
+					<path d="M 440,110 Q 300,180 200,400" stroke-dasharray="6 2" />
+				</g>
+				<g fill="none" stroke="#ff4a4a" stroke-width="1.5">
+					<circle cx="120" cy="120" r="6" fill="#040406" /> <circle cx="120" cy="120" r="12" />
+					<circle cx="440" cy="110" r="5" /><circle cx="180" cy="260" r="5" />
+					<circle cx="200" cy="400" r="5" /><circle cx="780" cy="360" r="5" />
+				</g>
+			</svg>
+		</div>
 		<!-- Polished Sidebarless Public Home Overlay Curtain -->
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
@@ -49,6 +73,7 @@
 					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
+			
 			<div class="telemetry-log">
 				<div id="typing-field"></div>
 				<div id="art-container">
@@ -110,7 +135,7 @@
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
-					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
+					<div onclick="navigateToPath('/matrix')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
 					<div onclick="alert('Telemetry Node Panel running.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
 					<div onclick="alert('Advanced Threat Intelligence database initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
 					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 6px 0;">[ RANGE ]</div>
@@ -217,6 +242,10 @@
 				document.getElementById('view-login').style.display = 'none';
 				document.getElementById('view-register').style.display = 'none';
 				document.getElementById('hud-master-layer').style.display = 'none';
+				
+				const map2dTarget = document.getElementById('root-2d-map');
+				if (map2dTarget) map2dTarget.style.display = 'none';
+				
 				clearInterval(cycleTimer);
 
 				if (path === "/login" || path === "/login/") {
@@ -225,13 +254,8 @@
 					document.getElementById('view-register').style.display = 'flex';
 				} else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
+						if (map2dTarget) map2dTarget.style.display = 'block';
 						document.getElementById('hud-master-layer').style.display = 'block';
-						
-						/* Calibrated rendering delay engine loop hook */
-						setTimeout(() => {
-							window.dispatchEvent(new Event('resize'));
-						}, 60);
-
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
