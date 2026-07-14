@@ -235,44 +235,75 @@
 			}
 
 			function routeSubDirectoriesNatively() {
-				const path = window.location.pathname, cachedHandle = localStorage.getItem('sl_saved_handle'), cachedEmail = localStorage.getItem('sl_saved_email'), publicHomeOverlay = document.getElementById('view-home-public');
-				if (publicHomeOverlay) publicHomeOverlay.style.display = 'none';
-				document.getElementById('view-login').style.display = 'none'; document.getElementById('view-register').style.display = 'none'; document.getElementById('hud-master-layer').style.display = 'none';
-				const rainTarget = document.getElementById('root-matrix-rain'), redteamView = document.getElementById('view-internal-redteam');
-				if (redteamView) redteamView.style.display = 'none';
+				const path = window.location.pathname;
+				const cachedHandle = localStorage.getItem('sl_saved_handle');
+				const cachedEmail = localStorage.getItem('sl_saved_email');
+				const publicHomeOverlay = document.getElementById('view-home-public');
+				
+				// Standardized Reset Sweep: Clean out all overlays cleanly before evaluation paths
+				if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'none', 'important');
+				document.getElementById('view-login').style.setProperty('display', 'none', 'important');
+				document.getElementById('view-register').style.setProperty('display', 'none', 'important');
+				document.getElementById('hud-master-layer').style.setProperty('display', 'none', 'important');
+				
+				const rainTarget = document.getElementById('root-matrix-rain');
+				if (rainTarget) rainTarget.style.setProperty('display', 'none', 'important');
+				
+				const redteamView = document.getElementById('view-internal-redteam');
+				if (redteamView) redteamView.style.setProperty('display', 'none', 'important');
+				
 				clearInterval(cycleTimer);
 
-				if (path === "/login" || path === "/login/") { document.getElementById('view-login').style.display = 'flex'; } 
-				else if (path === "/register" || path === "/register/") { document.getElementById('view-register').style.display = 'flex'; } 
+				if (path === "/login" || path === "/login/") {
+					document.getElementById('view-login').style.setProperty('display', 'flex', 'important');
+				} 
+				else if (path === "/register" || path === "/register/") {
+					document.getElementById('view-register').style.setProperty('display', 'flex', 'important');
+				} 
 				else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) rainTarget.style.display = 'block'; document.getElementById('hud-master-layer').style.display = 'block';
+						if (rainTarget) rainTarget.style.setProperty('display', 'block', 'important');
+						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
 						if (typeof rainTimer === 'undefined' || !rainTimer) startMatrixRainfallEngine();
+						
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
 							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
 							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
 						}
-						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
+						loadRandomCve();
+						cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
-				} 	else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
+				} 
+				else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) rainTarget.style.display = 'block'; 
-						document.getElementById('hud-master-layer').style.display = 'block';
+						if (rainTarget) rainTarget.style.setProperty('display', 'block', 'important');
+						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
 						
-						/* ENFORCES GRID VIEW DISPLAY TARGETS */
-						if (redteamView) redteamView.setAttribute('style', 'display: grid !important;');
+						/* REPAIRED ENFORCEMENT HOOK: Uses safe property bindings to avoid layout locks */
+						if (redteamView) redteamView.style.setProperty('display', 'grid', 'important');
 						
 						if (typeof rainTimer === 'undefined' || !rainTimer) startMatrixRainfallEngine();
 						const statusHud = document.getElementById('user-status-hud');
-						if (statusHud) { statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; statusHud.style.color = "#ff4a4a"; }
-						isTypingActive = false; triggerTerminalTypingSimulation();
-						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
+						if (statusHud) {
+							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`;
+							statusHud.style.color = "#ff4a4a";
+						}
+						isTypingActive = false;
+						triggerTerminalTypingSimulation();
+						loadRandomCve();
+						cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
-				}
-				} else {
-					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } else { if (publicHomeOverlay) publicHomeOverlay.style.display = 'flex'; clearInterval(rainTimer); if (rainTarget) rainTarget.style.display = 'none'; }
+				} 
+				else {
+					if (cachedHandle && cachedEmail) {
+						navigateToPath('/matrix');
+					} else {
+						if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'flex', 'important');
+						clearInterval(rainTimer);
+						rainTimer = null;
+					}
 				}
 			}
 
