@@ -6,20 +6,22 @@
 		<title>Slaughter-Sec Matrix</title>
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
-		<script src="https://jsdelivr.net"></script>
-		<script src="https://jsdelivr.net"></script>
 		<style>
 			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
+			
+			/* Highly Defined Local Vector Canvas Layer Box */
 			#root-2d-map { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: none; background: #040406; z-index: 1 !important; overflow: hidden; }
 			.map-svg-frame { width: 100%; height: 100%; display: block; }
+			
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
+			
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
 			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); border-color: #ff4a4a; }
-			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
+			
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
+			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0, 240, 255, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
 			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
@@ -35,9 +37,52 @@
 		</style>
 	</head>
 	<body>
+		<!-- High-Definition Local Vector Map Layers: Loaded offline to prevent HTTPS browser blockades -->
 		<div id="root-2d-map">
-			<svg id="sltr-defined-vector-map" class="map-svg-frame" viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid meet"></svg>
+			<svg class="map-svg-frame" viewBox="0 0 1000 500" xmlns="http://w3.org">
+				<g stroke="rgba(0, 240, 255, 0.03)" stroke-width="0.5">
+					<path d="M0,50 h1000 M0,100 h1000 M0,150 h1000 M0,200 h1000 M0,250 h1000 M0,300 h1000 M0,350 h1000 M0,400 h1000 M0,450 h1000" />
+					<path d="M100,0 v500 M200,0 v500 M300,0 v500 M400,0 v500 M500,0 v500 M600,0 v500 M700,0 v500 M800,0 v500 M900,0 v500" />
+				</g>
+				<g fill="none" stroke="#39ff14" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 3px rgba(57,255,20,0.35));">
+					<!-- North America Vector Boundaries -->
+					<path d="M60,110 L80,100 L110,115 L130,95 L160,105 L175,80 L200,75 L220,90 L245,75 L275,85 L310,80 L350,115 L385,120 L390,135 L355,140 L365,160 L410,165 L430,190 L425,210 L395,215 L380,200 L360,205 L355,220 L325,215 L320,235 L300,250 L305,270 L280,290 L290,320 L275,330 L250,310 L240,275 L245,250 L225,235 L230,220 L205,205 L180,210 L165,195 L170,170 L135,165 L115,170 L95,155 L95,175 L75,165 L65,180 L50,170 L45,135 Z" />
+					<!-- South America Vector Boundaries -->
+					<path d="M250,310 L270,320 L265,340 L275,345 L295,335 L315,345 L325,365 L355,385 L385,400 L400,425 L390,455 L375,480 L360,540 L345,580 L335,595 L325,590 L320,570 L330,540 L320,510 L310,515 L305,490 L295,465 L285,415 L270,385 L245,355 L230,335 Z" />
+					<!-- Greenland Outer Track -->
+					<path d="M360,50 L410,45 L435,65 L420,100 L385,120 L355,110 L345,80 Z" />
+					<!-- Australia & Oceania Vector Boundaries -->
+					<path d="M755,420 L805,405 L845,410 L875,445 L855,485 L810,490 L765,475 L750,445 Z" />
+					<path d="M885,475 L905,470 L935,515 L915,530 L895,505 Z" /><path d="M915,450 L935,445 L945,475 L925,485 Z" />
+				</g>
+			</svg>
 		</div>
+		<!-- Supplemental Local Map Vectors Block -->
+		<script>
+			window.addEventListener('DOMContentLoaded', () => {
+				const mapSvg = document.querySelector('.map-svg-frame');
+				if (!mapSvg) return;
+				const eurasiaGroup = document.createElementNS('http://w3.org', 'g');
+				eurasiaGroup.setAttribute('fill', 'none');
+				eurasiaGroup.setAttribute('stroke', '#39ff14');
+				eurasiaGroup.setAttribute('stroke-width', '1.1');
+				eurasiaGroup.setAttribute('style', 'filter: drop-shadow(0 0 3px rgba(57,255,20,0.35));');
+				
+				// Eurasia High Definition Outlines Array Path
+				const eurasiaPath = document.createElementNS('http://w3.org', 'path');
+				eurasiaPath.setAttribute('d', 'M455,175 L470,160 L495,155 L505,135 L500,115 L525,115 L535,95 L570,100 L590,85 L625,90 L655,75 L705,80 L745,65 L795,75 L835,60 L875,75 L925,85 L945,115 L930,135 L905,130 L895,145 L905,165 L930,170 L915,195 L895,185 L875,210 L860,200 L860,230 L875,245 L865,265 L840,270 L830,250 L820,275 L795,280 L785,265 L770,285 L745,270 L755,245 L730,230 L715,245 L700,225 L675,240 L660,220 L665,205 L635,205 L630,185 L585,190 L565,170 L540,185 L525,170 L500,185 L480,170 Z');
+				
+				// Africa High Definition Outlines Array Path
+				const africaPath = document.createElementNS('http://w3.org', 'path');
+				africaPath.setAttribute('d', 'M475,195 L500,190 L525,200 L540,190 L565,205 L570,225 L590,230 L600,255 L585,260 L580,285 L605,310 L615,340 L595,375 L575,440 L565,475 L550,490 L535,485 L530,460 L535,415 L520,380 L500,355 L495,315 L470,300 L445,305 L430,285 L435,265 L455,255 L440,235 L455,210 Z');
+				
+				eurasiaGroup.appendChild(eurasiaPath);
+				eurasiaGroup.appendChild(africaPath);
+				mapSvg.appendChild(eurasiaGroup);
+			});
+		</script>
+
+		<!-- Public Landing Cover Overlay Curtain -->
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
 				<div>
@@ -49,6 +94,7 @@
 					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
+			
 			<div class="telemetry-log">
 				<div id="typing-field"></div>
 				<div id="art-container">
@@ -79,7 +125,7 @@
 			</div>
 			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px; position: relative; z-index: 5;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
-
+		<!-- Standalone Subpage Views Layout Framework -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -104,6 +150,8 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
+
+		<!-- PRIVATE HUB OVERLAY LAYERS -->
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
@@ -128,26 +176,11 @@
 				</div>
 			</div>
 		</div>
+
 		<script>
 			let cycleTimer = null;
 			let isTypingActive = false;
 			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
-
-			function initializeHighDefinitionFlatMap() {
-				const svg = d3.select("#sltr-defined-vector-map");
-				svg.selectAll("*").remove();
-				svg.append("g").attr("stroke", "rgba(0, 240, 255, 0.04)").attr("stroke-width", "0.5")
-					.selectAll("line").data(d3.range(50, 550, 50)).enter().append("line")
-					.attr("x1", 0).attr("y1", d => d).attr("x2", 1000).attr("y2", d => d);
-				d3.json("https://jsdelivr.net").then(worldData => {
-					const countries = topojson.feature(worldData, worldData.objects.countries);
-					const projection = d3.geoEquirectangular().scale(155).translate([500, 275]);
-					const pathGenerator = d3.geoPath().projection(projection);
-					svg.append("g").attr("fill", "none").attr("stroke", "#39ff14").attr("stroke-width", "1.1")
-						.attr("style", "filter: drop-shadow(0 0 3px rgba(57,255,20,0.45)); stroke-linejoin: round;")
-						.selectAll("path").data(countries.features).enter().append("path").attr("d", pathGenerator);
-				}).catch(err => console.error("Map grid failure:", err));
-			}
 
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
@@ -244,9 +277,8 @@
 					if (cachedHandle && cachedEmail) {
 						if (map2dTarget) map2dTarget.style.display = 'block';
 						document.getElementById('hud-master-layer').style.display = 'block';
-						
-						initializeHighDefinitionFlatMap();
 
+						/* REPAIRED ENFORCEMENT HOOK: Corrects token strings layout mapping permissions */
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
@@ -302,7 +334,8 @@
 				setTimeout(() => { idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
 			}
 			function manualRoll() { loadRandomCve(); }
-			window.dispatchEvent(new Event('load'));
+			window.addEventListener('popstate', routeSubDirectoriesNatively);
+			window.addEventListener('load', routeSubDirectoriesNatively);
 		</script>
 	</body>
 </html>
