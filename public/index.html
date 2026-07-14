@@ -9,13 +9,11 @@
 		<style>
 			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
 			
-			/* Enforces absolute full-screen canvas tracking for the new matrix background */
-			#root-matrix-cascade { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: none; background: #040406; z-index: 1 !important; }
-			#root-matrix-cascade canvas { width: 100% !important; height: 100% !important; display: block !important; }
+			/* High-Performance Local Digital Code Rain Canvas Backdrop Frame */
+			#root-matrix-rain { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: none; z-index: 1 !important; }
 			
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
-			
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
 			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); border-color: #ff4a4a; }
 			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
@@ -37,11 +35,9 @@
 		</style>
 	</head>
 	<body>
-		<!-- Falling Matrix Streaming Canvas Background Mounting Module -->
-		<div id="root-matrix-cascade">
-			<canvas id="matrix-canvas-layer"></canvas>
-		</div>
-		<!-- Polished Sidebarless Public Home Overlay Curtain -->
+		<!-- Embedded Canvas Block drawing falling green alphanumeric telemetry nodes -->
+		<canvas id="root-matrix-rain"></canvas>
+		<!-- Polished Sidebarless Public Home Overlay Curtain Cover Layout -->
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
 				<div>
@@ -53,7 +49,6 @@
 					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
-			
 			<div class="telemetry-log">
 				<div id="typing-field"></div>
 				<div id="art-container">
@@ -84,7 +79,8 @@
 			</div>
 			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px; position: relative; z-index: 5;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
-		<!-- Standalone Sub-Directory Modals -->
+
+		<!-- Standalone Sub-Directory Routing Interfaces -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -109,16 +105,15 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
-
-		<!-- PRIVATE HUB OVERLAY WORKSPACE LAYERS -->
+		<!-- PRIVATE WORKSPACE INTERFACE MATRIX (Overlays dropping rain array codes) -->
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
-					<div onclick="navigateToPath('/matrix')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
-					<div onclick="alert('Telemetry Node Panel running.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
+					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
+					<div onclick="alert('Telemetry node stream running active.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
 					<div onclick="alert('Advanced Threat Intelligence database initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
-					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 6px 0;">[ RANGE ]</div>
+					<div onclick="alert('Tactical training firing range simulation standing by.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 6px 0;">[ RANGE ]</div>
 				</div>
 			</div>
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
@@ -135,56 +130,20 @@
 				</div>
 			</div>
 		</div>
+
 		<script>
-			let cycleTimer = null;
+			let cycleTimer = null, rainTimer = null;
 			let isTypingActive = false;
-			let matrixInterval = null;
-			
 			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
 
-			// Real-Time Matrix Stream Rain Engine Loop Function
-			function initializeMatrixCanvasCascade() {
-				const canvas = document.getElementById("matrix-canvas-layer");
-				if (!canvas) return;
-				const ctx = canvas.getContext("2d");
-				clearInterval(matrixInterval);
-				
-				const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-				resizeCanvas();
-				window.addEventListener('resize', resizeCanvas);
-				
-				const alphabet = "アカサタナハマヤラワガザダバパイウエオキクケコシスセソトヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ#@$&*";
-				const fontSize = 14;
-				const columns = Math.floor(canvas.width / fontSize) + 1;
-				const rainDrops = Array(columns).fill(1);
-				
-				function draw() {
-					ctx.fillStyle = "rgba(4, 4, 6, 0.06)";
-					ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.font = fontSize + "px monospace";
-					
-					for (let i = 0; i < rainDrops.length; i++) {
-						const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-						// Alternates drop streams between theme colors (Matrix Green & Alert Red)
-						ctx.fillStyle = (i % 5 === 0) ? "#ff4a4a" : "#39ff14";
-						ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-						
-						if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-							rainDrops[i] = 0;
-						}
-						rainDrops[i]++;
-					}
-				}
-				matrixInterval = setInterval(draw, 33);
-			}
+			// Baseline CVE Datasets
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
 				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
 				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." }
 			];
-
-						const cveDatasetExtended = [
+			const cveDatasetExtended = [
 				{ id: "CVE-2019-0708", summary: "Windows Remote Desktop pre-auth RCE vulnerability (BlueKeep)." },
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler privilege escalation and remote code flaw (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Microsoft Netlogon cryptography validation bypass privilege escalation (Netlogon Exploitation)." },
@@ -200,40 +159,50 @@
 				{ id: "CVE-2022-41040", summary: "Microsoft Exchange Server SSRF validation chaining command elevation (ProxyNotShell)." },
 				{ id: "CVE-2020-0601", summary: "Windows CryptoAPI subversion of standard certificate chain validation (Chain of Fools)." },
 				{ id: "CVE-2021-3156", summary: "Sudo legacy argument parser heap overflow local root elevation (Baron Samedit)." },
-				{ id: "CVE-2020-1350", summary: "Windows Server DNS operating subsystem parsing validation code execution flaw (SigRed)." }
+				{ id: "CVE-2020-1350", summary: "Critical remote code execution vulnerability inside Microsoft Windows Server DNS architecture via parsing failures (SigRed)." }
 			];
 
 			const masterDataset = cveDataset.concat(cveDatasetExtended);
+
+			// Local High Performance Matrix Cascade Falling Rain Engine Loop
+			function startMatrixRainfallEngine() {
+				const c = document.getElementById("root-matrix-rain"); if (!c) return;
+				const ctx = c.getContext("2d"); if (!ctx) return;
+				c.width = window.innerWidth; c.height = window.innerHeight;
+				const hexCharacters = "0123456789ABCDEF//X$!@#%^&*+=[]{}|".split("");
+				const fontSize = 14, columns = c.width / fontSize;
+				const drops = []; for (let i = 0; i < columns; i++) drops[i] = 1;
+				if (rainTimer) clearInterval(rainTimer);
+				function drawRain() {
+					ctx.fillStyle = "rgba(4, 4, 6, 0.06)"; ctx.fillRect(0, 0, c.width, c.height);
+					ctx.fillStyle = "rgba(57, 255, 20, 0.35)"; ctx.font = fontSize + "px monospace";
+					for (let i = 0; i < drops.length; i++) {
+						const txt = hexCharacters[Math.floor(Math.random() * hexCharacters.length)];
+						ctx.fillText(txt, i * fontSize, drops[i] * fontSize);
+						if (drops[i] * fontSize > c.height && Math.random() > 0.975) drops[i] = 0;
+						drops[i]++;
+					}
+				}
+				rainTimer = setInterval(drawRain, 33);
+			}
 			function triggerTerminalTypingSimulation() {
-				if (isTypingActive) return;
-				isTypingActive = true;
+				if (isTypingActive) return; isTypingActive = true;
 				const targetField = document.getElementById("typing-field");
 				const artContainer = document.getElementById("art-container");
-				if (!targetField) return;
-				targetField.innerHTML = "";
-				targetField.className = "";
+				if (!targetField) return; targetField.innerHTML = ""; targetField.className = "";
 				if (artContainer) artContainer.style.opacity = "0";
 				let index = 0;
 				function typeNextCharacter() {
 					if (index < terminalLogText.length) {
 						const char = terminalLogText.charAt(index);
 						if (char === "\n") { targetField.innerHTML += "<br>"; } else { targetField.innerHTML += char; }
-						index++;
-						setTimeout(typeNextCharacter, 35);
-					} else {
-						targetField.className = "done";
-						if (artContainer) artContainer.style.opacity = "1";
-					}
+						index++; setTimeout(typeNextCharacter, 35);
+					} else { targetField.className = "done"; if (artContainer) artContainer.style.opacity = "1"; }
 				}
 				typeNextCharacter();
 			}
 
-			function navigateToPath(targetUrlPath) {
-				window.history.pushState({}, '', targetUrlPath);
-				routeSubDirectoriesNatively();
-				resetTickers();
-			}
-
+			function navigateToPath(targetUrlPath) { window.history.pushState({}, '', targetUrlPath); routeSubDirectoriesNatively(); resetTickers(); }
 			document.addEventListener("keydown", (e) => {
 				if (e.key === "Enter") {
 					if (document.getElementById("view-login").style.display === "flex") executeLoginAuthentication();
@@ -242,77 +211,52 @@
 			});
 
 			function resetTickers() {
-				const loginT = document.getElementById('login-ticker');
-				const registerT = document.getElementById('register-ticker');
+				const loginT = document.getElementById('login-ticker'), registerT = document.getElementById('register-ticker');
 				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
 				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
 			}
 
 			function routeSubDirectoriesNatively() {
-				const path = window.location.pathname;
-				const cachedHandle = localStorage.getItem('sl_saved_handle');
-				const cachedEmail = localStorage.getItem('sl_saved_email');
-				const publicHomeOverlay = document.getElementById('view-home-public');
-
+				const path = window.location.pathname, cachedHandle = localStorage.getItem('sl_saved_handle'), cachedEmail = localStorage.getItem('sl_saved_email'), publicHomeOverlay = document.getElementById('view-home-public');
 				if (publicHomeOverlay) publicHomeOverlay.style.display = 'none';
-				document.getElementById('view-login').style.display = 'none';
-				document.getElementById('view-register').style.display = 'none';
-				document.getElementById('hud-master-layer').style.display = 'none';
-				
-				const map2dTarget = document.getElementById('root-2d-map');
-				if (map2dTarget) map2dTarget.style.display = 'none';
-				
-				clearInterval(cycleTimer);
+				document.getElementById('view-login').style.display = 'none'; document.getElementById('view-register').style.display = 'none'; document.getElementById('hud-master-layer').style.display = 'none';
+				const rainTarget = document.getElementById('root-matrix-rain'); if (rainTarget) rainTarget.style.display = 'none';
+				clearInterval(cycleTimer); clearInterval(rainTimer);
 
-				if (path === "/login" || path === "/login/") {
-					document.getElementById('view-login').style.display = 'flex';
-				} else if (path === "/register" || path === "/register/") {
-					document.getElementById('view-register').style.display = 'flex';
-				} else if (path === "/matrix" || path === "/matrix/") {
+				if (path === "/login" || path === "/login/") { document.getElementById('view-login').style.display = 'flex'; } 
+				else if (path === "/register" || path === "/register/") { document.getElementById('view-register').style.display = 'flex'; } 
+				else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						if (map2dTarget) map2dTarget.style.display = 'block';
-						document.getElementById('hud-master-layer').style.display = 'block';
-
+						if (rainTarget) rainTarget.style.display = 'block'; document.getElementById('hud-master-layer').style.display = 'block';
+						startMatrixRainfallEngine();
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
 							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
 							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
 						}
-						loadRandomCve();
-						cycleTimer = setInterval(loadRandomCve, 15000);
+						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
 				} else {
-					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } else {
-						if (publicHomeOverlay) publicHomeOverlay.style.display = 'flex';
-						triggerTerminalTypingSimulation();
-					}
+					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } else { if (publicHomeOverlay) publicHomeOverlay.style.display = 'flex'; triggerTerminalTypingSimulation(); }
 				}
 			}
 
 			function executeStudentValidation() {
-				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
-				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
-				const passVal = document.getElementById('student-password-input').value || "";
-				const ticker = document.getElementById('register-ticker');
+				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim(), emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase(), passVal = document.getElementById('student-password-input').value || "", ticker = document.getElementById('register-ticker');
 				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal);
-				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
+				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal); localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
 				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
 				setTimeout(() => { navigateToPath('/login'); }, 1200);
 			}
 
 			function executeLoginAuthentication() {
-				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
-				const loginPass = document.getElementById('login-password-input').value || "";
-				const ticker = document.getElementById('login-ticker');
+				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase(), loginPass = document.getElementById('login-password-input').value || "", ticker = document.getElementById('login-ticker');
 				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
-				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
+				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail), storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
 				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
 				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_saved_handle', storedHandle);
-				localStorage.setItem('sl_saved_email', loginEmail);
+				localStorage.setItem('sl_saved_handle', storedHandle); localStorage.setItem('sl_saved_email', loginEmail);
 				if (ticker) {
 					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
 					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
@@ -323,10 +267,15 @@
 
 			function executeProfileLogout() { localStorage.removeItem('sl_saved_handle'); localStorage.removeItem('sl_saved_email'); isTypingActive = false; routeSubDirectoriesNatively(); }
 			function loadRandomCve() {
-				const idEl = document.getElementById('cve-id'); const summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
-				idEl.textContent = "ROLLING..."; const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-				setTimeout(() => { idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
+				const idEl = document.getElementById('cve-id'), summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
+				idEl.textContent = "ROLLING..."; const
+				randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
+				setTimeout(() => { 
+					idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; 
+					summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; 
+				}, 200);
 			}
+
 			function manualRoll() { loadRandomCve(); }
 			window.addEventListener('popstate', routeSubDirectoriesNatively);
 			window.addEventListener('load', routeSubDirectoriesNatively);
