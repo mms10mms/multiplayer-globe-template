@@ -7,38 +7,25 @@
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
-			/* Enforces absolute full-screen canvas parameters for the ThreeJS globe root */
 			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			
-			/* Base Layer Canvas parameters for the ThreeJS globe root */
 			#root { position: absolute !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; z-index: 1 !important; }
 			#root canvas { width: 100% !important; height: 100% !important; display: block !important; }
-			
-			/* Stacking overlay configurations for the private dashboard components */
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
-			
-			/* Universal Premium Cyber Buttons */
 			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 74, 74, 0.02); border: 1px solid rgba(255, 74, 74, 0.3); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 74, 74, 0.05); transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
 			.nav-btn:hover { background: #ff4a4a; color: #040406; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); border-color: #ff4a4a; }
 			.placeholder-btn { color: #444; text-decoration: none; font-size: 11px; font-weight: bold; background: rgba(255, 255, 255, 0.005); border: 1px dashed rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 4px; display: block; text-align: center; margin-bottom: 6px; user-select: none; width: 100%; box-sizing: border-box; }
 			#user-status-hud { color: #39ff14; font-size: 11px; background: rgba(7, 7, 10, 0.95); border: 1px solid rgba(0,240,255,0.2); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
-			
-			/* Form Grid Component Frameworks */
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
 			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
 			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0, 240, 255, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
 			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
-			
-			/* Redesigned Full-Screen Center Layout for the Public Landing Terminal Cover */
 			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000 !important; }
 			#view-home-public::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01)); z-index: 2; background-size: 100% 4px, 6px 100%; pointer-events: none; }
-			
 			.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 950px; z-index: 5; position: relative; margin-bottom: 20px; }
 			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255, 74, 74, 0.35); margin: 0; text-transform: uppercase; }
 			.telemetry-log { background: #050508; border: 1px solid rgba(255, 74, 74, 0.2); padding: 30px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; width: 100%; max-width: 950px; min-height: 480px; box-sizing: border-box; overflow: hidden; border-left: 4px solid #ff4a4a; box-shadow: inset 0 0 20px rgba(0,0,0,0.9); font-family: 'Courier New', monospace; position: relative; z-index: 5; display: flex; flex-direction: column; justify-content: flex-start; }
-			
 			#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: #88ffaa; margin-left: 2px; }
 			#typing-field.done::after { content: ""; display: none; }
 			#art-container { opacity: 0; transition: opacity 1.5s ease-in-out; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 25px; }
@@ -49,6 +36,7 @@
 		<!-- Base Interactive 3D Globe Vector Container Mount Point -->
 		<div id="root">Loading global tracking array telemetry components...</div>
 		<script type="module" src="/dist/index.js"></script>
+
 		<!-- Polished Sidebarless Public Home Overlay Curtain -->
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
@@ -61,7 +49,6 @@
 					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
-			
 			<div class="telemetry-log">
 				<div id="typing-field"></div>
 				<div id="art-container">
@@ -122,21 +109,16 @@
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
-				
-				<!-- Restructured Core Control Buttons Matrix Array -->
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
 					<div onclick="window.dispatchEvent(new Event('resize'))" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.25); background: rgba(57,255,20,0.02); margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
 					<div onclick="alert('Telemetry Node Panel running.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
 					<div onclick="alert('Advanced Threat Intelligence database initialized.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
-					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.25); background: rgba(0,240,255,0.02); margin: 0; padding: 6px 0;">[ RANGE ]</div>
+					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 6px 0;">[ RANGE ]</div>
 				</div>
 			</div>
-			
 			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px;">
-				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);" onmouseover="this.style.background='#ff4a4a'; this.style.color='#040406';" onmouseout="this.style.background='rgba(255, 74, 74, 0.05)'; this.style.color='#ff4a4a';">[ LOG_OUT ]</div>
+				<div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);">[ LOG_OUT ]</div>
 			</div>
-			
-			<!-- Bottom Private Ticker Container Widget Frame -->
 			<div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 900px;">
 				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);">
 					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;">
@@ -154,7 +136,6 @@
 			let isTypingActive = false;
 			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
 
-			// 20 Complete Real-World CVE Telemetry Listings Matrix Database Array
 			const cveDataset = [
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
@@ -167,7 +148,7 @@
 				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." },
 				{ id: "CVE-2023-38831", summary: "WinRAR arbitrary code execution flaw triggered when a user attempts to open a specially crafted ZIP archive file." }
 			];
-						const cveDatasetExtended = [
+			const cveDatasetExtended = [
 				{ id: "CVE-2023-22515", summary: "Critical privilege escalation flaw in Atlassian Confluence Data Center exposing administrative creation access endpoints." },
 				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated remote code execution vulnerability via specialized OGNL expression inputs." },
 				{ id: "CVE-2023-46604", summary: "Apache ActiveMQ remote code execution flaw allowing attackers to run arbitrary shell strings via OpenWire protocol vectors." },
@@ -249,7 +230,7 @@
 						/* Calibrated rendering delay engine loop hook */
 						setTimeout(() => {
 							window.dispatchEvent(new Event('resize'));
-						}, 50);
+						}, 60);
 
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
