@@ -36,11 +36,7 @@
 		</style>
 	</head>
 	<body>
-		<!-- Hyper-Detailed 2D World Vector Tactical Map Canvas Element Module -->
-		<div id="root-2d-map">
-			<svg id="sltr-defined-vector-map" class="map-svg-frame" viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid meet"></svg>
-		</div>
-		<!-- Full-Screen Public Home Overlay Cover Curtain -->
+		<div id="root-2d-map"><svg id="sltr-defined-vector-map" class="map-svg-frame" viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid meet"></svg></div>
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
 				<div>
@@ -82,8 +78,6 @@
 			</div>
 			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px; position: relative; z-index: 5;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
-
-		<!-- Standalone Sub-Directory Modals -->
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -108,7 +102,7 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
-		<!-- PRIVATE HUB OVERLAY LAYERS -->
+
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
@@ -133,33 +127,27 @@
 				</div>
 			</div>
 		</div>
-
 		<script>
 			let cycleTimer = null;
 			let isTypingActive = false;
 			const terminalLogText = "[!] WARNING: CRYPTOGRAPHIC AUTHENTICATION MANDATORY\n----------------───────────────────────────────────────────────\n> STATUS: INITIALIZING MEMORY FENCE OVERLAY...\n> NODE_TRACKING: REAL-TIME GEOLOCATION VECTORMARK CHANNELS [DISABLED]\n> RADAR_SYNC: MULTIPLAYER WEBSOCKET CONSOLE CONNECTIONS [STANDBY]\n> CRITICAL: ACCESS TO PRIVATE GLOBAL MAP ASSETS REQUIRES AUTHORIZED TOKEN SYNC.";
 
-			// Inject high-fidelity real world geo rendering tracks
 			function initializeHighDefinitionFlatMap() {
 				const svg = d3.select("#sltr-defined-vector-map");
-				svg.selectAll("*").remove(); // Clean workspace boundaries
-				
-				// Draw base system tactical tracking sub-grid map overlay tracks
+				svg.selectAll("*").remove();
 				svg.append("g").attr("stroke", "rgba(0, 240, 255, 0.04)").attr("stroke-width", "0.5")
 					.selectAll("line").data(d3.range(50, 550, 50)).enter().append("line")
 					.attr("x1", 0).attr("y1", d => d).attr("x2", 1000).attr("y2", d => d);
 				
-				// Load standard official unified global tracking borders mapping dataset
 				d3.json("https://jsdelivr.net").then(worldData => {
 					const countries = topojson.feature(worldData, worldData.objects.countries);
 					const projection = d3.geoEquirectangular().scale(155).translate([500, 260]);
 					const pathGenerator = d3.geoPath().projection(projection);
 					
-					// Force draw high precision vector paths outlined inside premium matrix green styling
 					svg.append("g").attr("fill", "none").attr("stroke", "#39ff14").attr("stroke-width", "1.1")
 						.attr("style", "filter: drop-shadow(0 0 3px rgba(57,255,20,0.45)); stroke-linejoin: round;")
 						.selectAll("path").data(countries.features).enter().append("path").attr("d", pathGenerator);
-				}).catch(err => console.error("Map tracking array matrix compilation crash fallback:", err));
+				}).catch(err => console.error("Map tracking array error:", err));
 			}
 
 			const cveDataset = [
@@ -258,7 +246,6 @@
 						if (map2dTarget) map2dTarget.style.display = 'block';
 						document.getElementById('hud-master-layer').style.display = 'block';
 						
-						// Wake up the high resolution geospatial projection map array bounds
 						initializeHighDefinitionFlatMap();
 
 						const statusHud = document.getElementById('user-status-hud');
