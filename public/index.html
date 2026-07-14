@@ -6,7 +6,6 @@
 		<title>Slaughter-Sec Matrix</title>
 		<link rel="stylesheet" href="/normalize.css" />
 		<link rel="stylesheet" href="/dist/index.css" />
-		<!-- High-Definition Map Renderers: Generates the exact world coordinates from your reference photo -->
 		<script src="https://jsdelivr.net"></script>
 		<script src="https://jsdelivr.net"></script>
 		<style>
@@ -36,7 +35,9 @@
 		</style>
 	</head>
 	<body>
-		<div id="root-2d-map"><svg id="sltr-defined-vector-map" class="map-svg-frame" viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid meet"></svg></div>
+		<div id="root-2d-map">
+			<svg id="sltr-defined-vector-map" class="map-svg-frame" viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid meet"></svg>
+		</div>
 		<div id="view-home-public" style="display: flex;">
 			<div class="header-container">
 				<div>
@@ -78,6 +79,7 @@
 			</div>
 			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px; position: relative; z-index: 5;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
+
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
@@ -102,7 +104,6 @@
 				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
-
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 20px; left: 20px; font-family: 'Courier New', monospace; width: 190px;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
@@ -138,16 +139,14 @@
 				svg.append("g").attr("stroke", "rgba(0, 240, 255, 0.04)").attr("stroke-width", "0.5")
 					.selectAll("line").data(d3.range(50, 550, 50)).enter().append("line")
 					.attr("x1", 0).attr("y1", d => d).attr("x2", 1000).attr("y2", d => d);
-				
 				d3.json("https://jsdelivr.net").then(worldData => {
 					const countries = topojson.feature(worldData, worldData.objects.countries);
-					const projection = d3.geoEquirectangular().scale(155).translate([500, 260]);
+					const projection = d3.geoEquirectangular().scale(155).translate([500, 275]);
 					const pathGenerator = d3.geoPath().projection(projection);
-					
 					svg.append("g").attr("fill", "none").attr("stroke", "#39ff14").attr("stroke-width", "1.1")
 						.attr("style", "filter: drop-shadow(0 0 3px rgba(57,255,20,0.45)); stroke-linejoin: round;")
 						.selectAll("path").data(countries.features).enter().append("path").attr("d", pathGenerator);
-				}).catch(err => console.error("Map tracking array error:", err));
+				}).catch(err => console.error("Map grid failure:", err));
 			}
 
 			const cveDataset = [
@@ -157,22 +156,22 @@
 				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." }
 			];
 			const cveDatasetExtended = [
-				{ id: "CVE-2019-0708", summary: "Remote code execution vulnerability inside Windows Remote Desktop Services (RDS) architecture via pre-auth states (BlueKeep)." },
-				{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
-				{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." },
-				{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
-				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." },
-				{ id: "CVE-2023-38831", summary: "WinRAR arbitrary code execution flaw triggered when a user attempts to open a specially crafted ZIP archive file." },
-				{ id: "CVE-2023-22515", summary: "Critical privilege escalation flaw in Atlassian Confluence Data Center exposing administrative creation access endpoints." },
-				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated remote code execution vulnerability via specialized OGNL expression inputs." },
-				{ id: "CVE-2023-46604", summary: "Apache ActiveMQ remote code execution flaw allowing attackers to run arbitrary shell strings via OpenWire protocol vectors." },
-				{ id: "CVE-2023-27997", summary: "Fortinet FortiOS heap-based buffer overflow flaw permitting unauthenticated command execution over SSL-VPN interfaces." },
-				{ id: "CVE-2023-4966", summary: "Citrix NetScaler ADC and Gateway information disclosure vulnerability allowing session token hijacking routines (Citrix Bleed)." },
-				{ id: "CVE-2022-30190", summary: "Microsoft Windows Support Diagnostic Tool (MSDT) remote code execution flaw triggered via weaponized Office macros (Follina)." },
-				{ id: "CVE-2022-41040", summary: "Microsoft Exchange Server elevation of privilege and remote code execution vulnerability chaining layout parameters (ProxyNotShell)." },
-				{ id: "CVE-2020-0601", summary: "Windows CryptoAPI spoofing flaw allowing attackers to subvert standard Elliptic Curve Cryptography certificate validation (Chain of Fools)." },
-				{ id: "CVE-2021-3156", summary: "Heap-based buffer overflow in sudo legacy argument parsing allowing root privilege escalation on Unix local systems (Baron Samedit)." },
-				{ id: "CVE-2020-1350", summary: "Critical remote code execution vulnerability inside Microsoft Windows Server DNS architecture via parsing failures (SigRed)." }
+				{ id: "CVE-2019-0708", summary: "Windows Remote Desktop pre-auth RCE vulnerability (BlueKeep)." },
+				{ id: "CVE-2021-34527", summary: "Windows Print Spooler privilege escalation and remote code flaw (PrintNightmare)." },
+				{ id: "CVE-2020-1472", summary: "Microsoft Netlogon cryptography validation bypass privilege escalation (Netlogon Exploitation)." },
+				{ id: "CVE-2018-7600", summary: "Drupal core input sanitation remote command execution flaw (Drupalgeddon2)." },
+				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server evaluation boundary OGNL expression injection runtime." },
+				{ id: "CVE-2023-38831", summary: "WinRAR extension execution flaw triggered via spoofed malicious archive attachments." },
+				{ id: "CVE-2023-22515", summary: "Atlassian Confluence Data Center broken access control exposing admin setup endpoints." },
+				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL evaluation remote shell execute." },
+				{ id: "CVE-2023-46604", summary: "Apache ActiveMQ OpenWire marshaling engine arbitrary server command intrusion." },
+				{ id: "CVE-2023-27997", summary: "Fortinet FortiOS SSL-VPN stack memory buffer overflow authentication bypass." },
+				{ id: "CVE-2023-4966", summary: "Citrix NetScaler Gateway memory information disclosure token hijack (Citrix Bleed)." },
+				{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool remote script execution via Word macros (Follina)." },
+				{ id: "CVE-2022-41040", summary: "Microsoft Exchange Server SSRF validation chaining command elevation (ProxyNotShell)." },
+				{ id: "CVE-2020-0601", summary: "Windows CryptoAPI subversion of standard certificate chain validation (Chain of Fools)." },
+				{ id: "CVE-2021-3156", summary: "Sudo legacy argument parser heap overflow local root elevation (Baron Samedit)." },
+				{ id: "CVE-2020-1350", summary: "Windows Server DNS operating subsystem parsing validation code execution flaw (SigRed)." }
 			];
 
 			const masterDataset = cveDataset.concat(cveDatasetExtended);
@@ -303,8 +302,7 @@
 				setTimeout(() => { idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
 			}
 			function manualRoll() { loadRandomCve(); }
-			window.addEventListener('popstate', routeSubDirectoriesNatively);
-			window.addEventListener('load', routeSubDirectoriesNatively);
+			window.dispatchEvent(new Event('load'));
 		</script>
 	</body>
 </html>
