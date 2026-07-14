@@ -261,11 +261,18 @@
 				}
 			}
 
-			function executeStudentValidation() {
-				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim(), emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase(), passVal = document.getElementById('student-password-input').value || "", ticker = document.getElementById('register-ticker');
+						function executeStudentValidation() {
+				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
+				const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
+				const passVal = document.getElementById('student-password-input').value || "";
+				const ticker = document.getElementById('register-ticker');
+				
 				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal); localStorage.setItem('
-_db_mock_pass_' + emailVal, passVal);
+				
+				// Standardizes object mapping strings to allow identical lookup parsing bounds
+				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal); 
+				localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
+				
 				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
 				setTimeout(() => { navigateToPath('/login'); }, 1200);
 			}
@@ -274,13 +281,18 @@ _db_mock_pass_' + emailVal, passVal);
 				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
 				const loginPass = document.getElementById('login-password-input').value || "";
 				const ticker = document.getElementById('login-ticker');
+				
 				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail);
+				
+				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail); 
 				const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
+				
 				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
 				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_saved_handle', storedHandle);
+				
+				localStorage.setItem('sl_saved_handle', storedHandle); 
 				localStorage.setItem('sl_saved_email', loginEmail);
+				
 				if (ticker) {
 					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
 					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
