@@ -1,428 +1,290 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Slaughter-Sec Management Terminal</title>
-		<link rel="stylesheet" href="/normalize.css" />
-		<link rel="stylesheet" href="/index.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Globe</title>
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<meta name="title" content="PartyServer" />
+		<meta name="description" content="Everything's better with friends!" />
+		<meta name="author" content="PartyServer" />
+		<meta name="theme-color" content="#ffffff" />
+		<style>
+			html, body {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #0a0a0f;
+				font-family: 'Courier New', Courier, monospace;
+				color: #ffffff;
+				overflow: hidden;
+			}
+			#app-container {
+				width: 100%;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
+				padding: 40px 20px;
+				box-sizing: border-box;
+				position: relative;
+			}
+			.header-group {
+				text-align: center;
+				margin-top: 20px;
+				z-index: 10;
+			}
+			.main-title {
+				font-size: 36px;
+				font-weight: bold;
+				letter-spacing: 2px;
+				margin: 0 0 10px 0;
+			}
+			.sub-status {
+				color: #aaaaaa;
+				font-size: 14px;
+				letter-spacing: 1px;
+			}
+			.globe-viewport {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 500px;
+				height: 500px;
+				z-index: 1;
+			}
+			canvas {
+				width: 100%;
+				height: 100%;
+			}
+			.terminal-console {
+				width: 100%;
+				max-width: 850px;
+				background: rgba(10, 10, 15, 0.95);
+				border: 1px solid #00d2ff;
+				border-radius: 6px;
+				padding: 15px 20px;
+				box-sizing: border-box;
+				box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+				z-index: 10;
+				margin-bottom: 20px;
+			}
+			.terminal-input-row {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				border-bottom: 1px dashed rgba(0, 210, 255, 0.3);
+				padding-bottom: 10px;
+				margin-bottom: 12px;
+			}
+			.prompt-text {
+				color: #00d2ff;
+				font-weight: bold;
+			}
+			.cmd-text {
+				color: #ffffff;
+			}
+			.vulnerability-tag {
+				background: rgba(57, 255, 20, 0.1);
+				border: 1px dashed #39ff14;
+				color: #39ff14;
+				padding: 3px 8px;
+				border-radius: 4px;
+				font-weight: bold;
+			}
+			.action-btn {
+				background: rgba(255, 74, 74, 0.1);
+				border: 1px solid #ff4a4a;
+				color: #ff4a4a;
+				padding: 4px 12px;
+				border-radius: 4px;
+				font-weight: bold;
+				cursor: pointer;
+				font-family: monospace;
+				font-size: 11px;
+				transition: all 0.2s;
+			}
+			.action-btn:hover {
+				background: #ff4a4a;
+				color: #0a0a0f;
+				box-shadow: 0 0 10px #ff4a4a;
+			}
+			.output-description {
+				color: #39ff14;
+				font-size: 13px;
+				line-height: 1.5;
+				min-height: 40px;
+			}
+		</style>
 	</head>
 	<body>
-
-		<!-- Central Public Access Gate Portal Curtain -->
-		<div id="view-home-public" style="display: flex;">
-			<div class="public-box">
-				<h1 class="public-title">Slaughter-Sec Core Gateway</h1>
-				<p style="color: var(--text-muted); font-size: 14px; line-height: 1.5; margin: 0 0 28px 0;">Authentication required to bind dynamic layout telemetry resources and interface grids mapping to your active subnet identity vector context values safely.</p>
-				<div style="display: flex; gap: 12px; justify-content: center;">
-					<button onclick="navigateToPath('/login')" class="action-btn" style="background: var(--accent-blue); color: #000; font-weight: bold; border: none; padding: 10px 24px; border-radius: 6px;">Sign In</button>
-					<button onclick="navigateToPath('/register')" class="action-btn" style="padding: 10px 24px; border-radius: 6px;">Register Node</button>
+		<div id="app-container">
+			<div class="header-group">
+				<h1 class="main-title">where are you hiding...</h1>
+				<div class="sub-status"><span id="user-count">2</span> people connected.</div>
+			</div>
+			<div class="globe-viewport">
+				<canvas id="globeCanvas"></canvas>
+			</div>
+			<div class="terminal-console">
+				<div class="terminal-input-row">
+					<div class="prompt-text">[SLAUGHTER_SEC@CORE]:~$</div>
+					<div class="cmd-text">FETCH_VULN</div>
+					<div id="active-cve-id" class="vulnerability-tag">CVE-2024-3094</div>
+					<button id="roll-trigger" class="action-btn">EXECUTE_ROLL ↻</button>
+				</div>
+				<div id="active-cve-summary" class="output-description">
+					&gt; DESCRIPTION: Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors.
 				</div>
 			</div>
 		</div>
-
-		<!-- Login Standalone View Modal Container -->
-		<div id="view-login" class="standalone-page-view">
-			<div class="terminal-grid-box">
-				<h2>Account Authentication</h2>
-				
-				<input id="login-password-input" type="password" placeholder="Account Key Secret" />
-				<button onclick="executeLoginAuthentication()">Verify Identity</button>
-				<div id="login-ticker" class="status-log-line">Awaiting credentials...</div>
-				<br><div onclick="navigateToPath('/')" style="color: var(--text-muted); font-size: 12px; cursor: pointer; text-decoration: underline;">Cancel Handshake</div>
-			</div>
-		</div>
-
-		<!-- Registration Standalone View Modal Container -->
-		<div id="view-register" class="standalone-page-view">
-			<div class="terminal-grid-box">
-				<h2>Node Deployment</h2>
-				
-				<input id="student-email-input" type="email" placeholder="Institutional Email Account" />
-				<input id="student-password-input" type="password" placeholder="Configure Passphrase Code" />
-				<button onclick="executeStudentValidation()">Initialize Node</button>
-				<div id="register-ticker" class="status-log-line">Configure initialization matrices...</div>
-				<br><div onclick="navigateToPath('/')" style="color: var(--text-muted); font-size: 12px; cursor: pointer; text-decoration: underline;">Cancel Handshake</div>
-			</div>
-		</div>
-
-		<!-- SYSTEM WORKSPACE PLATFORM APPLICATION LAYER UI RUNTIME HOOKS -->
-		<div id="hud-master-layer">
-			
-			<!-- Global Dynamic Top Header Navigation Row Bar -->
-			<header class="top-navbar-row">
-				<div class="navbar-brand">SLAUGHTER<span>SEC</span> // SYSTEM TERMINAL</div>
-				<div style="display: flex; align-items: center; gap: 16px;">
-					<div id="user-status-hud" style="font-size: 13px; font-weight: 600; color: var(--accent-green);">GUEST // CLEARANCE_L1</div>
-					<button onclick="executeProfileLogout()" class="action-btn" style="border-color: var(--accent-red); color: var(--accent-red);">Sign Out</button>
-				</div>
-			</header>
-
-			<!-- Docked Left Sidebar Panel Menu Array Container -->
-			<nav class="left-sidebar-pane">
-				<div style="width: 100%;">
-					<div class="nav-group-header">Operations Center</div>
-					<ul class="sidebar-menu-list">
-						<li><div onclick="navigateToPath('/matrix')" id="btn-core-monitor" class="nav-btn active">Dashboard Overview</div></li>
-						<li><div onclick="alert('Platform metric engines online.')" class="nav-btn">Performance Knots</div></li>
-						<li><div onclick="alert('Database parameters tracking cleanly.')" class="nav-btn">Threat Databases</div></li>
-						<li><div onclick="navigateToPath('/matrix/redteam')" id="btn-red-team" class="nav-btn">Red Team Simulation</div></li>
-					</ul>
-				</div>
-				<div style="font-size: 11px; color: var(--text-muted); padding-left: 8px; letter-spacing: 0.5px;">PLATFORM ACTIVE v4.2</div>
-			</nav>
-
-			<!-- Central Executive Operations Command Workspace Pane Window Block -->
-			<main class="center-workspace-pane">
-				
-				<!-- The Clean, Big Professional Placeholder Banner Card Header Box Container Frame Element -->
-				<section class="big-placeholder">
-					<div class="placeholder-title">Operational Workspace Header Container</div>
-					<h2 class="placeholder-value">EXECUTIVE METRICS DASHBOARD</h2>
-				</section>
-
-				<!-- System Intelligence Logs Panel Module Window Component -->
-				<section class="terminal-console">
-					<div class="console-header-bar">
-						<div class="console-title-group">
-							<span class="console-label">Core Threat Stream Intake Tracker:</span>
-							<span id="cve-id" class="vulnerability-tag">SYS_INIT</span>
-						</div>
-						<button onclick="manualRoll()" class="action-btn">Cycle Intel Feed ↻</button>
-					</div>
-					<div id="cve-summary" class="output-description">
-						Connecting to system data stream engines...
-					</div>
-				</section>
-
-				<!-- Modular Sub-Interface Layout Overlay Box Container -->
-				<section id="view-internal-redteam">
-					<div id="typing-field" class="red-telemetry-log"></div>
-					<div id="art-container" style="transition: opacity 0.5s; opacity: 0; display: flex; justify-content: center; width: 100%;">
-						<pre style="color: var(--accent-red); font-family: monospace; font-size: 9px; line-height: 1.1; font-weight: bold; white-space: pre; margin: 12px 0 0 0;">
-               ,-.                               
-       ___,---.__          /'|`\          __,---,___          
-    ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
-  ,'        |           ~'\     /`~           |        `.      
- /      ___//              `. ,'          ,  , \___      \    
-
-|    ,-'   `-.__   _         |        ,    __,-'   `-.    |    
-|   /          /\_  `   .    |    ,      _/\          \   |   
-\  |           \ \`-.___ \   |   / ___,-'/ /           |  /  
- \  \           | `._   `\\  |  //'   _,' |           /  /      
-  `-.\         /'  _ `---'' , . ``---' _  `\         /,-'     
-     ``       /     \    ,='/ \`=.    /     \       ''          
-
-             |__   /|\_,--.,-.--,--._/|\   __|                  
-             /  `./  \\`\ |  |  | /,//' \,'  \                  
-            /   /     ||--+--|--+-/-|     \   \                 
-
-           |   |     /'\_\_\ | /_/_/`\     |   |                
-            \   \__, \_     `~'     _/ .__/   /            
-             `-._,-'   `-._______,-'   `-._,-'
-                // SLTR - SEC //</pre>
-					</div>
-				</section>
-
-			</main>
-		</div>
-
-		<!-- Combined Action Script Matrix Router Links Here Directly -->
+		<!-- Script engine imports link directly here -->
 		<script src="/index.js"></script>
 	</body>
 </html>
-/* THEME UTILITIES AND VARIABLES CONFIGURATION */
-:root {
-	--bg-main: #0a0b10;
-	--bg-card: #11131c;
-	--border-color: #222634;
-	--text-muted: #70758a;
-	--accent-blue: #00d2ff;
-	--accent-green: #39ff14;
-	--accent-red: #ff4a4a;
-}
-
-html, body { 
-	width: 100% !important; 
-	height: 100% !important; 
-	margin: 0; 
-	padding: 0; 
-	background-color: var(--bg-main) !important; 
-	overflow: hidden !important; 
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-	color: #ffffff; 
-}
-
-/* PUBLIC ACCESSIBLE VISUAL INTERFACE BASE LAYOUTS */
-#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #11131c 0%, #0a0b10 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 150000 !important; }
-.public-box { width: 100%; max-width: 500px; background: var(--bg-card); border: 1px solid var(--border-color); padding: 40px; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; }
-.public-title { font-size: 24px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; color: #ffffff; }
-
-/* MODAL SECTIONS FOR LOGIN AND IDENTITY ASSIGNMENTS */
-.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-main); z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-.terminal-grid-box { border: 1px solid var(--border-color); background: var(--bg-card); width: 95%; max-width: 400px; padding: 40px 30px; border-radius: 8px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-.terminal-grid-box h2 { font-size: 20px; margin-bottom: 24px; color: #ffffff; font-weight: 600; }
-.terminal-grid-box input { background: var(--bg-main); border: 1px solid var(--border-color); color: #ffffff; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 6px; font-size: 14px; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
-.terminal-grid-box input:focus { border-color: var(--accent-blue); }
-.terminal-grid-box button { background: var(--accent-blue); border: none; color: #000000; font-weight: bold; padding: 12px 0; width: 100%; cursor: pointer; border-radius: 6px; font-size: 14px; transition: opacity 0.2s; }
-.terminal-grid-box button:hover { opacity: 0.9; }
-.status-log-line { margin-top: 15px; font-size: 12px; height: 18px; color: var(--text-muted); }
-/* ENTERPRISE WORKSPACE HUD LAYOUT MANAGEMENT GRID GRID GRID */
-#hud-master-layer { 
-	position: fixed; 
-	top: 0; 
-	left: 0; 
-	width: 100vw; 
-	height: 100vh; 
-	display: none; 
-	grid-template-rows: 60px calc(100vh - 60px); 
-	grid-template-columns: 240px calc(100vw - 240px); 
-	z-index: 99999 !important; 
-	background: var(--bg-main); 
-}
-
-/* TOP STATUS CONTROL HEADER PANEL ROW BAR */
-.top-navbar-row { 
-	grid-column: 1 / span 2; 
-	grid-row: 1; 
-	background: var(--bg-card); 
-	display: flex; 
-	justify-content: space-between; 
-	align-items: center; 
-	padding: 0 24px; 
-	box-sizing: border-box; 
-	border-bottom: 1px solid var(--border-color); 
-}
-.navbar-brand { font-size: 16px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
-.navbar-brand span { color: var(--accent-blue); }
-
-/* SIDEBAR AND CENTRAL WORKING CONTENT CANVAS AREAS */
-.left-sidebar-pane { grid-column: 1; grid-row: 2; background: var(--bg-card); border-right: 1px solid var(--border-color); padding: 24px 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
-.nav-group-header { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-left: 8px; }
-.sidebar-menu-list { display: flex; flex-direction: column; gap: 6px; width: 100%; padding: 0; margin: 0; list-style: none; }
-
-.nav-btn { color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 500; background: transparent; border: 1px solid transparent; padding: 10px 14px; border-radius: 6px; transition: all 0.15s ease; display: block; text-align: left; cursor: pointer; width: 100%; box-sizing: border-box; }
-.nav-btn:hover { background: rgba(255,255,255,0.04); color: var(--accent-blue); }
-.nav-btn.active { background: rgba(0, 210, 255, 0.08); color: var(--accent-blue); border-color: rgba(0, 210, 255, 0.15); }
-
-.center-workspace-pane { grid-column: 2; grid-row: 2; padding: 32px; box-sizing: border-box; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; }
-
-/* REBUILT WORKSPACE SYSTEM CONTAINERS COMPONENTS */
-.big-placeholder { background: linear-gradient(135deg, #161925 0%, #11131c 100%); border: 1px solid var(--border-color); border-top: 3px solid var(--accent-blue); border-radius: 8px; padding: 24px 32px; box-sizing: border-box; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-.placeholder-title { color: var(--text-muted); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-.placeholder-value { color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin: 0; }
-
-.terminal-console { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-sizing: border-box; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 16px; }
-.console-header-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; }
-.console-title-group { display: flex; align-items: center; gap: 12px; }
-.console-label { font-size: 14px; font-weight: 600; color: #ffffff; }
-.vulnerability-tag { background: rgba(57, 255, 20, 0.06); border: 1px solid rgba(57, 255, 20, 0.2); color: var(--accent-green); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; font-family: monospace; }
-
-.action-btn { background: var(--bg-main); border: 1px solid var(--border-color); color: #ffffff; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
-.action-btn:hover { border-color: var(--text-muted); background: rgba(255,255,255,0.02); }
-.output-description { color: var(--text-muted); font-size: 14px; line-height: 1.6; background: var(--bg-main); padding: 16px; border-radius: 6px; border: 1px solid var(--border-color); min-height: 48px; font-family: monospace; }
-
-#view-internal-redteam { display: none; background: #1a0808; border: 1px solid #5c1e1e; border-radius: 6px; padding: 20px; flex-direction: column; gap: 16px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
-.red-telemetry-log { color: #ff6666; font-size: 13px; line-height: 1.6; font-family: monospace; }
-#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: var(--accent-red); }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-let cycleTimer = null;
-let isTypingActive = false;
-const terminalLogText = "[!] ALERT: SECURE ADVERSARY SIMULATION SUB-SYSTEM INTRODUCED\n---------------------------------------------------------------\n> ENDPOINT_STATUS: INITIALIZING OFFENSIVE SECURITY RADAR OVERLAY...\n> HANDSHAKE_TUNNEL: ENCRYPTED MULTIPLAYER MATRIX MOUNTED CLEANLY\n> LOG_STREAM: EXPLOITATION HOOK AGENTS ACTIVE ON LOGGING ROUTINES\n> THREAT_INTEL: NETWORK SHIELD RUNNING BACKGROUND VERIFICATION VECTORS.";
-
-const masterDataset = [
-	{ id: "CVE-2024-3094", summary: "Malicious code injection in XZ Utils compression utilities leading to sshd shell backdoor access hooks." },
-	{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configuration boundary failure permitting absolute remote execution string lookups." },
-	{ id: "CVE-2017-0144", summary: "Remote code execution flaw inside Windows SMBv1 servers, weaponized via EternalBlue exploits." },
-	{ id: "CVE-2014-0160", summary: "OpenSSL TLS Heartbeat Extension memory info leakage unauthenticated dumping routines (Heartbleed)." },
-	{ id: "CVE-2019-0708", summary: "Windows Remote Desktop pre-auth RCE vulnerability (BlueKeep)." },
-	{ id: "CVE-2021-34527", summary: "Windows Print Spooler privilege escalation and remote code flaw (PrintNightmare)." },
-	{ id: "CVE-2020-1472", summary: "Microsoft Netlogon cryptography validation bypass privilege escalation (Netlogon Exploitation)." }
+// 1. Core Threat Matrix Local Dataset (Exactly 25 High-Profile Real CVEs)
+const cveDataset = [
+	{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
+	{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
+	{ id: "CVE-2023-38606", summary: "Apple iOS kernel verification bypass exploit allowing localized processes to execute unauthorized root privileges." },
+	{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
+	{ id: "CVE-2022-22965", summary: "Spring Framework Core feature sets vulnerable to remote data binding injection routines via specific JVM environments." },
+	{ id: "CVE-2020-0601", summary: "Windows CryptoAPI spoofing vulnerability allowing attackers to bypass system security validation to trust malicious certificates." },
+	{ id: "CVE-2014-0160", summary: "OpenSSL Heartbeat Extension information disclosure flaw permitting unauthenticated memory dumping routines (Heartbleed)." },
+	{ id: "CVE-2019-0708", summary: "Remote code execution vulnerability inside Windows Remote Desktop Services (RDS) architecture via pre-auth states (BlueKeep)." },
+	{ id: "CVE-2021-34527", summary: "Windows Print Spooler service failure allowing remote code execution via unauthorized driver updates (PrintNightmare)." },
+	{ id: "CVE-2020-1472", summary: "Elevation of privilege vulnerability mapping inside Microsoft Netlogon protocol validation parameters (Netlogon Exploitation)." },
+	{ id: "CVE-2018-7600", summary: "Drupal core remote code execution vulnerability triggered via improper input sanitation on rendering structures (Drupalgeddon2)." },
+	{ id: "CVE-2023-23397", summary: "Microsoft Outlook privilege escalation flaw letting remote actors pass NTLM authentication hashes silently via calendar alerts." },
+	{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL expression injection leading to absolute remote root shell execution." },
+	{ id: "CVE-2021-26855", summary: "Microsoft Exchange Server SSRF vulnerability permitting untrusted attackers to bypass proxy parameters (ProxyLogon Core)." },
+	{ id: "CVE-2020-5902", summary: "F5 BIG-IP Traffic Management User Interface command execution flaw permitting complete root administrative system compromise." },
+	{ id: "CVE-2024-21626", summary: "runc container breakout vulnerability leaking file descriptors, enabling containers to escape isolation limits to the host system." },
+	{ id: "CVE-2022-0847", summary: "Linux kernel pipe buffer flag tracking failure enabling overwrite capabilities on protected read-only system files (Dirty Pipe)." },
+	{ id: "CVE-2023-44487", summary: "HTTP/2 protocol frame streaming manipulation enabling catastrophic stream multiplexing server resource exhaustion (Rapid Reset DDoS)." },
+	{ id: "CVE-2019-11510", summary: "Pulse Connect Secure VPN gateway directory traversal vulnerability exposing active user corporate authentication caches." },
+	{ id: "CVE-2021-21972", summary: "VMware vCenter Server plugin parameter handling vulnerability permitting untrusted file upload pathways and shell execution." },
+	{ id: "CVE-2023-4966", summary: "Citrix NetScaler ADC data disclosure vector leaking buffer memory frames during active session requests (Citrix Bleed)." },
+	{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool (MSDT) remote code execution loop triggered via malicious Office document macros (Follina)." },
+	{ id: "CVE-2020-1066", summary: "Microsoft Windows unauthenticated remote code execution flaw in the parsing routines of specific GDI layout components." },
+	{ id: "CVE-2023-3519", summary: "Citrix NetScaler Gateway remote code execution vulnerability exploiting buffer allocation limits on unauthenticated appliances." },
+	{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server OGNL injection parameters failing evaluation limits, mapping absolute terminal execution paths." }
 ];
+// 2. Build Interactive Top Fixed Navigation Elements
+function buildNavigation() {
+	// Access Dashboard Button (Left)
+	const leftContainer = document.createElement('div');
+	leftContainer.style.cssText = "position: fixed; top: 20px; left: 20px; z-index: 9999;";
+	const leftLink = document.createElement('a');
+	leftLink.href = "/dashboard.html"; // Straight directory targeting to resolve your 404 error
+	leftLink.textContent = "[ACCESS_DASHBOARD]";
+	leftLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s;";
+	
+	leftLink.onmouseover = () => { leftLink.style.background='#ff4a4a'; leftLink.style.color='#0a0a0f'; leftLink.style.boxShadow='0 0 15px #ff4a4a'; };
+	leftLink.onmouseout = () => { leftLink.style.background='rgba(255, 74, 74, 0.05)'; leftLink.style.color='#ff4a4a'; leftLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; };
+	leftContainer.appendChild(leftLink);
+	document.body.appendChild(leftContainer);
 
-function triggerTerminalTypingSimulation() {
-	if (isTypingActive) return; isTypingActive = true;
-	const targetField = document.getElementById("typing-field"), artContainer = document.getElementById("art-container");
-	if (!targetField) return; targetField.innerHTML = ""; if (artContainer) artContainer.style.opacity = "0";
-	let index = 0;
-	function typeNextCharacter() {
-		if (index < terminalLogText.length) {
-			const char = terminalLogText.charAt(index);
-			targetField.innerHTML += (char === "\n" ? "<br>" : char); index++; setTimeout(typeNextCharacter, 18);
-		} else { if (artContainer) artContainer.style.opacity = "1"; }
-	}
-	typeNextCharacter();
+	// Live Intel Link Button (Right)
+	const rightContainer = document.createElement('div');
+	rightContainer.style.cssText = "position: fixed; top: 20px; right: 20px; z-index: 9999;";
+	const rightLink = document.createElement('a');
+	rightLink.href = "/test-map.html"; // Targets your working canvas mockup
+	rightLink.textContent = "[LIVE_INTEL]";
+	rightLink.style.cssText = "color: #ff4a4a; text-decoration: none; font-size: 12px; font-weight: bold; background: rgba(255, 74, 74, 0.05); border: 1px solid rgba(255, 74, 74, 0.3); padding: 6px 12px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 74, 74, 0.1); transition: all 0.2s;";
+	
+	rightLink.onmouseover = () => { rightLink.style.background='#ff4a4a'; rightLink.style.color='#0a0a0f'; rightLink.style.boxShadow='0 0 15px #ff4a4a'; };
+	rightLink.onmouseout = () => { rightLink.style.background='rgba(255, 74, 74, 0.05)'; rightLink.style.color='#ff4a4a'; rightLink.style.boxShadow='0 0 10px rgba(255, 74, 74, 0.1)'; };
+	rightContainer.appendChild(rightLink);
+	document.body.appendChild(rightContainer);
 }
 
-function navigateToPath(targetUrlPath) { window.history.pushState({}, '', targetUrlPath); routeSubDirectoriesNatively(); resetTickers(); }
+// 3. Engine: Cycle Data Engine Handler
+function initTerminalEngine() {
+	const idContainer = document.getElementById('active-cve-id');
+	const summaryContainer = document.getElementById('active-cve-summary');
+	const rollBtn = document.getElementById('roll-trigger');
 
-document.addEventListener("keydown", (e) => {
-	if (e.key === "Enter") {
-		if (document.getElementById("view-login").style.display === "flex") executeLoginAuthentication();
-		if (document.getElementById("view-register").style.display === "flex") executeStudentValidation();
+	function cycleCVE() {
+		const randomIndex = Math.floor(Math.random() * cveDataset.length);
+		const currentItem = cveDataset[randomIndex];
+		if (idContainer) idContainer.textContent = currentItem.id;
+		if (summaryContainer) summaryContainer.innerHTML = `&gt; DESCRIPTION: ${currentItem.summary}`;
 	}
-});
 
-function resetTickers() {
-	const loginT = document.getElementById('login-ticker'), registerT = document.getElementById('register-ticker');
-	if (loginT) { loginT.textContent = "Awaiting credentials..."; }
-	if (registerT) { registerT.textContent = "Configure initialization matrices..."; }
+	if (rollBtn) rollBtn.addEventListener('click', cycleCVE);
+	setInterval(cycleCVE, 12000);
 }
 
-function routeSubDirectoriesNatively() {
-	const path = window.location.pathname;
-	const cachedHandle = localStorage.getItem('sl_saved_handle');
-	const cachedEmail = localStorage.getItem('sl_saved_email');
-	const publicHomeOverlay = document.getElementById('view-home-public');
+// 4. Engine: 3D Holographic Point Matrix Canvas Globe Simulation
+function initGlobeRenderer() {
+	const canvas = document.getElementById('globeCanvas');
+	if (!canvas) return;
+	const ctx = canvas.getContext('2d');
 	
-	if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'none', 'important');
-	document.getElementById('view-login').style.setProperty('display', 'none', 'important');
-	document.getElementById('view-register').style.setProperty('display', 'none', 'important');
-	document.getElementById('hud-master-layer').style.setProperty('display', 'none', 'important');
-	
-	const redteamView = document.getElementById('view-internal-redteam');
-	if (redteamView) redteamView.style.setProperty('display', 'none', 'important');
-	
-	document.getElementById('btn-core-monitor').classList.remove('active');
-	document.getElementById('btn-red-team').classList.remove('active');
-	
-	clearInterval(cycleTimer);
+	canvas.width = 500;
+	canvas.height = 500;
 
-	if (path === "/login" || path === "/login/") {
-		document.getElementById('view-login').style.setProperty('display', 'flex', 'important');
-	} 
-	else if (path === "/register" || path === "/register/") {
-		document.getElementById('view-register').style.setProperty('display', 'flex', 'important');
-	} 
-	else if (path === "/matrix" || path === "/matrix/") {
-		if (cachedHandle && cachedEmail) {
-			document.getElementById('hud-master-layer').style.setProperty('display', 'grid', 'important');
-			document.getElementById('btn-core-monitor').classList.add('active');
+	const points = [];
+	const totalPoints = 320;
+	const radius = 180;
+	let rotationAngle = 0;
+
+	for (let i = 0; i < totalPoints; i++) {
+		const theta = Math.acos(Math.random() * 2 - 1);
+		const phi = Math.random() * Math.PI * 2;
+
+		points.push({
+			x: radius * Math.sin(theta) * Math.cos(phi),
+			y: radius * Math.sin(theta) * Math.sin(phi),
+			z: radius * Math.cos(theta)
+		});
+	}
+
+	function animateGlobe() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		const cx = canvas.width / 2;
+		const cy = canvas.height / 2;
+		rotationAngle += 0.003;
+
+		const cosA = Math.cos(rotationAngle);
+		const sinA = Math.sin(rotationAngle);
+
+		points.forEach(p => {
+			const rotX = p.x * cosA - p.z * sinA;
+			const rotZ = p.x * sinA + p.z * cosA;
+			const perspective = 400 / (400 + rotZ);
+			const finalX = cx + rotX * perspective;
+			const finalY = cy + p.y * perspective;
+			const alpha = Math.max(0.1, (200 - rotZ) / 300);
 			
-			const statusHud = document.getElementById('user-status-hud');
-			if (statusHud) {
-				const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
-				statusHud.innerHTML = `${cachedHandle.toUpperCase()} // ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
-				statusHud.style.color = isL2 ? "var(--accent-blue)" : "var(--accent-green)";
-			}
-			loadRandomCve();
-			cycleTimer = setInterval(loadRandomCve, 12000);
-		} else { navigateToPath('/'); }
+			ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.85})`;
+			ctx.beginPath();
+			ctx.arc(finalX, finalY, Math.max(1, 1.8 * perspective), 0, Math.PI * 2);
+			ctx.fill();
+		});
+
+		requestAnimationFrame(animateGlobe);
 	}
-	else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
-		if (cachedHandle && cachedEmail) {
-			document.getElementById('hud-master-layer').style.setProperty('display', 'grid', 'important');
-			document.getElementById('btn-red-team').classList.add('active');
-			if (redteamView) redteamView.style.setProperty('display', 'flex', 'important');
-			
-			const statusHud = document.getElementById('user-status-hud');
-			if (statusHud) { statusHud.innerHTML = `${cachedHandle.toUpperCase()} // RED_TEAM_OPS`; statusHud.style.color = "var(--accent-red)"; }
-			
-			isTypingActive = false;
-			triggerTerminalTypingSimulation();
-			loadRandomCve();
-			cycleTimer = setInterval(loadRandomCve, 12000);
-		} else { navigateToPath('/'); }
-	} 
-	else {
-		if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } 
-		else { if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'flex', 'important'); }
-	}
+
+	animateGlobe();
 }
 
-function executeStudentValidation() {
-	const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim();
-	const emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase();
-	const passVal = document.getElementById('student-password-input').value || "";
-	const ticker = document.getElementById('register-ticker');
-	if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "Error: All fields are mandatory"; ticker.style.color = "var(--accent-red)"; } return; }
-	localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal); 
-	localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
-	if (ticker) { ticker.textContent = "Node initialization initialized. Redirecting..."; ticker.style.color = "var(--accent-green)"; }
-	setTimeout(() => { navigateToPath('/login'); }, 1200);
-}
-
-function executeLoginAuthentication() {
-	const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase();
-	const loginPass = document.getElementById('login-password-input').value || "";
-	const ticker = document.getElementById('login-ticker');
-	if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "Error: All fields are mandatory"; ticker.style.color = "var(--accent-red)"; } return; }
-	const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail); 
-	const storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
-	if (!storedPass) { if (ticker) { ticker.textContent = "Error: Credentials not found"; ticker.style.color = "var(--accent-red)"; } return; }
-	if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "Error: Passphrase verification mismatch"; ticker.style.color = "var(--accent-red)"; } return; }
-	localStorage.setItem('sl_saved_handle', storedHandle); 
-	localStorage.setItem('sl_saved_email', loginEmail);
-	if (ticker) { ticker.textContent = "Access Granted. Syncing dashboard environment..."; ticker.style.color = "var(--accent-green)"; }
-	setTimeout(() => { navigateToPath('/matrix'); }, 1000);
-}
-
-function executeProfileLogout() { localStorage.removeItem('sl_saved_handle'); localStorage.removeItem('sl_saved_email'); isTypingActive = false; routeSubDirectoriesNatively(); }
-
-function loadRandomCve() {
-	const idEl = document.getElementById('cve-id'); const summaryEl = document.getElementById('cve-summary');
-	if (!idEl || !summaryEl) return;
-	idEl.textContent = "ROLLING...";
-	const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-	setTimeout(() => { 
-		idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: var(--accent-green); text-decoration: none;">${randomCve.id}</a>`; 
-		summaryEl.textContent = "DESCRIPTION: " + randomCve.summary; 
-	}, 200);
-}
-
-function manualRoll() { loadRandomCve(); }
-window.addEventListener('popstate', routeSubDirectoriesNatively);
-window.addEventListener('load', routeSubDirectoriesNatively);
-// --- CRITICAL LIFECYCLE EVENT BINDINGS & SCREEN CONTROLLERS ---
-
-/**
- * Instantly triggers an manual rotation roll of the active threat intelligence stream array.
- */
-function manualRoll() { 
-    loadRandomCve(); 
-}
-
-/**
- * Listens for standard browser navigation events (like the user clicking the Back or Forward buttons).
- * This ensures the single-page routing state updates seamlessly without forcing a full page reload.
- */
-window.addEventListener('popstate', () => {
-    routeSubDirectoriesNatively();
-});
-
-/**
- * Fires the initialization routine immediately when the DOM layer mounts into the memory context.
- * This runs your local credentials lookup and renders the correct view state instantly on boot.
- */
+// System Boot Integration Hooks
 window.addEventListener('DOMContentLoaded', () => {
-    routeSubDirectoriesNatively();
+	buildNavigation();
+	initTerminalEngine();
+	initGlobeRenderer();
 
-    // Re-verify the active window state every 5 seconds to manage asynchronous routing loops smoothly
-    setInterval(() => {
-        const path = window.location.pathname;
-        if ((path === "/matrix" || path === "/matrix/") && !cycleTimer) {
-            loadRandomCve();
-            cycleTimer = setInterval(loadRandomCve, 12000);
-        }
-    }, 5000);
+	setInterval(() => {
+		const count = document.getElementById('user-count');
+		if (!count) return;
+		const current = parseInt(count.textContent);
+		const variance = Math.random() > 0.5 ? 1 : -1;
+		count.textContent = Math.max(1, current + variance);
+	}, 7000);
 });
-
-/**
- * Monitors the browser tab's active visibility state.
- * Clears systemic processing cycles when the operative backgrounds the tab to conserve layout resources.
- */
-document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-        clearInterval(cycleTimer);
-        cycleTimer = null;
-    } else {
-        const path = window.location.pathname;
-        if ((path === "/matrix" || path === "/matrix/" || path === "/matrix/redteam" || path === "/matrix/redteam/")) {
-            loadRandomCve();
-            cycleTimer = setInterval(loadRandomCve, 12000);
-        }
-    }
-});
-
-// Final confirmation that all security sub-system structures have compiled successfully on the client thread.
-console.log("[+] Slaughter-Sec System Terminal Frontend Matrix Engine V4.2 Initialized Successfully.");
