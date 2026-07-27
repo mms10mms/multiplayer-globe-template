@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="/dist/index.css" />
 		<style>
 			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			#root-matrix-rain { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; background: #040406; z-index: 1 !important; transition: all 0.3s ease; }
+			#root-matrix-rain { position: fixed !important; top: 0 !important; left: 240px !important; width: calc(100vw - 240px) !important; height: 100vh !important; display: none; background: #040406; z-index: 1 !important; border-left: 2px solid rgba(0, 240, 255, 0.2); }
 			#matrix-canvas { width: 100% !important; height: 100% !important; display: block !important; }
 			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
 			#hud-master-layer * { pointer-events: auto; }
@@ -16,24 +16,39 @@
 			.nav-btn:hover { background: #ff4a4a !important; color: #040406; box-shadow: 0 0 15px #ff4a4a, 0 0 5px rgba(0,0,0,0.9); border-color: #ff4a4a; }
 			#user-status-hud { color: #39ff14; font-size: 11px; background: #07070c !important; border: 1px solid rgba(0,240,255,0.3); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); box-shadow: 0 0 10px rgba(0,0,0,0.9); position: relative; z-index: 100005 !important; }
 			.connection-telemetry-box { color: #39ff14; font-size: 11px; background: #07070c !important; border: 1px dashed rgba(57,255,20,0.25); padding: 8px 12px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; font-family: monospace; }
-			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: transparent; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(255, 74, 74, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 35px rgba(255, 74, 74, 0.15); text-align: center; color: #ff4a4a; position: relative; z-index: 200005 !important; }
-			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(255, 74, 74, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
-			.terminal-grid-box input:focus { border-color: #ff4a4a; box-shadow: 0 0 10px rgba(255, 74, 74, 0.2); }
-			.terminal-grid-box button { background: rgba(255,74,74,0.05); border: 1px solid #ff4a4a; color: #ff4a4a; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; width: 100%; }
+			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040406; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
+			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.08); text-align: center; color: #00f0ff; }
+			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0, 240, 255, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
+			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
-			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: transparent !important; padding: 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; z-index: 150000 !important; }
-			.gate-floating-card { background: radial-gradient(circle at 50% 50%, #120404 0%, #050101 100%) !important; border: 1px solid rgba(255, 74, 74, 0.35); border-top: 4px solid #ff4a4a; padding: 35px; border-radius: 6px; color: #ff4a4a; width: 100%; max-width: 580px; box-shadow: 0 0 40px rgba(0,0,0,0.95); text-align: center; position: relative; z-index: 150005 !important; }
+			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: radial-gradient(circle at 50% 50%, #0a0a10 0%, #030305 100%) !important; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 150000 !important; }
+			#view-home-public::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01)); z-index: 2; background-size: 100% 4px, 6px 100%; pointer-events: none; }
+			.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 950px; z-index: 5; position: relative; margin-bottom: 20px; }
+			.landing-title { color: #ff4a4a; font-size: 2.2rem; font-weight: 800; letter-spacing: 4px; text-shadow: 0 0 15px rgba(255, 74, 74, 0.35); margin: 0; text-transform: uppercase; }
+			.telemetry-log { background: #050508; border: 1px solid rgba(255, 74, 74, 0.2); padding: 30px; border-radius: 4px; color: #88ffaa; font-size: 12px; line-height: 1.7; width: 100%; max-width: 950px; min-height: 480px; box-sizing: border-box; overflow: hidden; border-left: 4px solid #ff4a4a; box-shadow: inset 0 0 20px rgba(0,0,0,0.9); font-family: 'Courier New', monospace; position: relative; z-index: 5; display: flex; flex-direction: column; justify-content: flex-start; }
+			#typing-field::after { content: "█"; animation: blink 0.8s infinite; color: #88ffaa; margin-left: 2px; }
+			#typing-field.done::after { content: ""; display: none; }
+			#art-container { opacity: 0; transition: opacity 1.5s ease-in-out; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 25px; }
+			@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 		</style>
 	</head>
 	<body>
 		<div id="root-matrix-rain"><canvas id="matrix-canvas"></canvas></div>
 		<div id="view-home-public" style="display: flex;">
-			<div class="gate-floating-card">
-				<h1 style="color: #ff4a4a; font-size: 1.6rem; letter-spacing: 3px; font-weight: 900; margin: 0 0 4px 0; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4);">// AMBI_PORTAL EXPLOIT ACCESS</h1>
-				<div style="font-size: 10px; color: #884444; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px;">CENTRAL MULTIPLAYER RECON MATRIX PLATFORM</div>
-				<div style="background: #040406; padding: 15px; border-radius: 4px; border: 1px solid rgba(255,74,74,0.15); margin-bottom: 25px; display: flex; justify-content: center;">
-					<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 8px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 8px rgba(255, 74, 74, 0.4); margin: 0;">
+			<div class="header-container">
+				<div>
+					<h1 class="landing-title">// WELCOME OPERATIVE</h1>
+					<div style="font-size: 10px; color: #555; letter-spacing: 1px;">CENTRALIZED MULTIPLAYER GRAPHICS THREAT ROUTER</div>
+				</div>
+				<div style="width: 170px; display: flex; flex-direction: column; gap: 4px;">
+					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ AUTH_LOGIN ]</div>
+					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); background: rgba(0, 240, 255, 0.02); margin: 0; padding: 7px 0;">[ OPERATIVE_REG ]</div>
+				</div>
+			</div>
+			<div class="telemetry-log">
+				<div id="typing-field"></div>
+				<div id="art-container">
+					<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 10px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4); margin: 0;">
                ,-.                               
        ___,---.__          /'|`\          __,---,___          
     ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
@@ -57,46 +72,42 @@
 
                 // SLTR - SEC //</pre>
 				</div>
-				<div style="font-size: 11px; color: #663333; margin-bottom: 20px; font-family: monospace; font-weight: bold;">AWAITING SECURE OPERATIVE SYSTEM LOG IDENTIFICATION METRICS...</div>
-				<div style="display: flex; gap: 10px; width: 100%; justify-content: center;">
-					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.55); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ AUTH_LOGIN ]</div>
-					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.55); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ OPERATIVE_REG ]</div>
-				</div>
 			</div>
+			<div style="width: 100%; max-width: 950px; font-size: 10px; color: #222; letter-spacing: 2px; text-align: left; margin-top: 15px; position: relative; z-index: 5;">SECURE PLATFORM ENFORCEMENT ACTIVE // SUBNET SHIELD ENGAGED</div>
 		</div>
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
-				<p style="font-size:11px; color:#553333; margin-bottom:20px; font-weight: bold;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
+				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
 				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input id="login-password-input" type="password" placeholder="PASS_HASH_KEY" />
 				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<div id="login-ticker" class="status-log-line" style="color: #555;">READY_FOR_HANDSHAKE</div>
-				<br><div onclick="navigateToPath('/')" style="color:#553333; font-size:11px; cursor:pointer; text-decoration: underline; font-weight: bold;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
-				<p style="font-size:11px; color:#553333; margin-bottom:20px; font-weight: bold;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
+				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
 				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
 				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input id="student-password-input" type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
 				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
-				<div id="register-ticker" class="status-log-line" style="color: #555;">AWAITING_PARAMETER_INTRUSION</div>
-				<br><div onclick="navigateToPath('/'); return false;" style="color:#553333; font-size:11px; cursor:pointer; text-decoration: underline; font-weight: bold;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
+				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
 		<div id="hud-master-layer">
 			<div style="position: absolute; top: 0; left: 0; width: 240px; height: 100vh; background: #040406; border-right: 1px solid rgba(0, 240, 255, 0.15); box-sizing: border-box; padding: 20px; z-index: 100000 !important;">
 				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
-				<div id="connection-status-panel" class="connection-telemetry-box">> NODE: ONLINE<br>> ROUTE: WSS://CORE<br>> USERS: <span id="peer-count-span" style="font-weight:bold;color:#00f0ff;">1</span> ACTIVE<br>> LATENCY: <span id="ping-span" style="color:#ffb000;">42ms</span></div>
+				<div id="connection-status-panel" class="connection-telemetry-box">> NODE: ONLINE<br>> ROUTE: WSS://CORE<br>> PEERS: <span id="peer-count-span" style="font-weight:bold;color:#00f0ff;">1</span> ACTIVE<br>> LATENCY: <span id="ping-span" style="color:#ffb000;">42ms</span></div>
 				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
 					<div onclick="navigateToPath('/matrix')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
 					<div onclick="alert('Telemetry Node Panel running.')" class="nav-btn" style="color: #ffb000; border-color: rgba(255,176,0,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
 					<div onclick="alert('Threat Hunt memory forensic scanner initialized.')" class="nav-btn" style="color: #ffb000; border-color: rgba(255,176,0,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ THREAT HUNT ]</div>
 					<div onclick="alert('Advanced Threat Intelligence database initialized.')" class="nav-btn" style="color: #ffb000; border-color: rgba(255,176,0,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
-					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #ff5500; border-color: rgba(255,85,0,0.5); background: #07070c; margin: 0; padding: 6px 0;">[ RANGE ]</div>
+					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ RANGE ]</div>
 					<div onclick="navigateToPath('/matrix/redteam')" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.55); background: #07070c; margin: 0; padding: 6px 0;">[ RED TEAM ]</div>
 					<div onclick="alert('Blue Team protective defense protocols online.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ BLUE TEAM ]</div>
 					<div onclick="alert('Security Operations Center console active.')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ SOC ]</div>
@@ -156,7 +167,9 @@
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
 				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
-				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbleed vulnerability permitting unauthenticated core memory dumping routines." },
+				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbleed vulnerability permitting unauthenticated core memory dumping routines." }
+			];
+			const cveDatasetExtended = [
 				{ id: "CVE-2019-0708", summary: "Windows Remote Desktop pre-auth RCE vulnerability (BlueKeep)." },
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler privilege escalation and remote code flaw (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Microsoft Netlogon cryptography validation bypass privilege escalation (Netlogon Exploitation)." },
@@ -174,25 +187,25 @@
 				{ id: "CVE-2021-3156", summary: "Sudo legacy argument parser heap overflow local root elevation (Baron Samedit)." },
 				{ id: "CVE-2020-1350", summary: "Critical remote code execution vulnerability inside Microsoft Windows Server DNS architecture (SigRed)." }
 			];
-			const masterDataset = cveDataset;
+			const masterDataset = cveDataset.concat(cveDatasetExtended);
 			function startMatrixRainfallEngine() {
 				const canvas = document.getElementById('matrix-canvas'); if (!canvas) return;
 				const ctx = canvas.getContext('2d'); clearInterval(rainTimer);
 				canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight;
 				const chars = "0123456789ABCDEFMATRIXSLTRSEC".split("");
 				const fontSize = 14, columns = canvas.width / fontSize;
-				const drops = Array(Math.floor(columns)).fill(0).map(() => Math.floor(Math.random() * (canvas.height / fontSize)));
+				const drops = Array(Math.floor(columns)).fill(1);
 				function draw() {
-					ctx.fillStyle = "rgba(4, 4, 6, 0.18)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#39ff14"; ctx.font = "bold " + fontSize + "px monospace";
+					ctx.fillStyle = "rgba(4, 4, 6, 0.06)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+					ctx.fillStyle = "#39ff14"; ctx.font = fontSize + "px monospace";
 					for (let i = 0; i < drops.length; i++) {
 						const text = chars[Math.floor(Math.random() * chars.length)];
 						ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-						if (drops[i] * fontSize > canvas.height && Math.random() > 0.94) drops[i] = 0;
-						drops[i] += 1.5;
+						if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+						drops[i]++;
 					}
 				}
-				rainTimer = setInterval(draw, 22);
+				rainTimer = setInterval(draw, 33);
 			}
 			function startUserTelemetryTrackingEngine() {
 				clearInterval(telemetryTimer); const peerEl = document.getElementById('peer-count-span'), pingEl = document.getElementById('ping-span');
@@ -235,17 +248,11 @@
 				const rainTarget = document.getElementById('root-matrix-rain'), redteamView = document.getElementById('view-internal-redteam');
 				if (redteamView) redteamView.style.setProperty('display', 'none', 'important');
 				clearInterval(cycleTimer); clearInterval(telemetryTimer);
-				if (path === "/login" || path === "/login/") { 
-					if (rainTarget) { rainTarget.style.setProperty('left', '0', 'important'); rainTarget.style.setProperty('width', '100vw', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
-					document.getElementById('view-login').style.setProperty('display', 'flex', 'important'); 
-				} 
-				else if (path === "/register" || path === "/register/") { 
-					if (rainTarget) { rainTarget.style.setProperty('left', '0', 'important'); rainTarget.style.setProperty('width', '100vw', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
-					document.getElementById('view-register').style.setProperty('display', 'flex', 'important'); 
-				} 
+				if (path === "/login" || path === "/login/") { document.getElementById('view-login').style.setProperty('display', 'flex', 'important'); } 
+				else if (path === "/register" || path === "/register/") { document.getElementById('view-register').style.setProperty('display', 'flex', 'important'); } 
 				else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) { rainTarget.style.setProperty('left', '240px', 'important'); rainTarget.style.setProperty('width', 'calc(100vw - 240px)', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
+						if (rainTarget) rainTarget.style.setProperty('display', 'block', 'important'); 
 						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
 						startMatrixRainfallEngine(); startUserTelemetryTrackingEngine();
 						const statusHud = document.getElementById('user-status-hud');
@@ -258,7 +265,7 @@
 					} else { navigateToPath('/'); }
 				} else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) { rainTarget.style.setProperty('left', '240px', 'important'); rainTarget.style.setProperty('width', 'calc(100vw - 240px)', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
+						if (rainTarget) rainTarget.style.setProperty('display', 'block', 'important'); 
 						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
 						if (redteamView) redteamView.style.setProperty('display', 'flex', 'important');
 						startMatrixRainfallEngine(); startUserTelemetryTrackingEngine();
@@ -269,10 +276,7 @@
 					} else { navigateToPath('/'); }
 				} else {
 					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } 
-					else { 
-						if (rainTarget) { rainTarget.style.setProperty('left', '0', 'important'); rainTarget.style.setProperty('width', '100vw', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
-						if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'flex', 'important'); 
-					}
+					else { if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'flex', 'important'); clearInterval(rainTimer); rainTimer = null; if (rainTarget) rainTarget.style.setProperty('display', 'none', 'important'); }
 				}
 			}
 			function executeStudentValidation() {
@@ -300,23 +304,15 @@
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id'), summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
 				idEl.textContent = "ROLLING..."; const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-				setTimeout(() => { 
-				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-				setTimeout(() => { 
-					idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; 
-					summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; 
-				}, 200);
+				setTimeout(() => { idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
 			}
-
 			function manualRoll() { loadRandomCve(); }
-			window.onpopstate = window.onload = routeSubDirectoriesNatively;
-			window.onresize = () => {
-				const c = document.getElementById('matrix-canvas');
-				if (c && c.parentElement.style.display !== 'none') { 
-					c.width = c.parentElement.clientWidth; 
-					c.height = c.parentElement.clientHeight; 
-				}
-			};
+			window.addEventListener('popstate', routeSubDirectoriesNatively);
+			window.addEventListener('load', routeSubDirectoriesNatively);
+			window.addEventListener('resize', () => {
+				const canvas = document.getElementById('matrix-canvas');
+				if (canvas && canvas.parentElement.style.display !== 'none') { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; }
+			});
 		</script>
 	</body>
 </html>
