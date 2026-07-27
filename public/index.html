@@ -17,21 +17,22 @@
 			#user-status-hud { color: #39ff14; font-size: 11px; background: #07070c !important; border: 1px solid rgba(0,240,255,0.3); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); box-shadow: 0 0 10px rgba(0,0,0,0.9); position: relative; z-index: 100005 !important; }
 			.connection-telemetry-box { color: #39ff14; font-size: 11px; background: #07070c !important; border: 1px dashed rgba(57,255,20,0.25); padding: 8px 12px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; font-family: monospace; }
 			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: transparent; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 35px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; position: relative; z-index: 200005 !important; }
-			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0, 240, 255, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
-			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; width: 100%; }
+			.terminal-grid-box { border: 1px solid rgba(255, 74, 74, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 35px rgba(255, 74, 74, 0.15); text-align: center; color: #ff4a4a; position: relative; z-index: 200005 !important; }
+			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(255, 74, 74, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
+			.terminal-grid-box input:focus { border-color: #ff4a4a; box-shadow: 0 0 10px rgba(255, 74, 74, 0.2); }
+			.terminal-grid-box button { background: rgba(255,74,74,0.05); border: 1px solid #ff4a4a; color: #ff4a4a; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; width: 100%; }
 			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
 			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: transparent !important; padding: 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; z-index: 150000 !important; }
-			.gate-floating-card { background: radial-gradient(circle at 50% 50%, #0c0d14 0%, #050508 100%) !important; border: 1px solid rgba(0, 240, 255, 0.25); border-top: 4px solid #00f0ff; padding: 35px; border-radius: 6px; color: #00f0ff; width: 100%; max-width: 580px; box-shadow: 0 0 40px rgba(0,0,0,0.95); text-align: center; position: relative; z-index: 150005 !important; }
+			.gate-floating-card { background: radial-gradient(circle at 50% 50%, #120404 0%, #050101 100%) !important; border: 1px solid rgba(255, 74, 74, 0.35); border-top: 4px solid #ff4a4a; padding: 35px; border-radius: 6px; color: #ff4a4a; width: 100%; max-width: 580px; box-shadow: 0 0 40px rgba(0,0,0,0.95); text-align: center; position: relative; z-index: 150005 !important; }
 		</style>
 	</head>
 	<body>
 		<div id="root-matrix-rain"><canvas id="matrix-canvas"></canvas></div>
 		<div id="view-home-public" style="display: flex;">
 			<div class="gate-floating-card">
-				<h1 style="color: #00f0ff; font-size: 1.6rem; letter-spacing: 3px; font-weight: 900; margin: 0 0 4px 0;">// AMBI_PORTAL INITIALIZE</h1>
-				<div style="font-size: 10px; color: #447788; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px;">CENTRAL MULTIPLAYER RECON MATRIX PLATFORM</div>
-				<div style="background: #040406; padding: 15px; border-radius: 4px; border: 1px solid rgba(0,240,255,0.1); margin-bottom: 25px; display: flex; justify-content: center;">
+				<h1 style="color: #ff4a4a; font-size: 1.6rem; letter-spacing: 3px; font-weight: 900; margin: 0 0 4px 0; text-shadow: 0 0 10px rgba(255, 74, 74, 0.4);">// AMBI_PORTAL EXPLOIT ACCESS</h1>
+				<div style="font-size: 10px; color: #884444; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px;">CENTRAL MULTIPLAYER RECON MATRIX PLATFORM</div>
+				<div style="background: #040406; padding: 15px; border-radius: 4px; border: 1px solid rgba(255,74,74,0.15); margin-bottom: 25px; display: flex; justify-content: center;">
 					<pre style="color: #ff4a4a; font-family: 'Courier New', Courier, monospace; font-size: 8px; line-height: 1.05; font-weight: 900; letter-spacing: 0px; white-space: pre; text-align: left; user-select: none; text-shadow: 0 0 8px rgba(255, 74, 74, 0.4); margin: 0;">
                ,-.                               
        ___,---.__          /'|`\          __,---,___          
@@ -56,34 +57,34 @@
 
                 // SLTR - SEC //</pre>
 				</div>
-				<div style="font-size: 11px; color: #555; margin-bottom: 20px; font-family: monospace;">AWAITING SECURE OPERATIVE SYSTEM LOG IDENTIFICATION METRICS...</div>
+				<div style="font-size: 11px; color: #663333; margin-bottom: 20px; font-family: monospace; font-weight: bold;">AWAITING SECURE OPERATIVE SYSTEM LOG IDENTIFICATION METRICS...</div>
 				<div style="display: flex; gap: 10px; width: 100%; justify-content: center;">
-					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.45); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ AUTH_LOGIN ]</div>
-					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.45); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ OPERATIVE_REG ]</div>
+					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.55); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ AUTH_LOGIN ]</div>
+					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.55); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ OPERATIVE_REG ]</div>
 				</div>
 			</div>
 		</div>
 		<div id="view-login" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
+				<p style="font-size:11px; color:#553333; margin-bottom:20px; font-weight: bold;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
 				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input id="login-password-input" type="password" placeholder="PASS_HASH_KEY" />
 				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
-				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="login-ticker" class="status-log-line" style="color: #555;">READY_FOR_HANDSHAKE</div>
+				<br><div onclick="navigateToPath('/')" style="color:#553333; font-size:11px; cursor:pointer; text-decoration: underline; font-weight: bold;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
 		<div id="view-register" class="standalone-page-view">
 			<div class="terminal-grid-box">
 				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
+				<p style="font-size:11px; color:#553333; margin-bottom:20px; font-weight: bold;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
 				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
 				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
 				<input id="student-password-input" type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
 				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
-				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
-				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
+				<div id="register-ticker" class="status-log-line" style="color: #555;">AWAITING_PARAMETER_INTRUSION</div>
+				<br><div onclick="navigateToPath('/'); return false;" style="color:#553333; font-size:11px; cursor:pointer; text-decoration: underline; font-weight: bold;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
 			</div>
 		</div>
 		<div id="hud-master-layer">
@@ -155,9 +156,7 @@
 				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
 				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
 				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
-				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbleed vulnerability permitting unauthenticated core memory dumping routines." }
-			];
-			const cveDatasetExtended = [
+				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbleed vulnerability permitting unauthenticated core memory dumping routines." },
 				{ id: "CVE-2019-0708", summary: "Windows Remote Desktop pre-auth RCE vulnerability (BlueKeep)." },
 				{ id: "CVE-2021-34527", summary: "Windows Print Spooler privilege escalation and remote code flaw (PrintNightmare)." },
 				{ id: "CVE-2020-1472", summary: "Microsoft Netlogon cryptography validation bypass privilege escalation (Netlogon Exploitation)." },
@@ -175,25 +174,25 @@
 				{ id: "CVE-2021-3156", summary: "Sudo legacy argument parser heap overflow local root elevation (Baron Samedit)." },
 				{ id: "CVE-2020-1350", summary: "Critical remote code execution vulnerability inside Microsoft Windows Server DNS architecture (SigRed)." }
 			];
-			const masterDataset = cveDataset.concat(cveDatasetExtended);
+			const masterDataset = cveDataset.concat(cveDatasetExtended = []);
 			function startMatrixRainfallEngine() {
 				const canvas = document.getElementById('matrix-canvas'); if (!canvas) return;
 				const ctx = canvas.getContext('2d'); clearInterval(rainTimer);
 				canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight;
 				const chars = "0123456789ABCDEFMATRIXSLTRSEC".split("");
 				const fontSize = 14, columns = canvas.width / fontSize;
-				const drops = Array(Math.floor(columns)).fill(1);
+				const drops = Array(Math.floor(columns)).fill(0).map(() => Math.floor(Math.random() * (canvas.height / fontSize)));
 				function draw() {
-					ctx.fillStyle = "rgba(4, 4, 6, 0.06)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#39ff14"; ctx.font = fontSize + "px monospace";
+					ctx.fillStyle = "rgba(4, 4, 6, 0.18)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+					ctx.fillStyle = "#39ff14"; ctx.font = "bold " + fontSize + "px monospace";
 					for (let i = 0; i < drops.length; i++) {
 						const text = chars[Math.floor(Math.random() * chars.length)];
 						ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-						if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-						drops[i]++;
+						if (drops[i] * fontSize > canvas.height && Math.random() > 0.94) drops[i] = 0;
+						drops[i] += 1.5;
 					}
 				}
-				rainTimer = setInterval(draw, 33);
+				rainTimer = setInterval(draw, 22);
 			}
 			function startUserTelemetryTrackingEngine() {
 				clearInterval(telemetryTimer); const peerEl = document.getElementById('peer-count-span'), pingEl = document.getElementById('ping-span');
@@ -301,13 +300,21 @@
 			function loadRandomCve() {
 				const idEl = document.getElementById('cve-id'), summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
 				idEl.textContent = "ROLLING..."; const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-				setTimeout(() => { idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
+				const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
+				setTimeout(() => { 
+					idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; 
+					summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; 
+				}, 200);
 			}
+
 			function manualRoll() { loadRandomCve(); }
 			window.onpopstate = window.onload = routeSubDirectoriesNatively;
 			window.onresize = () => {
 				const c = document.getElementById('matrix-canvas');
-				if (c && c.parentElement.style.display !== 'none') { c.width = c.parentElement.clientWidth; c.height = c.parentElement.clientHeight; }
+				if (c && c.parentElement.style.display !== 'none') { 
+					c.width = c.parentElement.clientWidth; 
+					c.height = c.parentElement.clientHeight; 
+				}
 			};
 		</script>
 	</body>
