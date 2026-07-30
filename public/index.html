@@ -171,21 +171,25 @@
 			function startMatrixRainfallEngine() {
 				const canvas = document.getElementById('matrix-canvas'); if (!canvas) return;
 				const ctx = canvas.getContext('2d'); clearInterval(rainTimer);
-				canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight;
+				
+				// Fixes background crashes by calculating direct window space metrics
+				canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+				
 				const chars = "0123456789ABCDEFMATRIXSLTRSEC".split("");
 				const fontSize = 14, columns = canvas.width / fontSize;
-				const drops = Array(Math.floor(columns)).fill(1);
+				const drops = Array(Math.floor(columns)).fill(0).map(() => Math.floor(Math.random() * (canvas.height / fontSize)));
+				
 				function draw() {
-					ctx.fillStyle = "rgba(4, 4, 6, 0.06)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#39ff14"; ctx.font = fontSize + "px monospace";
+					ctx.fillStyle = "rgba(4, 4, 6, 0.18)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+					ctx.fillStyle = "#39ff14"; ctx.font = "bold " + fontSize + "px monospace";
 					for (let i = 0; i < drops.length; i++) {
 						const text = chars[Math.floor(Math.random() * chars.length)];
 						ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-						if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-						drops[i]++;
+						if (drops[i] * fontSize > canvas.height && Math.random() > 0.94) drops[i] = 0;
+						drops[i] += 1.5;
 					}
 				}
-				rainTimer = setInterval(draw, 33);
+				rainTimer = setInterval(draw, 22);
 			}
 			function startUserTelemetryTrackingEngine() {
 				clearInterval(telemetryTimer); const peerEl = document.getElementById('peer-count-span'), pingEl = document.getElementById('ping-span');
@@ -219,13 +223,13 @@
 				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
 				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
 			}
-			function routeSubDirectoriesNatively() {
+						function routeSubDirectoriesNatively() {
 				const path = window.location.pathname;
 				const cachedHandle = localStorage.getItem('sl_saved_handle');
 				const cachedEmail = localStorage.getItem('sl_saved_email');
 				const publicHomeOverlay = document.getElementById('view-home-public');
 				
-				// Reset Sweep: Clears visibility layout values before processing routing updates
+				// Global Clear Sweep: Resets visibility states before processing routing checks
 				if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'none', 'important');
 				document.getElementById('view-login').style.setProperty('display', 'none', 'important'); 
 				document.getElementById('view-register').style.setProperty('display', 'none', 'important'); 
@@ -235,10 +239,9 @@
 				const redteamView = document.getElementById('view-internal-redteam');
 				if (redteamView) redteamView.style.setProperty('display', 'none', 'important');
 				
-				clearInterval(cycleTimer); 
-				clearInterval(telemetryTimer);
+				clearInterval(cycleTimer); clearInterval(telemetryTimer);
 
-				// Evaluates Navigation Paths
+				// Route Enforcement Loop Controls
 				if (path === "/login" || path === "/login/") { 
 					if (rainTarget) {
 						rainTarget.classList.remove('hidden-rain-viewport');
@@ -259,10 +262,9 @@
 					if (cachedHandle && cachedEmail) {
 						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
 						
-						/* FLIPS THE OFF-SWITCH: Shuts down animation tracks and masks rain viewport on login */
+						/* KILLS MATRIX BACKGROUND: Stops all animation timers on login */
 						if (rainTarget) {
-							clearInterval(rainTimer);
-							rainTimer = null;
+							clearInterval(rainTimer); rainTimer = null;
 							rainTarget.classList.add('hidden-rain-viewport');
 						}
 						
@@ -273,8 +275,7 @@
 							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
 							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
 						}
-						loadRandomCve(); 
-						cycleTimer = setInterval(loadRandomCve, 15000);
+						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
 				} 
 				else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
@@ -283,27 +284,20 @@
 						if (redteamView) redteamView.style.setProperty('display', 'flex', 'important');
 						
 						if (rainTarget) {
-							clearInterval(rainTimer);
-							rainTimer = null;
+							clearInterval(rainTimer); rainTimer = null;
 							rainTarget.classList.add('hidden-rain-viewport');
 						}
 						
 						startUserTelemetryTrackingEngine();
 						const statusHud = document.getElementById('user-status-hud');
-						if (statusHud) { 
-							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; 
-							statusHud.style.color = "#ff4a4a"; 
-						}
-						isTypingActive = false; 
-						triggerTerminalTypingSimulation();
-						loadRandomCve(); 
-						cycleTimer = setInterval(loadRandomCve, 15000);
+						if (statusHud) { statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; statusHud.style.color = "#ff4a4a"; }
+						isTypingActive = false; triggerTerminalTypingSimulation();
+						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
 				} 
 				else {
-					if (cachedHandle && cachedEmail) { 
-						navigateToPath('/matrix'); 
-					} else { 
+					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } 
+					else { 
 						if (rainTarget) {
 							rainTarget.classList.remove('hidden-rain-viewport');
 							rainTarget.style.setProperty('display', 'block', 'important'); 
