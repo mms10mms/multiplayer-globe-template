@@ -35,16 +35,15 @@
 			
 	</head>
 	<body>
-		<div id="root-matrix-rain"><canvas id="matrix-canvas"></canvas></div>
 				<!-- REPAIRED STATIC GATE ENTRY PANELS (Houses permanent system quote block) -->
 		<div id="view-home-public" style="display: flex;">
 			<div class="gate-floating-card">
 				<h1 style="color: #00f0ff; font-size: 1.6rem; letter-spacing: 3px; font-weight: 900; margin: 0 0 4px 0;">Welcome.</h1>
 				<div style="font-size: 10px; color: #447788; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px;">Slaughter-Sec.com</div>
 				
-				<!-- Hardcoded Opaque Display Box for your Custom Quote -->
-				<div style="background: #040406; border: 1px solid rgba(0, 240, 255, 0.2); padding: 18px; border-radius: 4px; color: #00f0ff; font-family: monospace; font-size: 12px; line-height: 1.6; text-align: center; width: 100%; min-height: 60px; box-sizing: border-box; margin-bottom: 25px; letter-spacing: 0.5px; box-shadow: inset 0 0 15px rgba(0,0,0,0.85);">
-					"Plans are nothing: Planning is everything."
+				<!-- Permanent, hardcoded terminal quote card. Swap this text whenever you want! -->
+				<div style="background: #040406; border: 1px solid rgba(0, 240, 255, 0.35); padding: 18px; border-radius: 4px; color: #39ff14; font-family: monospace; font-size: 12px; line-height: 1.6; text-align: left; width: 100%; min-height: 60px; box-sizing: border-box; margin-bottom: 25px; letter-spacing: 0.5px; box-shadow: inset 0 0 15px rgba(0,0,0,0.9); border-left: 3px solid #39ff14;">
+					<span style="color: #00f0ff; font-weight: bold;">> </span>"Plans are nothing: Planning is everything."
 				</div>
 
 				<div style="font-size: 11px; color: #555; margin-bottom: 20px; font-family: monospace;">AWAITING SECURE OPERATIVE SYSTEM LOGIN...</div>
@@ -221,50 +220,95 @@
 				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
 			}
 			function routeSubDirectoriesNatively() {
-				const path = window.location.pathname, cachedHandle = localStorage.getItem('sl_saved_handle'), cachedEmail = localStorage.getItem('sl_saved_email'), publicHomeOverlay = document.getElementById('view-home-public');
+				const path = window.location.pathname;
+				const cachedHandle = localStorage.getItem('sl_saved_handle');
+				const cachedEmail = localStorage.getItem('sl_saved_email');
+				const publicHomeOverlay = document.getElementById('view-home-public');
+				
+				// Reset Sweep: Clears visibility layout values before processing routing updates
 				if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'none', 'important');
 				document.getElementById('view-login').style.setProperty('display', 'none', 'important'); 
 				document.getElementById('view-register').style.setProperty('display', 'none', 'important'); 
 				document.getElementById('hud-master-layer').style.setProperty('display', 'none', 'important');
-				const rainTarget = document.getElementById('root-matrix-rain'), redteamView = document.getElementById('view-internal-redteam');
+				
+				const rainTarget = document.getElementById('root-matrix-rain');
+				const redteamView = document.getElementById('view-internal-redteam');
 				if (redteamView) redteamView.style.setProperty('display', 'none', 'important');
-				clearInterval(cycleTimer); clearInterval(telemetryTimer);
+				
+				clearInterval(cycleTimer); 
+				clearInterval(telemetryTimer);
+
+				// Evaluates Navigation Paths
 				if (path === "/login" || path === "/login/") { 
-					if (rainTarget) { rainTarget.style.setProperty('left', '0', 'important'); rainTarget.style.setProperty('width', '100vw', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
+					if (rainTarget) {
+						rainTarget.classList.remove('hidden-rain-viewport');
+						rainTarget.style.setProperty('display', 'block', 'important'); 
+						startMatrixRainfallEngine(); 
+					}
 					document.getElementById('view-login').style.setProperty('display', 'flex', 'important'); 
 				} 
 				else if (path === "/register" || path === "/register/") { 
-					if (rainTarget) { rainTarget.style.setProperty('left', '0', 'important'); rainTarget.style.setProperty('width', '100vw', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
+					if (rainTarget) {
+						rainTarget.classList.remove('hidden-rain-viewport');
+						rainTarget.style.setProperty('display', 'block', 'important'); 
+						startMatrixRainfallEngine(); 
+					}
 					document.getElementById('view-register').style.setProperty('display', 'flex', 'important'); 
 				} 
 				else if (path === "/matrix" || path === "/matrix/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) { rainTarget.style.setProperty('left', '240px', 'important'); rainTarget.style.setProperty('width', 'calc(100vw - 240px)', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
 						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
-						startMatrixRainfallEngine(); startUserTelemetryTrackingEngine();
+						
+						/* FLIPS THE OFF-SWITCH: Shuts down animation tracks and masks rain viewport on login */
+						if (rainTarget) {
+							clearInterval(rainTimer);
+							rainTimer = null;
+							rainTarget.classList.add('hidden-rain-viewport');
+						}
+						
+						startUserTelemetryTrackingEngine();
 						const statusHud = document.getElementById('user-status-hud');
 						if (statusHud) {
 							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
 							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
 							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
 						}
-						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
+						loadRandomCve(); 
+						cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
-				} else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
+				} 
+				else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
 					if (cachedHandle && cachedEmail) {
-						if (rainTarget) { rainTarget.style.setProperty('left', '240px', 'important'); rainTarget.style.setProperty('width', 'calc(100vw - 240px)', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
 						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
 						if (redteamView) redteamView.style.setProperty('display', 'flex', 'important');
-						startMatrixRainfallEngine(); startUserTelemetryTrackingEngine();
+						
+						if (rainTarget) {
+							clearInterval(rainTimer);
+							rainTimer = null;
+							rainTarget.classList.add('hidden-rain-viewport');
+						}
+						
+						startUserTelemetryTrackingEngine();
 						const statusHud = document.getElementById('user-status-hud');
-						if (statusHud) { statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; statusHud.style.color = "#ff4a4a"; }
-						isTypingActive = false; triggerTerminalTypingSimulation();
-						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
+						if (statusHud) { 
+							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; 
+							statusHud.style.color = "#ff4a4a"; 
+						}
+						isTypingActive = false; 
+						triggerTerminalTypingSimulation();
+						loadRandomCve(); 
+						cycleTimer = setInterval(loadRandomCve, 15000);
 					} else { navigateToPath('/'); }
-				} else {
-					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } 
-					else { 
-						if (rainTarget) { rainTarget.style.setProperty('left', '0', 'important'); rainTarget.style.setProperty('width', '100vw', 'important'); rainTarget.style.setProperty('display', 'block', 'important'); startMatrixRainfallEngine(); }
+				} 
+				else {
+					if (cachedHandle && cachedEmail) { 
+						navigateToPath('/matrix'); 
+					} else { 
+						if (rainTarget) {
+							rainTarget.classList.remove('hidden-rain-viewport');
+							rainTarget.style.setProperty('display', 'block', 'important'); 
+							startMatrixRainfallEngine(); 
+						}
 						if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'flex', 'important'); 
 					}
 				}
