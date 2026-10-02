@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-palette="crimson">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -9,11 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#15110c; --win:#1d1812; --bar:#2a231a; --fg:#e9dcc4; --dim:#8c7f68; --line:#3a3125; --acc:#ffb347; --err:#ff6b5e; --ok:#9fd67a; --on-acc:#15110c; --rain:#2fdc6f;
+  --d-bg:#15110c;--d-win:#1d1812;--d-bar:#2a231a;--d-line:#3a3125;--d-fg:#e9dcc4;--d-dim:#8c7f68;--d-acc:#ffb347;--d-rain:#2fdc6f;--l-acc:#a85b00;--l-rain:#1b7a43;
+  --bg:var(--d-bg);--win:var(--d-win);--bar:var(--d-bar);--line:var(--d-line);--fg:var(--d-fg);--dim:var(--d-dim);--acc:var(--d-acc);--rain:var(--d-rain);--err:#ff6b5e;--ok:#9fd67a;--on-acc:#15110c;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:#a85b00;--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:#1b7a43}}
-:root[data-theme="light"]{--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:#a85b00;--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:#1b7a43}
+/* palettes: dark surfaces + accent, plus the accent used in light mode */
+:root[data-palette="crimson"]{--d-bg:#120a0c;--d-win:#1a1013;--d-bar:#26151a;--d-line:#3a1f26;--d-fg:#f0dfe0;--d-dim:#9a7f84;--d-acc:#ff4d5e;--d-rain:#e63946;--l-acc:#b3122b;--l-rain:#a01a2c}
+:root[data-palette="cyber"]{--d-bg:#0b0b1a;--d-win:#12122a;--d-bar:#1b1b3b;--d-line:#2b2b5c;--d-fg:#e6e6ff;--d-dim:#8b8bb8;--d-acc:#ff2e97;--d-rain:#29e7ff;--l-acc:#c4006e;--l-rain:#007f99}
+:root[data-palette="ice"]{--d-bg:#0a1018;--d-win:#0f1a26;--d-bar:#162434;--d-line:#223a52;--d-fg:#dcecf8;--d-dim:#7f9bb3;--d-acc:#4cc2ff;--d-rain:#3a9fd8;--l-acc:#0a6cb0;--l-rain:#0a6cb0}
+:root[data-palette="matrix"]{--d-bg:#050a06;--d-win:#0a130b;--d-bar:#0f1d11;--d-line:#1c3a20;--d-fg:#c8f7d2;--d-dim:#6fa27b;--d-acc:#3dff7a;--d-rain:#1fd65a;--l-acc:#1b7a43;--l-rain:#1b7a43}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:var(--l-acc);--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:var(--l-rain)}}
+:root[data-theme="light"]{--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:var(--l-acc);--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:var(--l-rain)}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:400 .95rem/1.7 "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
@@ -109,6 +115,10 @@ body.app .nav{display:flex}
 #dout{min-height:12em;margin:20px 0 0;border:1px solid var(--line);padding:12px 14px;font-size:.84rem;line-height:1.8}
 #dout b{display:inline-block;width:5.8em;font-weight:400}
 .btn:disabled{opacity:.4;cursor:default}
+.demo{border:1px dashed var(--acc);padding:10px 12px;margin:0 0 6px;color:var(--acc);font-size:.84rem}
+.alt .link{background:none;border:0;color:var(--acc);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+.alt .link:disabled{color:var(--dim);cursor:default;text-decoration:none}
+#vc{letter-spacing:.4em;font-size:1.3rem}
 @media (prefers-reduced-motion:reduce){h1::after{animation:none}}
 </style>
 </head>
@@ -177,6 +187,24 @@ body.app .nav{display:flex}
         <button class="btn fill" type="submit">run register</button>
       </form>
       <p class="alt">Have an account? <a href="#/login">./login</a> &nbsp; <a href="#/">cd ..</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="view" data-view="verify" aria-labelledby="vft">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/verify</span></div>
+    <div class="body">
+      <p class="cmd"><b>$</b> ./verify</p>
+      <h2 id="vft" tabindex="-1">Check your email</h2>
+      <p class="sub" id="vsub"></p>
+      <p class="demo" id="vdemo" hidden></p>
+      <form id="verForm" novalidate>
+        <label for="vc">6-digit code</label><input id="vc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+        <p class="err" role="alert" id="verr"></p>
+        <button class="btn fill" type="submit">run verify</button>
+      </form>
+      <p class="alt"><button class="link" id="resend" type="button">resend code</button> &nbsp; <a href="#/login">cd ..</a></p>
     </div>
   </div>
 </section>
@@ -255,6 +283,14 @@ body.app .nav{display:flex}
         <button class="btn" type="button" data-th="light">light</button>
         <button class="btn" type="button" data-th="system">system</button>
       </div>
+      <p class="cmd" style="margin-top:28px"><b>$</b> palette --set</p>
+      <div class="row">
+        <button class="btn" type="button" data-pal="crimson">crimson</button>
+        <button class="btn" type="button" data-pal="amber">amber</button>
+        <button class="btn" type="button" data-pal="cyber">cyber</button>
+        <button class="btn" type="button" data-pal="ice">ice</button>
+        <button class="btn" type="button" data-pal="matrix">matrix</button>
+      </div>
       <p class="cmd" style="margin-top:28px"><b>$</b> account --delete</p>
       <p class="sub">Removes your account from this browser. This cannot be undone.</p>
       <button class="btn" id="del" type="button">delete account</button>
@@ -287,13 +323,15 @@ body.app .nav{display:flex}
 
   var APP=['home','threats','product','demo','settings'];
   function route(){
-    var h=location.hash.replace('#/',''),all=['login','register'].concat(APP);
+    var h=location.hash.replace('#/',''),all=['login','register','verify'].concat(APP);
     var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
     if(app&&!sess){location.hash='#/login';return}
-    if((v==='login'||v==='register')&&sess){location.hash='#/home';return}
+    if((v==='login'||v==='register'||v==='verify')&&sess){location.hash='#/home';return}
+    if(v==='verify'&&!pending){location.hash='#/login';return}
     document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
     document.body.classList.toggle('app',app);
     document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    if(v==='verify')showVerify();else{pending=null;clearInterval(rt)}
     if(app)enterApp(v);else stopSim();
     if(v==='landing')typeQuote();
     var t=document.querySelector('.view.on [tabindex="-1"]');if(t)t.focus({preventScroll:true});
@@ -310,9 +348,10 @@ body.app .nav{display:flex}
     if(p!==c)return err.textContent='passwords do not match.';
     var users=get('users')||{};
     if(users[em])return err.textContent='an account with this email already exists. run ./login instead.';
-    users[em]={name:n,hash:await hash(em,p)};
-    set('users',users);set('session',em);err.textContent='';
-    e.target.reset();location.hash='#/home';
+    var user={name:n,hash:await hash(em,p)};
+    err.textContent='';
+    await beginMfa('register',em,user,err);
+    if(pending)e.target.reset();
   });
 
   $('#loginForm').addEventListener('submit',async function(e){
@@ -320,7 +359,9 @@ body.app .nav{display:flex}
     var em=$('#le').value.trim().toLowerCase(),p=$('#lp').value,err=$('#lerr');
     var u=(get('users')||{})[em];
     if(!u||u.hash!==await hash(em,p))return err.textContent='email or password is incorrect.';
-    set('session',em);err.textContent='';e.target.reset();location.hash='#/home';
+    err.textContent='';
+    await beginMfa('login',em,null,err);
+    if(pending)e.target.reset();
   });
 
   $('#out').addEventListener('click',function(){del('session');location.hash='#/'});
@@ -611,8 +652,65 @@ body.app .nav{display:flex}
   }
   document.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){runDemo(b.dataset.a)})});
 
+  /* ---- EMAIL MFA: plug your backend in here ---- */
+  var MFA={
+    sendUrl:'',    // POST {email}: your server emails a 6-digit code to that address
+    verifyUrl:''   // POST {email, code}: respond {"ok":true} when the code is correct
+  };               // leave both empty to run in demo mode (the code is shown on screen)
+  var pending=null,rt=0;
+  async function mfaSend(email){
+    if(MFA.sendUrl){
+      var r=await fetch(MFA.sendUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})});
+      if(!r.ok)throw new Error('send failed');
+      return null;
+    }
+    var a=new Uint32Array(1);crypto.getRandomValues(a);
+    return String(a[0]%1000000).padStart(6,'0');
+  }
+  async function beginMfa(purpose,email,user,err){
+    try{
+      var code=await mfaSend(email);
+      pending={purpose:purpose,email:email,user:user,code:code,exp:Date.now()+600000,tries:0};
+      location.hash='#/verify';
+    }catch(x){err.textContent='could not send the code. try again.'}
+  }
+  function cooldown(){
+    var n=30,b=$('#resend');clearInterval(rt);b.disabled=true;b.textContent='resend code (30s)';
+    rt=setInterval(function(){n--;b.textContent=n>0?'resend code ('+n+'s)':'resend code';if(n<=0){clearInterval(rt);b.disabled=false}},1000);
+  }
+  function showVerify(){
+    $('#vsub').textContent='We sent a 6-digit code to '+pending.email+'. It expires in 10 minutes.';
+    var d=$('#vdemo');
+    if(pending.code){d.hidden=false;d.textContent='Demo mode: no email is sent. Your code is '+pending.code+'.'}else d.hidden=true;
+    $('#vc').value='';$('#verr').textContent='';cooldown();
+  }
+  $('#resend').addEventListener('click',async function(){
+    if(!pending)return;
+    try{pending.code=await mfaSend(pending.email);pending.exp=Date.now()+600000;pending.tries=0;showVerify()}
+    catch(x){$('#verr').textContent='could not send the code. try again.'}
+  });
+  $('#verForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    var err=$('#verr'),c=$('#vc').value.replace(/\s/g,'');
+    if(!pending){location.hash='#/login';return}
+    if(!/^\d{6}$/.test(c))return err.textContent='enter the 6-digit code.';
+    if(Date.now()>pending.exp)return err.textContent='this code has expired. resend a new one.';
+    if(pending.tries>=5)return err.textContent='too many attempts. resend a new code.';
+    var ok=false;
+    if(MFA.verifyUrl){
+      try{
+        var r=await fetch(MFA.verifyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:pending.email,code:c})});
+        ok=r.ok&&(await r.json()).ok===true;
+      }catch(x){return err.textContent='could not reach the server. try again.'}
+    }else ok=c===pending.code;
+    if(!ok){pending.tries++;return err.textContent='that code is incorrect.'}
+    var q=pending;pending=null;clearInterval(rt);
+    if(q.purpose==='register'){var us=get('users')||{};us[q.email]=q.user;set('users',us)}
+    set('session',q.email);location.hash='#/home';
+  });
+
   function pressed(){var t=get('theme')||'system';document.querySelectorAll('[data-th]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.th===t)})}
-  function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';pressed()}
+  function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';pressed();palPressed()}
   function tick(){
     var idx=[];peers.forEach(function(p,i){if(!p.me)idx.push(i)});
     if(idx.length<7||(idx.length<15&&Math.random()<.6))mk();
@@ -632,9 +730,13 @@ body.app .nav{display:flex}
     if(v==='demo'){document.querySelectorAll('[data-a]').forEach(function(x){x.disabled=false});$('#dout').textContent='Pick an attack above to start.'}
     if(v==='settings')renderSettings(u,em);
   }
-  function applyTheme(t){var r=document.documentElement;if(t==='dark'||t==='light')r.setAttribute('data-theme',t);else r.removeAttribute('data-theme');col={};redraw()}
+  function applyTheme(t){var r=document.documentElement;if(t==='dark'||t==='light')r.setAttribute('data-theme',t);else r.removeAttribute('data-theme');col={};redraw();window.dispatchEvent(new Event('palette'))}
   applyTheme(get('theme')||'system');
   document.querySelectorAll('[data-th]').forEach(function(b){b.addEventListener('click',function(){set('theme',b.dataset.th);applyTheme(b.dataset.th);pressed()})});
+  function palPressed(){var t=get('palette')||'crimson';document.querySelectorAll('[data-pal]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pal===t)})}
+  function applyPalette(t){document.documentElement.setAttribute('data-palette',t);col={};redraw();if(cur==='threats')drawMap();window.dispatchEvent(new Event('palette'))}
+  applyPalette(get('palette')||'crimson');
+  document.querySelectorAll('[data-pal]').forEach(function(b){b.addEventListener('click',function(){set('palette',b.dataset.pal);applyPalette(b.dataset.pal);palPressed()})});
   var dt=0;
   $('#del').addEventListener('click',function(){
     var b=this;
@@ -654,7 +756,7 @@ body.app .nav{display:flex}
     bg=s.getPropertyValue('--bg').trim();fg=s.getPropertyValue('--rain').trim();
     var v=parseInt(bg.slice(1),16),r=v>>16&255,g=v>>8&255,b=v&255;
     fade='rgba('+r+','+g+','+b+',0.09)';
-    head=(r+g+b<384)?'#d9ffe6':'#0b3d20';
+    head=s.getPropertyValue('--fg').trim();
   }
   function size(){
     var d=Math.min(window.devicePixelRatio||1,2);
@@ -678,6 +780,7 @@ body.app .nav{display:flex}
   function loop(t){if(t-last>55){last=t;step()}requestAnimationFrame(loop)}
   size();
   window.addEventListener('resize',size);
+  window.addEventListener('palette',colors);
   for(var k=0;k<90;k++)step();
   if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(loop);
 })();
