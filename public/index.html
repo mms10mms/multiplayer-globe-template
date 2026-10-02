@@ -1,112 +1,687 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecOps Solutions | Enterprise Cyber Defense</title>
-    <!-- Tailwind CSS CDN for modern utility styling -->
-    <script src="https://tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyberDark: '#0B0F19',
-                        cyberCard: '#151D30',
-                        cyberBlue: '#00E5FF',
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>slaughter-sec — planning is everything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#15110c; --win:#1d1812; --bar:#2a231a; --fg:#e9dcc4; --dim:#8c7f68; --line:#3a3125; --acc:#ffb347; --err:#ff6b5e; --ok:#9fd67a; --on-acc:#15110c; --rain:#2fdc6f;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:#a85b00;--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:#1b7a43}}
+:root[data-theme="light"]{--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:#a85b00;--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:#1b7a43}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:400 .95rem/1.7 "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.view{display:none;min-height:100%;padding:24px 16px;align-items:center;justify-content:center}
+.view.on{display:flex}
+.win{width:100%;max-width:660px;background:var(--win);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:var(--bar);border-bottom:1px solid var(--line);color:var(--dim);font-size:.8rem}
+.bar i{width:11px;height:11px;border-radius:50%;background:var(--line);display:block}
+.bar i:first-child{background:var(--err)}.bar i:nth-child(2){background:var(--acc)}.bar i:nth-child(3){background:var(--ok)}
+.bar span{margin-left:10px}
+.body{padding:26px 24px 30px}
+.cmd{color:var(--dim);margin:0 0 6px}
+.cmd b{color:var(--acc);font-weight:400}
+h1,h2{font:700 clamp(1.5rem,5vw,2.4rem)/1.25 "JetBrains Mono",ui-monospace,monospace;margin:0 0 26px;color:var(--fg);text-wrap:balance}
+h1{min-height:3.8em}
+h1::after{content:"█";color:var(--acc);margin-left:4px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+h2{font-size:1.4rem;margin-bottom:8px}
+.sub{color:var(--dim);margin:0 0 18px}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font:700 .95rem "JetBrains Mono",ui-monospace,monospace;background:transparent;color:var(--acc);border:1px solid var(--acc);padding:9px 18px;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--acc);color:var(--on-acc)}
+.btn.fill{background:var(--acc);color:var(--on-acc)}
+.btn.fill:hover{opacity:.85}
+label{display:block;color:var(--dim);margin:16px 0 2px}
+label::before{content:"> ";color:var(--acc)}
+input[type=text],input[type=email],input[type=password]{width:100%;font:inherit;color:var(--fg);background:transparent;border:0;border-bottom:1px solid var(--line);padding:6px 0;caret-color:var(--acc);border-radius:0}
+input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{outline:0;border-bottom-color:var(--acc)}
+form .btn{margin-top:24px}
+.err{color:var(--err);min-height:1.7em;margin:12px 0 0}
+.err:not(:empty)::before{content:"error: "}
+.alt{margin:18px 0 0;color:var(--dim)}
+.alt a{color:var(--acc)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:22px}
+.top h2{margin:0}
+.add{display:flex;gap:12px;align-items:flex-end}
+.add input{flex:1}
+.add .btn{margin:0 0 3px}
+ul{list-style:none;padding:0;margin:22px 0 0}
+li{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+li span{flex:1;overflow-wrap:anywhere}
+li.done span{text-decoration:line-through;color:var(--dim)}
+li input{width:18px;height:18px;accent-color:var(--acc);flex:none}
+li button{background:none;border:0;color:var(--dim);cursor:pointer;font:inherit;padding:2px 6px}
+li button:hover{color:var(--err)}
+.empty{color:var(--dim);margin:18px 0 0}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.6}
+.view{position:relative;z-index:1}
+.view.globe{padding:0}
+.view.globe.on{display:block;position:fixed;inset:var(--nav-h) 0 0 0}
+#globe{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
+.panel{position:absolute;left:14px;top:14px;width:300px;max-width:calc(100% - 28px)}
+.panel .body{padding:16px}
+.panel h2{font-size:1.2rem;color:var(--acc);margin:0 0 6px}
+.panel ul{margin:8px 0 14px;max-height:44vh;overflow:auto}
+.panel li{padding:0;font-size:.82rem}
+.panel li button.pr{display:flex;gap:10px;width:100%;padding:5px 0;background:none;border:0;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.panel li button.pr:hover{color:var(--acc)}
+.pr .c{margin-left:auto;color:var(--dim)}
+.pr.me .h{color:var(--acc)}
+.note{position:absolute;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);margin:0;color:var(--dim);font-size:.75rem}
+body.app #rain{opacity:.3}
+@media (max-width:700px){.panel{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);left:10px;right:10px;width:auto;max-width:none}.panel ul{max-height:18vh}.note{display:none}}
+body.app{--nav-h:calc(env(safe-area-inset-top,0px) + 47px)}
+.nav{display:none;position:fixed;top:0;left:0;right:0;z-index:5;align-items:center;gap:16px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;background:var(--bar);border-bottom:1px solid var(--line);font-size:.85rem}
+body.app .nav{display:flex}
+.nav .brand{color:var(--acc);font-weight:700;flex:none}
+.tabs{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+.tabs a{color:var(--dim);text-decoration:none;padding:5px 12px;border:1px solid transparent;border-radius:4px;white-space:nowrap}
+.tabs a:hover{color:var(--fg);border-color:var(--line)}
+.tabs a[aria-current=page]{color:var(--on-acc);background:var(--acc)}
+.nav .btn{padding:5px 14px;font-size:.85rem;flex:none}
+.view.page.on{display:block;padding:calc(var(--nav-h) + 22px) 16px 40px}
+.page .win{max-width:900px;margin:0 auto}
+.t{color:var(--dim)}.ok{color:var(--ok)}.warn{color:var(--acc)}.bad{color:var(--err)}
+.btn[aria-pressed=true]{background:var(--acc);color:var(--on-acc)}
+@media (max-width:560px){.nav .brand{display:none}}
+.cname{margin:0 0 4px;font-weight:700}
+.meta{margin:0 0 10px;color:var(--dim);font-size:.8rem}
+.ctext{margin:0 0 14px;font-size:.82rem;min-height:5.2em}
+.track{position:relative;height:2px;background:var(--line);margin:8px 6px 4px}
+.track i{position:absolute;top:-4px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--acc);transition:left .4s}
+.yrs{display:flex;justify-content:space-between;margin:0 0 14px;font-size:.72rem;color:var(--dim)}
+.prog{height:3px;background:var(--line);margin-bottom:10px}
+.prog i{display:block;height:100%;width:100%;background:var(--acc);transition:width 1s linear}
+.foot{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--dim)}
+.foot .btn{padding:6px 14px;font-size:.85rem}
+#tmap{width:100%;aspect-ratio:2/1;display:block}
+.pl{border-left:3px solid var(--acc);padding:2px 0 2px 14px;margin:0 0 20px}
+.pl h3{margin:0 0 4px;font:700 1rem "JetBrains Mono",ui-monospace,monospace;color:var(--fg)}
+.pl p{margin:0;color:var(--dim);font-size:.88rem}
+#dout{min-height:12em;margin:20px 0 0;border:1px solid var(--line);padding:12px 14px;font-size:.84rem;line-height:1.8}
+#dout b{display:inline-block;width:5.8em;font-weight:400}
+.btn:disabled{opacity:.4;cursor:default}
+@media (prefers-reduced-motion:reduce){h1::after{animation:none}}
+</style>
 </head>
-<body class="bg-cyberDark text-gray-100 font-sans antialiased selection:bg-cyberBlue selection:text-black">
+<body>
+<canvas id="rain" aria-hidden="true"></canvas>
 
-    <!-- Navigation Header -->
-    <header class="border-b border-gray-800 bg-cyberDark/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <span class="text-cyberBlue font-black text-xl tracking-wider">⚡ SHIELD.IO</span>
-            </div>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-400">
-                <a href="#services" class="hover:text-cyberBlue transition-colors">Services</a>
-                <a href="#infrastructure" class="hover:text-cyberBlue transition-colors">Infrastructure</a>
-                <a href="#contact" class="hover:text-cyberBlue transition-colors">Contact</a>
-            </nav>
-            <a href="#contact" class="border border-cyberBlue text-cyberBlue px-5 py-2 rounded-lg text-sm font-semibold tracking-wide hover:bg-cyberBlue/10 transition-all">
-                Get Audited
-            </a>
-        </div>
-    </header>
+<nav class="nav" id="nav" aria-label="Main">
+  <span class="brand">slaughter-sec</span>
+  <div class="tabs">
+    <a href="#/home" data-v="home">globe</a>
+    <a href="#/threats" data-v="threats">threat map</a>
+    <a href="#/product" data-v="product">product</a>
+    <a href="#/demo" data-v="demo">demo</a>
+    <a href="#/settings" data-v="settings">settings</a>
+  </div>
+  <button class="btn" id="out" type="button">exit</button>
+</nav>
 
-    <!-- Hero / Value Proposition Section -->
-    <section class="max-w-7xl mx-auto px-6 pt-24 pb-20 text-center md:text-left md:flex md:items-center md:justify-between gap-12">
-        <div class="md:w-1/2 space-y-6">
-            <div class="inline-flex items-center space-x-2 bg-cyberBlue/10 text-cyberBlue text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest">
-                <span>●</span> <span>System Status: Fully Operational</span>
-            </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-                Next-Generation <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberBlue to-blue-500">Cyber Defense</span>
-            </h1>
-            <p class="text-gray-400 text-lg max-w-xl">
-                We safeguard enterprise infrastructure, mitigate sophisticated zero-day threats, and engineer bulletproof digital perimeters.
-            </p>
-            <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="#services" class="bg-cyberBlue text-black px-8 py-3 rounded-lg font-bold tracking-wide hover:bg-cyan-400 transition-all text-center shadow-lg shadow-cyberBlue/20">
-                    Explore Capabilities
-                </a>
-            </div>
-        </div>
-        <div class="hidden md:block md:w-1/2">
-            <!-- Sleek Cyber Graphic Shell -->
-            <div class="bg-cyberCard border border-gray-800 rounded-xl p-6 shadow-2xl relative overflow-hidden">
-                <div class="flex space-x-2 pb-4 border-b border-gray-800 mb-4">
-                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                </div>
-                <code class="text-sm text-cyan-400 block font-mono">$ shield-dfnd --analyze --live</code>
-                <code class="text-xs text-gray-500 block font-mono mt-2">[INFO] Scanning global networks...</code>
-                <code class="text-xs text-emerald-400 block font-mono mt-1">[OK] 0 Vulnerabilities discovered. Your perimeter is clear.</code>
-            </div>
-        </div>
-    </section>
+<section class="view" data-view="landing" aria-labelledby="q">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~</span></div>
+    <div class="body">
+      <p class="cmd"><b>$</b> connect slaughter-sec</p>
+      <p class="cmd"><b>$</b> cat quote.txt</p>
+      <h1 id="q" tabindex="-1" data-t="Plans are nothing, planning is everything">Plans are nothing, planning is everything</h1>
+      <p class="cmd"><b>$</b> choose --action</p>
+      <div class="row">
+        <a class="btn" href="#/login">./login</a>
+        <a class="btn fill" href="#/register">./register</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Services Grid Component -->
-    <section id="services" class="bg-slate-950/40 border-t border-gray-900 py-24">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Core Competencies</h2>
-                <p class="mt-4 text-gray-400">Architecting robust defense matrices tailored to offensive real-world testing environments.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-cyberCard border border-gray-800 p-8 rounded-xl hover:border-cyberBlue/50 transition-all group">
-                    <div class="w-12 h-12 bg-cyberBlue/10 text-cyberBlue rounded-lg flex items-center justify-center mb-6 font-bold text-xl group-hover:scale-110 transition-transform">✓</div>
-                    <h3 class="text-xl font-bold mb-3">Penetration Testing</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Rigorous, adversary-simulated attacks to isolate and patch edge architectures before exploitation occurs.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-cyberCard border border-gray-800 p-8 rounded-xl hover:border-cyberBlue/50 transition-all group">
-                    <div class="w-12 h-12 bg-cyberBlue/10 text-cyberBlue rounded-lg flex items-center justify-center mb-6 font-bold text-xl group-hover:scale-110 transition-transform">🛡️</div>
-                    <h3 class="text-xl font-bold mb-3">Incident Response</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Rapid triage protocols deployed globally within moments to isolate containment breaches and mitigate data leaks.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="bg-cyberCard border border-gray-800 p-8 rounded-xl hover:border-cyberBlue/50 transition-all group">
-                    <div class="w-12 h-12 bg-cyberBlue/10 text-cyberBlue rounded-lg flex items-center justify-center mb-6 font-bold text-xl group-hover:scale-110 transition-transform">⚙️</div>
-                    <h3 class="text-xl font-bold mb-3">Compliance & Auditing</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Streamlining strict regulatory architecture landscapes including SOC 2, ISO 27001, and HIPAA compliance readiness.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="view" data-view="login" aria-labelledby="lt">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/login</span></div>
+    <div class="body">
+      <p class="cmd"><b>$</b> ./login</p>
+      <h2 id="lt" tabindex="-1">Log in</h2>
+      <p class="sub">Enter your credentials to continue.</p>
+      <form id="loginForm" novalidate>
+        <label for="le">email</label><input id="le" type="email" autocomplete="email">
+        <label for="lp">password</label><input id="lp" type="password" autocomplete="current-password">
+        <p class="err" role="alert" id="lerr"></p>
+        <button class="btn fill" type="submit">run login</button>
+      </form>
+      <p class="alt">No account? <a href="#/register">./register</a> &nbsp; <a href="#/">cd ..</a></p>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer Contact -->
-    <footer id="contact" class="border-t border-gray-900 bg-cyberDark py-12 text-center text-sm text-gray-500">
-        <p>&copy; 2026 Shield.io. All rights reserved. Secured natively by Cloudflare.</p>
-    </footer>
+<section class="view" data-view="register" aria-labelledby="rt">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/register</span></div>
+    <div class="body">
+      <p class="cmd"><b>$</b> ./register</p>
+      <h2 id="rt" tabindex="-1">Create account</h2>
+      <p class="sub">Four fields, then you are in.</p>
+      <form id="regForm" novalidate>
+        <label for="rn">name</label><input id="rn" type="text" autocomplete="name">
+        <label for="re">email</label><input id="re" type="email" autocomplete="email">
+        <label for="rp">password (8+ characters)</label><input id="rp" type="password" autocomplete="new-password">
+        <label for="rc">confirm password</label><input id="rc" type="password" autocomplete="new-password">
+        <p class="err" role="alert" id="rerr"></p>
+        <button class="btn fill" type="submit">run register</button>
+      </form>
+      <p class="alt">Have an account? <a href="#/login">./login</a> &nbsp; <a href="#/">cd ..</a></p>
+    </div>
+  </div>
+</section>
 
+<section class="view globe" data-view="home" aria-label="Globe and CVE feed">
+  <canvas id="globe" aria-label="Spinning globe showing connected users"></canvas>
+  <aside class="win panel">
+    <div class="bar"><i></i><i></i><i></i><span>cve --random</span></div>
+    <div class="body">
+      <h2 id="ht" tabindex="-1">CVE-2021-44228</h2>
+      <p class="cname" id="cname"></p>
+      <p class="meta"><span id="cprod"></span> <span id="csev"></span></p>
+      <p class="ctext" id="ctext"></p>
+      <div class="track" aria-hidden="true"><i id="cdot"></i></div>
+      <p class="yrs"><span>2001</span><span id="cyr"></span><span>2024</span></p>
+      <div class="prog" aria-hidden="true"><i id="cbar"></i></div>
+      <div class="foot"><span>next in <b id="cleft">10s</b></span><button class="btn" id="cnext" type="button">shuffle</button></div>
+    </div>
+  </aside>
+  <p class="note">simulated demo traffic. drag the globe to spin it.</p>
+</section>
+
+<section class="view page" data-view="threats" aria-labelledby="mt">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>threat-map --live</span></div>
+    <div class="body">
+      <h2 id="mt" tabindex="-1">Live threat map</h2>
+      <p class="sub" id="mstat">API not connected. Showing demo points.</p>
+      <canvas id="tmap" aria-label="World map of threat activity"></canvas>
+    </div>
+  </div>
+</section>
+
+<section class="view page" data-view="product" aria-labelledby="pt">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>man slaughter-sec</span></div>
+    <div class="body">
+      <h2 id="pt" tabindex="-1">Product</h2>
+      <p class="sub">Network defense that never blinks.</p>
+      <div class="pl"><h3>Detect</h3><p>Sensors learn what normal traffic looks like on your network and flag anything that does not fit, from odd logins to data leaving at 3 a.m.</p></div>
+      <div class="pl"><h3>Block</h3><p>Hostile connections are cut automatically. Suspicious accounts are locked until someone confirms they are real.</p></div>
+      <div class="pl"><h3>Respond</h3><p>Analysts investigate every alert and send your team a plain-language report with the fix, not a wall of logs.</p></div>
+      <div class="pl"><h3>See</h3><p>A live globe, threat map and CVE feed keep your whole team looking at the same picture.</p></div>
+      <div class="row" style="margin-top:24px"><a class="btn fill" href="#/demo">try the demo</a><a class="btn" href="mailto:hello@slaughter-sec.com">book a live demo</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="view page" data-view="demo" aria-labelledby="dt">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>demo --simulate</span></div>
+    <div class="body">
+      <h2 id="dt" tabindex="-1">Demo</h2>
+      <p class="sub">Pick an attack and watch it get detected, blocked and reported. Simulated. Nothing real is touched.</p>
+      <div class="row">
+        <button class="btn" type="button" data-a="scan">port scan</button>
+        <button class="btn" type="button" data-a="brute">brute force</button>
+        <button class="btn" type="button" data-a="sqli">sql injection</button>
+        <button class="btn" type="button" data-a="phish">phishing email</button>
+      </div>
+      <div id="dout" role="log" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="view page" data-view="settings" aria-labelledby="st">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>cat ~/.config</span></div>
+    <div class="body">
+      <h2 id="st" tabindex="-1">Settings</h2>
+      <p class="cmd"><b>$</b> whoami</p>
+      <p id="sacct" style="margin:0 0 24px"></p>
+      <p class="cmd"><b>$</b> theme --set</p>
+      <div class="row">
+        <button class="btn" type="button" data-th="dark">dark</button>
+        <button class="btn" type="button" data-th="light">light</button>
+        <button class="btn" type="button" data-th="system">system</button>
+      </div>
+      <p class="cmd" style="margin-top:28px"><b>$</b> account --delete</p>
+      <p class="sub">Removes your account from this browser. This cannot be undone.</p>
+      <button class="btn" id="del" type="button">delete account</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var mem={};
+  function get(k){try{var v=localStorage.getItem(k);if(v!==null)return JSON.parse(v)}catch(e){}return mem[k]===undefined?null:mem[k]}
+  function set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  function del(k){delete mem[k];try{localStorage.removeItem(k)}catch(e){}}
+  function $(s){return document.querySelector(s)}
+  async function hash(email,pw){
+    var d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(email+':'+pw));
+    return Array.from(new Uint8Array(d)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+  }
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches,typed=false;
+
+  function typeQuote(){
+    if(typed)return;typed=true;
+    var h=$('#q'),full=h.getAttribute('data-t'),i=0;
+    h.setAttribute('aria-label',full);
+    if(reduce)return;
+    h.textContent='';
+    (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
+  }
+
+  var APP=['home','threats','product','demo','settings'];
+  function route(){
+    var h=location.hash.replace('#/',''),all=['login','register'].concat(APP);
+    var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
+    if(app&&!sess){location.hash='#/login';return}
+    if((v==='login'||v==='register')&&sess){location.hash='#/home';return}
+    document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
+    document.body.classList.toggle('app',app);
+    document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    if(app)enterApp(v);else stopSim();
+    if(v==='landing')typeQuote();
+    var t=document.querySelector('.view.on [tabindex="-1"]');if(t)t.focus({preventScroll:true});
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',route);
+
+  $('#regForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    var n=$('#rn').value.trim(),em=$('#re').value.trim().toLowerCase(),p=$('#rp').value,c=$('#rc').value,err=$('#rerr');
+    if(!n)return err.textContent='enter your name.';
+    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
+    if(p.length<8)return err.textContent='password must be at least 8 characters.';
+    if(p!==c)return err.textContent='passwords do not match.';
+    var users=get('users')||{};
+    if(users[em])return err.textContent='an account with this email already exists. run ./login instead.';
+    users[em]={name:n,hash:await hash(em,p)};
+    set('users',users);set('session',em);err.textContent='';
+    e.target.reset();location.hash='#/home';
+  });
+
+  $('#loginForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    var em=$('#le').value.trim().toLowerCase(),p=$('#lp').value,err=$('#lerr');
+    var u=(get('users')||{})[em];
+    if(!u||u.hash!==await hash(em,p))return err.textContent='email or password is incorrect.';
+    set('session',em);err.textContent='';e.target.reset();location.hash='#/home';
+  });
+
+  $('#out').addEventListener('click',function(){del('session');location.hash='#/'});
+
+  var POLY=[
+   [-168,66,-156,71,-125,70,-95,72,-85,69,-80,63,-94,58,-82,52,-78,53,-78,58,-70,60,-62,57,-55,52,-66,45,-70,42,-76,35,-81,31,-80,25,-83,29,-90,30,-97,27,-97,21,-90,21,-87,21,-88,16,-83,15,-83,10,-77,8,-80,7,-85,10,-92,14,-105,20,-110,24,-112,29,-117,32,-124,40,-124,48,-130,55,-140,60,-150,60,-158,57,-165,60],
+   [-72,78,-60,82,-30,83,-20,75,-22,70,-42,60,-52,64,-58,75],
+   [-77,8,-72,12,-62,11,-52,5,-50,0,-35,-6,-39,-15,-41,-22,-48,-26,-58,-35,-65,-41,-68,-50,-69,-55,-74,-50,-73,-40,-71,-30,-70,-18,-76,-14,-81,-5,-80,0],
+   [-17,21,-10,30,-6,36,10,37,20,32,32,31,34,28,43,12,51,12,40,-2,40,-15,35,-25,27,-34,18,-34,12,-18,9,-1,9,4,-8,4,-17,14],
+   [-9,37,-9,43,-2,44,-5,48,2,51,8,54,10,57,5,60,10,63,15,69,28,71,40,67,45,68,60,70,70,73,100,77,115,74,140,72,160,70,180,68,180,65,165,60,160,54,155,59,140,58,135,45,128,40,129,35,122,31,121,24,110,20,106,10,100,13,100,2,103,1,98,8,94,17,88,22,80,15,77,8,73,17,67,24,57,25,56,27,50,30,48,29,51,24,56,26,59,22,52,16,43,13,35,28,35,33,27,37,27,41,23,40,22,37,19,41,14,45,12,44,16,38,10,44,3,43,-1,38],
+   [-5,50,1,51,2,53,-2,57,-3,59,-6,58,-5,54,-3,53],
+   [130,31,135,34,140,35,142,39,142,44,141,45,138,38,132,35],
+   [95,5,100,2,106,-3,105,-6,101,-3,96,2],
+   [109,2,117,7,119,1,116,-4,110,-3],
+   [114,-22,122,-18,130,-12,137,-12,142,-11,146,-19,153,-27,150,-37,141,-38,135,-34,130,-32,115,-34],
+   [44,-24,47,-25,50,-15,49,-12,44,-17],
+   [-24,64,-14,64,-14,66,-22,66],
+   [173,-35,178,-38,174,-42,168,-46,172,-41]
+  ];
+  var CITIES=[['New York',40.7,-74],['London',51.5,-0.1],['Tokyo',35.7,139.7],['Sydney',-33.9,151.2],['Sao Paulo',-23.5,-46.6],['Lagos',6.5,3.4],['Mumbai',19.1,72.9],['Berlin',52.5,13.4],['Singapore',1.35,103.8],['Toronto',43.7,-79.4],['Dubai',25.2,55.3],['Seoul',37.6,127],['Mexico City',19.4,-99.1],['Cape Town',-33.9,18.4],['Moscow',55.8,37.6],['Los Angeles',34,-118.2],['Nairobi',-1.3,36.8],['Jakarta',-6.2,106.8],['Paris',48.9,2.4],['Chicago',41.9,-87.6],['Buenos Aires',-34.6,-58.4],['Cairo',30,31.2]];
+  var TZ={'America/New_York':[40.7,-74],'America/Chicago':[41.9,-87.6],'America/Denver':[39.7,-105],'America/Los_Angeles':[34,-118.2],'America/Toronto':[43.7,-79.4],'America/Sao_Paulo':[-23.5,-46.6],'Europe/London':[51.5,-0.1],'Europe/Paris':[48.9,2.4],'Europe/Berlin':[52.5,13.4],'Asia/Tokyo':[35.7,139.7],'Asia/Kolkata':[19.1,72.9],'Australia/Sydney':[-33.9,151.2]};
+  var WORDS=['ghost','null','cipher','vector','daemon','kernel','root','byte','proxy','shell'];
+  var gc=$('#globe'),g=gc.getContext('2d'),gw=0,gh=0,R=0,cx0=0,cy0=0,px=0,py=0,pz=0,cA=1,sA=0,cT=1,sT=0,cc=0;
+  var G={a:0,t:.4,go:null,pause:0},land=[],peers=[],me=null,raf=0,tmr=0,drag=null,col={};
+  function vec(la,lo){var p=la*Math.PI/180,l=lo*Math.PI/180;return [Math.cos(p)*Math.sin(l),Math.sin(p),Math.cos(p)*Math.cos(l)]}
+  var HV=vec(39,-77.5);
+  function ang(v){return Math.acos(Math.max(-1,Math.min(1,v[0]*HV[0]+v[1]*HV[1]+v[2]*HV[2])))}
+  function inPoly(f,x,y){var c=false;for(var i=0,j=f.length-2;i<f.length;j=i,i+=2){var xi=f[i],yi=f[i+1],xj=f[j],yj=f[j+1];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+  (function(){for(var la=-58;la<=82;la+=2){var st=2/Math.max(Math.cos(la*Math.PI/180),.2);for(var lo=-180;lo<180;lo+=st){for(var k=0;k<POLY.length;k++){if(inPoly(POLY[k],lo,la)){land.push(vec(la,lo));break}}}}})();
+  function cols(){var s=getComputedStyle(document.documentElement);['bg','win','fg','acc','rain','dim'].forEach(function(k){col[k]=s.getPropertyValue('--'+k).trim()})}
+  function pr(x,y,z){var z1=z*cA-x*sA;px=x*cA+z*sA;py=y*cT-z1*sT;pz=y*sT+z1*cT}
+  function arcPt(p,t){var s=Math.sin(p.om),k=Math.sin((1-t)*p.om)/s,k2=Math.sin(t*p.om)/s,h=1+(.04+.3*p.om/Math.PI)*Math.sin(Math.PI*t);pr((HV[0]*k+p.v[0]*k2)*h,(HV[1]*k+p.v[1]*k2)*h,(HV[2]*k+p.v[2]*k2)*h)}
+  function vis(){return pz>0||px*px+py*py>1}
+  function draw(now){
+    if(!col.bg||++cc%90===0)cols();
+    cA=Math.cos(G.a);sA=Math.sin(G.a);cT=Math.cos(G.t);sT=Math.sin(G.t);
+    g.clearRect(0,0,gw,gh);
+    var gr=g.createRadialGradient(cx0-R*.35,cy0-R*.35,R*.1,cx0,cy0,R),i,j,p,X,Y,a;
+    gr.addColorStop(0,col.win);gr.addColorStop(1,col.bg);
+    g.globalAlpha=1;g.fillStyle=gr;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.fill();
+    g.globalAlpha=.55;g.strokeStyle=col.acc;g.lineWidth=1.5;g.stroke();
+    var d=Math.max(1.5,R*.0055);g.fillStyle=col.rain;
+    for(i=0;i<land.length;i++){pr(land[i][0],land[i][1],land[i][2]);if(pz>0){g.globalAlpha=.15+.85*pz;g.fillRect(cx0+px*R-d/2,cy0-py*R-d/2,d,d)}}
+    g.lineWidth=1.2;g.font='11px "JetBrains Mono",ui-monospace,monospace';
+    for(i=0;i<peers.length;i++){
+      p=peers[i];g.strokeStyle=col.acc;g.globalAlpha=.7;g.beginPath();var pv=false;
+      for(j=0;j<=26;j++){arcPt(p,j/26);if(vis()){X=cx0+px*R;Y=cy0-py*R;if(pv)g.lineTo(X,Y);else g.moveTo(X,Y);pv=true}else pv=false}
+      g.stroke();arcPt(p,((now||0)/2800+p.ph)%1);
+      if(vis()){g.globalAlpha=1;g.fillStyle=col.fg;g.beginPath();g.arc(cx0+px*R,cy0-py*R,2.2,0,6.2832);g.fill()}
+    }
+    for(i=0;i<peers.length;i++){
+      p=peers[i];pr(p.v[0],p.v[1],p.v[2]);if(pz<=.05)continue;
+      X=cx0+px*R;Y=cy0-py*R;a=Math.min(1,pz*1.6);
+      g.globalAlpha=a;g.fillStyle=p.me?col.fg:col.acc;g.beginPath();g.arc(X,Y,p.me?4.5:3.2,0,6.2832);g.fill();
+      var age=((now||0)-p.born)/1600;
+      if(age>=0&&age<1){g.strokeStyle=col.acc;g.globalAlpha=a*(1-age);g.beginPath();g.arc(X,Y,4+age*16,0,6.2832);g.stroke()}
+      g.globalAlpha=a*.9;g.fillStyle=col.fg;g.fillText(p.me?'you':p.h,X+8,Y+4);
+    }
+    pr(HV[0],HV[1],HV[2]);
+    if(pz>.05){X=cx0+px*R;Y=cy0-py*R;g.globalAlpha=1;g.fillStyle=col.acc;g.fillRect(X-4,Y-4,8,8);g.fillStyle=col.fg;g.fillText('core',X+8,Y+4)}
+    g.globalAlpha=1;
+  }
+  function redraw(){if(reduce&&gw)draw(performance.now())}
+  function frame(now){
+    if(!drag&&!G.go&&now>G.pause)G.a+=.0022;
+    if(G.go){var df=G.go.a-G.a;df=Math.atan2(Math.sin(df),Math.cos(df));G.a+=df*.08;G.t+=(G.go.t-G.t)*.08;if(Math.abs(df)<.003)G.go=null}
+    draw(now);raf=requestAnimationFrame(frame);
+  }
+  function gsize(){
+    var d=Math.min(window.devicePixelRatio||1,2),m;
+    gw=gc.clientWidth;gh=gc.clientHeight;if(!gw)return;
+    gc.width=gw*d;gc.height=gh*d;g.setTransform(d,0,0,d,0,0);
+    m=gw<700;R=m?Math.min(gw*.45,gh*.25):Math.min(gw,gh)*.46;cx0=gw/2;cy0=m?gh*.32:gh/2;redraw();
+  }
+  window.addEventListener('resize',gsize);
+  gc.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY};gc.setPointerCapture(e.pointerId);gc.style.cursor='grabbing'});
+  gc.addEventListener('pointermove',function(e){if(!drag)return;G.go=null;G.a+=(e.clientX-drag.x)/R;G.t=Math.max(-1.2,Math.min(1.2,G.t+(e.clientY-drag.y)/R));drag.x=e.clientX;drag.y=e.clientY;redraw()});
+  function endDrag(){drag=null;G.pause=performance.now()+3000;gc.style.cursor='grab'}
+  gc.addEventListener('pointerup',endDrag);gc.addEventListener('pointercancel',endDrag);
+
+  function mk(seed){
+    var used=peers.map(function(p){return p.c}),pool=CITIES.filter(function(c){return used.indexOf(c[0])<0});
+    var c=pool[Math.floor(Math.random()*pool.length)];if(!c)return;
+    var la=c[1]+Math.random()*3-1.5,lo=c[2]+Math.random()*3-1.5,v=vec(la,lo);
+    var np={h:WORDS[Math.floor(Math.random()*WORDS.length)]+'_'+(10+Math.floor(Math.random()*90)),c:c[0],lat:la,lon:lo,v:v,om:Math.max(.08,ang(v)),ph:Math.random(),ms:Math.round(18+Math.random()*160),born:seed?-Math.random()*3600000:performance.now()};
+    peers.push(np);
+  }
+  function setMe(name){
+    var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+    me={me:true,name:name,c:'',born:performance.now()};
+    var c=TZ[tz];
+    if(c){me.c=tz.split('/')[1].replace(/_/g,' ');me.lat=c[0];me.lon=c[1];me.v=vec(c[0],c[1]);me.om=Math.max(.08,ang(me.v));me.ph=.3;peers.push(me)}
+  }
+  var cur='',cvi=-1,cvT=0,cvLeft=10,scr=0,thrT=0,threats=[],landLL=null;
+  var CVES=[
+   ["CVE-2008-4250",2008,"Conficker / MS08-067","Windows Server service","critical","Remote code execution through a crafted RPC request. Exploited by the Conficker worm."],
+   ["CVE-2010-2568",2010,"Stuxnet shortcut flaw","Windows Shell","critical","Viewing a folder with a malicious shortcut file ran attacker code. Used by Stuxnet."],
+   ["CVE-2014-0160",2014,"Heartbleed","OpenSSL","high","A missing length check in the TLS heartbeat leaked server memory, including private keys."],
+   ["CVE-2014-6271",2014,"Shellshock","GNU Bash","critical","Bash ran commands placed after a function definition in an environment variable."],
+   ["CVE-2016-5195",2016,"Dirty COW","Linux kernel","high","A race condition in copy-on-write let local users write to read-only memory."],
+   ["CVE-2017-0144",2017,"EternalBlue","Windows SMBv1","high","Crafted SMB packets allowed remote code execution. Powered WannaCry and NotPetya."],
+   ["CVE-2017-5638",2017,"Apache Struts","Struts Jakarta parser","critical","A crafted Content-Type header gave remote code execution. Tied to the Equifax breach."],
+   ["CVE-2017-11882",2017,"Equation Editor","Microsoft Office","high","Memory corruption in a legacy component ran code as soon as a document was opened."],
+   ["CVE-2018-13379",2018,"FortiOS path traversal","Fortinet SSL VPN","critical","Path traversal let unauthenticated users read system files, including session data."],
+   ["CVE-2019-0708",2019,"BlueKeep","Windows Remote Desktop","critical","Wormable remote code execution in Remote Desktop Services with no login needed."],
+   ["CVE-2019-11510",2019,"Pulse Secure file read","Pulse Connect Secure","critical","Unauthenticated arbitrary file read on the VPN appliance."],
+   ["CVE-2019-19781",2019,"Citrix ADC traversal","Citrix ADC and Gateway","critical","Directory traversal that led to remote code execution on the appliance."],
+   ["CVE-2020-0601",2020,"CurveBall","Windows CryptoAPI","high","Weak elliptic-curve validation allowed spoofed code-signing and TLS certificates."],
+   ["CVE-2020-1472",2020,"Zerologon","Windows Netlogon","critical","A cryptographic flaw let an attacker on the network take over a domain controller."],
+   ["CVE-2021-26855",2021,"ProxyLogon","Microsoft Exchange","critical","Server-side request forgery that bypassed authentication and chained into code execution."],
+   ["CVE-2021-34527",2021,"PrintNightmare","Windows Print Spooler","high","A Print Spooler flaw allowed remote code execution with SYSTEM privileges."],
+   ["CVE-2021-44228",2021,"Log4Shell","Apache Log4j 2","critical","Logged text could trigger JNDI lookups that load and run remote code."],
+   ["CVE-2021-4034",2021,"PwnKit","polkit pkexec","high","Local privilege escalation to root on most major Linux distributions."],
+   ["CVE-2022-0847",2022,"Dirty Pipe","Linux kernel","high","Unprivileged users could overwrite data in files they could only read."],
+   ["CVE-2022-22965",2022,"Spring4Shell","Spring Framework","critical","A data-binding flaw enabled remote code execution on certain Spring MVC setups."],
+   ["CVE-2022-26134",2022,"Confluence OGNL injection","Atlassian Confluence","critical","Unauthenticated OGNL injection gave remote code execution."],
+   ["CVE-2022-30190",2022,"Follina","Windows MSDT","high","Office documents could launch the support diagnostic tool and run commands."],
+   ["CVE-2023-23397",2023,"Outlook NTLM leak","Microsoft Outlook","critical","A crafted calendar invite leaked NTLM hashes without any user interaction."],
+   ["CVE-2023-34362",2023,"MOVEit Transfer","Progress MOVEit","critical","SQL injection in a file-transfer app drove a wave of data-theft breaches."],
+   ["CVE-2023-44487",2023,"HTTP/2 Rapid Reset","HTTP/2 protocol","high","Rapid stream resets enabled record-setting denial-of-service attacks."],
+   ["CVE-2023-4966",2023,"Citrix Bleed","NetScaler ADC and Gateway","critical","An information leak exposed session tokens, enabling account takeover."],
+   ["CVE-2023-4863",2023,"libwebp overflow","libwebp (Chrome and others)","high","Heap overflow while decoding a crafted WebP image."],
+   ["CVE-2024-3094",2024,"xz backdoor","xz Utils","critical","Malicious code hidden in release tarballs could compromise SSH on affected systems."],
+   ["CVE-2024-3400",2024,"GlobalProtect command injection","Palo Alto PAN-OS","critical","Command injection allowed unauthenticated code execution as root."],
+   ["CVE-2024-6387",2024,"regreSSHion","OpenSSH server","high","A signal-handler race could allow unauthenticated remote code execution on glibc Linux."],
+   ["CVE-2024-1086",2024,"nf_tables use-after-free","Linux kernel","high","A netfilter use-after-free allowed local privilege escalation."],
+   ["CVE-2024-4577",2024,"PHP-CGI argument injection","PHP on Windows","critical","An argument injection bypass allowed remote code execution on some Windows locales."],
+   ["CVE-2001-0500",2001,"Code Red","Microsoft IIS","critical","A buffer overflow in the Indexing Service let the Code Red worm spread across web servers."],
+   ["CVE-2002-0649",2002,"SQL Slammer","Microsoft SQL Server","critical","One small UDP packet could infect a server, and the worm spread worldwide in minutes."],
+   ["CVE-2003-0352",2003,"Blaster / DCOM RPC","Windows RPC DCOM","critical","A buffer overflow in the DCOM RPC interface was exploited by the Blaster worm."],
+   ["CVE-2008-1447",2008,"Kaminsky DNS flaw","DNS resolvers","high","Predictable query IDs let attackers poison DNS caches and redirect users."],
+   ["CVE-2011-3389",2011,"BEAST","SSL and TLS 1.0","medium","A CBC weakness let attackers decrypt parts of an HTTPS session from the browser."],
+   ["CVE-2012-0158",2012,"MSCOMCTL overflow","Microsoft Office","high","Memory corruption in a common ActiveX control ran code from booby-trapped Office files."],
+   ["CVE-2012-4681",2012,"Java sandbox bypass","Oracle Java 7","critical","Applets could escape the Java sandbox and run code. Common in exploit kits."],
+   ["CVE-2014-3566",2014,"POODLE","SSL 3.0","medium","A padding weakness let attackers decrypt secure cookies and tokens."],
+   ["CVE-2014-4114",2014,"Sandworm OLE","Windows OLE","high","Malicious Office files could pull in remote content and run code."],
+   ["CVE-2015-0235",2015,"GHOST","glibc","critical","A buffer overflow in hostname lookups could allow code execution on Linux."],
+   ["CVE-2015-1635",2015,"HTTP.sys flaw","Windows HTTP.sys","critical","A crafted Range header could crash or take over IIS web servers."],
+   ["CVE-2015-4000",2015,"Logjam","TLS Diffie-Hellman","medium","Weak 512-bit export groups let attackers downgrade and decrypt connections."],
+   ["CVE-2015-4852",2015,"WebLogic deserialization","Oracle WebLogic","critical","Unsafe deserialization over the T3 protocol allowed remote code execution."],
+   ["CVE-2016-0800",2016,"DROWN","OpenSSL and SSLv2","high","Servers that still offered SSLv2 exposed modern TLS sessions to decryption."],
+   ["CVE-2016-3714",2016,"ImageTragick","ImageMagick","critical","Shell commands hidden in image files ran when ImageMagick processed them."],
+   ["CVE-2016-10033",2016,"PHPMailer injection","PHPMailer","critical","A crafted sender address allowed remote code execution in many PHP apps."],
+   ["CVE-2017-5754",2017,"Meltdown","CPU out-of-order execution","medium","Speculation let user programs read kernel memory they should never see."],
+   ["CVE-2017-5753",2017,"Spectre variant 1","CPU speculative execution","medium","A bounds-check bypass could leak data from other programs through speculation."],
+   ["CVE-2017-5689",2017,"Intel AMT escalation","Intel management engine","critical","An empty authentication response could grant admin access to remote management."],
+   ["CVE-2017-7494",2017,"SambaCry","Samba","critical","A malicious shared library uploaded to a share could be loaded and run by Samba."],
+   ["CVE-2017-9805",2017,"Struts REST plugin","Apache Struts","critical","Unsafe XML deserialization allowed remote code execution."],
+   ["CVE-2017-0199",2017,"Office OLE download","Microsoft Office","high","Documents could fetch and run a remote HTA file. Widely used in phishing."],
+   ["CVE-2017-13077",2017,"KRACK","WPA2 Wi-Fi","medium","Replayed handshake messages let attackers decrypt traffic on WPA2 networks."],
+   ["CVE-2018-0101",2018,"Cisco ASA WebVPN","Cisco ASA","critical","A double free in the SSL VPN could allow code execution or a forced reload."],
+   ["CVE-2018-0171",2018,"Smart Install","Cisco IOS and IOS XE","critical","An exposed Smart Install service allowed device takeover over the network."],
+   ["CVE-2018-7600",2018,"Drupalgeddon2","Drupal","critical","Crafted form requests gave unauthenticated remote code execution."],
+   ["CVE-2018-4878",2018,"Flash zero-day","Adobe Flash Player","critical","A use-after-free exploited by state-backed attackers through Office documents."],
+   ["CVE-2018-10933",2018,"libssh auth bypass","libssh","critical","A server could be tricked into accepting a success message and skipping login."],
+   ["CVE-2018-1002105",2018,"Kubernetes API proxy","Kubernetes","critical","Crafted requests could escalate privileges through the API server proxy."],
+   ["CVE-2019-0604",2019,"SharePoint RCE","Microsoft SharePoint","critical","Improper input validation allowed code execution on SharePoint servers."],
+   ["CVE-2019-1182",2019,"DejaBlue","Windows Remote Desktop","critical","Wormable remote code execution in newer Remote Desktop Services."],
+   ["CVE-2019-2215",2019,"Android Binder","Android kernel","high","A use-after-free let apps gain root. Used in targeted spyware."],
+   ["CVE-2019-2725",2019,"WebLogic async flaw","Oracle WebLogic","critical","Unauthenticated deserialization in a web service component allowed code execution."],
+   ["CVE-2019-5736",2019,"runc container escape","runc","high","A malicious container could overwrite the host runc binary and gain root."],
+   ["CVE-2019-10149",2019,"Return of the WIZard","Exim mail server","critical","Crafted recipient addresses allowed command execution on the mail server."],
+   ["CVE-2019-15107",2019,"Webmin backdoor","Webmin","critical","Command injection in password reset, planted in release builds, gave remote root."],
+   ["CVE-2019-14287",2019,"sudo user ID bypass","sudo","high","Using user ID -1 ran commands as root despite sudo restrictions."],
+   ["CVE-2019-16759",2019,"vBulletin widget RCE","vBulletin","critical","A crafted request to a widget handler ran PHP code with no login."],
+   ["CVE-2020-0796",2020,"SMBGhost","Windows SMBv3","critical","A compression bug in SMBv3 could allow wormable remote code execution."],
+   ["CVE-2020-0688",2020,"Exchange static key","Microsoft Exchange","high","A hardcoded validation key let any logged-in user run code as SYSTEM."],
+   ["CVE-2020-1350",2020,"SIGRed","Windows DNS Server","critical","A wormable overflow in DNS responses could give control of domain servers."],
+   ["CVE-2020-1938",2020,"Ghostcat","Apache Tomcat AJP","critical","The AJP connector allowed reading files from the web application."],
+   ["CVE-2020-5902",2020,"BIG-IP TMUI","F5 BIG-IP","critical","Unauthenticated remote code execution in the Traffic Management UI."],
+   ["CVE-2020-14882",2020,"WebLogic console bypass","Oracle WebLogic","critical","Path tricks reached the admin console without login, leading to code execution."],
+   ["CVE-2021-1675",2021,"PrintNightmare (first)","Windows Print Spooler","high","The first Print Spooler flaw, initially treated as local privilege escalation."],
+   ["CVE-2021-3156",2021,"Baron Samedit","sudo","high","A heap overflow gave any local user root on many Linux and Unix systems."],
+   ["CVE-2021-21972",2021,"vCenter plugin upload","VMware vCenter","critical","An unauthenticated file upload in a vSphere plugin gave remote code execution."],
+   ["CVE-2021-22205",2021,"GitLab image parsing","GitLab","critical","Uploaded images were parsed unsafely, allowing unauthenticated code execution."],
+   ["CVE-2021-22555",2021,"Netfilter heap overflow","Linux kernel","high","A 15-year-old out-of-bounds write allowed privilege escalation and container escape."],
+   ["CVE-2021-26084",2021,"Confluence OGNL injection","Atlassian Confluence","critical","OGNL injection let unauthenticated users run code on Confluence Server."],
+   ["CVE-2021-30860",2021,"FORCEDENTRY","Apple CoreGraphics","high","A zero-click PDF flaw in iMessage was used to install Pegasus spyware."],
+   ["CVE-2021-34473",2021,"ProxyShell","Microsoft Exchange","critical","Pre-auth path confusion that chained into remote code execution."],
+   ["CVE-2021-38647",2021,"OMIGOD","Open Management Infrastructure","critical","Missing authentication allowed root code execution on Azure Linux VMs."],
+   ["CVE-2021-40444",2021,"MSHTML RCE","Windows MSHTML","high","Malicious Office documents used ActiveX in MSHTML to run code."],
+   ["CVE-2021-45046",2021,"Log4Shell follow-up","Apache Log4j 2","critical","The first fix was incomplete, leaving some setups open to attack."],
+   ["CVE-2022-1388",2022,"BIG-IP iControl bypass","F5 BIG-IP","critical","An authentication bypass in the management API gave full control."],
+   ["CVE-2022-22947",2022,"Spring Cloud Gateway","Spring Cloud Gateway","critical","Expression injection through an actuator endpoint allowed code execution."],
+   ["CVE-2022-3602",2022,"OpenSSL punycode","OpenSSL 3.0","high","A buffer overflow in certificate checks, downgraded from critical before release."],
+   ["CVE-2022-40684",2022,"FortiOS admin bypass","Fortinet FortiOS","critical","An authentication bypass on the admin interface allowed full control."],
+   ["CVE-2022-41040",2022,"ProxyNotShell","Microsoft Exchange","high","A request forgery step chained with CVE-2022-41082 for code execution."],
+   ["CVE-2022-42889",2022,"Text4Shell","Apache Commons Text","critical","Unsafe string interpolation could run code from untrusted input."],
+   ["CVE-2023-20198",2023,"IOS XE web UI","Cisco IOS XE","critical","Unauthenticated attackers could create admin accounts through the web interface."],
+   ["CVE-2023-22515",2023,"Confluence access control","Atlassian Confluence","critical","Broken access control allowed attackers to create administrator accounts."],
+   ["CVE-2023-28252",2023,"CLFS escalation","Windows CLFS","high","A log file system flaw gave SYSTEM rights and was used by ransomware crews."],
+   ["CVE-2023-3519",2023,"Citrix ADC RCE","NetScaler ADC and Gateway","critical","Unauthenticated code execution that was exploited in the wild."],
+   ["CVE-2023-46604",2023,"ActiveMQ deserialization","Apache ActiveMQ","critical","Unsafe deserialization in the OpenWire protocol allowed code execution."],
+   ["CVE-2023-48795",2023,"Terrapin","SSH protocol","medium","Attackers could drop handshake messages and downgrade connection security."],
+   ["CVE-2023-4911",2023,"Looney Tunables","glibc","high","A buffer overflow in the dynamic loader gave local root."],
+   ["CVE-2024-21887",2024,"Ivanti command injection","Ivanti Connect Secure","critical","Command injection chained with an authentication bypass for full takeover."],
+   ["CVE-2024-21762",2024,"FortiOS SSL VPN overflow","Fortinet FortiOS","critical","An out-of-bounds write let unauthenticated attackers run code with crafted requests."],
+   ["CVE-2024-1709",2024,"ScreenConnect bypass","ConnectWise ScreenConnect","critical","An alternate path skipped authentication and let attackers create admin users."],
+   ["CVE-2024-27198",2024,"TeamCity bypass","JetBrains TeamCity","critical","An authentication bypass gave admin control of the build server."],
+   ["CVE-2024-23897",2024,"Jenkins CLI file read","Jenkins","critical","The CLI parser could read arbitrary files, which led to code execution."],
+   ["CVE-2024-38063",2024,"Windows IPv6 RCE","Windows TCP/IP","critical","Crafted IPv6 packets could run code with no user action."]
+  ];
+  function showCve(i){
+    var c=CVES[i];
+    $('#ht').textContent=c[0];$('#cname').textContent=c[2];
+    $('#cprod').textContent=c[3]+', '+c[1];
+    var sv=$('#csev');sv.textContent=c[4];sv.className=c[4]==='critical'?'bad':'warn';
+    $('#ctext').textContent=c[5];$('#cyr').textContent=c[1];
+    $('#cdot').style.left=((c[1]-2001)/23*100)+'%';
+  }
+  function bar(){$('#cleft').textContent=cvLeft+'s';$('#cbar').style.width=(cvLeft*10)+'%'}
+  function nextCve(){
+    var n;do{n=Math.floor(Math.random()*CVES.length)}while(n===cvi);
+    cvi=n;cvLeft=10;bar();clearInterval(scr);
+    if(reduce){showCve(n);return}
+    var step=0,h=$('#ht');
+    scr=setInterval(function(){
+      if(++step>8){clearInterval(scr);showCve(n);return}
+      h.textContent='CVE-'+(2001+Math.floor(Math.random()*24))+'-'+String(Math.floor(Math.random()*99999)).padStart(4,'0');
+    },55);
+  }
+  function startCve(){
+    if(cvi<0)nextCve();else{showCve(cvi);cvLeft=10;bar()}
+    cvT=setInterval(function(){cvLeft--;if(cvLeft<=0)nextCve();else bar()},1000);
+  }
+  $('#cnext').addEventListener('click',nextCve);
+
+  /* ---- THREAT FEED: plug your API in here ---- */
+  var THREAT_FEED={
+    url:'',        // your API endpoint, e.g. 'https://example.com/v1/threats'
+    headers:{},    // e.g. {Authorization:'Bearer YOUR_KEY'}
+    every:5000,    // polling interval in ms
+    parse:function(raw){return raw} // must return [{lat,lon,type,label}] where type is scan, malware, ddos or phish
+  };
+  function drawMap(){
+    var c=$('#tmap');if(!c||!c.clientWidth)return;
+    var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d');
+    c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);
+    if(!col.bg)cols();
+    if(!landLL)landLL=land.map(function(v){return [Math.asin(v[1])*57.2958,Math.atan2(v[0],v[2])*57.2958]});
+    x.fillStyle=col.rain;x.globalAlpha=.6;
+    landLL.forEach(function(p){x.fillRect((p[1]+180)/360*w-1,(90-p[0])/180*h-1,2,2)});
+    var tc={scan:col.acc,malware:'#ff6b5e',ddos:col.fg,phish:col.rain};
+    x.font='11px "JetBrains Mono",ui-monospace,monospace';
+    threats.forEach(function(t,i){
+      var X=(t.lon+180)/360*w,Y=(90-t.lat)/180*h,last=i>=threats.length-5;
+      x.globalAlpha=last?1:.55;x.fillStyle=tc[t.type]||col.acc;
+      x.beginPath();x.arc(X,Y,last?4:3,0,6.2832);x.fill();
+      if(last){x.fillStyle=col.fg;x.fillText(t.type+' '+t.label,X+8,Y+4)}
+    });
+    x.globalAlpha=1;
+  }
+  async function loadThreats(){
+    if(!THREAT_FEED.url){
+      var c=CITIES[Math.floor(Math.random()*CITIES.length)];
+      threats.push({lat:c[1],lon:c[2],type:['scan','malware','ddos','phish'][Math.floor(Math.random()*4)],label:c[0]});
+    }else{
+      try{
+        var r=await fetch(THREAT_FEED.url,{headers:THREAT_FEED.headers});
+        threats=THREAT_FEED.parse(await r.json());
+        $('#mstat').textContent='Live from '+THREAT_FEED.url;
+      }catch(e){$('#mstat').textContent='error: could not reach the threat API.'}
+    }
+    while(threats.length>40)threats.shift();
+    drawMap();
+  }
+  window.addEventListener('resize',function(){if(cur==='threats')drawMap()});
+
+  var dTimer=0;
+  var SCEN={
+    scan:[["attack","203.0.113.45 starts probing 1,024 ports on web-01"],["detect","Sequential probes from one address, 212 in 3 seconds"],["block","203.0.113.45 added to the deny list"],["respond","Firewall rule saved and a ticket opened"],["report","No service was reached. No action needed."]],
+    brute:[["attack","198.51.100.7 tries 90 passwords a minute on the admin login"],["detect","Failed logins far above normal for this account"],["block","198.51.100.7 blocked and the admin account locked"],["respond","Admin asked to confirm and reset the password"],["report","No successful login. Account restored after verification."]],
+    sqli:[["attack","Request to /api/orders carries an injected SQL string"],["detect","Input matches a known injection pattern"],["block","Request dropped before it reached the database"],["respond","Developer ticket opened to use parameterized queries"],["report","No data was read or changed."]],
+    phish:[["attack","Email 'Invoice overdue' reaches 11 staff with a lookalike login link"],["detect","Link domain imitates your company and was registered 2 days ago"],["block","Email pulled from all 11 inboxes and the domain blocked"],["respond","Staff alerted with what to look for"],["report","No one entered credentials."]]
+  };
+  function runDemo(k){
+    var out=$('#dout'),steps=SCEN[k],i=0,btns=document.querySelectorAll('[data-a]');
+    clearInterval(dTimer);out.innerHTML='';
+    function add(){
+      var st=steps[i++],d=document.createElement('div'),b=document.createElement('b'),t=document.createElement('span');
+      b.textContent=st[0];b.className={attack:'bad',detect:'warn',block:'ok',respond:'ok',report:'t'}[st[0]];
+      t.textContent=st[1];d.appendChild(b);d.appendChild(t);out.appendChild(d);
+      if(i>=steps.length){clearInterval(dTimer);btns.forEach(function(x){x.disabled=false})}
+    }
+    btns.forEach(function(x){x.disabled=true});
+    if(reduce){while(i<steps.length)add();return}
+    add();dTimer=setInterval(add,750);
+  }
+  document.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){runDemo(b.dataset.a)})});
+
+  function pressed(){var t=get('theme')||'system';document.querySelectorAll('[data-th]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.th===t)})}
+  function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';pressed()}
+  function tick(){
+    var idx=[];peers.forEach(function(p,i){if(!p.me)idx.push(i)});
+    if(idx.length<7||(idx.length<15&&Math.random()<.6))mk();
+    else peers.splice(idx[Math.floor(Math.random()*idx.length)],1);
+    redraw();
+  }
+  function startSim(u){
+    if(!tmr){peers=[];setMe(u.name);for(var k=0;k<8;k++)mk(true);tmr=setInterval(tick,2400)}
+  }
+  function stopTimers(){cancelAnimationFrame(raf);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
+  function stopSim(){clearInterval(tmr);tmr=0;stopTimers();cur=''}
+  function enterApp(v){
+    var em=get('session'),u=(get('users')||{})[em];if(!u){location.hash='#/login';return}
+    cur=v;startSim(u);stopTimers();
+    if(v==='home'){gsize();if(!reduce)raf=requestAnimationFrame(frame);startCve()}
+    if(v==='threats'){loadThreats();thrT=setInterval(loadThreats,THREAT_FEED.url?THREAT_FEED.every:2400)}
+    if(v==='demo'){document.querySelectorAll('[data-a]').forEach(function(x){x.disabled=false});$('#dout').textContent='Pick an attack above to start.'}
+    if(v==='settings')renderSettings(u,em);
+  }
+  function applyTheme(t){var r=document.documentElement;if(t==='dark'||t==='light')r.setAttribute('data-theme',t);else r.removeAttribute('data-theme');col={};redraw()}
+  applyTheme(get('theme')||'system');
+  document.querySelectorAll('[data-th]').forEach(function(b){b.addEventListener('click',function(){set('theme',b.dataset.th);applyTheme(b.dataset.th);pressed()})});
+  var dt=0;
+  $('#del').addEventListener('click',function(){
+    var b=this;
+    if(!dt){b.textContent='click again to confirm';dt=setTimeout(function(){dt=0;b.textContent='delete account'},4000);return}
+    clearTimeout(dt);dt=0;b.textContent='delete account';
+    var em=get('session'),us=get('users')||{};delete us[em];set('users',us);del('session');location.hash='#/';
+  });
+
+  route();
+})();
+(function(){
+  var cv=document.getElementById('rain'),cx=cv.getContext('2d'),fs=16,w,h,drops=[],bg,fade,fg,head,n=0;
+  var chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+=<>/|{}[]';
+  function rc(){return chars.charAt(Math.floor(Math.random()*chars.length))}
+  function colors(){
+    var s=getComputedStyle(document.documentElement);
+    bg=s.getPropertyValue('--bg').trim();fg=s.getPropertyValue('--rain').trim();
+    var v=parseInt(bg.slice(1),16),r=v>>16&255,g=v>>8&255,b=v&255;
+    fade='rgba('+r+','+g+','+b+',0.09)';
+    head=(r+g+b<384)?'#d9ffe6':'#0b3d20';
+  }
+  function size(){
+    var d=Math.min(window.devicePixelRatio||1,2);
+    w=window.innerWidth;h=window.innerHeight;
+    cv.width=w*d;cv.height=h*d;cx.setTransform(d,0,0,d,0,0);
+    colors();cx.fillStyle=bg;cx.fillRect(0,0,w,h);
+    drops=[];for(var i=0;i<Math.ceil(w/fs);i++)drops.push(Math.floor(Math.random()*h/fs));
+  }
+  function step(){
+    if(++n%40===0)colors();
+    cx.fillStyle=fade;cx.fillRect(0,0,w,h);
+    cx.font=fs+'px "JetBrains Mono",ui-monospace,monospace';
+    for(var i=0;i<drops.length;i++){
+      var x=i*fs,y=drops[i]*fs;
+      cx.fillStyle=fg;cx.fillText(rc(),x,y-fs);
+      cx.fillStyle=head;cx.fillText(rc(),x,y);
+      if(y>h&&Math.random()>0.975)drops[i]=0;else drops[i]++;
+    }
+  }
+  var last=0;
+  function loop(t){if(t-last>55){last=t;step()}requestAnimationFrame(loop)}
+  size();
+  window.addEventListener('resize',size);
+  for(var k=0;k<90;k++)step();
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(loop);
+})();
+
+</script>
 </body>
 </html>
