@@ -1,10 +1,10 @@
-
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
-<html lang="en" data-palette="crimson">
+<html lang="en" data-palette="amber">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>slaughter-sec — planning is everything</title>
+<title>Slaughter-Sec — security posture and AI security research</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -14,6 +14,8 @@
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 /* palettes: dark surfaces + accent, plus the accent used in light mode */
+:root[data-palette="violet"]{--d-bg:#0d0a1a;--d-win:#150f26;--d-bar:#1f1736;--d-line:#33284f;--d-fg:#ece6ff;--d-dim:#9a8fc0;--d-acc:#b794ff;--d-rain:#7c5cff;--l-acc:#6b3fd4;--l-rain:#5a35b8}
+:root[data-palette="mint"]{--d-bg:#07120f;--d-win:#0c1a16;--d-bar:#12251f;--d-line:#1f3d34;--d-fg:#d9f5ec;--d-dim:#7fb3a3;--d-acc:#5eead4;--d-rain:#2dd4bf;--l-acc:#0f766e;--l-rain:#0f766e}
 :root[data-palette="crimson"]{--d-bg:#120a0c;--d-win:#1a1013;--d-bar:#26151a;--d-line:#3a1f26;--d-fg:#f0dfe0;--d-dim:#9a7f84;--d-acc:#ff4d5e;--d-rain:#e63946;--l-acc:#b3122b;--l-rain:#a01a2c}
 :root[data-palette="cyber"]{--d-bg:#0b0b1a;--d-win:#12122a;--d-bar:#1b1b3b;--d-line:#2b2b5c;--d-fg:#e6e6ff;--d-dim:#8b8bb8;--d-acc:#ff2e97;--d-rain:#29e7ff;--l-acc:#c4006e;--l-rain:#007f99}
 :root[data-palette="ice"]{--d-bg:#0a1018;--d-win:#0f1a26;--d-bar:#162434;--d-line:#223a52;--d-fg:#dcecf8;--d-dim:#7f9bb3;--d-acc:#4cc2ff;--d-rain:#3a9fd8;--l-acc:#0a6cb0;--l-rain:#0a6cb0}
@@ -35,8 +37,11 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:400 .95rem/1
 .cmd{color:var(--dim);margin:0 0 6px}
 .cmd b{color:var(--acc);font-weight:400}
 h1,h2{font:700 clamp(1.5rem,5vw,2.4rem)/1.25 "JetBrains Mono",ui-monospace,monospace;margin:0 0 26px;color:var(--fg);text-wrap:balance}
-h1{min-height:3.8em}
-h1::after{content:"█";color:var(--acc);margin-left:4px;animation:blink 1.1s steps(1) infinite}
+#q{min-height:3.75em}
+[tabindex="-1"]:focus{outline:0}
+@media (min-width:700px){#q{min-height:2.5em}}
+h1.ph{font-size:clamp(1.6rem,4.5vw,2.3rem);min-height:0;margin-bottom:10px}
+#q::after{content:"█";color:var(--acc);margin-left:4px;animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 h2{font-size:1.4rem;margin-bottom:8px}
 .sub{color:var(--dim);margin:0 0 18px}
@@ -70,20 +75,7 @@ li button:hover{color:var(--err)}
 #rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.6}
 .view{position:relative;z-index:1}
 .view.globe{padding:0}
-.view.globe.on{display:block;position:fixed;inset:var(--nav-h) 0 0 0}
-#globe{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
-.panel{position:absolute;left:14px;top:14px;width:300px;max-width:calc(100% - 28px)}
-.panel .body{padding:16px}
-.panel h2{font-size:1.2rem;color:var(--acc);margin:0 0 6px}
-.panel ul{margin:8px 0 14px;max-height:44vh;overflow:auto}
-.panel li{padding:0;font-size:.82rem}
-.panel li button.pr{display:flex;gap:10px;width:100%;padding:5px 0;background:none;border:0;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
-.panel li button.pr:hover{color:var(--acc)}
-.pr .c{margin-left:auto;color:var(--dim)}
-.pr.me .h{color:var(--acc)}
-.note{position:absolute;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);margin:0;color:var(--dim);font-size:.75rem}
 body.app #rain{opacity:.3}
-@media (max-width:700px){.panel{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);left:10px;right:10px;width:auto;max-width:none}.panel ul{max-height:18vh}.note{display:none}}
 body.app{--nav-h:calc(env(safe-area-inset-top,0px) + 47px)}
 .nav{display:none;position:fixed;top:0;left:0;right:0;z-index:5;align-items:center;gap:16px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;background:var(--bar);border-bottom:1px solid var(--line);font-size:.85rem}
 body.app .nav{display:flex}
@@ -98,14 +90,23 @@ body.app .nav{display:flex}
 .t{color:var(--dim)}.ok{color:var(--ok)}.warn{color:var(--acc)}.bad{color:var(--err)}
 .btn[aria-pressed=true]{background:var(--acc);color:var(--on-acc)}
 @media (max-width:560px){.nav .brand{display:none}}
-.cname{margin:0 0 4px;font-weight:700}
-.meta{margin:0 0 10px;color:var(--dim);font-size:.8rem}
-.ctext{margin:0 0 14px;font-size:.82rem;min-height:5.2em}
-.track{position:relative;height:2px;background:var(--line);margin:8px 6px 4px}
-.track i{position:absolute;top:-4px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--acc);transition:left .4s}
-.yrs{display:flex;justify-content:space-between;margin:0 0 14px;font-size:.72rem;color:var(--dim)}
-.prog{height:3px;background:var(--line);margin-bottom:10px}
 .prog i{display:block;height:100%;width:100%;background:var(--acc);transition:width 1s linear}
+.view.globe.on{min-height:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;position:fixed;inset:var(--nav-h) 0 0 0}
+.stage{position:relative;flex:1 1 0;min-height:0}
+#globe{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
+.live{white-space:nowrap;position:absolute;left:14px;top:14px;margin:0;display:flex;align-items:center;gap:8px;background:var(--win);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:.8rem}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:block}
+.live b{font-weight:700}
+.live span{color:var(--dim)}
+.dock{background:var(--win);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.prog{height:2px;background:var(--line)}
+.dk{display:grid;grid-template-columns:minmax(210px,auto) 1fr auto;gap:8px 28px;align-items:center;max-width:1200px;margin:0 auto;padding:12px 18px}
+.dock h2{font-size:1.1rem;color:var(--acc);margin:0 0 2px}
+.meta{margin:0;color:var(--dim);font-size:.78rem}
+.ctext{margin:0;font-size:.82rem;color:var(--dim);min-height:2.9em;display:flex;align-items:center}
+.foot{gap:14px}
+.dh{min-width:0}
+@media (max-width:860px){.dk{grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:10px 14px}.dock h2{font-size:1rem;white-space:nowrap}.meta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ctext{grid-column:1/-1;order:3;min-height:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
 .foot{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--dim)}
 .foot .btn{padding:6px 14px;font-size:.85rem}
 #tmap{width:100%;aspect-ratio:2/1;display:block}
@@ -115,11 +116,48 @@ body.app .nav{display:flex}
 #dout{min-height:12em;margin:20px 0 0;border:1px solid var(--line);padding:12px 14px;font-size:.84rem;line-height:1.8}
 #dout b{display:inline-block;width:5.8em;font-weight:400}
 .btn:disabled{opacity:.4;cursor:default}
-.demo{border:1px dashed var(--acc);padding:10px 12px;margin:0 0 6px;color:var(--acc);font-size:.84rem}
-.alt .link{background:none;border:0;color:var(--acc);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
-.alt .link:disabled{color:var(--dim);cursor:default;text-decoration:none}
-#vc{letter-spacing:.4em;font-size:1.3rem}
-@media (prefers-reduced-motion:reduce){h1::after{animation:none}}
+.pubnav{display:none;position:fixed;top:0;left:0;right:0;z-index:5;align-items:center;gap:16px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;background:var(--bar);border-bottom:1px solid var(--line);font-size:.85rem}
+body.pub .pubnav{display:flex}
+body.pub{--pub-h:calc(env(safe-area-inset-top,0px) + 47px)}
+body.pub #rain{opacity:.35}
+.pubnav .brand{color:var(--acc);font-weight:700;text-decoration:none;flex:none}
+.pubnav .tabs{flex:1}
+.pubnav .btn{padding:5px 14px;font-size:.85rem;flex:none}
+.pubnav .acts{display:flex;gap:8px;flex:none}
+.view.site.on{display:block;padding:calc(var(--pub-h) + 28px) 16px 40px}
+.wrap{max-width:960px;margin:0 auto}
+.blk{margin:0 0 40px}
+.wrap .win:not(.form){max-width:none}
+.blk>h2{font-size:1.35rem;margin:0 0 16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card .body{padding:20px}
+.card h3{font:700 1rem "JetBrains Mono",ui-monospace,monospace;color:var(--acc);margin:0 0 8px}
+.card p{margin:0;color:var(--dim);font-size:.88rem}
+.hero .body{padding:30px 28px 34px}
+.hero .lead{color:var(--dim);max-width:60ch;margin:0 0 26px}
+.step{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:0}
+.step b{color:var(--acc);font-size:1.3rem;flex:none;width:1.6em}
+.step h3{margin:0 0 4px;font:700 1rem "JetBrains Mono",ui-monospace,monospace}
+.step p{margin:0;color:var(--dim);font-size:.9rem}
+blockquote{margin:0}
+blockquote p{font:700 clamp(1.3rem,3.2vw,1.9rem)/1.35 "JetBrains Mono",ui-monospace,monospace;margin:0 0 8px}
+.qby{color:var(--dim);font-size:.85rem;margin:0 0 14px}
+.sample{margin:0;font:inherit;font-size:.8rem;line-height:1.8;white-space:pre;overflow-x:auto;border:1px solid var(--line);padding:14px 16px;background:var(--bg)}
+.status{display:inline-block;border:1px dashed var(--acc);color:var(--acc);padding:4px 10px;font-size:.82rem;margin:0 0 20px}
+.sfoot{max-width:960px;margin:0 auto;padding-top:22px;border-top:1px solid var(--line);color:var(--dim);font-size:.82rem;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+.sfoot a{color:var(--dim)}
+.sfoot a:hover{color:var(--acc)}
+select,textarea{width:100%;font:inherit;color:var(--fg);background:var(--win);border:1px solid var(--line);border-radius:4px;padding:8px;caret-color:var(--acc)}
+select:focus,textarea:focus{outline:0;border-color:var(--acc)}
+textarea{resize:vertical}
+.form{max-width:560px}
+#cmsg{margin:18px 0 0;color:var(--ok)}
+#cmsg a{color:var(--acc)}
+@media (max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+@media (max-width:560px){.pubnav .brand{display:none}}
+@media (prefers-reduced-motion:reduce){#q::after{animation:none}}
 </style>
 </head>
 <body>
@@ -137,36 +175,192 @@ body.app .nav{display:flex}
   <button class="btn" id="out" type="button">exit</button>
 </nav>
 
-<section class="view" data-view="landing" aria-labelledby="q">
-  <div class="win">
+<nav class="pubnav" id="pubnav" aria-label="Main">
+  <a class="brand" href="#/">slaughter-sec</a>
+  <div class="tabs">
+    <a href="#/platform" data-v="platform">platform</a>
+    <a href="#/pentesting" data-v="pentesting">ai pentesting</a>
+    <a href="#/research" data-v="research">ai research</a>
+    <a href="#/about" data-v="about">about</a>
+    <a href="#/contact" data-v="contact">contact</a>
+  </div>
+  <div class="acts"><a class="btn" id="pLogin" href="#/login">log in</a><a class="btn fill" id="pReg" href="#/register">register</a></div>
+</nav>
+
+<section class="view site" data-view="landing" aria-labelledby="q">
+ <div class="wrap">
+  <div class="win hero blk">
     <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~</span></div>
     <div class="body">
-      <p class="cmd"><b>$</b> connect slaughter-sec</p>
-      <p class="cmd"><b>$</b> cat quote.txt</p>
-      <h1 id="q" tabindex="-1" data-t="Plans are nothing, planning is everything">Plans are nothing, planning is everything</h1>
-      <p class="cmd"><b>$</b> choose --action</p>
+      <p class="cmd"><b>$</b> slaughter-sec --status</p>
+      <h1 id="q" tabindex="-1" data-t="See your security the way an attacker does.">See your security the way an attacker does.</h1>
+      <p class="lead">Slaughter-Sec is building software that shows a business where it is exposed and what to fix first. We also run AI-driven penetration tests that are faster and more accurate than traditional ones, without interrupting your business.</p>
       <div class="row">
-        <a class="btn" href="#/login">./login</a>
-        <a class="btn fill" href="#/register">./register</a>
+        <a class="btn fill" href="#/contact">Request early access</a>
+        <a class="btn" href="#/platform">See the platform</a>
       </div>
     </div>
   </div>
+
+  <div class="blk">
+    <h2>What we do</h2>
+    <div class="g2">
+      <div class="win card"><div class="body"><h3>Posture platform</h3><p>One screen that shows your real exposure: open services, unpatched software and risky accounts, and how an attacker could chain them together.</p></div></div>
+      <div class="win card"><div class="body"><h3>AI penetration testing</h3><p>Realistic attack tests run by AI and reviewed by experts. Results arrive sooner, with fewer false alarms, and your team keeps working while we test. <a href="#/pentesting" style="color:var(--acc)">Learn more</a></p></div></div>
+      <div class="win card"><div class="body"><h3>AI security research</h3><p>We test how AI tools and agents can be tricked, leak data or be misused, then turn the findings into checks you can run.</p></div></div>
+      <div class="win card"><div class="body"><h3>Expert review</h3><p>Real researchers read what the software finds, so you get a ranked plan instead of a long list of alerts.</p></div></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2>How it works</h2>
+    <div class="win"><div class="body">
+      <div class="step"><b>1</b><div><h3>Connect</h3><p>Point the platform at your network, cloud accounts and the AI tools your team uses.</p></div></div>
+      <div class="step"><b>2</b><div><h3>Map</h3><p>It builds a picture of what is exposed and how weaknesses connect, scored against known vulnerabilities.</p></div></div>
+      <div class="step"><b>3</b><div><h3>Act</h3><p>You get a short, ranked list of fixes. Each one is explained in plain language and reviewed by an expert.</p></div></div>
+    </div></div>
+  </div>
+
+  <div class="blk">
+    <div class="win"><div class="body">
+      <blockquote><p>Plans are nothing, planning is everything.</p><p class="qby">Dwight D. Eisenhower</p></blockquote>
+      <p class="sub" style="margin:0 0 18px">A security plan goes stale the day you write it. The habit that protects you is checking your posture again and again, and the platform is built to make that routine.</p>
+      <a class="btn fill" href="#/contact">Talk to us</a>
+    </div></div>
+  </div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+</section>
+
+<section class="view site" data-view="platform" aria-labelledby="pf">
+ <div class="wrap">
+  <h1 class="ph" id="pf" tabindex="-1">The platform</h1>
+  <p class="sub">Software that turns scattered security data into one clear picture.</p>
+  <p class="status">Status: in development. Early access is open.</p>
+  <div class="g2 blk">
+    <div class="win card"><div class="body"><h3>Posture score</h3><p>One score with the reasons behind it, so you can see whether you are getting safer.</p></div></div>
+    <div class="win card"><div class="body"><h3>Attack paths</h3><p>See how a weak password, an open port and an old server could combine into a real breach.</p></div></div>
+    <div class="win card"><div class="body"><h3>Vulnerability exposure</h3><p>Matches what you run against known CVEs and highlights the ones attackers are using right now.</p></div></div>
+    <div class="win card"><div class="body"><h3>AI penetration testing</h3><p>Run realistic attack tests on demand, without taking systems offline. <a href="#/pentesting" style="color:var(--acc)">How it works</a></p></div></div>
+    <div class="win card"><div class="body"><h3>AI system review</h3><p>Checks the AI tools and agents your team uses for prompt injection, data leaks and permissions that are too broad.</p></div></div>
+    <div class="win card"><div class="body"><h3>Plain-language reports</h3><p>Every finding says what it is, why it matters and how to fix it.</p></div></div>
+    <div class="win card"><div class="body"><h3>Client portal</h3><p>Log in to see the live globe, the threat map and the attack demo.</p></div></div>
+  </div>
+  <div class="blk">
+    <h2>What a report looks like</h2>
+    <pre class="sample" aria-label="Sample posture report, illustrative data"><span class="t">$ slaughter-sec posture --sample</span>
+posture score         72 / 100
+exposed services      3     <span class="warn">2 need action</span>
+unpatched software    5     <span class="bad">1 critical: CVE-2021-44228</span>
+ai systems reviewed   2     <span class="warn">1 prompt-injection path found</span>
+next best fix         <span class="ok">patch Log4j on web-02</span>
+<span class="t">sample output, illustrative data only</span></pre>
+  </div>
+  <div class="row blk"><a class="btn fill" href="#/contact">Request early access</a><a class="btn" href="#/research">Read about our research</a></div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+</section>
+
+<section class="view site" data-view="pentesting" aria-labelledby="pt2">
+ <div class="wrap">
+  <h1 class="ph" id="pt2" tabindex="-1">AI penetration testing</h1>
+  <p class="sub" style="max-width:64ch">A penetration test attacks your own systems, with your permission, to find the weaknesses a real attacker would use. Ours is run by AI and reviewed by experts, so it is faster and more accurate than a traditional test and does not interrupt your business.</p>
+  <div class="g3 blk" style="margin-top:28px">
+    <div class="win card"><div class="body"><h3>Faster</h3><p>AI works through many attack paths at once, so you get results sooner than from a test done by hand.</p></div></div>
+    <div class="win card"><div class="body"><h3>More accurate</h3><p>Findings are checked and reviewed by security experts, so you see fewer false alarms and fewer missed problems.</p></div></div>
+    <div class="win card"><div class="body"><h3>No disruption</h3><p>Tests are scoped and paced to rules you approve, so your systems and your staff keep working normally.</p></div></div>
+  </div>
+  <div class="blk">
+    <h2>How an engagement works</h2>
+    <div class="win"><div class="body">
+      <div class="step"><b>1</b><div><h3>Agree the rules</h3><p>You decide what we may test and when. We only test systems you own or have approved in writing.</p></div></div>
+      <div class="step"><b>2</b><div><h3>Test</h3><p>The AI probes your systems the way an attacker would, within the limits you set.</p></div></div>
+      <div class="step"><b>3</b><div><h3>Expert review</h3><p>Researchers confirm what is real, rank it by risk and write it up in plain language.</p></div></div>
+      <div class="step"><b>4</b><div><h3>Fix and retest</h3><p>You fix the issues, and we test again to confirm they are closed.</p></div></div>
+    </div></div>
+  </div>
+  <div class="row blk"><a class="btn fill" href="#/contact">Request a test</a><a class="btn" href="#/platform">See the platform</a></div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+</section>
+
+<section class="view site" data-view="research" aria-labelledby="rs">
+ <div class="wrap">
+  <h1 class="ph" id="rs" tabindex="-1">AI security research</h1>
+  <p class="sub">Our researchers study how AI systems fail under attack and share what they learn, so businesses can defend themselves.</p>
+  <div class="g2 blk">
+    <div class="win card"><div class="body"><h3>Prompt injection</h3><p>Instructions hidden in emails, web pages or documents that make an AI assistant act against its owner.</p></div></div>
+    <div class="win card"><div class="body"><h3>Data leakage</h3><p>How models and connected tools can reveal private information they were never meant to share.</p></div></div>
+    <div class="win card"><div class="body"><h3>Agent permissions</h3><p>What happens when an AI agent can send email, run code or touch your files, and how to limit the damage.</p></div></div>
+    <div class="win card"><div class="body"><h3>Supply chain</h3><p>Risks in the models, plug-ins and datasets a business pulls in from outside.</p></div></div>
+  </div>
+  <div class="blk">
+    <h2>How research reaches you</h2>
+    <div class="win"><div class="body">
+      <p class="sub" style="margin:0">Findings become checks inside the platform and short write-ups your team can read. Papers and write-ups will be listed here as they are released.</p>
+    </div></div>
+  </div>
+  <div class="row blk"><a class="btn fill" href="#/contact">Ask about our research</a></div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+</section>
+
+<section class="view site" data-view="about" aria-labelledby="ab">
+ <div class="wrap">
+  <h1 class="ph" id="ab" tabindex="-1">About Slaughter-Sec</h1>
+  <p class="sub" style="max-width:68ch">Most businesses are told to buy more security tools. What they need is a clear view of where they stand. Slaughter-Sec builds software that gives that view and pairs it with research from experts who spend their time breaking AI systems, so you do not have to find out the hard way.</p>
+  <div class="blk" style="margin-top:28px">
+    <h2>How we work</h2>
+    <div class="g3">
+      <div class="win card"><div class="body"><h3>Plain language first</h3><p>If an owner cannot read a finding and know what to do, we wrote it badly.</p></div></div>
+      <div class="win card"><div class="body"><h3>Evidence over alarm</h3><p>We show how a weakness could be used and how likely that is, not a wall of red warnings.</p></div></div>
+      <div class="win card"><div class="body"><h3>Experts in the loop</h3><p>Software finds the problems. People decide what matters and what to fix first.</p></div></div>
+    </div>
+  </div>
+  <div class="blk">
+    <h2>Our experts</h2>
+    <div class="win"><div class="body"><p class="sub" style="margin:0">Profiles of the researchers and engineers behind the platform will be added here. Want to know who you would work with? <a href="#/contact" style="color:var(--acc)">Ask us.</a></p></div></div>
+  </div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+</section>
+
+<section class="view site" data-view="contact" aria-labelledby="ct2">
+ <div class="wrap">
+  <h1 class="ph" id="ct2" tabindex="-1">Request early access</h1>
+  <p class="sub">Tell us a little about your business and what worries you most about security.</p>
+  <div class="win form blk"><div class="body">
+    <form id="contactForm" novalidate>
+      <label for="cn">your name</label><input id="cn" type="text" autocomplete="name">
+      <label for="ce">email</label><input id="ce" type="email" autocomplete="email">
+      <label for="cc">company</label><input id="cc" type="text" autocomplete="organization">
+      <label for="ci">most interested in</label>
+      <select id="ci"><option>The posture platform</option><option>AI penetration testing</option><option>AI security research</option><option>Both</option><option>Not sure yet</option></select>
+      <label for="cm">message</label><textarea id="cm" rows="5"></textarea>
+      <p class="err" role="alert" id="cerr"></p>
+      <button class="btn fill" type="submit">send message</button>
+    </form>
+    <p id="cmsg" role="status" hidden></p>
+  </div></div>
+  <p class="sub">Prefer to write directly? Email <a href="mailto:hello@slaughter-sec.com" style="color:var(--acc)">hello@slaughter-sec.com</a>.</p>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
 </section>
 
 <section class="view" data-view="login" aria-labelledby="lt">
   <div class="win">
     <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/login</span></div>
     <div class="body">
-      <p class="cmd"><b>$</b> ./login</p>
+      <p class="cmd"><b>$</b> login</p>
       <h2 id="lt" tabindex="-1">Log in</h2>
       <p class="sub">Enter your credentials to continue.</p>
       <form id="loginForm" novalidate>
         <label for="le">email</label><input id="le" type="email" autocomplete="email">
         <label for="lp">password</label><input id="lp" type="password" autocomplete="current-password">
         <p class="err" role="alert" id="lerr"></p>
-        <button class="btn fill" type="submit">run login</button>
+        <button class="btn fill" type="submit">log in</button>
       </form>
-      <p class="alt">No account? <a href="#/register">./register</a> &nbsp; <a href="#/">cd ..</a></p>
+      <p class="alt">No account? <a href="#/register">register</a> &nbsp; <a href="#/">back</a></p>
     </div>
   </div>
 </section>
@@ -175,7 +369,7 @@ body.app .nav{display:flex}
   <div class="win">
     <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/register</span></div>
     <div class="body">
-      <p class="cmd"><b>$</b> ./register</p>
+      <p class="cmd"><b>$</b> register</p>
       <h2 id="rt" tabindex="-1">Create account</h2>
       <p class="sub">Four fields, then you are in.</p>
       <form id="regForm" novalidate>
@@ -184,47 +378,26 @@ body.app .nav{display:flex}
         <label for="rp">password (8+ characters)</label><input id="rp" type="password" autocomplete="new-password">
         <label for="rc">confirm password</label><input id="rc" type="password" autocomplete="new-password">
         <p class="err" role="alert" id="rerr"></p>
-        <button class="btn fill" type="submit">run register</button>
+        <button class="btn fill" type="submit">register</button>
       </form>
-      <p class="alt">Have an account? <a href="#/login">./login</a> &nbsp; <a href="#/">cd ..</a></p>
+      <p class="alt">Have an account? <a href="#/login">log in</a> &nbsp; <a href="#/">back</a></p>
     </div>
   </div>
 </section>
 
-<section class="view" data-view="verify" aria-labelledby="vft">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/verify</span></div>
-    <div class="body">
-      <p class="cmd"><b>$</b> ./verify</p>
-      <h2 id="vft" tabindex="-1">Check your email</h2>
-      <p class="sub" id="vsub"></p>
-      <p class="demo" id="vdemo" hidden></p>
-      <form id="verForm" novalidate>
-        <label for="vc">6-digit code</label><input id="vc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-        <p class="err" role="alert" id="verr"></p>
-        <button class="btn fill" type="submit">run verify</button>
-      </form>
-      <p class="alt"><button class="link" id="resend" type="button">resend code</button> &nbsp; <a href="#/login">cd ..</a></p>
-    </div>
+<section class="view globe" data-view="home" aria-label="Live connections globe">
+  <div class="stage" id="stage">
+    <canvas id="globe" aria-label="Spinning globe with a point for each live connection"></canvas>
+    <p class="live" role="status"><i aria-hidden="true"></i><b id="lcount">0</b> connected <span id="lmode">demo data</span></p>
   </div>
-</section>
-
-<section class="view globe" data-view="home" aria-label="Globe and CVE feed">
-  <canvas id="globe" aria-label="Spinning globe showing connected users"></canvas>
-  <aside class="win panel">
-    <div class="bar"><i></i><i></i><i></i><span>cve --random</span></div>
-    <div class="body">
-      <h2 id="ht" tabindex="-1">CVE-2021-44228</h2>
-      <p class="cname" id="cname"></p>
-      <p class="meta"><span id="cprod"></span> <span id="csev"></span></p>
+  <div class="dock" aria-label="Random CVE">
+    <div class="prog" aria-hidden="true"><i id="cbar"></i></div>
+    <div class="dk">
+      <div class="dh"><h2 id="ht" tabindex="-1">CVE-2021-44228</h2><p class="meta"><span id="csev"></span> <span id="cprod"></span></p></div>
       <p class="ctext" id="ctext"></p>
-      <div class="track" aria-hidden="true"><i id="cdot"></i></div>
-      <p class="yrs"><span>2001</span><span id="cyr"></span><span>2024</span></p>
-      <div class="prog" aria-hidden="true"><i id="cbar"></i></div>
       <div class="foot"><span>next in <b id="cleft">10s</b></span><button class="btn" id="cnext" type="button">shuffle</button></div>
     </div>
-  </aside>
-  <p class="note">simulated demo traffic. drag the globe to spin it.</p>
+  </div>
 </section>
 
 <section class="view page" data-view="threats" aria-labelledby="mt">
@@ -285,8 +458,10 @@ body.app .nav{display:flex}
       </div>
       <p class="cmd" style="margin-top:28px"><b>$</b> palette --set</p>
       <div class="row">
-        <button class="btn" type="button" data-pal="crimson">crimson</button>
         <button class="btn" type="button" data-pal="amber">amber</button>
+        <button class="btn" type="button" data-pal="violet">violet</button>
+        <button class="btn" type="button" data-pal="mint">mint</button>
+        <button class="btn" type="button" data-pal="crimson">crimson</button>
         <button class="btn" type="button" data-pal="cyber">cyber</button>
         <button class="btn" type="button" data-pal="ice">ice</button>
         <button class="btn" type="button" data-pal="matrix">matrix</button>
@@ -321,17 +496,19 @@ body.app .nav{display:flex}
     (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
   }
 
-  var APP=['home','threats','product','demo','settings'];
+  var APP=['home','threats','product','demo','settings'],PUB=['landing','platform','pentesting','research','about','contact'];
   function route(){
-    var h=location.hash.replace('#/',''),all=['login','register','verify'].concat(APP);
+    var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
     var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
     if(app&&!sess){location.hash='#/login';return}
-    if((v==='login'||v==='register'||v==='verify')&&sess){location.hash='#/home';return}
-    if(v==='verify'&&!pending){location.hash='#/login';return}
+    if((v==='login'||v==='register')&&sess){location.hash='#/home';return}
     document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
-    document.body.classList.toggle('app',app);
+    var pub=PUB.indexOf(v)>-1;
+    document.body.classList.toggle('app',app);document.body.classList.toggle('pub',pub);
+    document.querySelectorAll('#pubnav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    var pl=$('#pLogin'),pr2=$('#pReg');
+    if(sess){pl.textContent='open app';pl.setAttribute('href','#/home');pr2.hidden=true}else{pl.textContent='log in';pl.setAttribute('href','#/login');pr2.hidden=false}
     document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-    if(v==='verify')showVerify();else{pending=null;clearInterval(rt)}
     if(app)enterApp(v);else stopSim();
     if(v==='landing')typeQuote();
     var t=document.querySelector('.view.on [tabindex="-1"]');if(t)t.focus({preventScroll:true});
@@ -347,11 +524,10 @@ body.app .nav{display:flex}
     if(p.length<8)return err.textContent='password must be at least 8 characters.';
     if(p!==c)return err.textContent='passwords do not match.';
     var users=get('users')||{};
-    if(users[em])return err.textContent='an account with this email already exists. run ./login instead.';
-    var user={name:n,hash:await hash(em,p)};
-    err.textContent='';
-    await beginMfa('register',em,user,err);
-    if(pending)e.target.reset();
+    if(users[em])return err.textContent='an account with this email already exists. log in instead.';
+    users[em]={name:n,hash:await hash(em,p)};
+    set('users',users);set('session',em);err.textContent='';
+    e.target.reset();location.hash='#/home';
   });
 
   $('#loginForm').addEventListener('submit',async function(e){
@@ -359,9 +535,23 @@ body.app .nav{display:flex}
     var em=$('#le').value.trim().toLowerCase(),p=$('#lp').value,err=$('#lerr');
     var u=(get('users')||{})[em];
     if(!u||u.hash!==await hash(em,p))return err.textContent='email or password is incorrect.';
+    set('session',em);err.textContent='';e.target.reset();location.hash='#/home';
+  });
+
+  $('#contactForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=$('#cn').value.trim(),em=$('#ce').value.trim(),co=$('#cc').value.trim(),err=$('#cerr'),msg=$('#cmsg');
+    if(!n)return err.textContent='enter your name.';
+    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
+    if(!$('#cm').value.trim())return err.textContent='write a short message.';
     err.textContent='';
-    await beginMfa('login',em,null,err);
-    if(pending)e.target.reset();
+    var body='Name: '+n+'\nEmail: '+em+'\nCompany: '+(co||'-')+'\nInterested in: '+$('#ci').value+'\n\n'+$('#cm').value.trim();
+    var href='mailto:hello@slaughter-sec.com?subject='+encodeURIComponent('Early access request from '+n)+'&body='+encodeURIComponent(body);
+    msg.hidden=false;msg.textContent='';
+    var a=document.createElement('a');a.href=href;a.textContent='open the email';
+    msg.appendChild(document.createTextNode('Your message is ready. Your email app should open. If it does not, '));
+    msg.appendChild(a);msg.appendChild(document.createTextNode(' or write to hello@slaughter-sec.com.'));
+    a.click();
   });
 
   $('#out').addEventListener('click',function(){del('session');location.hash='#/'});
@@ -385,16 +575,12 @@ body.app .nav{display:flex}
   var TZ={'America/New_York':[40.7,-74],'America/Chicago':[41.9,-87.6],'America/Denver':[39.7,-105],'America/Los_Angeles':[34,-118.2],'America/Toronto':[43.7,-79.4],'America/Sao_Paulo':[-23.5,-46.6],'Europe/London':[51.5,-0.1],'Europe/Paris':[48.9,2.4],'Europe/Berlin':[52.5,13.4],'Asia/Tokyo':[35.7,139.7],'Asia/Kolkata':[19.1,72.9],'Australia/Sydney':[-33.9,151.2]};
   var WORDS=['ghost','null','cipher','vector','daemon','kernel','root','byte','proxy','shell'];
   var gc=$('#globe'),g=gc.getContext('2d'),gw=0,gh=0,R=0,cx0=0,cy0=0,px=0,py=0,pz=0,cA=1,sA=0,cT=1,sT=0,cc=0;
-  var G={a:0,t:.4,go:null,pause:0},land=[],peers=[],me=null,raf=0,tmr=0,drag=null,col={};
+  var hv=null,G={a:0,t:.4,go:null,pause:0},land=[],peers=[],me=null,raf=0,tmr=0,drag=null,col={};
   function vec(la,lo){var p=la*Math.PI/180,l=lo*Math.PI/180;return [Math.cos(p)*Math.sin(l),Math.sin(p),Math.cos(p)*Math.cos(l)]}
-  var HV=vec(39,-77.5);
-  function ang(v){return Math.acos(Math.max(-1,Math.min(1,v[0]*HV[0]+v[1]*HV[1]+v[2]*HV[2])))}
   function inPoly(f,x,y){var c=false;for(var i=0,j=f.length-2;i<f.length;j=i,i+=2){var xi=f[i],yi=f[i+1],xj=f[j],yj=f[j+1];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
   (function(){for(var la=-58;la<=82;la+=2){var st=2/Math.max(Math.cos(la*Math.PI/180),.2);for(var lo=-180;lo<180;lo+=st){for(var k=0;k<POLY.length;k++){if(inPoly(POLY[k],lo,la)){land.push(vec(la,lo));break}}}}})();
-  function cols(){var s=getComputedStyle(document.documentElement);['bg','win','fg','acc','rain','dim'].forEach(function(k){col[k]=s.getPropertyValue('--'+k).trim()})}
+  function cols(){var s=getComputedStyle(document.documentElement);['bg','win','fg','acc','rain','dim','line'].forEach(function(k){col[k]=s.getPropertyValue('--'+k).trim()})}
   function pr(x,y,z){var z1=z*cA-x*sA;px=x*cA+z*sA;py=y*cT-z1*sT;pz=y*sT+z1*cT}
-  function arcPt(p,t){var s=Math.sin(p.om),k=Math.sin((1-t)*p.om)/s,k2=Math.sin(t*p.om)/s,h=1+(.04+.3*p.om/Math.PI)*Math.sin(Math.PI*t);pr((HV[0]*k+p.v[0]*k2)*h,(HV[1]*k+p.v[1]*k2)*h,(HV[2]*k+p.v[2]*k2)*h)}
-  function vis(){return pz>0||px*px+py*py>1}
   function draw(now){
     if(!col.bg||++cc%90===0)cols();
     cA=Math.cos(G.a);sA=Math.sin(G.a);cT=Math.cos(G.t);sT=Math.sin(G.t);
@@ -405,23 +591,25 @@ body.app .nav{display:flex}
     g.globalAlpha=.55;g.strokeStyle=col.acc;g.lineWidth=1.5;g.stroke();
     var d=Math.max(1.5,R*.0055);g.fillStyle=col.rain;
     for(i=0;i<land.length;i++){pr(land[i][0],land[i][1],land[i][2]);if(pz>0){g.globalAlpha=.15+.85*pz;g.fillRect(cx0+px*R-d/2,cy0-py*R-d/2,d,d)}}
-    g.lineWidth=1.2;g.font='11px "JetBrains Mono",ui-monospace,monospace';
-    for(i=0;i<peers.length;i++){
-      p=peers[i];g.strokeStyle=col.acc;g.globalAlpha=.7;g.beginPath();var pv=false;
-      for(j=0;j<=26;j++){arcPt(p,j/26);if(vis()){X=cx0+px*R;Y=cy0-py*R;if(pv)g.lineTo(X,Y);else g.moveTo(X,Y);pv=true}else pv=false}
-      g.stroke();arcPt(p,((now||0)/2800+p.ph)%1);
-      if(vis()){g.globalAlpha=1;g.fillStyle=col.fg;g.beginPath();g.arc(cx0+px*R,cy0-py*R,2.2,0,6.2832);g.fill()}
-    }
+    g.font='11px "JetBrains Mono",ui-monospace,monospace';
+    var hp=null,hx=0,hy=0,hd=225;
     for(i=0;i<peers.length;i++){
       p=peers[i];pr(p.v[0],p.v[1],p.v[2]);if(pz<=.05)continue;
       X=cx0+px*R;Y=cy0-py*R;a=Math.min(1,pz*1.6);
-      g.globalAlpha=a;g.fillStyle=p.me?col.fg:col.acc;g.beginPath();g.arc(X,Y,p.me?4.5:3.2,0,6.2832);g.fill();
+      g.fillStyle=p.me?col.fg:col.acc;
+      g.globalAlpha=a*.22;g.beginPath();g.arc(X,Y,p.me?9:7,0,6.2832);g.fill();
+      g.globalAlpha=a;g.beginPath();g.arc(X,Y,p.me?4.5:3.4,0,6.2832);g.fill();
       var age=((now||0)-p.born)/1600;
-      if(age>=0&&age<1){g.strokeStyle=col.acc;g.globalAlpha=a*(1-age);g.beginPath();g.arc(X,Y,4+age*16,0,6.2832);g.stroke()}
-      g.globalAlpha=a*.9;g.fillStyle=col.fg;g.fillText(p.me?'you':p.h,X+8,Y+4);
+      if(age>=0&&age<1){g.strokeStyle=col.acc;g.lineWidth=1.2;g.globalAlpha=a*(1-age);g.beginPath();g.arc(X,Y,5+age*18,0,6.2832);g.stroke()}
+      if(p.me){g.globalAlpha=a*.9;g.fillStyle=col.fg;g.fillText('you',X+10,Y+4)}
+      if(hv){var dd=(hv.x-X)*(hv.x-X)+(hv.y-Y)*(hv.y-Y);if(dd<hd){hd=dd;hp=p;hx=X;hy=Y}}
     }
-    pr(HV[0],HV[1],HV[2]);
-    if(pz>.05){X=cx0+px*R;Y=cy0-py*R;g.globalAlpha=1;g.fillStyle=col.acc;g.fillRect(X-4,Y-4,8,8);g.fillStyle=col.fg;g.fillText('core',X+8,Y+4)}
+    if(hp&&!hp.me){
+      var t=hp.h+(hp.c?', '+hp.c:''),tw=g.measureText(t).width,bx=hx+10;if(bx+tw+14>gw)bx=hx-tw-24;
+      g.globalAlpha=.95;g.fillStyle=col.win;g.fillRect(bx,hy-10,tw+14,20);
+      g.strokeStyle=col.line;g.lineWidth=1;g.strokeRect(bx+.5,hy-9.5,tw+13,19);
+      g.fillStyle=col.fg;g.fillText(t,bx+7,hy+4);
+    }
     g.globalAlpha=1;
   }
   function redraw(){if(reduce&&gw)draw(performance.now())}
@@ -431,14 +619,17 @@ body.app .nav{display:flex}
     draw(now);raf=requestAnimationFrame(frame);
   }
   function gsize(){
-    var d=Math.min(window.devicePixelRatio||1,2),m;
-    gw=gc.clientWidth;gh=gc.clientHeight;if(!gw)return;
+    var d=Math.min(window.devicePixelRatio||1,2);
+    gw=gc.clientWidth;gh=gc.clientHeight;if(!gw||!gh)return;
     gc.width=gw*d;gc.height=gh*d;g.setTransform(d,0,0,d,0,0);
-    m=gw<700;R=m?Math.min(gw*.45,gh*.25):Math.min(gw,gh)*.46;cx0=gw/2;cy0=m?gh*.32:gh/2;redraw();
+    R=Math.min(gw,gh)*(gw<700?.4:.38);cx0=gw/2;cy0=gh/2;redraw();
   }
   window.addEventListener('resize',gsize);
+  if(window.ResizeObserver)new ResizeObserver(function(){gsize()}).observe($('#stage'));
   gc.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY};gc.setPointerCapture(e.pointerId);gc.style.cursor='grabbing'});
-  gc.addEventListener('pointermove',function(e){if(!drag)return;G.go=null;G.a+=(e.clientX-drag.x)/R;G.t=Math.max(-1.2,Math.min(1.2,G.t+(e.clientY-drag.y)/R));drag.x=e.clientX;drag.y=e.clientY;redraw()});
+  function hpos(e){var r=gc.getBoundingClientRect();hv={x:e.clientX-r.left,y:e.clientY-r.top}}
+  gc.addEventListener('pointermove',function(e){hpos(e);if(!drag){redraw();return}G.go=null;G.a+=(e.clientX-drag.x)/R;G.t=Math.max(-1.2,Math.min(1.2,G.t+(e.clientY-drag.y)/R));drag.x=e.clientX;drag.y=e.clientY;redraw()});
+  gc.addEventListener('pointerleave',function(){if(!drag){hv=null;redraw()}});
   function endDrag(){drag=null;G.pause=performance.now()+3000;gc.style.cursor='grab'}
   gc.addEventListener('pointerup',endDrag);gc.addEventListener('pointercancel',endDrag);
 
@@ -446,14 +637,14 @@ body.app .nav{display:flex}
     var used=peers.map(function(p){return p.c}),pool=CITIES.filter(function(c){return used.indexOf(c[0])<0});
     var c=pool[Math.floor(Math.random()*pool.length)];if(!c)return;
     var la=c[1]+Math.random()*3-1.5,lo=c[2]+Math.random()*3-1.5,v=vec(la,lo);
-    var np={h:WORDS[Math.floor(Math.random()*WORDS.length)]+'_'+(10+Math.floor(Math.random()*90)),c:c[0],lat:la,lon:lo,v:v,om:Math.max(.08,ang(v)),ph:Math.random(),ms:Math.round(18+Math.random()*160),born:seed?-Math.random()*3600000:performance.now()};
+    var np={h:WORDS[Math.floor(Math.random()*WORDS.length)]+'_'+(10+Math.floor(Math.random()*90)),c:c[0],lat:la,lon:lo,v:v,ms:Math.round(18+Math.random()*160),born:seed?-Math.random()*3600000:performance.now()};
     peers.push(np);
   }
   function setMe(name){
     var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
     me={me:true,name:name,c:'',born:performance.now()};
     var c=TZ[tz];
-    if(c){me.c=tz.split('/')[1].replace(/_/g,' ');me.lat=c[0];me.lon=c[1];me.v=vec(c[0],c[1]);me.om=Math.max(.08,ang(me.v));me.ph=.3;peers.push(me)}
+    if(c){me.c=tz.split('/')[1].replace(/_/g,' ');me.lat=c[0];me.lon=c[1];me.v=vec(c[0],c[1]);peers.push(me)}
   }
   var cur='',cvi=-1,cvT=0,cvLeft=10,scr=0,thrT=0,threats=[],landLL=null;
   var CVES=[
@@ -566,11 +757,10 @@ body.app .nav{display:flex}
   ];
   function showCve(i){
     var c=CVES[i];
-    $('#ht').textContent=c[0];$('#cname').textContent=c[2];
-    $('#cprod').textContent=c[3]+', '+c[1];
+    $('#ht').textContent=c[0];
+    $('#cprod').textContent=c[2]+', '+c[3]+', '+c[1];
     var sv=$('#csev');sv.textContent=c[4];sv.className=c[4]==='critical'?'bad':'warn';
-    $('#ctext').textContent=c[5];$('#cyr').textContent=c[1];
-    $('#cdot').style.left=((c[1]-2001)/23*100)+'%';
+    $('#ctext').textContent=c[5];
   }
   function bar(){$('#cleft').textContent=cvLeft+'s';$('#cbar').style.width=(cvLeft*10)+'%'}
   function nextCve(){
@@ -652,73 +842,44 @@ body.app .nav{display:flex}
   }
   document.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){runDemo(b.dataset.a)})});
 
-  /* ---- EMAIL MFA: plug your backend in here ---- */
-  var MFA={
-    sendUrl:'',    // POST {email}: your server emails a 6-digit code to that address
-    verifyUrl:''   // POST {email, code}: respond {"ok":true} when the code is correct
-  };               // leave both empty to run in demo mode (the code is shown on screen)
-  var pending=null,rt=0;
-  async function mfaSend(email){
-    if(MFA.sendUrl){
-      var r=await fetch(MFA.sendUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})});
-      if(!r.ok)throw new Error('send failed');
-      return null;
-    }
-    var a=new Uint32Array(1);crypto.getRandomValues(a);
-    return String(a[0]%1000000).padStart(6,'0');
-  }
-  async function beginMfa(purpose,email,user,err){
-    try{
-      var code=await mfaSend(email);
-      pending={purpose:purpose,email:email,user:user,code:code,exp:Date.now()+600000,tries:0};
-      location.hash='#/verify';
-    }catch(x){err.textContent='could not send the code. try again.'}
-  }
-  function cooldown(){
-    var n=30,b=$('#resend');clearInterval(rt);b.disabled=true;b.textContent='resend code (30s)';
-    rt=setInterval(function(){n--;b.textContent=n>0?'resend code ('+n+'s)':'resend code';if(n<=0){clearInterval(rt);b.disabled=false}},1000);
-  }
-  function showVerify(){
-    $('#vsub').textContent='We sent a 6-digit code to '+pending.email+'. It expires in 10 minutes.';
-    var d=$('#vdemo');
-    if(pending.code){d.hidden=false;d.textContent='Demo mode: no email is sent. Your code is '+pending.code+'.'}else d.hidden=true;
-    $('#vc').value='';$('#verr').textContent='';cooldown();
-  }
-  $('#resend').addEventListener('click',async function(){
-    if(!pending)return;
-    try{pending.code=await mfaSend(pending.email);pending.exp=Date.now()+600000;pending.tries=0;showVerify()}
-    catch(x){$('#verr').textContent='could not send the code. try again.'}
-  });
-  $('#verForm').addEventListener('submit',async function(e){
-    e.preventDefault();
-    var err=$('#verr'),c=$('#vc').value.replace(/\s/g,'');
-    if(!pending){location.hash='#/login';return}
-    if(!/^\d{6}$/.test(c))return err.textContent='enter the 6-digit code.';
-    if(Date.now()>pending.exp)return err.textContent='this code has expired. resend a new one.';
-    if(pending.tries>=5)return err.textContent='too many attempts. resend a new code.';
-    var ok=false;
-    if(MFA.verifyUrl){
-      try{
-        var r=await fetch(MFA.verifyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:pending.email,code:c})});
-        ok=r.ok&&(await r.json()).ok===true;
-      }catch(x){return err.textContent='could not reach the server. try again.'}
-    }else ok=c===pending.code;
-    if(!ok){pending.tries++;return err.textContent='that code is incorrect.'}
-    var q=pending;pending=null;clearInterval(rt);
-    if(q.purpose==='register'){var us=get('users')||{};us[q.email]=q.user;set('users',us)}
-    set('session',q.email);location.hash='#/home';
-  });
-
   function pressed(){var t=get('theme')||'system';document.querySelectorAll('[data-th]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.th===t)})}
   function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';pressed();palPressed()}
+  /* ---- LIVE CONNECTIONS: plug your API in here ---- */
+  var PEER_FEED={
+    url:'',        // endpoint that lists who is connected right now
+    headers:{},    // e.g. {Authorization:'Bearer YOUR_KEY'}
+    every:5000,    // polling interval in ms
+    parse:function(raw){return raw} // must return [{id,lat,lon,label}]
+  };
+  function updCount(){
+    $('#lcount').textContent=peers.filter(function(p){return !p.me}).length+(me&&me.v?1:0);
+    $('#lmode').textContent=PEER_FEED.url?'live':'demo data';
+  }
   function tick(){
     var idx=[];peers.forEach(function(p,i){if(!p.me)idx.push(i)});
     if(idx.length<7||(idx.length<15&&Math.random()<.6))mk();
     else peers.splice(idx[Math.floor(Math.random()*idx.length)],1);
-    redraw();
+    updCount();redraw();
+  }
+  async function pollPeers(){
+    try{
+      var r=await fetch(PEER_FEED.url,{headers:PEER_FEED.headers}),list=PEER_FEED.parse(await r.json()),old={};
+      peers.forEach(function(p){if(p.id)old[p.id]=p});
+      var next=peers.filter(function(p){return p.me});
+      list.forEach(function(x){
+        var o=old[x.id];
+        next.push(o||{id:x.id,h:x.label||x.id,c:'',lat:x.lat,lon:x.lon,v:vec(x.lat,x.lon),born:performance.now()});
+      });
+      peers=next;
+    }catch(e){}
+    updCount();redraw();
   }
   function startSim(u){
-    if(!tmr){peers=[];setMe(u.name);for(var k=0;k<8;k++)mk(true);tmr=setInterval(tick,2400)}
+    if(tmr)return;
+    peers=[];setMe(u.name);
+    if(PEER_FEED.url){pollPeers();tmr=setInterval(pollPeers,PEER_FEED.every)}
+    else{for(var k=0;k<8;k++)mk(true);tmr=setInterval(tick,2400)}
+    updCount();
   }
   function stopTimers(){cancelAnimationFrame(raf);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
   function stopSim(){clearInterval(tmr);tmr=0;stopTimers();cur=''}
@@ -733,9 +894,9 @@ body.app .nav{display:flex}
   function applyTheme(t){var r=document.documentElement;if(t==='dark'||t==='light')r.setAttribute('data-theme',t);else r.removeAttribute('data-theme');col={};redraw();window.dispatchEvent(new Event('palette'))}
   applyTheme(get('theme')||'system');
   document.querySelectorAll('[data-th]').forEach(function(b){b.addEventListener('click',function(){set('theme',b.dataset.th);applyTheme(b.dataset.th);pressed()})});
-  function palPressed(){var t=get('palette')||'crimson';document.querySelectorAll('[data-pal]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pal===t)})}
+  function palPressed(){var t=get('palette')||'amber';document.querySelectorAll('[data-pal]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pal===t)})}
   function applyPalette(t){document.documentElement.setAttribute('data-palette',t);col={};redraw();if(cur==='threats')drawMap();window.dispatchEvent(new Event('palette'))}
-  applyPalette(get('palette')||'crimson');
+  applyPalette(get('palette')||'amber');
   document.querySelectorAll('[data-pal]').forEach(function(b){b.addEventListener('click',function(){set('palette',b.dataset.pal);applyPalette(b.dataset.pal);palPressed()})});
   var dt=0;
   $('#del').addEventListener('click',function(){
@@ -788,3 +949,5 @@ body.app .nav{display:flex}
 </script>
 </body>
 </html>
+
+</body></html>
