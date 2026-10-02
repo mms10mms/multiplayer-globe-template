@@ -1,345 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Slaughter-Sec</title>
-		<link rel="stylesheet" href="/normalize.css" />
-		<link rel="stylesheet" href="/dist/index.css" />
-		<style>
-			html, body { width: 100% !important; height: 100% !important; margin: 0; padding: 0; background-color: #040406 !important; overflow: hidden !important; font-family: 'Courier New', monospace; color: #00f0ff; }
-			#root-matrix-rain { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; display: block !important; background: #040406; z-index: 1 !important; transition: all 0.3s ease; }
-			#matrix-canvas { width: 100% !important; height: 100% !important; display: block !important; }
-			#hud-master-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999 !important; display: none; }
-			#hud-master-layer * { pointer-events: auto; }
-			
-			/* Universal Solid Opaque Tactical Cyber Buttons (Blocks matrix bleed through) */
-			.nav-btn { color: #ff4a4a; text-decoration: none; font-size: 11px; font-weight: bold; background: #07070c !important; border: 1px solid rgba(255, 74, 74, 0.45); padding: 8px 14px; border-radius: 4px; box-shadow: 0 0 10px rgba(0,0,0,0.85); transition: all 0.25s ease; display: block; text-align: center; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; position: relative; z-index: 100005 !important; }
-			.nav-btn:hover { background: #ff4a4a !important; color: #040406; box-shadow: 0 0 15px #ff4a4a, 0 0 5px rgba(0,0,0,0.9); border-color: #ff4a4a; }
-			
-			/* Opaque Secure Status Monitoring Panel */
-			#user-status-hud { color: #39ff14; font-size: 11px; background: #07070c !important; border: 1px solid rgba(0,240,255,0.3); padding: 10px 14px; border-radius: 4px; margin-top: 12px; width: 100%; box-sizing: border-box; line-height: 1.6; text-shadow: 0 0 5px rgba(57,255,20,0.3); box-shadow: 0 0 10px rgba(0,0,0,0.9); position: relative; z-index: 100005 !important; }
-			
-			.connection-telemetry-box { color: #39ff14; font-size: 11px; background: #07070c !important; border: 1px dashed rgba(57,255,20,0.25); padding: 8px 12px; border-radius: 4px; margin-top: 10px; width: 100%; box-sizing: border-box; line-height: 1.5; font-family: monospace; }
-			.standalone-page-view { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: transparent; z-index: 200000 !important; display: none; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px; }
-			.terminal-grid-box { border: 1px solid rgba(0, 240, 255, 0.3); background: #07070c; width: 95%; max-width: 440px; padding: 35px 30px; border-radius: 4px; box-shadow: 0 0 35px rgba(0, 240, 255, 0.15); text-align: center; color: #00f0ff; position: relative; z-index: 200005 !important; }
-			.terminal-grid-box input { background: #0d0d14; border: 1px solid rgba(0, 240, 255, 0.2); color: #39ff14; padding: 12px; width: 100%; margin-bottom: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; outline: none; box-sizing: border-box; }
-			.terminal-grid-box button { background: rgba(0,240,255,0.05); border: 1px solid #00f0ff; color: #00f0ff; font-family: monospace; font-weight: bold; padding: 12px 28px; cursor: pointer; border-radius: 4px; width: 100%; }
-			.status-log-line { margin-top: 15px; font-size: 11px; height: 18px; line-height: 18px; font-weight: bold; }
-			#view-home-public { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: transparent !important; padding: 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; z-index: 150000 !important; }
-			.gate-floating-card { background: radial-gradient(circle at 50% 50%, #0c0d14 0%, #050508 100%) !important; border: 1px solid rgba(0, 240, 255, 0.25); border-top: 4px solid #00f0ff; padding: 35px; border-radius: 6px; color: #00f0ff; width: 100%; max-width: 580px; box-shadow: 0 0 40px rgba(0,0,0,0.95); text-align: center; position: relative; z-index: 150005 !important; }
-			
-			/* Controls instant matrix visibility switching between public gates and private layout backdrops */
-			.hidden-rain-viewport { display: none !important; }
-		</style>
-			
-	</head>
-	<body>
-				<!-- REPAIRED STATIC GATE ENTRY PANELS (Houses permanent system quote block) -->
-		<div id="view-home-public" style="display: flex;">
-			<div class="gate-floating-card">
-				<h1 style="color: #00f0ff; font-size: 1.6rem; letter-spacing: 3px; font-weight: 900; margin: 0 0 4px 0;">Welcome.</h1>
-				<div style="font-size: 10px; color: #447788; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px;">Slaughter-Sec.com</div>
-				
-				<!-- Permanent, hardcoded terminal quote card. Swap this text whenever you want! -->
-				<div style="background: #040406; border: 1px solid rgba(0, 240, 255, 0.35); padding: 18px; border-radius: 4px; color: #39ff14; font-family: monospace; font-size: 12px; line-height: 1.6; text-align: left; width: 100%; min-height: 60px; box-sizing: border-box; margin-bottom: 25px; letter-spacing: 0.5px; box-shadow: inset 0 0 15px rgba(0,0,0,0.9); border-left: 3px solid #39ff14;">
-					<span style="color: #00f0ff; font-weight: bold;">> </span>"Plans are nothing: Planning is everything."
-				</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecOps Solutions | Enterprise Cyber Defense</title>
+    <!-- Tailwind CSS CDN for modern utility styling -->
+    <script src="https://tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyberDark: '#0B0F19',
+                        cyberCard: '#151D30',
+                        cyberBlue: '#00E5FF',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cyberDark text-gray-100 font-sans antialiased selection:bg-cyberBlue selection:text-black">
 
-				<div style="font-size: 11px; color: #555; margin-bottom: 20px; font-family: monospace;">AWAITING SECURE OPERATIVE SYSTEM LOGIN...</div>
-				
-				<div style="display: flex; gap: 10px; width: 100%; justify-content: center;">
-					<div onclick="navigateToPath('/login')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.45); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ LOGIN ]</div>
-					<div onclick="navigateToPath('/register')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0, 240, 255, 0.45); background: #07070c; margin: 0; padding: 10px 0; width: 180px;">[ REGISTER ]</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		<div id="view-login" class="standalone-page-view">
-			<div class="terminal-grid-box">
-				<h2>[CORE_INITIALIZE_HANDSHAKE]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">KEY IN OPERATIVE MAIN NODE IDENTITY METRICS</p>
-				<input id="login-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
-				<input id="login-password-input" type="password" placeholder="PASS_HASH_KEY" />
-				<button onclick="executeLoginAuthentication()">EXECUTE_SYNC</button>
-				<div id="login-ticker" class="status-log-line" style="color: #666;">READY_FOR_HANDSHAKE</div>
-				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
-			</div>
-		</div>
-		<div id="view-register" class="standalone-page-view">
-			<div class="terminal-grid-box">
-				<h2>[MAIN_NODE_DEPLOYMENT]</h2>
-				<p style="font-size:11px; color:#555; margin-bottom:20px;">GENERATE NEW TRACKING IDENTIFIER PERMIT KEYS</p>
-				<input id="student-handle-input" type="text" placeholder="OPERATIVE_HANDLE_STRING" />
-				<input id="student-email-input" type="email" placeholder="IDENTITY_ALIAS_HASH" />
-				<input id="student-password-input" type="password" placeholder="CREATE_SECRET_PASSPHRASE" />
-				<button onclick="executeStudentValidation()">DEPLOY_NODE</button>
-				<div id="register-ticker" class="status-log-line" style="color: #666;">AWAITING_PARAMETER_INTRUSION</div>
-				<br><div onclick="navigateToPath('/')" style="color:#555; font-size:11px; cursor:pointer; text-decoration: underline;">&lt;- TERMINATE HANDSHAKE AND RETURN</div>
-			</div>
-		</div>
-		<div id="hud-master-layer">
-			<div style="position: absolute; top: 0; left: 0; width: 240px; height: 100vh; background: #040406; border-right: 1px solid rgba(0, 240, 255, 0.15); box-sizing: border-box; padding: 20px; z-index: 100000 !important;">
-				<div id="user-status-hud">> OPERATIVE: GUEST<br>> STATUS: CLEARANCE_L1</div>
-				<div id="connection-status-panel" class="connection-telemetry-box">> NODE: ONLINE<br>> ROUTE: WSS://CORE<br>> USERS: <span id="peer-count-span" style="font-weight:bold;color:#00f0ff;">1</span> ACTIVE<br>> LATENCY: <span id="ping-span" style="color:#ffb000;">42ms</span></div>
-				<div style="margin-top: 15px; display: flex; flex-direction: column; gap: 4px; width: 100%;">
-					<div onclick="navigateToPath('/matrix')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ LIVE MAP ]</div>
-					<div onclick="alert('Telemetry Node Panel running.')" class="nav-btn" style="color: #ffb000; border-color: rgba(255,176,0,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ DASHBOARD ]</div>
-					<div onclick="alert('Threat Hunt memory forensic scanner initialized.')" class="nav-btn" style="color: #ffb000; border-color: rgba(255,176,0,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ THREAT HUNT ]</div>
-					<div onclick="alert('Advanced Threat Intelligence database initialized.')" class="nav-btn" style="color: #ffb000; border-color: rgba(255,176,0,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ THREAT INTEL ]</div>
-					<div onclick="alert('Tactical training firing range simulation offline.')" class="nav-btn" style="color: #ff5500; border-color: rgba(255,85,0,0.5); background: #07070c; margin: 0; padding: 6px 0;">[ RANGE ]</div>
-					<div onclick="navigateToPath('/matrix/redteam')" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255,74,74,0.55); background: #07070c; margin: 0; padding: 6px 0;">[ RED TEAM ]</div>
-					<div onclick="alert('Blue Team protective defense protocols online.')" class="nav-btn" style="color: #00f0ff; border-color: rgba(0,240,255,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ BLUE TEAM ]</div>
-					<div onclick="alert('Security Operations Center console active.')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ SOC ]</div>
-					<div onclick="alert('Network Operations Center pipeline clear.')" class="nav-btn" style="color: #39ff14; border-color: rgba(57,255,20,0.45); background: #07070c; margin: 0; padding: 6px 0;">[ NOC ]</div>
-				</div>
-			</div>
-			<div style="position: absolute; top: 20px; right: 20px; font-family: 'Courier New', monospace; width: 180px; z-index: 100000 !important;"><div onclick="executeProfileLogout()" class="nav-btn" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.4); background: rgba(255, 74, 74, 0.05); box-shadow: 0 0 10px rgba(255, 74, 74, 0.15);">[ LOG_OUT ]</div></div>
-			<div style="position: absolute; bottom: 15px; left: calc(50% + 120px); transform: translateX(-50%); width: 70%; max-width: 750px; z-index: 100000 !important;">
-				<div id="cve-widget" style="padding: 15px 25px; background: rgba(10, 10, 15, 0.95); color: #39ff14; text-align: center; font-family: 'Courier New', monospace; font-size: 13px; border: 1px solid #00f0ff; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);">
-					<div style="margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;"><strong style="letter-spacing: 1px; color: #00f0ff;">[SLAUGHTER SEC@CORE]:~$ FETCH_VULN</strong> <span id="cve-id" style="color: #39ff14; font-weight: 700;">SYS_INIT</span><button onclick="manualRoll()" style="background: #14141f; border: 1px solid #00f0ff; color: #00f0ff; cursor: pointer; font-size: 11px; padding: 4px 12px; border-radius: 3px;">EXECUTE_ROLL ↻</button></div>
-					<p id="cve-summary" style="margin: 0; font-size: 12px; color: #88ffaa; text-align: left; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 3px; border: 1px solid rgba(0,240,255,0.1); min-height: 36px; max-height: 60px; overflow-y: auto;">Connecting to system arrays...</p>
-				</div>
-			</div>
-		</div>
-		<div id="view-internal-redteam" style="position: fixed !important; top: 0 !important; left: 240px !important; width: calc(100vw - 240px) !important; height: 100vh !important; background: transparent !important; box-sizing: border-box !important; display: none; align-items: center !important; justify-content: center !important; z-index: 50000 !important; padding: 20px !important;">
-			<div style="background: radial-gradient(circle at 50% 50%, #150505 0%, #030101 100%) !important; width: 100%; max-width: 750px; padding: 35px; border-radius: 6px; border: 2px solid rgba(255, 74, 74, 0.25); box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), inset 0 0 30px rgba(21, 5, 5, 0.85); display: flex !important; flex-direction: column !important; align-items: center !important; box-sizing: border-box !important;">
-				<div class="header-container" style="max-width: 100% !important; margin-bottom: 15px !important; width: 100% !important; display: flex !important; justify-content: center !important;">
-					<div style="text-align: center !important; width: 100% !important;">
-						<h1 class="landing-title" style="color: #ff4a4a !important; text-shadow: 0 0 15px rgba(255, 74, 74, 0.6) !important; font-weight: 900 !important; font-size: 1.6rem !important; margin: 0 0 4px 0 !important; letter-spacing: 2px !important;">// INTRUSION_ALERT EXPLOITATION SUB-SYSTEM</h1>
-						<div style="font-size: 10px; color: #773333; letter-spacing: 1.5px; font-weight: bold; text-transform: uppercase;">OFFENSIVE ADVERSARY SIMULATION NODE // MULTIPLIER MATRIX ACTIVE</div>
-					</div>
-				</div>
-				<div class="telemetry-log" style="background: #080202 !important; border: 1px solid rgba(255, 74, 74, 0.35) !important; border-left: 5px solid #ff4a4a !important; box-shadow: inset 0 0 30px rgba(0,0,0,0.95) !important; color: #ff6666 !important; width: 100% !important; min-height: 400px !important; box-sizing: border-box !important; overflow: hidden !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; padding: 20px !important;">
-					<div id="typing-field" style="color: #ff7777 !important; text-shadow: 0 0 5px rgba(255,100,100,0.2) !important;"></div>
-					<div id="art-container" style="width: 100% !important; display: flex !important; justify-content: center !important;">
-						<pre style="color: #ff4a4a !important; font-family: 'Courier New', Courier, monospace !important; font-size: 9px !important; line-height: 1.05 !important; font-weight: 900 !important; letter-spacing: 0px !important; white-space: pre !important; text-align: left !important; user-select: none !important; text-shadow: 0 0 15px rgba(255, 74, 74, 0.6) !important; margin: 15px 0 0 0 !important;">
-               ,-.                               
-       ___,---.__          /'|`\          __,---,___          
-    ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.       
-  ,'        |           ~'\     /`~           |        `.      
- /      ___//              `. ,'          ,  , \___      \    
+    <!-- Navigation Header -->
+    <header class="border-b border-gray-800 bg-cyberDark/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-cyberBlue font-black text-xl tracking-wider">⚡ SHIELD.IO</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-400">
+                <a href="#services" class="hover:text-cyberBlue transition-colors">Services</a>
+                <a href="#infrastructure" class="hover:text-cyberBlue transition-colors">Infrastructure</a>
+                <a href="#contact" class="hover:text-cyberBlue transition-colors">Contact</a>
+            </nav>
+            <a href="#contact" class="border border-cyberBlue text-cyberBlue px-5 py-2 rounded-lg text-sm font-semibold tracking-wide hover:bg-cyberBlue/10 transition-all">
+                Get Audited
+            </a>
+        </div>
+    </header>
 
-|    ,-'   `-.__   _         |        ,    __,-'   `-.    |    
-|   /          /\_  `   .    |    ,      _/\          \   |   
-\  |           \ \`-.___ \   |   / ___,-'/ /           |  /  
- \  \           | `._   `\\  |  //'   _,' |           /  /      
-  `-.\         /'  _ `---'' , . ``---' _  `\         /,-'     
-     ``       /     \    ,='/ \`=.    /     \       ''          
+    <!-- Hero / Value Proposition Section -->
+    <section class="max-w-7xl mx-auto px-6 pt-24 pb-20 text-center md:text-left md:flex md:items-center md:justify-between gap-12">
+        <div class="md:w-1/2 space-y-6">
+            <div class="inline-flex items-center space-x-2 bg-cyberBlue/10 text-cyberBlue text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest">
+                <span>●</span> <span>System Status: Fully Operational</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                Next-Generation <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberBlue to-blue-500">Cyber Defense</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-xl">
+                We safeguard enterprise infrastructure, mitigate sophisticated zero-day threats, and engineer bulletproof digital perimeters.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="#services" class="bg-cyberBlue text-black px-8 py-3 rounded-lg font-bold tracking-wide hover:bg-cyan-400 transition-all text-center shadow-lg shadow-cyberBlue/20">
+                    Explore Capabilities
+                </a>
+            </div>
+        </div>
+        <div class="hidden md:block md:w-1/2">
+            <!-- Sleek Cyber Graphic Shell -->
+            <div class="bg-cyberCard border border-gray-800 rounded-xl p-6 shadow-2xl relative overflow-hidden">
+                <div class="flex space-x-2 pb-4 border-b border-gray-800 mb-4">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <code class="text-sm text-cyan-400 block font-mono">$ shield-dfnd --analyze --live</code>
+                <code class="text-xs text-gray-500 block font-mono mt-2">[INFO] Scanning global networks...</code>
+                <code class="text-xs text-emerald-400 block font-mono mt-1">[OK] 0 Vulnerabilities discovered. Your perimeter is clear.</code>
+            </div>
+        </div>
+    </section>
 
-             |__   /|\_,--.,-.--,--._/|\   __|                  
-             /  `./  \\`\ |  |  | /,//' \,'  \                  
-            /   /     ||--+--|--+-/-|     \   \                 
+    <!-- Services Grid Component -->
+    <section id="services" class="bg-slate-950/40 border-t border-gray-900 py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Core Competencies</h2>
+                <p class="mt-4 text-gray-400">Architecting robust defense matrices tailored to offensive real-world testing environments.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-cyberCard border border-gray-800 p-8 rounded-xl hover:border-cyberBlue/50 transition-all group">
+                    <div class="w-12 h-12 bg-cyberBlue/10 text-cyberBlue rounded-lg flex items-center justify-center mb-6 font-bold text-xl group-hover:scale-110 transition-transform">✓</div>
+                    <h3 class="text-xl font-bold mb-3">Penetration Testing</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Rigorous, adversary-simulated attacks to isolate and patch edge architectures before exploitation occurs.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-cyberCard border border-gray-800 p-8 rounded-xl hover:border-cyberBlue/50 transition-all group">
+                    <div class="w-12 h-12 bg-cyberBlue/10 text-cyberBlue rounded-lg flex items-center justify-center mb-6 font-bold text-xl group-hover:scale-110 transition-transform">🛡️</div>
+                    <h3 class="text-xl font-bold mb-3">Incident Response</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Rapid triage protocols deployed globally within moments to isolate containment breaches and mitigate data leaks.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-cyberCard border border-gray-800 p-8 rounded-xl hover:border-cyberBlue/50 transition-all group">
+                    <div class="w-12 h-12 bg-cyberBlue/10 text-cyberBlue rounded-lg flex items-center justify-center mb-6 font-bold text-xl group-hover:scale-110 transition-transform">⚙️</div>
+                    <h3 class="text-xl font-bold mb-3">Compliance & Auditing</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Streamlining strict regulatory architecture landscapes including SOC 2, ISO 27001, and HIPAA compliance readiness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-           |   |     /'\_\_\ | /_/_/`\     |   |                
-            \   \__, \_     `~'     _/ .__/   /            
-             `-._,-'   `-._______,-'   `-._,-'
+    <!-- Footer Contact -->
+    <footer id="contact" class="border-t border-gray-900 bg-cyberDark py-12 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Shield.io. All rights reserved. Secured natively by Cloudflare.</p>
+    </footer>
 
-                // SLTR - SEC //</pre>
-					</div>
-				</div>
-			</div>
-		</div>
-		<script>
-			let cycleTimer = null; let rainTimer = null; let isTypingActive = false; let telemetryTimer = null;
-			const terminalLogText = "[!] WARNING: RED TEAM ADVERSARY EMULATION INTEL INTERCEPT\n----------------───────────────────────────────────────────────\n> STATUS: ACTIVE INFRASTRUCTURE PENETRATION OVERLAY ENGAGED...\n> NODE_TRACKING: CORE VECTOR EXVEL MEMORY ATTACK VECTOR [RUNNING]\n> CRITICAL: TARGET PLATFORM SECURITY COMPROMISE IMMINENT.";
-			const cveDataset = [
-				{ id: "CVE-2024-3094", summary: "Malicious code injection discovered in XZ Utils compression utilities, leading to remote execution shell backdoors." },
-				{ id: "CVE-2021-44228", summary: "Apache Log4j2 JNDI configurations vulnerable to message lookup substitution attacks permitting remote execution strings." },
-				{ id: "CVE-2017-0144", summary: "Remote code execution flaw in Microsoft SMBv1 servers, heavily leveraged by WannaCry via EternalBlue mechanisms." },
-				{ id: "CVE-2014-0160", summary: "OpenSSL Heartbleed vulnerability permitting unauthenticated core memory dumping routines." }
-			];
-			const cveDatasetExtended = [
-				{ id: "CVE-2019-0708", summary: "Windows Remote Desktop pre-auth RCE vulnerability (BlueKeep)." },
-				{ id: "CVE-2021-34527", summary: "Windows Print Spooler privilege escalation and remote code flaw (PrintNightmare)." },
-				{ id: "CVE-2020-1472", summary: "Microsoft Netlogon cryptography validation bypass privilege escalation (Netlogon Exploitation)." },
-				{ id: "CVE-2018-7600", summary: "Drupal core input sanitation remote command execution flaw (Drupalgeddon2)." },
-				{ id: "CVE-2021-26084", summary: "Atlassian Confluence Server evaluation boundary OGNL expression injection runtime." },
-				{ id: "CVE-2023-38831", summary: "WinRAR extension execution flaw triggered via spoofed malicious archive attachments." },
-				{ id: "CVE-2023-22515", summary: "Atlassian Confluence Data Center broken access control exposing admin setup endpoints." },
-				{ id: "CVE-2022-26134", summary: "Atlassian Confluence Server unauthenticated OGNL evaluation remote shell execute." },
-				{ id: "CVE-2023-46604", summary: "Apache ActiveMQ OpenWire marshaling engine arbitrary server command intrusion." },
-				{ id: "CVE-2023-27997", summary: "Fortinet FortiOS SSL-VPN stack memory buffer overflow authentication bypass." },
-				{ id: "CVE-2023-4966", summary: "Citrix NetScaler Gateway memory information disclosure token hijack (Citrix Bleed)." },
-				{ id: "CVE-2022-30190", summary: "Windows Support Diagnostic Tool remote script execution via Word macros (Follina)." },
-				{ id: "CVE-2022-41040", summary: "Microsoft Exchange Server SSRF validation chaining command elevation (ProxyNotShell)." },
-				{ id: "CVE-2020-0601", summary: "Windows CryptoAPI subversion of standard certificate chain validation (Chain of Fools)." },
-				{ id: "CVE-2021-3156", summary: "Sudo legacy argument parser heap overflow local root elevation (Baron Samedit)." },
-				{ id: "CVE-2020-1350", summary: "Critical remote code execution vulnerability inside Microsoft Windows Server DNS architecture (SigRed)." }
-			];
-			const masterDataset = cveDataset.concat(cveDatasetExtended);
-			function startMatrixRainfallEngine() {
-				const canvas = document.getElementById('matrix-canvas'); if (!canvas) return;
-				const ctx = canvas.getContext('2d'); clearInterval(rainTimer);
-				
-				// Fixes background crashes by calculating direct window space metrics
-				canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-				
-				const chars = "0123456789ABCDEFMATRIXSLTRSEC".split("");
-				const fontSize = 14, columns = canvas.width / fontSize;
-				const drops = Array(Math.floor(columns)).fill(0).map(() => Math.floor(Math.random() * (canvas.height / fontSize)));
-				
-				function draw() {
-					ctx.fillStyle = "rgba(4, 4, 6, 0.18)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#39ff14"; ctx.font = "bold " + fontSize + "px monospace";
-					for (let i = 0; i < drops.length; i++) {
-						const text = chars[Math.floor(Math.random() * chars.length)];
-						ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-						if (drops[i] * fontSize > canvas.height && Math.random() > 0.94) drops[i] = 0;
-						drops[i] += 1.5;
-					}
-				}
-				rainTimer = setInterval(draw, 22);
-			}
-			function startUserTelemetryTrackingEngine() {
-				clearInterval(telemetryTimer); const peerEl = document.getElementById('peer-count-span'), pingEl = document.getElementById('ping-span');
-				telemetryTimer = setInterval(() => {
-					if (peerEl) peerEl.textContent = Math.floor(Math.random() * 8) + 3;
-					if (pingEl) pingEl.textContent = (Math.floor(Math.random() * 25) + 30) + "ms";
-				}, 4000);
-			}
-			function triggerTerminalTypingSimulation() {
-				if (isTypingActive) return; isTypingActive = true;
-				const targetField = document.getElementById("typing-field"), artContainer = document.getElementById("art-container");
-				if (!targetField) return; targetField.innerHTML = ""; if (artContainer) artContainer.style.opacity = "0";
-				let index = 0;
-				function typeNextCharacter() {
-					if (index < terminalLogText.length) {
-						const char = terminalLogText.charAt(index);
-						targetField.innerHTML += (char === "\n" ? "<br>" : char); index++; setTimeout(typeNextCharacter, 25);
-					} else { if (artContainer) artContainer.style.opacity = "1"; }
-				}
-				typeNextCharacter();
-			}
-			function navigateToPath(targetUrlPath) { window.history.pushState({}, '', targetUrlPath); routeSubDirectoriesNatively(); resetTickers(); }
-			document.addEventListener("keydown", (e) => {
-				if (e.key === "Enter") {
-					if (document.getElementById("view-login").style.display === "flex") executeLoginAuthentication();
-					if (document.getElementById("view-register").style.display === "flex") executeStudentValidation();
-				}
-			});
-			function resetTickers() {
-				const loginT = document.getElementById('login-ticker'), registerT = document.getElementById('register-ticker');
-				if (loginT) { loginT.textContent = "READY_FOR_HANDSHAKE"; loginT.style.color = "#666"; }
-				if (registerT) { registerT.textContent = "AWAITING_PARAMETER_INTRUSION"; registerT.style.color = "#666"; }
-			}
-						function routeSubDirectoriesNatively() {
-				const path = window.location.pathname;
-				const cachedHandle = localStorage.getItem('sl_saved_handle');
-				const cachedEmail = localStorage.getItem('sl_saved_email');
-				const publicHomeOverlay = document.getElementById('view-home-public');
-				
-				// Global Clear Sweep: Resets visibility states before processing routing checks
-				if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'none', 'important');
-				document.getElementById('view-login').style.setProperty('display', 'none', 'important'); 
-				document.getElementById('view-register').style.setProperty('display', 'none', 'important'); 
-				document.getElementById('hud-master-layer').style.setProperty('display', 'none', 'important');
-				
-				const rainTarget = document.getElementById('root-matrix-rain');
-				const redteamView = document.getElementById('view-internal-redteam');
-				if (redteamView) redteamView.style.setProperty('display', 'none', 'important');
-				
-				clearInterval(cycleTimer); clearInterval(telemetryTimer);
-
-				// Route Enforcement Loop Controls
-				if (path === "/login" || path === "/login/") { 
-					if (rainTarget) {
-						rainTarget.classList.remove('hidden-rain-viewport');
-						rainTarget.style.setProperty('display', 'block', 'important'); 
-						startMatrixRainfallEngine(); 
-					}
-					document.getElementById('view-login').style.setProperty('display', 'flex', 'important'); 
-				} 
-				else if (path === "/register" || path === "/register/") { 
-					if (rainTarget) {
-						rainTarget.classList.remove('hidden-rain-viewport');
-						rainTarget.style.setProperty('display', 'block', 'important'); 
-						startMatrixRainfallEngine(); 
-					}
-					document.getElementById('view-register').style.setProperty('display', 'flex', 'important'); 
-				} 
-				else if (path === "/matrix" || path === "/matrix/") {
-					if (cachedHandle && cachedEmail) {
-						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
-						
-						/* KILLS MATRIX BACKGROUND: Stops all animation timers on login */
-						if (rainTarget) {
-							clearInterval(rainTimer); rainTimer = null;
-							rainTarget.classList.add('hidden-rain-viewport');
-						}
-						
-						startUserTelemetryTrackingEngine();
-						const statusHud = document.getElementById('user-status-hud');
-						if (statusHud) {
-							const isL2 = cachedEmail.endsWith("@students.columbusstate.edu");
-							statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: ${isL2 ? 'CLEARANCE_L2' : 'CLEARANCE_L1'}`;
-							statusHud.style.color = isL2 ? "#00f0ff" : "#39ff14";
-						}
-						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
-					} else { navigateToPath('/'); }
-				} 
-				else if (path === "/matrix/redteam" || path === "/matrix/redteam/") {
-					if (cachedHandle && cachedEmail) {
-						document.getElementById('hud-master-layer').style.setProperty('display', 'block', 'important');
-						if (redteamView) redteamView.style.setProperty('display', 'flex', 'important');
-						
-						if (rainTarget) {
-							clearInterval(rainTimer); rainTimer = null;
-							rainTarget.classList.add('hidden-rain-viewport');
-						}
-						
-						startUserTelemetryTrackingEngine();
-						const statusHud = document.getElementById('user-status-hud');
-						if (statusHud) { statusHud.innerHTML = `> OPERATIVE: ${cachedHandle.toUpperCase()}<br>> STATUS: RED_TEAM_OPS`; statusHud.style.color = "#ff4a4a"; }
-						isTypingActive = false; triggerTerminalTypingSimulation();
-						loadRandomCve(); cycleTimer = setInterval(loadRandomCve, 15000);
-					} else { navigateToPath('/'); }
-				} 
-				else {
-					if (cachedHandle && cachedEmail) { navigateToPath('/matrix'); } 
-					else { 
-						if (rainTarget) {
-							rainTarget.classList.remove('hidden-rain-viewport');
-							rainTarget.style.setProperty('display', 'block', 'important'); 
-							startMatrixRainfallEngine(); 
-						}
-						if (publicHomeOverlay) publicHomeOverlay.style.setProperty('display', 'flex', 'important'); 
-					}
-				}
-			}
-			function executeStudentValidation() {
-				const handleVal = (document.getElementById('student-handle-input').value || "Operative").trim(), emailVal = (document.getElementById('student-email-input').value || "").trim().toLowerCase(), passVal = document.getElementById('student-password-input').value || "", ticker = document.getElementById('register-ticker');
-				if (!emailVal || !passVal) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_db_mock_handle_' + emailVal, handleVal); localStorage.setItem('sl_db_mock_pass_' + emailVal, passVal);
-				if (ticker) { ticker.textContent = "[+] NODE DEPLOYED SUCCESSFULLY. SYNCHRONIZING..."; ticker.style.color = "#39ff14"; }
-				setTimeout(() => { navigateToPath('/login'); }, 1200);
-			}
-			function executeLoginAuthentication() {
-				const loginEmail = (document.getElementById('login-email-input').value || "").trim().toLowerCase(), loginPass = document.getElementById('login-password-input').value || "", ticker = document.getElementById('login-ticker');
-				if (!loginEmail || !loginPass) { if (ticker) { ticker.textContent = "[-] ERROR: ALL FIELDS MANDATORY"; ticker.style.color = "#ff4a4a"; } return; }
-				const storedPass = localStorage.getItem('sl_db_mock_pass_' + loginEmail), storedHandle = localStorage.getItem('sl_db_mock_handle_' + loginEmail) || "Operative";
-				if (!storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: RECON_NOT_FOUND"; ticker.style.color = "#ff4a4a"; } return; }
-				if (loginPass !== storedPass) { if (ticker) { ticker.textContent = "[-] ERROR: CREDENTIAL_MISMATCH"; ticker.style.color = "#ff4a4a"; } return; }
-				localStorage.setItem('sl_saved_handle', storedHandle); localStorage.setItem('sl_saved_email', loginEmail);
-				if (ticker) {
-					const isL2 = loginEmail.endsWith("@students.columbusstate.edu");
-					ticker.textContent = isL2 ? "[🟢 ACCESS APPROVED] CLEARANCE L2 MOUNTED" : "[🔵 ACCESS APPROVED] CLEARANCE L1 MOUNTED";
-					ticker.style.color = isL2 ? "#39ff14" : "#00f0ff";
-				}
-				setTimeout(() => { navigateToPath('/matrix'); }, 1000);
-			}
-			function executeProfileLogout() { localStorage.removeItem('sl_saved_handle'); localStorage.removeItem('sl_saved_email'); isTypingActive = false; routeSubDirectoriesNatively(); }
-			function loadRandomCve() {
-				const idEl = document.getElementById('cve-id'), summaryEl = document.getElementById('cve-summary'); if (!idEl || !summaryEl) return;
-				idEl.textContent = "ROLLING..."; const randomCve = masterDataset[Math.floor(Math.random() * masterDataset.length)];
-				setTimeout(() => { idEl.innerHTML = `<a href="https://nist.gov{randomCve.id}" target="_blank" style="color: #39ff14; text-decoration: none;">${randomCve.id}</a>`; summaryEl.textContent = "> DESCRIPTION: " + randomCve.summary; }, 200);
-			}
-			function manualRoll() { loadRandomCve(); }
-			window.onpopstate = window.onload = routeSubDirectoriesNatively;
-			window.onresize = () => {
-				const c = document.getElementById('matrix-canvas');
-				if (c && c.parentElement.style.display !== 'none') { c.width = c.parentElement.clientWidth; c.height = c.parentElement.clientHeight; }
-			};
-		</script>
-	</body>
+</body>
 </html>
