@@ -21,8 +21,6 @@
 :root[data-palette="cyber"]{--d-bg:#0b0b1a;--d-win:#12122a;--d-bar:#1b1b3b;--d-line:#2b2b5c;--d-fg:#e6e6ff;--d-dim:#8b8bb8;--d-acc:#ff2e97;--d-rain:#29e7ff;--l-acc:#c4006e;--l-rain:#007f99}
 :root[data-palette="ice"]{--d-bg:#0a1018;--d-win:#0f1a26;--d-bar:#162434;--d-line:#223a52;--d-fg:#dcecf8;--d-dim:#7f9bb3;--d-acc:#4cc2ff;--d-rain:#3a9fd8;--l-acc:#0a6cb0;--l-rain:#0a6cb0}
 :root[data-palette="matrix"]{--d-bg:#050a06;--d-win:#0a130b;--d-bar:#0f1d11;--d-line:#1c3a20;--d-fg:#c8f7d2;--d-dim:#6fa27b;--d-acc:#3dff7a;--d-rain:#1fd65a;--l-acc:#1b7a43;--l-rain:#1b7a43}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:var(--l-acc);--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:var(--l-rain)}}
-:root[data-theme="light"]{--bg:#e4e8ec;--win:#f7f9fa;--bar:#d3d9df;--fg:#1d2733;--dim:#667380;--line:#c3cbd3;--acc:var(--l-acc);--err:#b3261e;--ok:#2e7d32;--on-acc:#fff;--rain:var(--l-rain)}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:400 .95rem/1.7 "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
@@ -557,13 +555,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
       <h2 id="st" tabindex="-1">Settings</h2>
       <p class="cmd"><b>$</b> whoami</p>
       <p id="sacct" style="margin:0 0 24px"></p>
-      <p class="cmd"><b>$</b> theme --set</p>
-      <div class="row">
-        <button class="btn" type="button" data-th="dark">dark</button>
-        <button class="btn" type="button" data-th="light">light</button>
-        <button class="btn" type="button" data-th="system">system</button>
-      </div>
-      <p class="cmd" style="margin-top:28px"><b>$</b> palette --set</p>
+      <p class="cmd"><b>$</b> palette --set</p>
       <div class="row">
         <button class="btn" type="button" data-pal="amber">amber</button>
         <button class="btn" type="button" data-pal="violet">violet</button>
@@ -1074,8 +1066,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
   }
   document.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){runDemo(b.dataset.a)})});
 
-  function pressed(){var t=get('theme')||'system';document.querySelectorAll('[data-th]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.th===t)})}
-  function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';pressed();palPressed()}
+    function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';palPressed()}
   /* ---- LIVE CONNECTIONS: plug your API in here ---- */
   var PEER_FEED={
     url:'',        // endpoint that lists who is connected right now
@@ -1237,9 +1228,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     if(v==='sltr')slShow();
     if(v==='settings')renderSettings(u,em);
   }
-  function applyTheme(t){var r=document.documentElement;if(t==='dark'||t==='light')r.setAttribute('data-theme',t);else r.removeAttribute('data-theme');col={};redraw();window.dispatchEvent(new Event('palette'))}
-  applyTheme(get('theme')||'system');
-  document.querySelectorAll('[data-th]').forEach(function(b){b.addEventListener('click',function(){set('theme',b.dataset.th);applyTheme(b.dataset.th);pressed()})});
+  document.documentElement.setAttribute('data-theme','dark');
   function palPressed(){var t=get('palette')||'amber';document.querySelectorAll('[data-pal]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pal===t)})}
   function applyPalette(t){document.documentElement.setAttribute('data-palette',t);col={};redraw();if(cur==='threats')drawMap();window.dispatchEvent(new Event('palette'))}
   applyPalette(get('palette')||'amber');
