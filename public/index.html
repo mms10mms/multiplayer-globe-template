@@ -108,8 +108,6 @@ body.app .nav{display:flex}
 .pl{border-left:3px solid var(--acc);padding:2px 0 2px 14px;margin:0 0 20px}
 .pl h3{margin:0 0 4px;font:700 1rem "JetBrains Mono",ui-monospace,monospace;color:var(--fg)}
 .pl p{margin:0;color:var(--dim);font-size:.88rem}
-#dout{min-height:12em;margin:20px 0 0;border:1px solid var(--line);padding:12px 14px;font-size:.84rem;line-height:1.8}
-#dout b{display:inline-block;width:5.8em;font-weight:400}
 .btn:disabled{opacity:.4;cursor:default}
 .pubnav{display:none;position:fixed;top:0;left:0;right:0;z-index:5;align-items:center;gap:16px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;background:var(--bar);border-bottom:1px solid var(--line);font-size:.85rem}
 body.pub .pubnav{display:flex}
@@ -205,10 +203,8 @@ textarea{resize:vertical}
   <div class="tabs">
     <a href="#/home" data-v="home"><span>Globe</span></a>
     <a href="#/threats" data-v="threats"><span>Threat map</span></a>
-    <a href="#/aisec" data-v="aisec"><span>AI security</span></a>
     <a href="#/sltr" data-v="sltr"><span>SLTR framework</span></a>
-    <a href="#/product" data-v="product"><span>Product</span></a>
-    <a href="#/demo" data-v="demo"><span>Demo</span></a>
+    <a href="#/pentesting" data-v="pentesting"><span>Pen testing</span></a>
     <a href="#/settings" data-v="settings"><span>Settings</span></a>
   </div>
   <div class="plr"><div><b id="plrName">Player</b><small>online</small></div><button class="btn" id="out" type="button">exit</button></div>
@@ -218,8 +214,8 @@ textarea{resize:vertical}
   <a class="brand" href="#/">slaughter-sec</a>
   <div class="tabs">
     <a href="#/platform" data-v="platform">platform</a>
-    <a href="#/pentesting" data-v="pentesting">ai pentesting</a>
     <a href="#/research" data-v="research">ai research</a>
+    <a href="#/kb" data-v="kb">tta</a>
     <a href="#/about" data-v="about">about</a>
     <a href="#/contact" data-v="contact">contact</a>
   </div>
@@ -259,7 +255,7 @@ textarea{resize:vertical}
     <h2>What we do</h2>
     <div class="g2">
       <div class="win card"><div class="body"><h3>Posture platform</h3><p>One screen that shows your real exposure: open services, unpatched software and risky accounts, and how an attacker could chain them together.</p></div></div>
-      <div class="win card"><div class="body"><h3>AI penetration testing</h3><p>Our own AI agents carry out the initial test, and our team works alongside them, guiding the work and checking it as it goes. Nothing reaches you raw. Every result is reviewed by hand, written up clearly for your convenience, and briefed to you once we finish. You get the speed of the agents and the judgment of people, and your business keeps running while we test. <a href="#/pentesting" style="color:var(--acc)">Learn more</a></p></div></div>
+      <div class="win card"><div class="body"><h3>Penetration testing</h3><p>Our own AI agents carry out the initial test, and our team works alongside them, guiding the work and checking it as it goes. Nothing reaches you raw. Every result is reviewed by hand, written up clearly for your convenience, and briefed to you once we finish. You get the speed of the agents and the judgment of people, and your business keeps running while we test.</p></div></div>
       <div class="win card"><div class="body"><h3>AI security research</h3><p>Standard security research, with a heavy focus on AI and what it changes: how AI systems can be attacked, how attackers are starting to use AI, and what both mean for a business like yours. We turn what we learn into checks you can run and plain-English guidance your team can act on.</p></div></div>
       <div class="win card"><div class="body"><h3>People review everything</h3><p>We do not rely on AI alone. We use it for what it does well, like speed and scale, and our team reviews and analyzes every finding before it reaches you. You get a ranked plan from people who stand behind it, not a long list of automated alerts.</p></div></div>
     </div>
@@ -299,10 +295,10 @@ textarea{resize:vertical}
     <div class="win card"><div class="body"><h3>Posture score</h3><p>One score with the reasons behind it, so you can see whether you are getting safer.</p></div></div>
     <div class="win card"><div class="body"><h3>Attack paths</h3><p>See how a weak password, an open port and an old server could combine into a real breach.</p></div></div>
     <div class="win card"><div class="body"><h3>Vulnerability exposure</h3><p>Matches what you run against known CVEs and highlights the ones attackers are using right now.</p></div></div>
-    <div class="win card"><div class="body"><h3>AI penetration testing</h3><p>Run realistic attack tests on demand, without taking systems offline. <a href="#/pentesting" style="color:var(--acc)">How it works</a></p></div></div>
+    <div class="win card"><div class="body"><h3>Penetration testing</h3><p>Run realistic attack tests on demand, without taking systems offline.</p></div></div>
     <div class="win card"><div class="body"><h3>AI system review</h3><p>Checks the AI tools and agents your team uses for prompt injection, data leaks and permissions that are too broad.</p></div></div>
     <div class="win card"><div class="body"><h3>Plain-language reports</h3><p>Every finding says what it is, why it matters and how to fix it.</p></div></div>
-    <div class="win card"><div class="body"><h3>Client portal</h3><p>Log in to see the live globe, the threat map and the attack demo.</p></div></div>
+    <div class="win card"><div class="body"><h3>Client portal</h3><p>Log in to see the live globe, the threat map and our SLTR framework.</p></div></div>
   </div>
   <div class="blk">
     <h2>What a report looks like</h2>
@@ -319,9 +315,9 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
 </section>
 
-<section class="view site" data-view="pentesting" aria-labelledby="pt2">
- <div class="wrap">
-  <h1 class="ph" id="pt2" tabindex="-1">AI penetration testing</h1>
+<section class="view page" data-view="pentesting" aria-labelledby="pt2">
+ <div class="win"><div class="body">
+  <h1 class="ph" id="pt2" tabindex="-1">Penetration testing</h1>
   <p class="sub" style="max-width:64ch">A penetration test attacks your own systems, with your permission, to find the weaknesses a real attacker would use. Ours is run by AI and reviewed by experts, so it is faster and more accurate than a traditional test and does not interrupt your business.</p>
   <div class="g3 blk" style="margin-top:28px">
     <div class="win card"><div class="body"><h3>Faster</h3><p>AI works through many attack paths at once, so you get results sooner than from a test done by hand.</p></div></div>
@@ -337,9 +333,8 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
       <div class="step"><b>4</b><div><h3>Fix and retest</h3><p>You fix the issues, and we test again to confirm they are closed.</p></div></div>
     </div></div>
   </div>
-  <div class="row blk"><a class="btn fill" href="#/contact">Request a test</a><a class="btn" href="#/platform">See the platform</a></div>
- </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+  <div class="row blk"><a class="btn fill" href="mailto:hello@slaughter-sec.com?subject=Penetration%20test%20request">Request a test</a></div>
+ </div></div>
 </section>
 
 <section class="view site" data-view="research" aria-labelledby="rs">
@@ -353,10 +348,9 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     <div class="win card"><div class="body"><h3>Supply chain</h3><p>Risks in the models, plug-ins and datasets a business pulls in from outside.</p></div></div>
   </div>
   <div class="blk">
-    <h2>How research reaches you</h2>
-    <div class="win"><div class="body">
-      <p class="sub" style="margin:0">Findings become checks inside the platform and short write-ups your team can read. Papers and write-ups will be listed here as they are released.</p>
-    </div></div>
+    <h2>Latest findings</h2>
+    <p class="sub" id="aiSub" style="margin:0 0 8px"></p>
+    <div id="aiBody"></div>
   </div>
   <div class="row blk"><a class="btn fill" href="#/contact">Ask about our research</a></div>
  </div>
@@ -393,7 +387,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
       <label for="ce">email</label><input id="ce" type="email" autocomplete="email">
       <label for="cc">company</label><input id="cc" type="text" autocomplete="organization">
       <label for="ci">most interested in</label>
-      <select id="ci"><option>The posture platform</option><option>AI penetration testing</option><option>AI security research</option><option>Both</option><option>Not sure yet</option></select>
+      <select id="ci"><option>The posture platform</option><option>Penetration testing</option><option>AI security research</option><option>Both</option><option>Not sure yet</option></select>
       <label for="cm">message</label><textarea id="cm" rows="5"></textarea>
       <p class="err" role="alert" id="cerr"></p>
       <button class="btn fill" type="submit">send message</button>
@@ -401,6 +395,15 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     <p id="cmsg" role="status" hidden></p>
   </div></div>
   <p class="sub">Prefer to write directly? Email <a href="mailto:hello@slaughter-sec.com" style="color:var(--acc)">hello@slaughter-sec.com</a>.</p>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+</section>
+
+<section class="view site" data-view="kb" aria-labelledby="kbT">
+ <div class="wrap">
+  <h1 class="ph" id="kbT" tabindex="-1">TTA: Today's Threat Analysis</h1>
+  <p class="sub" id="kbSub" style="max-width:74ch"></p>
+  <div id="kbBody" class="blk"></div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
 </section>
@@ -471,73 +474,6 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
   </div>
 </section>
 
-<section class="view page" data-view="product" aria-labelledby="pt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>man slaughter-sec</span></div>
-    <div class="body">
-      <h2 id="pt" tabindex="-1">Product</h2>
-      <p class="sub">Network defense that never blinks.</p>
-      <div class="pl"><h3>Detect</h3><p>Sensors learn what normal traffic looks like on your network and flag anything that does not fit, from odd logins to data leaving at 3 a.m.</p></div>
-      <div class="pl"><h3>Block</h3><p>Hostile connections are cut automatically. Suspicious accounts are locked until someone confirms they are real.</p></div>
-      <div class="pl"><h3>Respond</h3><p>Analysts investigate every alert and send your team a plain-language report with the fix, not a wall of logs.</p></div>
-      <div class="pl"><h3>See</h3><p>A live globe, threat map and CVE feed keep your whole team looking at the same picture.</p></div>
-      <div class="row" style="margin-top:24px"><a class="btn fill" href="#/demo">try the demo</a><a class="btn" href="mailto:hello@slaughter-sec.com">book a live demo</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="view page" data-view="demo" aria-labelledby="dt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>demo --simulate</span></div>
-    <div class="body">
-      <h2 id="dt" tabindex="-1">Demo</h2>
-      <p class="sub">Pick an attack and watch it get detected, blocked and reported. Simulated. Nothing real is touched.</p>
-      <div class="row">
-        <button class="btn" type="button" data-a="scan">port scan</button>
-        <button class="btn" type="button" data-a="brute">brute force</button>
-        <button class="btn" type="button" data-a="sqli">sql injection</button>
-        <button class="btn" type="button" data-a="phish">phishing email</button>
-      </div>
-      <div id="dout" role="log" aria-live="polite"></div>
-    </div>
-  </div>
-</section>
-
-<section class="view page" data-view="aisec" aria-label="AI security">
-  <div class="seg" id="aiSeg" tabindex="-1" role="group" aria-label="AI security section">
-    <button class="mi" type="button" id="aiBtnPt" aria-pressed="true">Pentesting</button>
-    <button class="mi" type="button" id="aiBtnRa" aria-pressed="false">Research</button>
-  </div>
-  <div class="split" id="aiPt">
-    <div class="menu" id="ptMenu" role="group" aria-label="Choose a target"></div>
-    <div class="detail">
-      <div class="dhead"><h1 id="apt">AI pentesting</h1><p id="ptSub"></p></div>
-      <div class="dbody">
-        <div class="chips"><span class="chip">scope: this target only</span><span class="chip">pace: low impact</span><span class="chip">review: expert sign-off</span></div>
-        <div class="row"><button class="btn fill" id="ptGo" type="button">start test</button></div>
-        <div class="pbar" aria-hidden="true"><i id="ptBar"></i></div>
-        <div id="ptLog" role="log" aria-live="polite"></div>
-        <div id="ptFind"></div>
-        <p class="sub" style="margin:18px 0 0">Simulated demo. Nothing real is scanned or touched.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="split" id="aiRa" hidden>
-    <div class="menu" id="raMenu" role="group" aria-label="Research areas"></div>
-    <div class="detail">
-      <div class="dhead"><h1 id="art">AI security research</h1><p id="raSub"></p></div>
-      <div class="dbody">
-        <p id="raText" style="margin:0 0 18px"></p>
-        <h3 class="mini">What we check</h3>
-        <div id="raChecks"></div>
-        <p class="status" style="margin-top:18px">Status: checks in development</p>
-        <p class="sub" style="margin:0">Write-ups: none published yet. They will be listed here as they are released.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="view page" data-view="sltr" aria-label="SLTR framework">
   <div class="split">
     <div class="menu" id="slMenu" role="group" aria-label="SLTR stages"></div>
@@ -595,7 +531,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
   }
 
-  var APP=['home','threats','aisec','sltr','product','demo','settings'],PUB=['landing','platform','pentesting','research','about','contact'];
+  var APP=['home','threats','sltr','pentesting','settings'],PUB=['landing','platform','research','kb','about','contact'];
   function route(){
     var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
     var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
@@ -610,6 +546,8 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     if(app)enterApp(v);else stopSim();
     if(v==='landing')typeQuote();
+    if(v==='kb')kbShow();
+    if(v==='research')aiShow();
     var t=document.querySelector('.view.on [tabindex="-1"]');if(t)t.focus({preventScroll:true});
     window.scrollTo(0,0);
   }
@@ -1045,26 +983,6 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
   window.addEventListener('resize',function(){if(cur==='threats')drawMap()});
 
   var dTimer=0;
-  var SCEN={
-    scan:[["attack","203.0.113.45 starts probing 1,024 ports on web-01"],["detect","Sequential probes from one address, 212 in 3 seconds"],["block","203.0.113.45 added to the deny list"],["respond","Firewall rule saved and a ticket opened"],["report","No service was reached. No action needed."]],
-    brute:[["attack","198.51.100.7 tries 90 passwords a minute on the admin login"],["detect","Failed logins far above normal for this account"],["block","198.51.100.7 blocked and the admin account locked"],["respond","Admin asked to confirm and reset the password"],["report","No successful login. Account restored after verification."]],
-    sqli:[["attack","Request to /api/orders carries an injected SQL string"],["detect","Input matches a known injection pattern"],["block","Request dropped before it reached the database"],["respond","Developer ticket opened to use parameterized queries"],["report","No data was read or changed."]],
-    phish:[["attack","Email 'Invoice overdue' reaches 11 staff with a lookalike login link"],["detect","Link domain imitates your company and was registered 2 days ago"],["block","Email pulled from all 11 inboxes and the domain blocked"],["respond","Staff alerted with what to look for"],["report","No one entered credentials."]]
-  };
-  function runDemo(k){
-    var out=$('#dout'),steps=SCEN[k],i=0,btns=document.querySelectorAll('[data-a]');
-    clearInterval(dTimer);out.innerHTML='';
-    function add(){
-      var st=steps[i++],d=document.createElement('div'),b=document.createElement('b'),t=document.createElement('span');
-      b.textContent=st[0];b.className={attack:'bad',detect:'warn',block:'ok',respond:'ok',report:'t'}[st[0]];
-      t.textContent=st[1];d.appendChild(b);d.appendChild(t);out.appendChild(d);
-      if(i>=steps.length){clearInterval(dTimer);btns.forEach(function(x){x.disabled=false})}
-    }
-    btns.forEach(function(x){x.disabled=true});
-    if(reduce){while(i<steps.length)add();return}
-    add();dTimer=setInterval(add,750);
-  }
-  document.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){runDemo(b.dataset.a)})});
 
     function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';palPressed()}
   /* ---- LIVE CONNECTIONS: plug your API in here ---- */
@@ -1115,62 +1033,58 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
       b.onclick=function(){onPick(i)};m.appendChild(b);
     });
   }
-  var aiM='pt';
-  function aiMode(m){
-    aiM=m;
-    $('#aiPt').hidden=m!=='pt';$('#aiRa').hidden=m!=='ra';
-    $('#aiBtnPt').setAttribute('aria-pressed',m==='pt');$('#aiBtnRa').setAttribute('aria-pressed',m==='ra');
+  var ptTimer=0;
+  /* ---- TTA (Today's Threat Analysis) ----
+     To update: edit KB_UPDATED and the NEWS list (newest first). Each item: d date, tag, t headline, x summary, a optional action, s source name, u source link. */
+  var KB_UPDATED='2026-10-06';
+  var NEWS=[{"d": "2026-10-05", "tag": "Zero-day", "t": "Citrix NetScaler zero-days exploited for remote code execution", "x": "Two critical flaws (reported as CVE-2026-88771 and CVE-2026-88772) let attackers run code on NetScaler ADC and Gateway appliances without logging in. These devices often handle VPN and sign-in, so a compromise can open the whole network.", "a": "Patch as soon as fixes are available, then check the appliance for signs of compromise before trusting it again.", "s": "CISA alert", "u": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway"}, {"d": "2026-10-05", "tag": "Zero-day", "t": "Cisco SD-WAN Manager authentication bypass", "x": "A zero-day (reported as CVE-2026-76504) lets attackers skip authentication and gain administrator access to the Catalyst SD-WAN Manager API on internet-facing systems.", "a": "Do not leave management interfaces open to the internet. Apply the vendor fix and review admin activity.", "s": "NetworkTigers roundup", "u": "https://news.networktigers.com/cybersecurity-news/roundup-october-5-2026/"}, {"d": "2026-10-05", "tag": "Exploited", "t": "SharePoint flaw used to plant web shells", "x": "A SharePoint vulnerability (reported as CVE-2026-65660) is being exploited to create web shells. A low-privileged user can run code, and chained with an authentication bypass it can be done without an account.", "a": "Patch SharePoint servers and look for unexpected files in their web directories.", "s": "NetworkTigers roundup", "u": "https://news.networktigers.com/cybersecurity-news/roundup-october-5-2026/"}, {"d": "2026-10-04", "tag": "Breach", "t": "Pentagon personnel data exposed for nearly a year", "x": "Unauthorized access to a Defense Manpower Data Center system went on for almost a year and exposed Social Security numbers and military service information for roughly 3 million people. Reports differ slightly on the exact count.", "a": "", "s": "This Week in Security", "u": "https://this.weekinsecurity.com/this-week-in-security-october-4-2026-edition/"}, {"d": "2026-10-04", "tag": "AI", "t": "Autonomous AI agent breaches a Dutch security institute", "x": "An AI agent hacked the Dutch Institute for Vulnerability Disclosure and, along the way, exposed two previously unknown vulnerabilities in the Zammad helpdesk software.", "a": "", "s": "This Week in Security", "u": "https://this.weekinsecurity.com/this-week-in-security-october-4-2026-edition/"}, {"d": "2026-10-04", "tag": "AI", "t": "Apple to restrict macOS Full Disk Access after AI agent abuse", "x": "Apple says it will limit the permission after AI agents and other software used it to reach sensitive data without clear consent.", "a": "Review which apps and agents have broad file access on your machines.", "s": "This Week in Security", "u": "https://this.weekinsecurity.com/this-week-in-security-october-4-2026-edition/"}, {"d": "2026-10-05", "tag": "Phishing", "t": "Attackers abuse legitimate remote-management tools", "x": "Phishing campaigns install genuine MSP360 software to get a foothold, then add ScreenConnect as a second way back in. Because the tools are legitimate, they can slip past basic antivirus.", "a": "Allow-list the remote tools your team actually uses and alert on any others.", "s": "NetworkTigers roundup", "u": "https://news.networktigers.com/cybersecurity-news/roundup-october-5-2026/"}, {"d": "2026-10-05", "tag": "Threat actor", "t": "Star Blizzard runs new phishing wave with RedFlick", "x": "The Russian group is using a new technique called RedFlick across at least 13 phishing campaigns aimed at governments, NGOs and financial organizations.", "a": "", "s": "NetworkTigers roundup", "u": "https://news.networktigers.com/cybersecurity-news/roundup-october-5-2026/"}, {"d": "2026-10-05", "tag": "Research", "t": "543,699 valid credentials found in public GitHub repositories", "x": "A scan found working secrets sitting in public code for a median of 784 days. Old keys that were never rotated stay dangerous long after the code is forgotten.", "a": "Scan your repositories for secrets and rotate anything that has ever been committed.", "s": "NetworkTigers roundup", "u": "https://news.networktigers.com/cybersecurity-news/roundup-october-5-2026/"}, {"d": "2026-10-05", "tag": "AI", "t": "Google: vulnerability disclosures doubled in 2026 as AI speeds discovery", "x": "Google reports monthly disclosures have more than doubled this year and that exploitation is up about 71% compared with 2025. Patching windows are shrinking.", "a": "", "s": "NetworkTigers roundup", "u": "https://news.networktigers.com/cybersecurity-news/roundup-october-5-2026/"}];
+  var kbQ='';
+  function kbEl(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+  function kbNews(n,box){
+    var d=kbEl('div','fnd');d.style.display='block';d.style.padding='14px 0';d.style.borderBottom='1px dashed var(--line)';
+    var top=kbEl('div','');top.style.cssText='font-size:.75rem;color:var(--dim);margin-bottom:4px';top.textContent=n.d+'  ·  '+n.tag;d.appendChild(top);
+    var h=kbEl('h3','mini',n.t);h.style.cssText='margin:0 0 6px;font-size:1rem';d.appendChild(h);
+    d.appendChild(kbEl('p','',n.x)).style.margin='0 0 6px';
+    if(n.a){var a=kbEl('p','','What to do: '+n.a);a.style.cssText='margin:0 0 6px;color:var(--fg)';d.appendChild(a)}
+    var l=document.createElement('a');l.href=n.u;l.target='_blank';l.rel='noopener noreferrer';l.textContent='Source: '+n.s;l.style.cssText='color:var(--acc);font-size:.82rem';d.appendChild(l);
+    box.appendChild(d);
   }
-  $('#aiBtnPt').addEventListener('click',function(){aiMode('pt')});
-  $('#aiBtnRa').addEventListener('click',function(){aiMode('ra')});
-  var PT=[
-    {n:'web-01',d:'Public website',f:[['high','Old admin login page is open to the internet'],['medium','Security headers are missing'],['low','Error pages reveal software versions']]},
-    {n:'vpn-gw',d:'Remote access gateway',f:[['critical','Software version matches CVE-2018-13379'],['medium','No lockout after repeated failed logins']]},
-    {n:'api',d:'Customer API',f:[['high','Order lookup returns other customers\u2019 records'],['medium','No rate limit on the login endpoint']]},
-    {n:'ai-assistant',d:'Internal AI assistant',ai:1,f:[['high','Follows instructions hidden in uploaded documents'],['medium','Can read files outside its intended folder'],['low','Reveals its own setup instructions when asked']]}
-  ],ptSel=0,ptTimer=0;
-  function ptShow(i){
-    if(i!==undefined)ptSel=i;clearInterval(ptTimer);
-    menu('#ptMenu',PT,ptSel,ptShow);
-    $('#ptSub').textContent='Target: '+PT[ptSel].n+', '+PT[ptSel].d;
-    $('#ptLog').textContent='Pick a target, then start the test.';$('#ptFind').innerHTML='';$('#ptBar').style.width='0';
-    $('#ptGo').disabled=false;
+  function kbShow(){
+    kbQ='';
+    var box=$('#kbBody');box.innerHTML='';
+    var q=document.createElement('input');q.type='search';q.placeholder='Search TTA';q.setAttribute('aria-label','Search TTA');
+    q.style.cssText='width:100%;box-sizing:border-box;padding:10px 12px;margin:0 0 16px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;font:inherit';
+    q.oninput=function(){kbQ=q.value;kbRender(list)};
+    box.appendChild(q);var list=kbEl('div','');box.appendChild(list);
+    kbRender(list);
   }
-  function ptRun(){
-    var t=PT[ptSel],steps=['Reading the rules you approved','Mapping what is exposed on '+t.n,t.ai?'Testing how the assistant handles hidden instructions':'Trying known attack paths at low speed','Checking each result for real impact','Sending findings to an expert for review'],i=0,log=$('#ptLog');
-    log.innerHTML='';$('#ptFind').innerHTML='';$('#ptGo').disabled=true;$('#ptBar').style.width='0';
-    function add(){
-      var d=document.createElement('div'),a=document.createElement('span'),b=document.createElement('span');
-      a.className='ok';a.textContent='done  ';b.textContent=steps[i];d.appendChild(a);d.appendChild(b);log.appendChild(d);
-      i++;$('#ptBar').style.width=Math.round(i/steps.length*100)+'%';
-      if(i>=steps.length){clearInterval(ptTimer);ptDone(t)}
-    }
-    if(reduce){while(i<steps.length)add();return}
-    add();ptTimer=setInterval(add,850);
+  function kbRender(list){
+    list.innerHTML='';var qq=kbQ.trim().toLowerCase(),found=0;
+    $('#kbT').textContent='TTA: Today\'s Threat Analysis';
+    $('#kbSub').textContent=qq?'Search results':'Updated '+KB_UPDATED+'. Newest first. Each item links to its source.';
+    NEWS.forEach(function(n){if(!qq||(n.t+' '+n.x+' '+n.tag).toLowerCase().indexOf(qq)>-1){kbNews(n,list);found++}});
+    if(!found)list.appendChild(kbEl('p','sub','Nothing matched. Try a shorter word.'));
   }
-  function ptDone(t){
-    var box=$('#ptFind'),h=document.createElement('h3');h.className='mini';h.style.marginTop='18px';h.textContent=t.f.length+' findings';box.appendChild(h);
-    t.f.forEach(function(f){
-      var d=document.createElement('div'),b=document.createElement('b'),x=document.createElement('span');
-      d.className='fnd';b.textContent=f[0];b.className=(f[0]==='critical'||f[0]==='high')?'bad':f[0]==='medium'?'warn':'t';x.textContent=f[1];
-      d.appendChild(b);d.appendChild(x);box.appendChild(d);
-    });
-    $('#ptGo').disabled=false;
+  /* ---- AI SECURITY RESEARCH FEED ----
+     To publish: add an item to the top of AINEWS and update AI_UPDATED. Fields: d date, tag, t headline, x summary, a optional action, s source name, u source link.
+     Our own findings: use tag 'Slaughter-Sec research' and link u to the full write-up. */
+  var AI_UPDATED='2026-10-06';
+  var AINEWS=[{"d": "2026-10-04", "tag": "AI agents", "t": "Autonomous AI agent breaches a Dutch vulnerability-disclosure institute", "x": "An AI agent hacked the Dutch Institute for Vulnerability Disclosure and, along the way, exposed two previously unknown vulnerabilities in the Zammad helpdesk software. It is a real example of an agent finding and using flaws on its own.", "a": "Assume attackers can run agents against your public systems around the clock, and shorten the time you take to patch.", "s": "This Week in Security", "u": "https://this.weekinsecurity.com/this-week-in-security-october-4-2026-edition/"}, {"d": "2026-10-04", "tag": "Agent permissions", "t": "Apple to limit macOS Full Disk Access after AI agent abuse", "x": "Apple says it will restrict the permission after AI agents and other software used it to reach sensitive user data without clear consent.", "a": "Review which agents and apps have broad file access, and remove what is not needed.", "s": "This Week in Security", "u": "https://this.weekinsecurity.com/this-week-in-security-october-4-2026-edition/"}, {"d": "2026-10", "tag": "Coding agents", "t": "GitSpawn: untrusted repositories run commands through the coding agent", "x": "A reported technique lets a booby-trapped repository set git configuration that executes whenever a coding agent calls git to gather context. It runs outside both the sandbox and the approval step, so the agent never asks.", "a": "Treat unfamiliar repositories as hostile, and run coding agents in disposable environments.", "s": "Adversa AI roundup", "u": "https://adversa.ai/blog/top-ai-coding-agent-security-resources-october-2026/"}, {"d": "2026-10", "tag": "Coding agents", "t": "Plugin4Shell: pinned agent plugins can be silently swapped", "x": "In several coding agents, a plugin pinned to a commit can be replaced with malicious code during automatic updates when a branch name is made to look like a commit hash.", "a": "Pin plugins to full commit hashes, and review plugin updates before they apply.", "s": "Adversa AI roundup", "u": "https://adversa.ai/blog/top-ai-coding-agent-security-resources-october-2026/"}, {"d": "2026-10", "tag": "Prompt injection", "t": "Salesforce Agentforce hijacked through public web forms", "x": "Researchers reported that instructions hidden in unauthenticated web form submissions could take over an Agentforce agent and send CRM data out through DNS, with no action needed from any user.", "a": "Treat anything a public form or inbox feeds into an agent as untrusted, and limit what the agent can send out.", "s": "Adversa AI roundup", "u": "https://adversa.ai/blog/top-ai-agent-security-resources-october-2026/"}, {"d": "2026-10", "tag": "Prompt injection", "t": "Planted instructions turn a SQL assistant into an administrator", "x": "A reported flaw (CVE-2026-65669) lets instructions stored in database properties make an AI SQL assistant run arbitrary queries as the victim, escalating to system administrator.", "a": "Do not give an assistant more database rights than the person using it.", "s": "Adversa AI roundup", "u": "https://adversa.ai/blog/top-ai-agent-security-resources-october-2026/"}, {"d": "2026-06-11", "tag": "Research", "t": "Prompt injection still drives most agentic AI security failures", "x": "A review of agentic AI incidents found prompt injection remains the main cause, with coding agents seeing the most. It also points to supply chain risk, including a backdoored LiteLLM package that reached nearly 47,000 PyPI downloads in March 2026.", "a": "", "s": "Help Net Security", "u": "https://www.helpnetsecurity.com/2026/06/11/owasp-prompt-injection-ai-security-failures/"}, {"d": "2026-05-07", "tag": "Research", "t": "Microsoft: prompt injection can become remote code execution", "x": "Microsoft researchers showed how prompt injection against agent frameworks can escalate to running code. Flaws in Semantic Kernel (CVE-2026-26030 and CVE-2026-25592) came from unsafe handling of tool parameters. Their guidance: AI models are not security boundaries, so treat every tool parameter as attacker-controlled.", "a": "Upgrade affected versions, and alert on unexpected child processes started by agent hosts.", "s": "Microsoft Security Blog", "u": "https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks/"}];
+  var aiQ='';
+  function aiShow(){
+    aiQ='';var box=$('#aiBody');box.innerHTML='';
+    var note=kbEl('p','sub','Findings from the Slaughter-Sec team are published here and marked as ours. Until our first write-up, this feed tracks notable public AI security research and incidents. Each item links to its source.');
+    note.style.maxWidth='74ch';box.appendChild(note);
+    var q=document.createElement('input');q.type='search';q.placeholder='Search AI security research';q.setAttribute('aria-label','Search AI security research');
+    q.style.cssText='width:100%;box-sizing:border-box;padding:10px 12px;margin:0 0 16px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;font:inherit';
+    q.oninput=function(){aiQ=q.value;aiRender(list)};
+    box.appendChild(q);var list=kbEl('div','');box.appendChild(list);aiRender(list);
   }
-  $('#ptGo').addEventListener('click',ptRun);
-
-  var RA=[
-    {n:'Prompt injection',d:'Hidden instructions',t:'Instructions hidden in emails, web pages and documents that an AI assistant reads, which make it act against its owner.',c:['Does the assistant follow instructions found inside a document?','Can a hidden instruction make it reveal how it is set up?','Does it ask a person before doing anything risky after reading outside content?']},
-    {n:'Data leakage',d:'Private data getting out',t:'How models and connected tools can reveal information they were never meant to share.',c:['Can it be coaxed into repeating private data from earlier chats?','Does it share information with people who should not see it?','Are secrets such as keys kept out of what it can read?']},
-    {n:'Agent permissions',d:'What an agent can do',t:'What happens when an AI agent can send email, run code or touch files, and how to limit the damage.',c:['Which tools can the agent use, and is each one needed?','Can it send, delete or spend without a person approving?','What is the worst it can do with the access it has?']},
-    {n:'Supply chain',d:'Models and plug-ins',t:'Risks in the models, plug-ins and datasets a business pulls in from outside.',c:['Where did each model, plug-in and dataset come from?','Are third-party tools pinned and reviewed?','What happens if one of them is changed later?']}
-  ],raSel=0;
-  function raShow(i){
-    if(i!==undefined)raSel=i;var a=RA[raSel];
-    menu('#raMenu',RA,raSel,raShow);
-    $('#raSub').textContent=a.n;$('#raText').textContent=a.t;
-    var box=$('#raChecks');box.innerHTML='';
-    a.c.forEach(function(x){var d=document.createElement('div');d.className='chk';d.textContent=x;box.appendChild(d)});
+  function aiRender(list){
+    list.innerHTML='';var qq=aiQ.trim().toLowerCase(),found=0;
+    $('#aiSub').textContent=qq?'Search results':'Updated '+AI_UPDATED+'. Newest first.';
+    AINEWS.forEach(function(n){if(!qq||(n.t+' '+n.x+' '+n.tag).toLowerCase().indexOf(qq)>-1){kbNews(n,list);found++}});
+    if(!found)list.appendChild(kbEl('p','sub','Nothing matched. Try a shorter word.'));
   }
   var SL=[
    {n:'Overview',d:'The four-stage method',k:'SLTR is the methodology Slaughter-Sec built to run security work. It has four stages: Study, Stalk, Strategize, Strike. Our AI agents follow it on every engagement, and our team signs off between stages.',
@@ -1223,8 +1137,6 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     cur=v;plrN(u);startSim(u);stopTimers();
     if(v==='home'){gsize();if(!reduce)raf=requestAnimationFrame(frame);startCve()}
     if(v==='threats'){loadThreats();thrT=setInterval(loadThreats,THREAT_FEED.url?THREAT_FEED.every:2400)}
-    if(v==='demo'){document.querySelectorAll('[data-a]').forEach(function(x){x.disabled=false});$('#dout').textContent='Pick an attack above to start.'}
-    if(v==='aisec'){ptShow();raShow();aiMode(aiM)}
     if(v==='sltr')slShow();
     if(v==='settings')renderSettings(u,em);
   }
