@@ -1,11 +1,12 @@
 
+
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="en" data-palette="amber">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Slaughter-Sec — security posture and AI security research</title>
+<title>Slaughter-Sec — daily threat analysis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -137,6 +138,21 @@ blockquote{margin:0}
 blockquote p{font:700 clamp(1.3rem,3.2vw,1.9rem)/1.35 "JetBrains Mono",ui-monospace,monospace;margin:0 0 8px}
 .qby{color:var(--dim);font-size:.85rem;margin:0 0 14px}
 .sample{margin:0;font:inherit;font-size:.8rem;line-height:1.8;white-space:pre;overflow-x:auto;border:1px solid var(--line);padding:14px 16px;background:var(--bg)}
+.report{border:1px solid var(--line);background:var(--win);padding:34px 38px;max-width:860px}
+.report .rh{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
+.report .rk{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin:0 0 8px}
+.report h3{font-size:1.45rem;margin:0 0 10px;line-height:1.25}
+.report h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin:26px 0 10px;font-weight:700}
+.report p{margin:0 0 12px;line-height:1.75}
+.report .meta{font-size:.82rem;color:var(--dim);margin:0}
+.report .f{border-left:3px solid var(--line);padding:2px 0 2px 16px;margin:0 0 18px}
+.report .f b{color:var(--fg)}
+.report .f.crit{border-left-color:var(--err)}
+.report .f.med{border-left-color:var(--acc)}
+.report .sev{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-right:8px}
+.report .sev.crit{color:var(--err)}.report .sev.med{color:var(--acc)}
+.report .note{font-size:.8rem;color:var(--dim);border-top:1px dashed var(--line);padding-top:12px;margin:22px 0 0}
+@media (max-width:760px){.report{padding:22px 18px}}
 .status{display:inline-block;border:1px dashed var(--acc);color:var(--acc);padding:4px 10px;font-size:.82rem;margin:0 0 20px}
 .sfoot{max-width:960px;margin:0 auto;padding-top:22px;border-top:1px solid var(--line);color:var(--dim);font-size:.82rem;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 .sfoot a{color:var(--dim)}
@@ -204,7 +220,6 @@ textarea{resize:vertical}
     <a href="#/home" data-v="home"><span>Globe</span></a>
     <a href="#/threats" data-v="threats"><span>Threat map</span></a>
     <a href="#/sltr" data-v="sltr"><span>SLTR framework</span></a>
-    <a href="#/pentesting" data-v="pentesting"><span>Pen testing</span></a>
     <a href="#/settings" data-v="settings"><span>Settings</span></a>
   </div>
   <div class="plr"><div><b id="plrName">Player</b><small>online</small></div><button class="btn" id="out" type="button">exit</button></div>
@@ -213,7 +228,6 @@ textarea{resize:vertical}
 <nav class="pubnav" id="pubnav" aria-label="Main">
   <a class="brand" href="#/">slaughter-sec</a>
   <div class="tabs">
-    <a href="#/platform" data-v="platform">platform</a>
     <a href="#/research" data-v="research">ai research</a>
     <a href="#/kb" data-v="kb">tta</a>
     <a href="#/about" data-v="about">about</a>
@@ -228,12 +242,12 @@ textarea{resize:vertical}
     <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~</span></div>
     <div class="body">
       <p class="cmd"><b>$</b> slaughter-sec --status</p>
-      <h1 id="q" tabindex="-1" data-t="See your security the way an attacker does.">See your security the way an attacker does.</h1>
-      <p class="lead">Slaughter-Sec is building software that shows a business where it is exposed and what to fix first. We also run AI-driven penetration tests that are faster and more accurate than traditional ones, without interrupting your business.</p>
+      <h1 id="q" tabindex="-1" data-t="Know what attackers are doing before they reach you.">Know what attackers are doing before they reach you.</h1>
+      <p class="lead">Slaughter-Sec tracks real attacker activity and turns it into daily threat analysis that your team can read in minutes and act on. We combine public threat intelligence with our own collection, and our analysts check every item before it is published.</p>
       <div class="row">
-        <a class="btn fill" href="#/register">Register</a>
+        <a class="btn fill" href="#/kb">Read today&rsquo;s analysis</a>
+        <a class="btn" href="#/register">Register</a>
         <a class="btn" href="#/login">Log in</a>
-        <a class="btn" href="#/platform">See the platform</a>
       </div>
     </div>
   </div>
@@ -241,23 +255,23 @@ textarea{resize:vertical}
   <div class="blk" id="mission">
     <h2>Our mission</h2>
     <div class="win" style="margin-bottom:16px"><div class="body">
-      <p style="font-size:1.25rem;line-height:1.45;margin:0 0 14px;color:var(--fg)">We want to be the best in security: the most effective and the most accurate in the industry.</p>
-      <p class="sub" style="max-width:74ch;margin:0">Speed gets attention, but accuracy is what protects you. A fast answer that is wrong costs more than a slower one that is right: false alarms burn your team&rsquo;s time, and a missed weakness is how breaches happen. So we build for accuracy first and make it fast second. Everything we make, test and report is held to that standard.</p>
+      <p style="font-size:1.25rem;line-height:1.45;margin:0 0 14px;color:var(--fg)">We want to be the best at threat analysis: the most accurate and the most useful in the industry.</p>
+      <p class="sub" style="max-width:74ch;margin:0">Speed gets attention, but accuracy is what makes analysis worth reading. A fast report that is wrong sends your team after the wrong problem, and one that misses a real threat leaves you exposed. So we build for accuracy first and make it fast second. Everything we collect, analyze and publish is held to that standard.</p>
     </div></div>
     <div class="g3">
-      <div class="win card"><div class="body"><h3>Accuracy before speed</h3><p>We will take longer to get it right before we rush a result out. Fast is welcome only when it is also correct.</p></div></div>
-      <div class="win card"><div class="body"><h3>Every finding verified</h3><p>Each result is checked against evidence, then reviewed and analyzed by our team before it reaches you. If we cannot prove it, we do not report it as fact.</p></div></div>
-      <div class="win card"><div class="body"><h3>Always improving</h3><p>Our research, threat intelligence pipeline and AI agents are measured against real outcomes and sharpened continuously, so next quarter&rsquo;s work is better than this quarter&rsquo;s.</p></div></div>
+      <div class="win card"><div class="body"><h3>Accuracy before speed</h3><p>We would rather publish an hour later than publish something wrong. Fast is welcome only when it is also correct.</p></div></div>
+      <div class="win card"><div class="body"><h3>Every item sourced</h3><p>Each item links to where it came from and is checked by an analyst before it is published. If we cannot support a claim, we do not state it as fact.</p></div></div>
+      <div class="win card"><div class="body"><h3>Always improving</h3><p>Our collection, threat intelligence pipeline and AI agents are measured against what actually happens and sharpened continuously, so next quarter&rsquo;s analysis is better than this quarter&rsquo;s.</p></div></div>
     </div>
   </div>
 
   <div class="blk">
     <h2>What we do</h2>
     <div class="g2">
-      <div class="win card"><div class="body"><h3>Posture platform</h3><p>One screen that shows your real exposure: open services, unpatched software and risky accounts, and how an attacker could chain them together.</p></div></div>
-      <div class="win card"><div class="body"><h3>Penetration testing</h3><p>Our own AI agents carry out the initial test, and our team works alongside them, guiding the work and checking it as it goes. Nothing reaches you raw. Every result is reviewed by hand, written up clearly for your convenience, and briefed to you once we finish. You get the speed of the agents and the judgment of people, and your business keeps running while we test.</p></div></div>
-      <div class="win card"><div class="body"><h3>AI security research</h3><p>Standard security research, with a heavy focus on AI and what it changes: how AI systems can be attacked, how attackers are starting to use AI, and what both mean for a business like yours. We turn what we learn into checks you can run and plain-English guidance your team can act on.</p></div></div>
-      <div class="win card"><div class="body"><h3>People review everything</h3><p>We do not rely on AI alone. We use it for what it does well, like speed and scale, and our team reviews and analyzes every finding before it reaches you. You get a ranked plan from people who stand behind it, not a long list of automated alerts.</p></div></div>
+      <div class="win card"><div class="body"><h3>Daily threat analysis</h3><p>Every day we publish what attackers are doing: newly exploited vulnerabilities, active campaigns, major breaches and new techniques. Each item says what it means and what to do about it. <a href="#/kb" style="color:var(--acc)">Read today&rsquo;s analysis</a></p></div></div>
+      <div class="win card"><div class="body"><h3>A heavy focus on AI</h3><p>We pay close attention to how AI systems and agents are being attacked, and how attackers are starting to use AI themselves. We track the incidents and the research, and explain what they mean for a business like yours. <a href="#/research" style="color:var(--acc)">See our AI research</a></p></div></div>
+      <div class="win card"><div class="body"><h3>Real attacker data</h3><p>We combine public intelligence sources with our own collection of attacker activity, so our analysis starts from current data instead of last quarter&rsquo;s reports.</p></div></div>
+      <div class="win card"><div class="body"><h3>People review everything</h3><p>We do not rely on AI alone. We use it for what it does well, like sorting and summarizing at scale, and our team reviews and checks every item before it is published. You get analysis from people who stand behind it, not an automated feed.</p></div></div>
     </div>
   </div>
 
@@ -265,76 +279,25 @@ textarea{resize:vertical}
     <h2>How it works</h2>
     <p class="sub" style="max-width:68ch">Two systems we built do the heavy lifting. Our team directs them and checks their work.</p>
     <div class="g2" style="margin-bottom:16px">
-      <div class="win card"><div class="body"><h3>Automated CTI pipeline</h3><p>CTI is cyber threat intelligence. Our pipeline collects and sorts new threat information around the clock, including newly published vulnerabilities, attacker techniques and fresh threat reports, so our research starts from current data instead of last quarter&rsquo;s. Analysts use it to spot what matters for your business, and it feeds our research and our AI agents.</p></div></div>
-      <div class="win card"><div class="body"><h3>Our own AI agents</h3><p>We build and run our own AI agents. They handle the first pass of testing and research: mapping what is exposed, trying attack paths and gathering evidence. Each agent works within limits you approve, and its output goes to our team, not straight to you.</p></div></div>
+      <div class="win card"><div class="body"><h3>Automated CTI pipeline</h3><p>CTI is cyber threat intelligence. Our pipeline collects and sorts new threat information around the clock, including newly published vulnerabilities, attacker techniques and fresh threat reports, so our research starts from current data instead of last quarter&rsquo;s. Analysts use it to spot what matters, and it feeds our research and our AI agents.</p></div></div>
+      <div class="win card"><div class="body"><h3>Our own AI agents</h3><p>We build and run our own AI agents. They handle the first pass of research: collecting reports, sorting what is new, spotting patterns across sources and drafting summaries. Each agent works within limits we set, and its output goes to our team, not straight to you.</p></div></div>
     </div>
     <div class="win"><div class="body">
-      <div class="step"><b>1</b><div><h3>Connect</h3><p>Point the platform at your network, cloud accounts and the AI tools your team uses, and tell us what is in scope.</p></div></div>
-      <div class="step"><b>2</b><div><h3>Map and test</h3><p>Our pipeline and agents map what is exposed and test how it could be used, scored against known vulnerabilities and current threat activity.</p></div></div>
-      <div class="step"><b>3</b><div><h3>Review and brief</h3><p>Our team reviews every finding by hand, writes it up in plain language, ranks the fixes and briefs you once the work is finished.</p></div></div>
+      <div class="step"><b>1</b><div><h3>Collect</h3><p>Our pipeline gathers new vulnerabilities, attacker techniques, incidents and reports from public sources and our own collection, around the clock.</p></div></div>
+      <div class="step"><b>2</b><div><h3>Analyze</h3><p>Our agents sort and connect what is new, and our analysts judge what matters, how likely it is to affect you and what to do about it.</p></div></div>
+      <div class="step"><b>3</b><div><h3>Review and publish</h3><p>Our team checks every item against its source, writes it in plain language and publishes it in TTA.</p></div></div>
     </div></div>
   </div>
 
   <div class="blk">
     <div class="win"><div class="body">
       <blockquote><p>Plans are nothing, planning is everything.</p><p class="qby">Dwight D. Eisenhower</p></blockquote>
-      <p class="sub" style="margin:0 0 18px">A security plan goes stale the day you write it. The habit that protects you is checking your posture again and again, and the platform is built to make that routine.</p>
+      <p class="sub" style="margin:0 0 18px">A security plan goes stale the day you write it. The habit that protects you is staying current on what attackers are doing, and daily analysis is built to make that routine.</p>
       <a class="btn fill" href="#/contact">Talk to us</a>
     </div></div>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
-</section>
-
-<section class="view site" data-view="platform" aria-labelledby="pf">
- <div class="wrap">
-  <h1 class="ph" id="pf" tabindex="-1">The platform</h1>
-  <p class="sub">Software that turns scattered security data into one clear picture.</p>
-  <p class="status">Status: in development. Early access is open.</p>
-  <div class="g2 blk">
-    <div class="win card"><div class="body"><h3>Posture score</h3><p>One score with the reasons behind it, so you can see whether you are getting safer.</p></div></div>
-    <div class="win card"><div class="body"><h3>Attack paths</h3><p>See how a weak password, an open port and an old server could combine into a real breach.</p></div></div>
-    <div class="win card"><div class="body"><h3>Vulnerability exposure</h3><p>Matches what you run against known CVEs and highlights the ones attackers are using right now.</p></div></div>
-    <div class="win card"><div class="body"><h3>Penetration testing</h3><p>Run realistic attack tests on demand, without taking systems offline.</p></div></div>
-    <div class="win card"><div class="body"><h3>AI system review</h3><p>Checks the AI tools and agents your team uses for prompt injection, data leaks and permissions that are too broad.</p></div></div>
-    <div class="win card"><div class="body"><h3>Plain-language reports</h3><p>Every finding says what it is, why it matters and how to fix it.</p></div></div>
-    <div class="win card"><div class="body"><h3>Client portal</h3><p>Log in to see the live globe, the threat map and our SLTR framework.</p></div></div>
-  </div>
-  <div class="blk">
-    <h2>What a report looks like</h2>
-    <pre class="sample" aria-label="Sample posture report, illustrative data"><span class="t">$ slaughter-sec posture --sample</span>
-posture score         72 / 100
-exposed services      3     <span class="warn">2 need action</span>
-unpatched software    5     <span class="bad">1 critical: CVE-2021-44228</span>
-ai systems reviewed   2     <span class="warn">1 prompt-injection path found</span>
-next best fix         <span class="ok">patch Log4j on web-02</span>
-<span class="t">sample output, illustrative data only</span></pre>
-  </div>
-  <div class="row blk"><a class="btn fill" href="#/contact">Request early access</a><a class="btn" href="#/research">Read about our research</a></div>
- </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
-</section>
-
-<section class="view page" data-view="pentesting" aria-labelledby="pt2">
- <div class="win"><div class="body">
-  <h1 class="ph" id="pt2" tabindex="-1">Penetration testing</h1>
-  <p class="sub" style="max-width:64ch">A penetration test attacks your own systems, with your permission, to find the weaknesses a real attacker would use. Ours is run by AI and reviewed by experts, so it is faster and more accurate than a traditional test and does not interrupt your business.</p>
-  <div class="g3 blk" style="margin-top:28px">
-    <div class="win card"><div class="body"><h3>Faster</h3><p>AI works through many attack paths at once, so you get results sooner than from a test done by hand.</p></div></div>
-    <div class="win card"><div class="body"><h3>More accurate</h3><p>Findings are checked and reviewed by security experts, so you see fewer false alarms and fewer missed problems.</p></div></div>
-    <div class="win card"><div class="body"><h3>No disruption</h3><p>Tests are scoped and paced to rules you approve, so your systems and your staff keep working normally.</p></div></div>
-  </div>
-  <div class="blk">
-    <h2>How an engagement works</h2>
-    <div class="win"><div class="body">
-      <div class="step"><b>1</b><div><h3>Agree the rules</h3><p>You decide what we may test and when. We only test systems you own or have approved in writing.</p></div></div>
-      <div class="step"><b>2</b><div><h3>Test</h3><p>The AI probes your systems the way an attacker would, within the limits you set.</p></div></div>
-      <div class="step"><b>3</b><div><h3>Expert review</h3><p>Researchers confirm what is real, rank it by risk and write it up in plain language.</p></div></div>
-      <div class="step"><b>4</b><div><h3>Fix and retest</h3><p>You fix the issues, and we test again to confirm they are closed.</p></div></div>
-    </div></div>
-  </div>
-  <div class="row blk"><a class="btn fill" href="mailto:hello@slaughter-sec.com?subject=Penetration%20test%20request">Request a test</a></div>
- </div></div>
 </section>
 
 <section class="view site" data-view="research" aria-labelledby="rs">
@@ -360,18 +323,18 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
 <section class="view site" data-view="about" aria-labelledby="ab">
  <div class="wrap">
   <h1 class="ph" id="ab" tabindex="-1">About Slaughter-Sec</h1>
-  <p class="sub" style="max-width:68ch">Most businesses are told to buy more security tools. What they need is a clear view of where they stand. Slaughter-Sec builds software that gives that view and pairs it with research from experts who spend their time breaking AI systems, so you do not have to find out the hard way.</p>
+  <p class="sub" style="max-width:68ch">Most businesses are told to buy more security tools. What they need is a clear view of what attackers are doing and what it means for them. Slaughter-Sec publishes threat analysis that gives that view, from analysts who check every item, so you do not have to find out the hard way.</p>
   <div class="blk" style="margin-top:28px">
     <h2>How we work</h2>
     <div class="g3">
       <div class="win card"><div class="body"><h3>Plain language first</h3><p>If an owner cannot read a finding and know what to do, we wrote it badly.</p></div></div>
-      <div class="win card"><div class="body"><h3>Evidence over alarm</h3><p>We show how a weakness could be used and how likely that is, not a wall of red warnings.</p></div></div>
-      <div class="win card"><div class="body"><h3>Experts in the loop</h3><p>Software finds the problems. People decide what matters and what to fix first.</p></div></div>
+      <div class="win card"><div class="body"><h3>Evidence over alarm</h3><p>We show how a threat could affect you and how likely that is, not a wall of red warnings.</p></div></div>
+      <div class="win card"><div class="body"><h3>Experts in the loop</h3><p>Software finds the signals. People decide what matters and what to do about it.</p></div></div>
     </div>
   </div>
   <div class="blk">
     <h2>Our experts</h2>
-    <div class="win"><div class="body"><p class="sub" style="margin:0">Profiles of the researchers and engineers behind the platform will be added here. Want to know who you would work with? <a href="#/contact" style="color:var(--acc)">Ask us.</a></p></div></div>
+    <div class="win"><div class="body"><p class="sub" style="margin:0">Profiles of the analysts and engineers behind our work will be added here. Want to know who is behind it? <a href="#/contact" style="color:var(--acc)">Ask us.</a></p></div></div>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
@@ -387,7 +350,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
       <label for="ce">email</label><input id="ce" type="email" autocomplete="email">
       <label for="cc">company</label><input id="cc" type="text" autocomplete="organization">
       <label for="ci">most interested in</label>
-      <select id="ci"><option>The posture platform</option><option>Penetration testing</option><option>AI security research</option><option>Both</option><option>Not sure yet</option></select>
+      <select id="ci"><option>Daily threat analysis</option><option>AI security research</option><option>Both</option><option>Not sure yet</option></select>
       <label for="cm">message</label><textarea id="cm" rows="5"></textarea>
       <p class="err" role="alert" id="cerr"></p>
       <button class="btn fill" type="submit">send message</button>
@@ -531,7 +494,7 @@ next best fix         <span class="ok">patch Log4j on web-02</span>
     (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
   }
 
-  var APP=['home','threats','sltr','pentesting','settings'],PUB=['landing','platform','research','kb','about','contact'];
+  var APP=['home','threats','sltr','settings'],PUB=['landing','research','kb','about','contact'];
   function route(){
     var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
     var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
