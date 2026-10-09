@@ -311,7 +311,7 @@ textarea{resize:vertical}
     </div></div>
   </div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="research" aria-labelledby="rs">
@@ -331,7 +331,7 @@ textarea{resize:vertical}
   </div>
   <div class="row blk"><a class="btn fill" href="#/contact">Ask about my research</a></div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="about" aria-labelledby="ab">
@@ -359,29 +359,18 @@ textarea{resize:vertical}
         <circle cx="17.5" cy="44" r="3" fill="currentColor"/>
       </svg>
       <span class="lw">slaughter-sec</span>
-    </div><span><a href="#/contact">Request early access</a></span></footer>
+    </div><span><a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="contact" aria-labelledby="ct2">
  <div class="wrap">
-  <h1 class="ph" id="ct2" tabindex="-1">Request early access</h1>
-  <p class="sub">Tell me a little about your business and what threats you most want to keep up with.</p>
-  <div class="win form blk"><div class="body">
-    <form id="contactForm" novalidate>
-      <label for="cn">your name</label><input id="cn" type="text" autocomplete="name">
-      <label for="ce">email</label><input id="ce" type="email" autocomplete="email">
-      <label for="cc">company</label><input id="cc" type="text" autocomplete="organization">
-      <label for="ci">most interested in</label>
-      <select id="ci"><option>Daily threat analysis</option><option>AI security research</option><option>Malware analysis</option><option>All of it</option><option>Not sure yet</option></select>
-      <label for="cm">message</label><textarea id="cm" rows="5"></textarea>
-      <p class="err" role="alert" id="cerr"></p>
-      <button class="btn fill" type="submit">send message</button>
-    </form>
-    <p id="cmsg" role="status" hidden></p>
+  <h1 class="ph" id="ct2" tabindex="-1">Contact</h1>
+  <p class="sub" style="max-width:68ch">Questions, tips, corrections or a story I missed? Email me.</p>
+  <div class="win blk"><div class="body">
+    <p style="font-size:1.25rem;margin:0"><a href="mailto:contact@slaughter-sec.com" style="color:var(--acc)">contact@slaughter-sec.com</a></p>
   </div></div>
-  <p class="sub">Prefer to write directly? Email <a href="mailto:hello@slaughter-sec.com" style="color:var(--acc)">hello@slaughter-sec.com</a>.</p>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="malware" aria-labelledby="mw">
@@ -402,7 +391,7 @@ textarea{resize:vertical}
     <div id="mwBody"></div>
   </div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="kb" aria-labelledby="kbT">
@@ -411,7 +400,7 @@ textarea{resize:vertical}
   <p class="sub" id="kbSub" style="max-width:74ch"></p>
   <div id="kbBody" class="blk"></div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Request early access</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view" data-view="login" aria-labelledby="lt">
@@ -582,22 +571,6 @@ textarea{resize:vertical}
     var u=(get('users')||{})[em];
     if(!u||u.hash!==await hash(em,p))return err.textContent='email or password is incorrect.';
     set('session',em);err.textContent='';e.target.reset();location.hash='#/home';
-  });
-
-  $('#contactForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var n=$('#cn').value.trim(),em=$('#ce').value.trim(),co=$('#cc').value.trim(),err=$('#cerr'),msg=$('#cmsg');
-    if(!n)return err.textContent='enter your name.';
-    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
-    if(!$('#cm').value.trim())return err.textContent='write a short message.';
-    err.textContent='';
-    var body='Name: '+n+'\nEmail: '+em+'\nCompany: '+(co||'-')+'\nInterested in: '+$('#ci').value+'\n\n'+$('#cm').value.trim();
-    var href='mailto:hello@slaughter-sec.com?subject='+encodeURIComponent('Early access request from '+n)+'&body='+encodeURIComponent(body);
-    msg.hidden=false;msg.textContent='';
-    var a=document.createElement('a');a.href=href;a.textContent='open the email';
-    msg.appendChild(document.createTextNode('Your message is ready. Your email app should open. If it does not, '));
-    msg.appendChild(a);msg.appendChild(document.createTextNode(' or write to hello@slaughter-sec.com.'));
-    a.click();
   });
 
   $('#out').addEventListener('click',function(){del('session');location.hash='#/'});
