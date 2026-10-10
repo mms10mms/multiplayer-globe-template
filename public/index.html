@@ -441,7 +441,7 @@ textarea{resize:vertical}
     <div class="stage" id="stage">
       <canvas id="globe" aria-label="Spinning globe with a point for each live connection"></canvas>
       <div class="stat" id="lstat"><span class="k">Connected</span><b id="lcount">0</b></div>
-      <div class="demo" role="note"><b>demo</b>Simulated connections. This globe is not showing real users yet.</div>
+      <div class="demo" role="note"><b>live</b>People on the site right now, shown at an approximate location from their IP address. Names and IP addresses are not stored.</div>
     </div>
   </div>
   <div class="dock" aria-label="Random CVE">
@@ -916,12 +916,13 @@ textarea{resize:vertical}
 
   /* ---- THREAT FEED: plug your API in here ---- */
   var THREAT_FEED={
-    url:'',        // your API endpoint, e.g. 'https://example.com/v1/threats'
-    headers:{},    // e.g. {Authorization:'Bearer YOUR_KEY'}
-    every:5000,    // polling interval in ms
-    parse:function(raw){return raw} // must return [{lat,lon,type,label}] where type is scan, malware, ddos or phish
+    url:'https://slaughter-sec-api.mikemms497.workers.dev/honeypot/live',
+    headers:{},
+    every:3000,    // polling interval in ms
+    parse:function(raw){return(raw&&raw.events||[]).map(function(e){return{id:e.id,lat:e.lat,lon:e.lon,type:e.type,label:e.label||''}})}
   };
-  function drawMap(){
+  var seenId=0,rings=[],ringT0=0;
+  function drawMap(p){
     var c=$('#tmap');if(!c||!c.clientWidth)return;
     var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d');
     c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);
@@ -941,7 +942,16 @@ textarea{resize:vertical}
       x.beginPath();x.arc(X,Y,last?4:3,0,6.2832);x.fill();
       if(last){x.fillStyle=col.fg;x.fillText(t.type+' '+t.label,X+8,Y+4)}
     });
+    if(p!=null&&rings.length){rings.forEach(function(t){
+      var X=(t.lon+180)/360*w,Y=(85-t.lat)/145*h;
+      x.globalAlpha=Math.max(0,1-p);x.strokeStyle=tc[t.type]||col.acc;x.lineWidth=2;
+      x.beginPath();x.arc(X,Y,5+p*26,0,6.2832);x.stroke();
+    })}
     x.globalAlpha=1;
+  }
+  function pulse(){
+    ringT0=performance.now();
+    (function f(now){var p=(now-ringT0)/1600;if(cur!=='threats'){return}drawMap(Math.min(p,1));if(p<1)requestAnimationFrame(f)})(ringT0);
   }
   async function loadThreats(){
     if(!THREAT_FEED.url){
@@ -950,8 +960,13 @@ textarea{resize:vertical}
     }else{
       try{
         var r=await fetch(THREAT_FEED.url,{headers:THREAT_FEED.headers});
-        threats=THREAT_FEED.parse(await r.json());
-        $('#mstat').textContent='Live from '+THREAT_FEED.url;
+        var raw=await r.json();
+        threats=THREAT_FEED.parse(raw);
+        var fresh=threats.filter(function(t){return t.id>seenId});
+        if(threats.length)seenId=Math.max(seenId,threats[threats.length-1].id);
+        var n=raw&&raw.lastHour||0;
+        $('#mstat').textContent=threats.length?'Live: real attacks on my honeypot. '+n+' in the last hour.':'Live honeypot connected. Waiting for the next attack...';
+        if(fresh.length&&fresh.length<threats.length){rings=fresh;pulse()}
       }catch(e){$('#mstat').textContent='error: could not reach the threat API.'}
     }
     while(threats.length>40)threats.shift();
@@ -964,11 +979,20 @@ textarea{resize:vertical}
     function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';palPressed()}
   /* ---- LIVE CONNECTIONS: plug your API in here ---- */
   var PEER_FEED={
-    url:'',        // endpoint that lists who is connected right now
-    headers:{},    // e.g. {Authorization:'Bearer YOUR_KEY'}
-    every:5000,    // polling interval in ms
-    parse:function(raw){return raw} // must return [{id,lat,lon,label}]
+    url:'https://slaughter-sec-api.mikemms497.workers.dev/presence/live',
+    headers:{},
+    every:5000,
+    parse:function(raw){return(raw&&raw.users||[]).map(function(u){return{id:u.id,lat:u.lat,lon:u.lon,label:u.label}})}
   };
+  /* tell the API this page is open (about every 30 s) so the globe can show it. Skipped if the browser sends Do Not Track or Global Privacy Control. */
+  (function(){
+    var dnt=navigator.doNotTrack==='1'||window.doNotTrack==='1'||navigator.globalPrivacyControl===true;
+    if(dnt||!PEER_FEED.url)return;
+    var base=PEER_FEED.url.replace(/\/presence\/live$/,'');
+    function ping(){if(document.visibilityState==='hidden')return;try{fetch(base+'/presence/ping',{method:'POST',keepalive:true}).catch(function(){})}catch(e){}}
+    ping();setInterval(ping,30000);
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')ping()});
+  })();
   function updCount(){
     var n=peers.filter(function(p){return !p.me}).length+(me&&me.v?1:0);
     $('#lcount').textContent=n;
@@ -995,7 +1019,7 @@ textarea{resize:vertical}
   }
   function startSim(u){
     if(tmr)return;
-    peers=[];setMe(u.name);
+    peers=[];if(!PEER_FEED.url)setMe(u.name);
     if(PEER_FEED.url){pollPeers();tmr=setInterval(pollPeers,PEER_FEED.every)}
     else{for(var k=0;k<8;k++)mk(true);tmr=setInterval(tick,2400)}
     updCount();
