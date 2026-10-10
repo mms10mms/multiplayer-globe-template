@@ -621,7 +621,14 @@ textarea{resize:vertical}
    [-180,-90,-180,-78.5,-160,-78,-150,-76.5,-130,-74.5,-112,-74.5,-100,-72.5,-90,-73.5,-80,-73,-72,-71,-68,-67,-63,-65,-58,-63.5,-60,-65,-62,-69,-61,-74,-65,-77.5,-58,-80,-45,-78,-35,-79,-25,-77,-12,-72,0,-70,20,-70,40,-68,60,-67.5,70,-69.5,75,-69,85,-66.5,100,-66.5,115,-66,130,-66,145,-67.5,160,-70.5,170,-72,165,-77,175,-78.5,180,-78.5,180,-90]
   ],LAKES=[[47,45,50,46.5,53,45,53,42,54,40,53,37,50,37,49,40,47.5,42.5]];
   function dens(f){var o=[],n=f.length/2,i,k,s,x0,y0,x1,y1;for(i=0;i<n;i++){x0=f[2*i];y0=f[2*i+1];x1=f[2*((i+1)%n)];y1=f[2*((i+1)%n)+1];s=Math.max(1,Math.ceil(Math.max(Math.abs(x1-x0),Math.abs(y1-y0))/3));for(k=0;k<s;k++)o.push([y0+(y1-y0)*k/s,x0+(x1-x0)*k/s])}return o}
-  function prep(a){return a.map(function(f){var d=dens(f);return {ll:d,v:d.map(function(p){return vec(p[0],p[1])})}})}
+  function prep(a){return a.map(function(f){
+    var d=dens(f),v=d.map(function(p){return vec(p[0],p[1])}),i,k,cx=0,cy=0,cz=0,e,rho=0,dt;
+    for(i=0;i<v.length;i++){cx+=v[i][0];cy+=v[i][1];cz+=v[i][2]}
+    e=Math.sqrt(cx*cx+cy*cy+cz*cz);
+    if(e<1e-6){cx=0;cy=0;cz=1;rho=4}else{cx/=e;cy/=e;cz/=e;for(i=0;i<v.length;i++){dt=cx*v[i][0]+cy*v[i][1]+cz*v[i][2];k=Math.acos(Math.max(-1,Math.min(1,dt)));if(k>rho)rho=k}}
+    return {ll:d,v:v,c:[cx,cy,cz],s:rho>=1.5708?1:Math.sin(rho)};
+  })}
+  function vis(q){pr(q.c[0],q.c[1],q.c[2]);return pz>-q.s}
   var CITIES=[['New York',40.7,-74],['London',51.5,-0.1],['Tokyo',35.7,139.7],['Sydney',-33.9,151.2],['Sao Paulo',-23.5,-46.6],['Lagos',6.5,3.4],['Mumbai',19.1,72.9],['Berlin',52.5,13.4],['Singapore',1.35,103.8],['Toronto',43.7,-79.4],['Dubai',25.2,55.3],['Seoul',37.6,127],['Mexico City',19.4,-99.1],['Cape Town',-33.9,18.4],['Moscow',55.8,37.6],['Los Angeles',34,-118.2],['Nairobi',-1.3,36.8],['Jakarta',-6.2,106.8],['Paris',48.9,2.4],['Chicago',41.9,-87.6],['Buenos Aires',-34.6,-58.4],['Cairo',30,31.2]];
   var TZ={'America/New_York':[40.7,-74],'America/Chicago':[41.9,-87.6],'America/Denver':[39.7,-105],'America/Los_Angeles':[34,-118.2],'America/Toronto':[43.7,-79.4],'America/Sao_Paulo':[-23.5,-46.6],'Europe/London':[51.5,-0.1],'Europe/Paris':[48.9,2.4],'Europe/Berlin':[52.5,13.4],'Asia/Tokyo':[35.7,139.7],'Asia/Kolkata':[19.1,72.9],'Australia/Sydney':[-33.9,151.2]};
   var WORDS=['ghost','null','cipher','vector','daemon','kernel','root','byte','proxy','shell'];
@@ -641,6 +648,7 @@ textarea{resize:vertical}
   }
   DOTS=mkDots(LAND);
   /* Upgrade to real world coastlines when the data library loads; the hand-drawn set above is the fallback. */
+  var EPS2=.08*.08,geoName='built-in';
   function upgradeGeo(name){
     var gj=window['am4geodata_world'+name];if(!gj||!gj.features)return false;
     var out=[];
@@ -650,13 +658,14 @@ textarea{resize:vertical}
       polys.forEach(function(pg){
         var r=pg[0];if(!r||r.length<4)return;
         var flat=[],pl=r[0][0];
-        r.forEach(function(c){var x=c[0];while(x-pl>180)x-=360;while(x-pl<-180)x+=360;pl=x;flat.push(x,c[1])});
+        var lx=1e9,ly=1e9,n=r.length;
+        r.forEach(function(c,ci){var x=c[0];while(x-pl>180)x-=360;while(x-pl<-180)x+=360;pl=x;var dx=x-lx,dy=c[1]-ly;if(ci===0||ci===n-1||dx*dx+dy*dy>EPS2){flat.push(x,c[1]);lx=x;ly=c[1]}});
         out.push(flat);
       });
     });
     if(out.length<50)return false;
     out.push(LAND[LAND.length-1]);
-    LAND=out;SH=prep(LAND);DOTS=mkDots(LAND);geoReal=true;
+    LAND=out;SH=prep(LAND);DOTS=mkDots(LAND);geoReal=true;geoName=name;
     redraw();if(cur==='threats')drawMap();
     return true;
   }
@@ -671,7 +680,7 @@ textarea{resize:vertical}
     document.head.appendChild(gs);
   }
   var geoStarted=false;
-  function ensureGeo(){if(geoStarted)return;geoStarted=true;try{loadGeo(['Medium','Low'])}catch(e){}}
+  function ensureGeo(){if(geoStarted)return;geoStarted=true;try{var big=window.innerWidth>=900&&!(navigator.connection&&navigator.connection.saveData);loadGeo(big?['High','Medium','Low']:['Medium','Low'])}catch(e){}}
   function cols(){var s=getComputedStyle(document.documentElement);['bg','win','fg','acc','rain','dim','line'].forEach(function(k){col[k]=s.getPropertyValue('--'+k).trim()})}
   function pr(x,y,z){var z1=z*cA-x*sA;px=x*cA+z*sA;py=y*cT-z1*sT;pz=y*sT+z1*cT}
   function gpath(poly){
@@ -719,14 +728,13 @@ textarea{resize:vertical}
     gr.addColorStop(0,col.win);gr.addColorStop(.7,col.bg);gr.addColorStop(1,'#000');
     g.globalAlpha=1;g.fillStyle=gr;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.fill();
     g.globalAlpha=.14;g.strokeStyle=col.acc;g.lineWidth=1;grat();
-    /* land body */
-    g.beginPath();for(i=0;i<SH.length;i++)gpath(SH[i]);
+    /* land body (one path, reused for fill and outline; polygons fully behind the globe are skipped) */
+    g.beginPath();for(i=0;i<SH.length;i++)if(vis(SH[i]))gpath(SH[i]);
     g.globalAlpha=.16;g.fillStyle=col.rain;g.fill();
     /* land dot texture, brighter toward the centre */
     var d=Math.max(1.1,R*.0036);g.fillStyle=col.rain;
     for(i=0;i<DOTS.length;i++){pr(DOTS[i][0],DOTS[i][1],DOTS[i][2]);if(pz>.04){g.globalAlpha=.12+.6*pz;g.fillRect(cx0+px*R-d/2,cy0-py*R-d/2,d,d)}}
     /* coastline: soft halo, then crisp line */
-    g.beginPath();for(i=0;i<SH.length;i++)gpath(SH[i]);
     g.lineJoin='round';g.strokeStyle=col.rain;g.lineWidth=3.2;g.globalAlpha=.12;g.stroke();
     g.lineWidth=1;g.globalAlpha=1;g.stroke();
     g.beginPath();for(i=0;i<LK.length;i++)gpath(LK[i]);
@@ -768,7 +776,7 @@ textarea{resize:vertical}
     var d=Math.min(window.devicePixelRatio||1,2);
     gw=gc.clientWidth;gh=gc.clientHeight;if(!gw||!gh)return;
     gc.width=gw*d;gc.height=gh*d;g.setTransform(d,0,0,d,0,0);
-    R=Math.min(gw,gh)*(gw<700?.4:.38);cx0=gw/2;cy0=gh/2;redraw();
+    R=Math.min(gw,gh)*(gw<700?.4:.43);cx0=gw/2;cy0=gh/2;redraw();
   }
   window.addEventListener('resize',gsize);
   if(window.ResizeObserver)new ResizeObserver(function(){gsize()}).observe($('#stage'));
@@ -1007,7 +1015,7 @@ textarea{resize:vertical}
   function updCount(){
     var n=peers.filter(function(p){return !p.me}).length+(me&&me.v?1:0);
     $('#lcount').textContent=n;
-    $('#lstat').title=PEER_FEED.url?'live connections':'demo data';
+    $('#lstat').title=(PEER_FEED.url?'live connections':'demo data')+' - map: '+geoName;
   }
   function tick(){
     var idx=[];peers.forEach(function(p,i){if(!p.me)idx.push(i)});
