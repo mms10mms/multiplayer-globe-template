@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" data-palette="amber">
 <head>
@@ -720,9 +719,6 @@ textarea{resize:vertical}
     g.clearRect(0,0,gw,gh);
     var i,j,p,X,Y,a,gr;
     /* atmosphere glow */
-    gr=g.createRadialGradient(cx0,cy0,R*.96,cx0,cy0,R*1.18);
-    gr.addColorStop(0,col.acc);gr.addColorStop(1,'rgba(0,0,0,0)');
-    g.globalAlpha=.22;g.fillStyle=gr;g.beginPath();g.arc(cx0,cy0,R*1.18,0,6.2832);g.fill();
     /* ocean with lit upper-left and dark limb */
     gr=g.createRadialGradient(cx0-R*.4,cy0-R*.4,R*.05,cx0,cy0,R);
     gr.addColorStop(0,col.win);gr.addColorStop(.7,col.bg);gr.addColorStop(1,'#000');
@@ -740,7 +736,7 @@ textarea{resize:vertical}
     g.beginPath();for(i=0;i<LK.length;i++)gpath(LK[i]);
     g.globalAlpha=1;g.fillStyle=col.bg;g.fill();g.globalAlpha=.6;g.stroke();
     /* rim */
-    g.globalAlpha=.7;g.strokeStyle=col.acc;g.lineWidth=1.2;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.stroke();
+    g.globalAlpha=.9;g.strokeStyle=col.line;g.lineWidth=1.2;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.stroke();
     /* specular highlight */
     gr=g.createRadialGradient(cx0-R*.45,cy0-R*.5,0,cx0-R*.45,cy0-R*.5,R*.7);
     gr.addColorStop(0,'rgba(255,255,255,.10)');gr.addColorStop(1,'rgba(255,255,255,0)');
