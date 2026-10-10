@@ -464,7 +464,6 @@ textarea{resize:vertical}
   <div class="stage tstage">
     <canvas id="tmap" aria-label="World map of threat activity"></canvas>
     <div class="stat tstat"><span class="k" id="mt" tabindex="-1">Live threat map</span><b id="tcount">0</b></div>
-    <div class="tleg" aria-label="Legend"><span><i style="background:var(--acc)"></i>scan</span><span><i style="background:#ff6b5e"></i>malware</span><span><i style="background:var(--fg)"></i>ddos</span><span><i style="background:var(--rain)"></i>phish</span></div>
     <div class="demo" role="note"><b>wip</b>Honeypot still in the works. Real attacks will appear here once it is connected. <span id="mstat"></span></div>
   </div>
 </section>
@@ -942,10 +941,11 @@ textarea{resize:vertical}
     parse:function(raw){return(raw&&raw.events||[]).map(function(e){return{id:e.id,lat:e.lat,lon:e.lon,type:e.type,label:e.label||''}})}
   };
   var seenId=0,rings=[],ringT0=0;
+  var SHOW_POINTS=false; /* flip to true once the honeypot is live */
   var tLayer=null,tKey='';
   function drawMap(p){
     var c=$('#tmap');if(!c||!c.clientWidth)return;
-    var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d'),k=Math.min(w/360,h/145),mw=360*k,mh=145*k,ox=(w-mw)/2,oy=(h-mh)/2;
+    var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d'),k=Math.min(w/360,h/145)*1.0,mw=360*k,mh=145*k,ox=(w-mw)/2,oy=(h-mh)/2+h*.03;
     function MX(lo){return ox+(lo+180)*k}function MY(la){return oy+(85-la)*k}
     if(!col.bg)cols();
     c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);
@@ -954,33 +954,32 @@ textarea{resize:vertical}
     if(key!==tKey||!tLayer){
       tKey=key;tLayer=document.createElement('canvas');tLayer.width=w*d;tLayer.height=h*d;
       var y=tLayer.getContext('2d');y.setTransform(d,0,0,d,0,0);
-      var gr=y.createRadialGradient(w/2,h*.5,Math.min(w,h)*.15,w/2,h*.5,Math.max(w,h)*.75);
+      y.fillStyle=col.bg;y.fillRect(0,0,w,h);
+      var gr=y.createRadialGradient(w/2,h*.5,0,w/2,h*.5,Math.max(w,h)*.7);
       gr.addColorStop(0,col.win);gr.addColorStop(1,col.bg);y.fillStyle=gr;y.fillRect(0,0,w,h);
-      /* graticule */
-      y.strokeStyle=col.line;y.globalAlpha=.5;y.lineWidth=1;y.beginPath();
-      for(var gl=-60;gl<=60;gl+=30){y.moveTo(0,MY(gl));y.lineTo(w,MY(gl))}
-      for(var gn=-510;gn<=510;gn+=30){y.moveTo(MX(gn),oy);y.lineTo(MX(gn),oy+mh)}
-      y.stroke();
-      y.globalAlpha=.9;y.strokeStyle=col.line;y.setLineDash([2,5]);y.beginPath();y.moveTo(0,MY(0));y.lineTo(w,MY(0));y.stroke();y.setLineDash([]);
-      function fp(a){y.beginPath();[-mw,0,mw].forEach(function(o){a.forEach(function(po){po.ll.forEach(function(q,i){var X=MX(q[1])+o,Y=MY(q[0]);if(i)y.lineTo(X,Y);else y.moveTo(X,Y)});y.closePath()})})}
-      /* land: faint tint, then a dot matrix clipped to the land shape */
-      fp(SH);y.globalAlpha=.10;y.fillStyle=col.rain;y.fill();
-      y.save();fp(SH);y.clip();
-      var st=Math.max(5,Math.round(k*2.2)),r=Math.max(1,st*.2);
-      y.globalAlpha=.55;y.fillStyle=col.rain;
-      for(var yy=oy%st;yy<h;yy+=st){var row=Math.round((yy-oy)/st)&1;for(var xx=ox%st+(row?st/2:0);xx<w;xx+=st){y.fillRect(xx-r,yy-r,r*2,r*2)}}
-      y.restore();
-      /* coastline: soft halo then crisp line */
-      fp(SH);y.lineJoin='round';y.strokeStyle=col.rain;y.globalAlpha=.14;y.lineWidth=4;y.stroke();y.globalAlpha=.9;y.lineWidth=1;y.stroke();
-      fp(LK);y.globalAlpha=1;y.fillStyle=col.bg;y.fill();y.globalAlpha=.5;y.stroke();
+      /* fine grid every 10 degrees, stronger every 30 */
+      y.lineWidth=1;
+      for(var pass=0;pass<2;pass++){
+        y.strokeStyle=col.fg;y.globalAlpha=pass?.16:.06;y.beginPath();
+        var stp=pass?30:10,la0=Math.ceil(-60/stp)*stp;
+        for(var gl=-90;gl<=90;gl+=stp){y.moveTo(0,MY(gl));y.lineTo(w,MY(gl))}
+        for(var gn=-540;gn<=540;gn+=stp){y.moveTo(MX(gn),0);y.lineTo(MX(gn),h)}
+        y.stroke();
+      }
+      function fp(a){y.beginPath();[-mw,0,mw].forEach(function(o){a.forEach(function(po){if(po.ll.every(function(q){return q[0]<-58}))return;po.ll.forEach(function(q,i){var X=MX(q[1])+o,Y=MY(q[0]);if(i)y.lineTo(X,Y);else y.moveTo(X,Y)});y.closePath()})})}
+      /* land: flat dark slab with a thin lit edge, like a SOC wall map */
+      fp(SH);y.globalAlpha=1;y.fillStyle=col.bar;y.fill();
+      fp(SH);y.globalAlpha=.16;y.fillStyle=col.fg;y.fill();
+      y.lineJoin='round';y.strokeStyle=col.fg;y.globalAlpha=.75;y.lineWidth=1;y.stroke();
+      fp(LK);y.globalAlpha=1;y.fillStyle=col.bg;y.fill();y.globalAlpha=.45;y.stroke();
       /* vignette */
       var vg=y.createRadialGradient(w/2,h/2,Math.min(w,h)*.55,w/2,h/2,Math.max(w,h)*.8);
-      vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.45)');y.globalAlpha=1;y.fillStyle=vg;y.fillRect(0,0,w,h);
+      vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.5)');y.globalAlpha=1;y.fillStyle=vg;y.fillRect(0,0,w,h);
     }
     x.drawImage(tLayer,0,0,w,h);
     var tc={scan:col.acc,malware:'#ff6b5e',ddos:col.fg,phish:col.rain};
     x.font='13px "JetBrains Mono",ui-monospace,monospace';
-    threats.forEach(function(t,i){
+    if(SHOW_POINTS)threats.forEach(function(t,i){
       var X=MX(t.lon),Y=MY(t.lat),last=i>=threats.length-(w<700?2:5),cl=tc[t.type]||col.acc;
       x.globalAlpha=last?.28:.14;x.fillStyle=cl;x.beginPath();x.arc(X,Y,last?11:8,0,6.2832);x.fill();
       x.globalAlpha=last?1:.7;x.beginPath();x.arc(X,Y,last?4.5:3.2,0,6.2832);x.fill();
@@ -992,7 +991,7 @@ textarea{resize:vertical}
         x.globalAlpha=1;x.fillStyle=col.fg;x.fillText(tx,bx+7,Y+4);
       }
     });
-    if(p!=null&&rings.length){rings.forEach(function(t){
+    if(SHOW_POINTS&&p!=null&&rings.length){rings.forEach(function(t){
       var X=MX(t.lon),Y=MY(t.lat);
       for(var q=0;q<2;q++){var pp=Math.max(0,Math.min(1,p-q*.18));if(pp<=0)continue;
         x.globalAlpha=(1-pp)*.9;x.strokeStyle=tc[t.type]||col.acc;x.lineWidth=2;
