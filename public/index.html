@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-palette="amber">
 <head>
@@ -102,7 +103,9 @@ body.app .nav{display:flex}
 @media (max-width:860px){.dk{grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:10px 14px}.dock h2{font-size:1rem;white-space:nowrap}.meta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ctext{grid-column:1/-1;order:3;min-height:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
 .foot{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--dim)}
 .foot .btn{padding:6px 14px;font-size:.85rem}
-#tmap{width:100%;aspect-ratio:360/145;display:block}
+#tmap{position:absolute;inset:0;width:100%;height:100%;display:block}
+.view.globe[data-view=threats] .tstage{position:relative;flex:1 1 auto;min-height:0}
+.tstat .k{outline:0}
 .pl{border-left:3px solid var(--acc);padding:2px 0 2px 14px;margin:0 0 20px}
 .pl h3{margin:0 0 4px;font:700 1rem "JetBrains Mono",ui-monospace,monospace;color:var(--fg)}
 .pl p{margin:0;color:var(--dim);font-size:.88rem}
@@ -453,14 +456,11 @@ textarea{resize:vertical}
   </div>
 </section>
 
-<section class="view page" data-view="threats" aria-labelledby="mt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>threat-map --live</span></div>
-    <div class="body">
-      <h2 id="mt" tabindex="-1">Live threat map</h2>
-      <p class="sub" id="mstat">Demo: these points are simulated and do not show real attacks.</p>
-      <canvas id="tmap" aria-label="World map of threat activity"></canvas>
-    </div>
+<section class="view globe" data-view="threats" aria-labelledby="mt">
+  <div class="stage tstage">
+    <canvas id="tmap" aria-label="World map of threat activity"></canvas>
+    <div class="stat tstat"><span class="k" id="mt" tabindex="-1">Live threat map</span><b id="tcount">0</b></div>
+    <div class="demo" role="note"><b>wip</b>Honeypot still in the works. Real attacks will appear here once it is connected. <span id="mstat"></span></div>
   </div>
 </section>
 
@@ -939,28 +939,29 @@ textarea{resize:vertical}
   var seenId=0,rings=[],ringT0=0;
   function drawMap(p){
     var c=$('#tmap');if(!c||!c.clientWidth)return;
-    var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d');
+    var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d'),k=Math.min(w/360,h/145),mw=360*k,mh=145*k,ox=(w-mw)/2,oy=(h-mh)/2;
+    function MX(lo){return ox+(lo+180)*k}function MY(la){return oy+(85-la)*k}
     c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);
     if(!col.bg)cols();
     x.strokeStyle=col.line;x.globalAlpha=.25;x.lineWidth=1;x.beginPath();
-    for(var gl=-60;gl<=60;gl+=30){x.moveTo(0,(85-gl)/145*h);x.lineTo(w,(85-gl)/145*h)}
-    for(var gn=-150;gn<=150;gn+=30){x.moveTo((gn+180)/360*w,0);x.lineTo((gn+180)/360*w,h)}
+    for(var gl=-60;gl<=60;gl+=30){x.moveTo(0,MY(gl));x.lineTo(w,MY(gl))}
+    for(var gn=-510;gn<=510;gn+=30){x.moveTo(MX(gn),oy);x.lineTo(MX(gn),oy+mh)}
     x.stroke();
-    function fp(a){x.beginPath();[-w,0,w].forEach(function(o){a.forEach(function(po){po.ll.forEach(function(q,i){var X=(q[1]+180)/360*w+o,Y=(85-q[0])/145*h;if(i)x.lineTo(X,Y);else x.moveTo(X,Y)});x.closePath()})})}
+    function fp(a){x.beginPath();[-mw,0,mw].forEach(function(o){a.forEach(function(po){po.ll.forEach(function(q,i){var X=MX(q[1])+o,Y=MY(q[0]);if(i)x.lineTo(X,Y);else x.moveTo(X,Y)});x.closePath()})})}
     fp(SH);x.globalAlpha=.3;x.fillStyle=col.rain;x.fill();x.globalAlpha=.95;x.strokeStyle=col.rain;x.lineWidth=1;x.lineJoin='round';x.stroke();
     fp(LK);x.globalAlpha=1;x.fillStyle=col.win;x.fill();
     var tc={scan:col.acc,malware:'#ff6b5e',ddos:col.fg,phish:col.rain};
-    x.font='11px "JetBrains Mono",ui-monospace,monospace';
+    x.font='13px "JetBrains Mono",ui-monospace,monospace';
     threats.forEach(function(t,i){
-      var X=(t.lon+180)/360*w,Y=(85-t.lat)/145*h,last=i>=threats.length-5;
+      var X=MX(t.lon),Y=MY(t.lat),last=i>=threats.length-5;
       x.globalAlpha=last?1:.55;x.fillStyle=tc[t.type]||col.acc;
-      x.beginPath();x.arc(X,Y,last?4:3,0,6.2832);x.fill();
+      x.beginPath();x.arc(X,Y,last?6:4.5,0,6.2832);x.fill();
       if(last){x.fillStyle=col.fg;x.fillText(t.type+' '+t.label,X+8,Y+4)}
     });
     if(p!=null&&rings.length){rings.forEach(function(t){
-      var X=(t.lon+180)/360*w,Y=(85-t.lat)/145*h;
+      var X=MX(t.lon),Y=MY(t.lat);
       x.globalAlpha=Math.max(0,1-p);x.strokeStyle=tc[t.type]||col.acc;x.lineWidth=2;
-      x.beginPath();x.arc(X,Y,5+p*26,0,6.2832);x.stroke();
+      x.beginPath();x.arc(X,Y,6+p*40,0,6.2832);x.stroke();
     })}
     x.globalAlpha=1;
   }
@@ -980,9 +981,9 @@ textarea{resize:vertical}
         var fresh=threats.filter(function(t){return t.id>seenId});
         if(threats.length)seenId=Math.max(seenId,threats[threats.length-1].id);
         var n=raw&&raw.lastHour||0;
-        $('#mstat').textContent=threats.length?'Live: real attacks on my honeypot. '+n+' in the last hour.':'Live honeypot connected. Waiting for the next attack...';
+        $('#mstat').textContent=threats.length?n+' attacks in the last hour.':'';$('#tcount').textContent=n||threats.length;
         if(fresh.length&&fresh.length<threats.length){rings=fresh;pulse()}
-      }catch(e){$('#mstat').textContent='error: could not reach the threat API.'}
+      }catch(e){$('#mstat').textContent=''}
     }
     while(threats.length>40)threats.shift();
     drawMap();
