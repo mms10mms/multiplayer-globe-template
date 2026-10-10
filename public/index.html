@@ -74,6 +74,7 @@ li button:hover{color:var(--err)}
 .view{position:relative;z-index:1}
 .view.globe{padding:0}
 body.app #rain{display:block;opacity:.3}
+body.tm #rain{display:none}
 body.app{--nav-h:calc(env(safe-area-inset-top,0px) + 52px)}
 .nav{display:none;position:fixed;top:0;left:0;right:0;z-index:5;align-items:center;gap:16px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;background:var(--bar);border-bottom:1px solid var(--line);font-size:.85rem}
 body.app .nav{display:flex}
@@ -106,6 +107,9 @@ body.app .nav{display:flex}
 #tmap{position:absolute;inset:0;width:100%;height:100%;display:block}
 .view.globe[data-view=threats] .tstage{position:relative;flex:1 1 auto;min-height:0}
 .tstat .k{outline:0}
+.tleg{position:absolute;left:20px;bottom:20px;z-index:2;display:flex;gap:16px;background:var(--win);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:.78rem;color:var(--dim)}
+.tleg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:baseline}
+@media (max-width:860px){.tleg{left:14px;bottom:14px;gap:10px;padding:6px 10px;font-size:.72rem}}
 .pl{border-left:3px solid var(--acc);padding:2px 0 2px 14px;margin:0 0 20px}
 .pl h3{margin:0 0 4px;font:700 1rem "JetBrains Mono",ui-monospace,monospace;color:var(--fg)}
 .pl p{margin:0;color:var(--dim);font-size:.88rem}
@@ -460,6 +464,7 @@ textarea{resize:vertical}
   <div class="stage tstage">
     <canvas id="tmap" aria-label="World map of threat activity"></canvas>
     <div class="stat tstat"><span class="k" id="mt" tabindex="-1">Live threat map</span><b id="tcount">0</b></div>
+    <div class="tleg" aria-label="Legend"><span><i style="background:var(--acc)"></i>scan</span><span><i style="background:#ff6b5e"></i>malware</span><span><i style="background:var(--fg)"></i>ddos</span><span><i style="background:var(--rain)"></i>phish</span></div>
     <div class="demo" role="note"><b>wip</b>Honeypot still in the works. Real attacks will appear here once it is connected. <span id="mstat"></span></div>
   </div>
 </section>
@@ -530,7 +535,7 @@ textarea{resize:vertical}
     if((v==='login'||v==='register')&&sess){location.hash='#/home';return}
     document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
     var pub=PUB.indexOf(v)>-1;
-    document.body.classList.toggle('app',app);document.body.classList.toggle('pub',pub);
+    document.body.classList.toggle('app',app);document.body.classList.toggle('pub',pub);document.body.classList.toggle('tm',v==='threats');
     document.querySelectorAll('#pubnav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     var pl=$('#pLogin'),pr2=$('#pReg');
     if(sess){pl.textContent='open app';pl.setAttribute('href','#/home');pr2.hidden=true}else{pl.textContent='log in';pl.setAttribute('href','#/login');pr2.hidden=false}
@@ -937,31 +942,61 @@ textarea{resize:vertical}
     parse:function(raw){return(raw&&raw.events||[]).map(function(e){return{id:e.id,lat:e.lat,lon:e.lon,type:e.type,label:e.label||''}})}
   };
   var seenId=0,rings=[],ringT0=0;
+  var tLayer=null,tKey='';
   function drawMap(p){
     var c=$('#tmap');if(!c||!c.clientWidth)return;
     var d=Math.min(window.devicePixelRatio||1,2),w=c.clientWidth,h=c.clientHeight,x=c.getContext('2d'),k=Math.min(w/360,h/145),mw=360*k,mh=145*k,ox=(w-mw)/2,oy=(h-mh)/2;
     function MX(lo){return ox+(lo+180)*k}function MY(la){return oy+(85-la)*k}
-    c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);
     if(!col.bg)cols();
-    x.strokeStyle=col.line;x.globalAlpha=.25;x.lineWidth=1;x.beginPath();
-    for(var gl=-60;gl<=60;gl+=30){x.moveTo(0,MY(gl));x.lineTo(w,MY(gl))}
-    for(var gn=-510;gn<=510;gn+=30){x.moveTo(MX(gn),oy);x.lineTo(MX(gn),oy+mh)}
-    x.stroke();
-    function fp(a){x.beginPath();[-mw,0,mw].forEach(function(o){a.forEach(function(po){po.ll.forEach(function(q,i){var X=MX(q[1])+o,Y=MY(q[0]);if(i)x.lineTo(X,Y);else x.moveTo(X,Y)});x.closePath()})})}
-    fp(SH);x.globalAlpha=.3;x.fillStyle=col.rain;x.fill();x.globalAlpha=.95;x.strokeStyle=col.rain;x.lineWidth=1;x.lineJoin='round';x.stroke();
-    fp(LK);x.globalAlpha=1;x.fillStyle=col.win;x.fill();
+    c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);
+    /* static layer (ocean, grid, dotted land, coastline) is cached; only redrawn on resize / palette / map change */
+    var key=[w,h,d,col.bg,col.rain,col.line,geoName,SH.length].join('|');
+    if(key!==tKey||!tLayer){
+      tKey=key;tLayer=document.createElement('canvas');tLayer.width=w*d;tLayer.height=h*d;
+      var y=tLayer.getContext('2d');y.setTransform(d,0,0,d,0,0);
+      var gr=y.createRadialGradient(w/2,h*.5,Math.min(w,h)*.15,w/2,h*.5,Math.max(w,h)*.75);
+      gr.addColorStop(0,col.win);gr.addColorStop(1,col.bg);y.fillStyle=gr;y.fillRect(0,0,w,h);
+      /* graticule */
+      y.strokeStyle=col.line;y.globalAlpha=.5;y.lineWidth=1;y.beginPath();
+      for(var gl=-60;gl<=60;gl+=30){y.moveTo(0,MY(gl));y.lineTo(w,MY(gl))}
+      for(var gn=-510;gn<=510;gn+=30){y.moveTo(MX(gn),oy);y.lineTo(MX(gn),oy+mh)}
+      y.stroke();
+      y.globalAlpha=.9;y.strokeStyle=col.line;y.setLineDash([2,5]);y.beginPath();y.moveTo(0,MY(0));y.lineTo(w,MY(0));y.stroke();y.setLineDash([]);
+      function fp(a){y.beginPath();[-mw,0,mw].forEach(function(o){a.forEach(function(po){po.ll.forEach(function(q,i){var X=MX(q[1])+o,Y=MY(q[0]);if(i)y.lineTo(X,Y);else y.moveTo(X,Y)});y.closePath()})})}
+      /* land: faint tint, then a dot matrix clipped to the land shape */
+      fp(SH);y.globalAlpha=.10;y.fillStyle=col.rain;y.fill();
+      y.save();fp(SH);y.clip();
+      var st=Math.max(5,Math.round(k*2.2)),r=Math.max(1,st*.2);
+      y.globalAlpha=.55;y.fillStyle=col.rain;
+      for(var yy=oy%st;yy<h;yy+=st){var row=Math.round((yy-oy)/st)&1;for(var xx=ox%st+(row?st/2:0);xx<w;xx+=st){y.fillRect(xx-r,yy-r,r*2,r*2)}}
+      y.restore();
+      /* coastline: soft halo then crisp line */
+      fp(SH);y.lineJoin='round';y.strokeStyle=col.rain;y.globalAlpha=.14;y.lineWidth=4;y.stroke();y.globalAlpha=.9;y.lineWidth=1;y.stroke();
+      fp(LK);y.globalAlpha=1;y.fillStyle=col.bg;y.fill();y.globalAlpha=.5;y.stroke();
+      /* vignette */
+      var vg=y.createRadialGradient(w/2,h/2,Math.min(w,h)*.55,w/2,h/2,Math.max(w,h)*.8);
+      vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.45)');y.globalAlpha=1;y.fillStyle=vg;y.fillRect(0,0,w,h);
+    }
+    x.drawImage(tLayer,0,0,w,h);
     var tc={scan:col.acc,malware:'#ff6b5e',ddos:col.fg,phish:col.rain};
     x.font='13px "JetBrains Mono",ui-monospace,monospace';
     threats.forEach(function(t,i){
-      var X=MX(t.lon),Y=MY(t.lat),last=i>=threats.length-5;
-      x.globalAlpha=last?1:.55;x.fillStyle=tc[t.type]||col.acc;
-      x.beginPath();x.arc(X,Y,last?6:4.5,0,6.2832);x.fill();
-      if(last){x.fillStyle=col.fg;x.fillText(t.type+' '+t.label,X+8,Y+4)}
+      var X=MX(t.lon),Y=MY(t.lat),last=i>=threats.length-(w<700?2:5),cl=tc[t.type]||col.acc;
+      x.globalAlpha=last?.28:.14;x.fillStyle=cl;x.beginPath();x.arc(X,Y,last?11:8,0,6.2832);x.fill();
+      x.globalAlpha=last?1:.7;x.beginPath();x.arc(X,Y,last?4.5:3.2,0,6.2832);x.fill();
+      x.globalAlpha=last?1:.5;x.strokeStyle=col.bg;x.lineWidth=1.5;x.stroke();
+      if(last){
+        var tx=t.type+'  '+t.label,tw=x.measureText(tx).width,bx=X+14;if(bx+tw+14>w)bx=X-tw-28;
+        x.globalAlpha=.92;x.fillStyle=col.win;x.fillRect(bx,Y-11,tw+14,22);
+        x.strokeStyle=cl;x.lineWidth=1;x.globalAlpha=.8;x.strokeRect(bx+.5,Y-10.5,tw+13,21);
+        x.globalAlpha=1;x.fillStyle=col.fg;x.fillText(tx,bx+7,Y+4);
+      }
     });
     if(p!=null&&rings.length){rings.forEach(function(t){
       var X=MX(t.lon),Y=MY(t.lat);
-      x.globalAlpha=Math.max(0,1-p);x.strokeStyle=tc[t.type]||col.acc;x.lineWidth=2;
-      x.beginPath();x.arc(X,Y,6+p*40,0,6.2832);x.stroke();
+      for(var q=0;q<2;q++){var pp=Math.max(0,Math.min(1,p-q*.18));if(pp<=0)continue;
+        x.globalAlpha=(1-pp)*.9;x.strokeStyle=tc[t.type]||col.acc;x.lineWidth=2;
+        x.beginPath();x.arc(X,Y,6+pp*48,0,6.2832);x.stroke()}
     })}
     x.globalAlpha=1;
   }
