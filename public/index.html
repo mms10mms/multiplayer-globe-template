@@ -246,7 +246,7 @@ textarea{resize:vertical}
 .lp h1 span{color:var(--acc)}
 .lp h3{font:700 .95rem "JetBrains Mono",ui-monospace,monospace;color:var(--acc);margin:30px 0 10px}
 .lp p,.lp li{color:var(--dim);font-size:.92rem;max-width:72ch}
-.lp ul{margin:0;padding-left:18px}.lp li{margin:0 0 6px}
+.lp ul{margin:0;padding-left:18px}.lp li{margin:0 0 6px;display:list-item;border:0;padding:0}
 .back{font-size:.82rem;color:var(--dim);text-decoration:none}.back:hover{color:var(--acc)}
 .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:8px 0 4px;counter-reset:f}
 .flow div{flex:1 1 140px;border:1px solid var(--line);background:var(--bg);padding:12px 14px;font-size:.82rem;color:var(--fg);position:relative;margin:0 22px 10px 0}
@@ -254,6 +254,23 @@ textarea{resize:vertical}
 .flow div:not(:last-child)::after{content:"\2192";position:absolute;right:-18px;top:50%;transform:translateY(-50%);color:var(--acc)}
 .flow div:last-child{margin-right:0}
 @media (max-width:700px){.flow{flex-direction:column}.flow div{margin:0 0 22px}.flow div:not(:last-child)::after{content:"\2193";right:auto;left:14px;top:auto;bottom:-20px;transform:none}}
+
+.panel.soon{cursor:default}
+.panel.soon:hover{transform:none;border-color:var(--line)}
+.lmap{display:flex;align-items:stretch;gap:0;margin:10px 0 16px}
+.lz{position:relative;flex:1 1 0;display:flex;flex-direction:column;gap:8px;border:1px dashed var(--line);border-radius:8px;padding:22px 10px 10px;min-width:0}
+.lzt{position:absolute;top:-9px;left:10px;background:var(--win);padding:0 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.lz-cf{border-color:color-mix(in srgb,var(--acc) 55%,var(--line))}
+.ln{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:9px 11px;font-size:.82rem;color:var(--fg)}
+.ln small{display:block;color:var(--dim);font-size:.72rem;margin-top:3px}
+.ln.hl{border-color:var(--acc)}
+.la{flex:0 0 26px;position:relative}
+.la::before{content:"";position:absolute;left:3px;right:7px;top:50%;border-top:1px solid var(--acc)}
+.la::after{content:"";position:absolute;right:3px;top:50%;margin-top:-4px;border:4px solid transparent;border-left:6px solid var(--acc)}
+.lz-nodes{margin:6px 0 4px}
+.lgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.lgrid .ln{border-style:dashed}
+@media (max-width:760px){.lmap{flex-direction:column}.la{flex:0 0 26px}.la::before{left:50%;right:auto;top:3px;bottom:7px;border-top:0;border-left:1px solid var(--acc)}.la::after{left:50%;right:auto;top:auto;bottom:3px;margin:0 0 0 -4px;border:4px solid transparent;border-top:6px solid var(--acc)}.lgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -478,9 +495,9 @@ textarea{resize:vertical}
   <div class="lobby">
     <div class="stage" id="stage">
       <nav class="hub" aria-label="Projects">
-        <a class="panel" href="#/lab"><div class="pb"><span class="pn">01 / HOMELAB</span><h2>The <span>Lab</span></h2><p>The hardware and services I run at home, including a live honeypot, and how they connect to this site.</p><div class="pf"><span class="st on">running</span><span class="go">open &rarr;</span></div></div></a>
+        <a class="panel" href="#/lab"><div class="pb"><span class="pn">01 / HOMELAB</span><h2>The <span>Lab</span></h2><p>My home setup: two honeypots and a cluster of six nodes, and how data from it reaches this site.</p><div class="pf"><span class="st wip">in setup</span><span class="go">open &rarr;</span></div></div></a>
         <a class="panel" href="#/cti"><div class="pb"><span class="pn">02 / THREAT INTEL</span><h2><span>CTI</span> pipeline</h2><p>How news and threat data are collected, reviewed by me and published to the feeds every day.</p><div class="pf"><span class="st wip">in progress</span><span class="go">open &rarr;</span></div></div></a>
-        <a class="panel" href="#/siem"><div class="pb"><span class="pn">03 / EXPERIMENT</span><h2><span>SIEM</span></h2><p>An experiment in an AI agent assisted SIEM. A test bed for ideas, not a product.</p><div class="pf"><span class="st">planned</span><span class="go">open &rarr;</span></div></div></a>
+        <div class="panel soon" aria-disabled="true"><div class="pb"><span class="pn">03 / NEXT</span><h2>Coming <span>soon</span></h2><p>The next part of Slaughter-Sec is in the works. Check back for updates.</p><div class="pf"><span class="st">coming soon</span></div></div></div>
       </nav>
     </div>
   </div>
@@ -506,22 +523,29 @@ textarea{resize:vertical}
   <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/lab</span></div><div class="body">
     <a class="back" href="#/home">&larr; home</a>
     <h1 id="labT" tabindex="-1">The <span>Lab</span></h1>
-    <p>My homelab is where I run the tools behind Slaughter-Sec. It is built and run by me, and it grows in stages.</p>
-    <h3>What is running</h3>
-    <ul>
-      <li><b>T-Pot honeypot</b>: a set of decoy services that attract real attacks from the internet. It runs isolated from my home network.</li>
-      <li><b>CTI pipeline</b>: collects and sorts threat news for the feeds on this site. Parts of it are still being built.</li>
-    </ul>
-    <h3>How it connects to this site</h3>
-    <div class="flow">
-      <div>Honeypot<small>logs every attack</small></div>
-      <div>Shipper script<small>trims and sends events</small></div>
-      <div>Cloudflare Worker<small>checks and stores them</small></div>
-      <div>Threat map<small>shows hits live</small></div>
+    <p>My homelab is the hardware I build and run myself. It is still being set up, and this page will grow as each part comes online.</p>
+    <h3>Data flow</h3>
+    <div class="lmap" role="img" aria-label="Data flow: attackers on the internet hit two honeypots. A shipper sends trimmed events out to a Cloudflare Worker, which stores them in a database and feeds the Threat map on this site. Six Dell OptiPlex nodes are being set up separately.">
+      <div class="lz lz-net"><span class="lzt">internet</span><div class="ln">Attackers<small>bots and scanners</small></div></div>
+      <div class="la" aria-hidden="true"></div>
+      <div class="lz"><span class="lzt">honeypots</span><div class="ln">Honeypot 1<small>decoy services</small></div><div class="ln">Honeypot 2<small>decoy services</small></div></div>
+      <div class="la" aria-hidden="true"></div>
+      <div class="lz"><span class="lzt">out of the lab</span><div class="ln">Shipper<small>trims events, sends them out</small></div></div>
+      <div class="la" aria-hidden="true"></div>
+      <div class="lz lz-cf"><span class="lzt">cloudflare</span><div class="ln">Worker + database<small>checks and stores events</small></div><div class="ln hl">Threat map<small>shows hits live</small></div></div>
     </div>
+    <div class="lz lz-nodes"><span class="lzt">node cluster &middot; in setup</span>
+      <div class="lgrid">
+        <div class="ln">OptiPlex 1<small>role tbd</small></div><div class="ln">OptiPlex 2<small>role tbd</small></div><div class="ln">OptiPlex 3<small>role tbd</small></div>
+        <div class="ln">OptiPlex 4<small>role tbd</small></div><div class="ln">OptiPlex 5<small>role tbd</small></div><div class="ln">OptiPlex 6<small>role tbd</small></div>
+      </div>
+    </div>
+    <h3>What is in it</h3>
+    <ul>
+      <li><b>2 honeypots</b>: decoy services that attract real attacks from the internet. Their hits feed the Threat map.</li>
+      <li><b>6 Dell OptiPlex nodes</b>: being set up. Each one's role will be listed here when it is running.</li>
+    </ul>
     <p>Data only flows out of the lab. Nothing on the internet connects into my home network, and no attacker IP addresses are published.</p>
-    <h3>Hardware and network</h3>
-    <p>A write-up of the hardware, network layout and isolation setup is coming soon.</p>
   </div></div>
 </section>
 
@@ -547,17 +571,6 @@ textarea{resize:vertical}
   </div></div>
 </section>
 
-<section class="view page lp" data-view="siem" aria-labelledby="siemT">
-  <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/siem</span></div><div class="body">
-    <a class="back" href="#/home">&larr; home</a>
-    <h1 id="siemT" tabindex="-1"><span>SIEM</span> experiment</h1>
-    <p>A SIEM (security information and event management) system collects logs from many sources and flags activity worth investigating.</p>
-    <h3>The idea</h3>
-    <p>I want to test whether AI agents can help sort and investigate those alerts, with a person still making the final call. This is an experiment for learning, not a product.</p>
-    <h3>Status</h3>
-    <p>Planned. Progress and results will be posted here as I build it.</p>
-  </div></div>
-</section>
 
 <section class="view page" data-view="sltr" aria-label="SLTR framework">
   <div class="split">
@@ -616,7 +629,7 @@ textarea{resize:vertical}
     (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
   }
 
-  var APP=['home','lab','cti','siem','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
+  var APP=['home','lab','cti','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
   function route(){
     var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
     var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
@@ -629,7 +642,7 @@ textarea{resize:vertical}
     document.querySelectorAll('#pubnav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     var pl=$('#pLogin'),pr2=$('#pReg');
     if(sess){pl.textContent='open app';pl.setAttribute('href','#/home');pr2.hidden=true}else{pl.textContent='log in';pl.setAttribute('href','#/login');pr2.hidden=false}
-    document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v||(a.dataset.v==='home'&&['lab','cti','siem'].indexOf(v)>-1))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v||(a.dataset.v==='home'&&['lab','cti'].indexOf(v)>-1))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     if(app)enterApp(v);else stopSim();
     if(v==='landing')typeQuote();
     if(v==='kb')kbShow();
