@@ -222,6 +222,38 @@ textarea{resize:vertical}
 .chk{padding:9px 0;border-bottom:1px dashed var(--line);font-size:.88rem}
 @media (max-width:820px){.split{grid-template-columns:1fr}.menu{flex-direction:row;overflow-x:auto}.mi{flex:none}}
 @media (prefers-reduced-motion:reduce){#q::after{animation:none}}
+
+/* ---- Home: three big panels over the rain ---- */
+.hub{position:absolute;inset:0;overflow:auto;padding:clamp(16px,3vw,36px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,26px);align-content:stretch}
+.panel{position:relative;display:flex;flex-direction:column;min-height:300px;background:color-mix(in srgb,var(--win) 82%,transparent);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:var(--fg);text-decoration:none;box-shadow:0 18px 50px rgba(0,0,0,.35);transition:border-color .2s,transform .2s}
+.panel:hover,.panel:focus-visible{border-color:var(--acc);transform:translateY(-3px);outline:0}
+.panel .pb{flex:1;display:flex;flex-direction:column;padding:clamp(20px,2.4vw,34px)}
+.panel .pn{font:700 .8rem "JetBrains Mono",ui-monospace,monospace;color:var(--dim);letter-spacing:.14em;margin:0 0 auto}
+.panel h2{font-size:clamp(2rem,4.2vw,3.6rem);line-height:1.02;margin:28px 0 14px;color:var(--fg);letter-spacing:-.02em}
+.panel h2 span{color:var(--acc)}
+.panel p{margin:0 0 22px;color:var(--dim);font-size:.9rem;max-width:34ch}
+.panel .pf{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px dashed var(--line);padding-top:14px;font-size:.8rem}
+.panel .go{color:var(--acc);font-weight:700}
+.st{display:inline-flex;align-items:center;gap:7px;color:var(--dim)}
+.st::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.st.on::before{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
+.st.wip::before{background:var(--acc)}
+@media (max-width:900px){.hub{grid-template-columns:1fr;align-content:start}.panel{min-height:0}.panel h2{margin-top:18px}}
+/* ---- Lab / CTI / SIEM detail pages ---- */
+.lp .win{max-width:980px;background:color-mix(in srgb,var(--win) 90%,transparent)}
+.lp .body{padding:clamp(22px,3vw,40px)}
+.lp h1{font-size:clamp(2rem,5vw,3.4rem);margin:6px 0 10px}
+.lp h1 span{color:var(--acc)}
+.lp h3{font:700 .95rem "JetBrains Mono",ui-monospace,monospace;color:var(--acc);margin:30px 0 10px}
+.lp p,.lp li{color:var(--dim);font-size:.92rem;max-width:72ch}
+.lp ul{margin:0;padding-left:18px}.lp li{margin:0 0 6px}
+.back{font-size:.82rem;color:var(--dim);text-decoration:none}.back:hover{color:var(--acc)}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:8px 0 4px;counter-reset:f}
+.flow div{flex:1 1 140px;border:1px solid var(--line);background:var(--bg);padding:12px 14px;font-size:.82rem;color:var(--fg);position:relative;margin:0 22px 10px 0}
+.flow div small{display:block;color:var(--dim);font-size:.74rem;margin-top:4px}
+.flow div:not(:last-child)::after{content:"\2192";position:absolute;right:-18px;top:50%;transform:translateY(-50%);color:var(--acc)}
+.flow div:last-child{margin-right:0}
+@media (max-width:700px){.flow{flex-direction:column}.flow div{margin:0 0 22px}.flow div:not(:last-child)::after{content:"\2193";right:auto;left:14px;top:auto;bottom:-20px;transform:none}}
 </style>
 </head>
 <body>
@@ -442,9 +474,14 @@ textarea{resize:vertical}
   </div>
 </section>
 
-<section class="view globe" data-view="home" aria-label="Home">
+<section class="view globe" data-view="home" aria-labelledby="ht">
   <div class="lobby">
     <div class="stage" id="stage">
+      <nav class="hub" aria-label="Projects">
+        <a class="panel" href="#/lab"><div class="pb"><span class="pn">01 / HOMELAB</span><h2>The <span>Lab</span></h2><p>The hardware and services I run at home, including a live honeypot, and how they connect to this site.</p><div class="pf"><span class="st on">running</span><span class="go">open &rarr;</span></div></div></a>
+        <a class="panel" href="#/cti"><div class="pb"><span class="pn">02 / THREAT INTEL</span><h2><span>CTI</span> pipeline</h2><p>How news and threat data are collected, reviewed by me and published to the feeds every day.</p><div class="pf"><span class="st wip">in progress</span><span class="go">open &rarr;</span></div></div></a>
+        <a class="panel" href="#/siem"><div class="pb"><span class="pn">03 / EXPERIMENT</span><h2><span>SIEM</span></h2><p>An experiment in an AI agent assisted SIEM. A test bed for ideas, not a product.</p><div class="pf"><span class="st">planned</span><span class="go">open &rarr;</span></div></div></a>
+      </nav>
     </div>
   </div>
   <div class="dock" aria-label="Random CVE">
@@ -463,6 +500,63 @@ textarea{resize:vertical}
     <div class="stat tstat"><span class="k" id="mt" tabindex="-1">Live threat map</span><b id="tcount">0</b></div>
     <div class="demo" role="note"><b>wip</b>Honeypot still in the works. Real attacks will appear here once it is connected. <span id="mstat"></span></div>
   </div>
+</section>
+
+<section class="view page lp" data-view="lab" aria-labelledby="labT">
+  <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/lab</span></div><div class="body">
+    <a class="back" href="#/home">&larr; home</a>
+    <h1 id="labT" tabindex="-1">The <span>Lab</span></h1>
+    <p>My homelab is where I run the tools behind Slaughter-Sec. It is built and run by me, and it grows in stages.</p>
+    <h3>What is running</h3>
+    <ul>
+      <li><b>T-Pot honeypot</b>: a set of decoy services that attract real attacks from the internet. It runs isolated from my home network.</li>
+      <li><b>CTI pipeline</b>: collects and sorts threat news for the feeds on this site. Parts of it are still being built.</li>
+    </ul>
+    <h3>How it connects to this site</h3>
+    <div class="flow">
+      <div>Honeypot<small>logs every attack</small></div>
+      <div>Shipper script<small>trims and sends events</small></div>
+      <div>Cloudflare Worker<small>checks and stores them</small></div>
+      <div>Threat map<small>shows hits live</small></div>
+    </div>
+    <p>Data only flows out of the lab. Nothing on the internet connects into my home network, and no attacker IP addresses are published.</p>
+    <h3>Hardware and network</h3>
+    <p>A write-up of the hardware, network layout and isolation setup is coming soon.</p>
+  </div></div>
+</section>
+
+<section class="view page lp" data-view="cti" aria-labelledby="ctiT">
+  <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/cti-pipeline</span></div><div class="body">
+    <a class="back" href="#/home">&larr; home</a>
+    <h1 id="ctiT" tabindex="-1"><span>CTI</span> pipeline</h1>
+    <p>Cyber threat intelligence (CTI) is the work of collecting reports on threats and turning them into something useful. My pipeline feeds the TTS, AI research and malware analysis pages.</p>
+    <h3>How an item gets published</h3>
+    <div class="flow">
+      <div>Collect<small>Workers pull new articles from security sources</small></div>
+      <div>Draft<small>a short summary is drafted automatically</small></div>
+      <div>Review<small>I check every item against its source</small></div>
+      <div>Publish<small>approved items go live and are archived</small></div>
+    </div>
+    <p>Nothing is published without my review. Accuracy comes first, speed second.</p>
+    <h3>What is next</h3>
+    <ul>
+      <li>Keep threat tracking running all the time, not just on a schedule.</li>
+      <li>Connect the parts that run in my homelab, which are not finished yet.</li>
+      <li>Go beyond what happened and track the reasoning behind threats.</li>
+    </ul>
+  </div></div>
+</section>
+
+<section class="view page lp" data-view="siem" aria-labelledby="siemT">
+  <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/siem</span></div><div class="body">
+    <a class="back" href="#/home">&larr; home</a>
+    <h1 id="siemT" tabindex="-1"><span>SIEM</span> experiment</h1>
+    <p>A SIEM (security information and event management) system collects logs from many sources and flags activity worth investigating.</p>
+    <h3>The idea</h3>
+    <p>I want to test whether AI agents can help sort and investigate those alerts, with a person still making the final call. This is an experiment for learning, not a product.</p>
+    <h3>Status</h3>
+    <p>Planned. Progress and results will be posted here as I build it.</p>
+  </div></div>
 </section>
 
 <section class="view page" data-view="sltr" aria-label="SLTR framework">
@@ -522,7 +616,7 @@ textarea{resize:vertical}
     (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
   }
 
-  var APP=['home','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
+  var APP=['home','lab','cti','siem','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
   function route(){
     var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
     var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
@@ -535,7 +629,7 @@ textarea{resize:vertical}
     document.querySelectorAll('#pubnav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     var pl=$('#pLogin'),pr2=$('#pReg');
     if(sess){pl.textContent='open app';pl.setAttribute('href','#/home');pr2.hidden=true}else{pl.textContent='log in';pl.setAttribute('href','#/login');pr2.hidden=false}
-    document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v||(a.dataset.v==='home'&&['lab','cti','siem'].indexOf(v)>-1))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     if(app)enterApp(v);else stopSim();
     if(v==='landing')typeQuote();
     if(v==='kb')kbShow();
