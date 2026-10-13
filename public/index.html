@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en" data-palette="amber">
 <head>
@@ -92,7 +93,6 @@ body.app .nav{display:flex}
 .prog i{display:block;height:100%;width:100%;background:var(--acc);transition:width 1s linear}
 .view.globe.on{min-height:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;position:fixed;inset:var(--nav-h) 0 0 0}
 .stage{position:relative;flex:1 1 0;min-height:0}
-#globe{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
 .dock{background:var(--win);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
 .prog{height:2px;background:var(--line)}
 .dk{display:grid;grid-template-columns:minmax(210px,auto) 1fr auto;gap:8px 28px;align-items:center;max-width:1200px;margin:0 auto;padding:12px 18px}
@@ -230,7 +230,7 @@ textarea{resize:vertical}
 <nav class="nav" id="nav" aria-label="Main">
   <span class="brand">Slaughter-Sec</span>
   <div class="tabs">
-    <a href="#/home" data-v="home"><span>Globe</span></a>
+    <a href="#/home" data-v="home"><span>Home</span></a>
     <a href="#/threats" data-v="threats"><span>Threat map</span></a>
     <a class="soon" aria-disabled="true" tabindex="-1" title="Coming soon" data-v="sltr"><span>SLTR framework</span></a>
     <a href="#/settings" data-v="settings"><span>Settings</span></a>
@@ -442,12 +442,9 @@ textarea{resize:vertical}
   </div>
 </section>
 
-<section class="view globe" data-view="home" aria-label="Live connections globe">
+<section class="view globe" data-view="home" aria-label="Home">
   <div class="lobby">
     <div class="stage" id="stage">
-      <canvas id="globe" aria-label="Spinning globe with a point for each live connection"></canvas>
-      <div class="stat" id="lstat"><span class="k">Connected</span><b id="lcount">0</b></div>
-      <div class="demo" role="note"><b>live</b>People on the site right now, shown at an approximate location from their IP address. Names and IP addresses are not stored.</div>
     </div>
   </div>
   <div class="dock" aria-label="Random CVE">
@@ -631,25 +628,11 @@ textarea{resize:vertical}
     if(e<1e-6){cx=0;cy=0;cz=1;rho=4}else{cx/=e;cy/=e;cz/=e;for(i=0;i<v.length;i++){dt=cx*v[i][0]+cy*v[i][1]+cz*v[i][2];k=Math.acos(Math.max(-1,Math.min(1,dt)));if(k>rho)rho=k}}
     return {ll:d,v:v,c:[cx,cy,cz],s:rho>=1.5708?1:Math.sin(rho)};
   })}
-  function vis(q){pr(q.c[0],q.c[1],q.c[2]);return pz>-q.s}
   var CITIES=[['New York',40.7,-74],['London',51.5,-0.1],['Tokyo',35.7,139.7],['Sydney',-33.9,151.2],['Sao Paulo',-23.5,-46.6],['Lagos',6.5,3.4],['Mumbai',19.1,72.9],['Berlin',52.5,13.4],['Singapore',1.35,103.8],['Toronto',43.7,-79.4],['Dubai',25.2,55.3],['Seoul',37.6,127],['Mexico City',19.4,-99.1],['Cape Town',-33.9,18.4],['Moscow',55.8,37.6],['Los Angeles',34,-118.2],['Nairobi',-1.3,36.8],['Jakarta',-6.2,106.8],['Paris',48.9,2.4],['Chicago',41.9,-87.6],['Buenos Aires',-34.6,-58.4],['Cairo',30,31.2]];
-  var TZ={'America/New_York':[40.7,-74],'America/Chicago':[41.9,-87.6],'America/Denver':[39.7,-105],'America/Los_Angeles':[34,-118.2],'America/Toronto':[43.7,-79.4],'America/Sao_Paulo':[-23.5,-46.6],'Europe/London':[51.5,-0.1],'Europe/Paris':[48.9,2.4],'Europe/Berlin':[52.5,13.4],'Asia/Tokyo':[35.7,139.7],'Asia/Kolkata':[19.1,72.9],'Australia/Sydney':[-33.9,151.2]};
-  var WORDS=['ghost','null','cipher','vector','daemon','kernel','root','byte','proxy','shell'];
-  var gc=$('#globe'),g=gc.getContext('2d'),gw=0,gh=0,R=0,cx0=0,cy0=0,px=0,py=0,pz=0,cA=1,sA=0,cT=1,sT=0,cc=0;
-  var hv=null,G={a:0,t:.4,go:null,pause:0},land=[],peers=[],me=null,raf=0,tmr=0,drag=null,col={};
+  var col={};
   function vec(la,lo){var p=la*Math.PI/180,l=lo*Math.PI/180;return [Math.cos(p)*Math.sin(l),Math.sin(p),Math.cos(p)*Math.cos(l)]}
   function inPoly(f,x,y){var c=false;for(var i=0,j=f.length-2;i<f.length;j=i,i+=2){var xi=f[i],yi=f[i+1],xj=f[j],yj=f[j+1];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
-  var SH=prep(LAND),LK=prep(LAKES),DOTS=[];
-  function mkDots(polys){
-    var out=[],la,lo,st,k,ok,sh,bb=polys.map(function(f){var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;for(var i=0;i<f.length;i+=2){if(f[i]<x0)x0=f[i];if(f[i]>x1)x1=f[i];if(f[i+1]<y0)y0=f[i+1];if(f[i+1]>y1)y1=f[i+1]}return[x0,x1,y0,y1]});
-    for(la=-84;la<=84;la+=1.25){st=1.25/Math.max(Math.cos(la*Math.PI/180),.15);for(lo=-180;lo<180;lo+=st){
-      ok=false;for(k=0;k<polys.length&&!ok;k++){var b=bb[k];if(la<b[2]||la>b[3])continue;for(sh=-360;sh<=360&&!ok;sh+=360)if(lo+sh>=b[0]&&lo+sh<=b[1]&&inPoly(polys[k],lo+sh,la))ok=true}
-      if(ok)for(k=0;k<LAKES.length;k++)if(inPoly(LAKES[k],lo,la)){ok=false;break}
-      if(ok)out.push(vec(la,lo));
-    }}
-    return out;
-  }
-  DOTS=mkDots(LAND);
+  var SH=prep(LAND),LK=prep(LAKES);
   /* Upgrade to real world coastlines when the data library loads; the hand-drawn set above is the fallback. */
   var EPS2=.08*.08,geoName='built-in';
   function upgradeGeo(name){
@@ -668,8 +651,8 @@ textarea{resize:vertical}
     });
     if(out.length<50)return false;
     out.push(LAND[LAND.length-1]);
-    LAND=out;SH=prep(LAND);DOTS=mkDots(LAND);geoReal=true;geoName=name;
-    redraw();if(cur==='threats')drawMap();
+    LAND=out;SH=prep(LAND);geoReal=true;geoName=name;
+    if(cur==='threats')drawMap();
     return true;
   }
   var geoReal=false;
@@ -685,121 +668,6 @@ textarea{resize:vertical}
   var geoStarted=false;
   function ensureGeo(){if(geoStarted)return;geoStarted=true;try{var big=window.innerWidth>=900&&!(navigator.connection&&navigator.connection.saveData);loadGeo(big?['High','Medium','Low']:['Medium','Low'])}catch(e){}}
   function cols(){var s=getComputedStyle(document.documentElement);['bg','win','fg','acc','rain','dim','line'].forEach(function(k){col[k]=s.getPropertyValue('--'+k).trim()})}
-  function pr(x,y,z){var z1=z*cA-x*sA;px=x*cA+z*sA;py=y*cT-z1*sT;pz=y*sT+z1*cT}
-  function gpath(poly){
-    var v=poly.v,n=v.length,P=new Array(n),i,k,s=-1,c,l,vis=true,a0=0,t,X,Y,e,a1,da,st,j;
-    for(i=0;i<n;i++){pr(v[i][0],v[i][1],v[i][2]);P[i]=[px,py,pz]}
-    for(i=0;i<n;i++)if(P[i][2]>0){s=i;break}
-    if(s<0)return false;
-    l=P[s];g.moveTo(cx0+l[0]*R,cy0-l[1]*R);
-    for(k=1;k<=n;k++){
-      c=P[(s+k)%n];
-      if(c[2]>0){
-        if(!vis){
-          t=l[2]/(l[2]-c[2]);X=l[0]+(c[0]-l[0])*t;Y=l[1]+(c[1]-l[1])*t;e=Math.sqrt(X*X+Y*Y)||1;X/=e;Y/=e;
-          a1=Math.atan2(Y,X);da=Math.atan2(Math.sin(a1-a0),Math.cos(a1-a0));st=Math.max(1,Math.ceil(Math.abs(da)/.08));
-          for(j=1;j<=st;j++)g.lineTo(cx0+Math.cos(a0+da*j/st)*R,cy0-Math.sin(a0+da*j/st)*R);
-          vis=true;
-        }
-        g.lineTo(cx0+c[0]*R,cy0-c[1]*R);
-      }else if(vis){
-        t=l[2]/(l[2]-c[2]);X=l[0]+(c[0]-l[0])*t;Y=l[1]+(c[1]-l[1])*t;e=Math.sqrt(X*X+Y*Y)||1;X/=e;Y/=e;
-        g.lineTo(cx0+X*R,cy0-Y*R);a0=Math.atan2(Y,X);vis=false;
-      }
-      l=c;
-    }
-    g.closePath();return true;
-  }
-  function grat(){
-    var la,lo,i,pa=null,pp;
-    g.beginPath();
-    for(la=-60;la<=60;la+=30){pa=null;for(lo=-180;lo<=180;lo+=4){var v=vec(la,lo);pr(v[0],v[1],v[2]);if(pz>0){if(pa)g.lineTo(cx0+px*R,cy0-py*R);else g.moveTo(cx0+px*R,cy0-py*R);pa=1}else pa=null}}
-    for(lo=-150;lo<=180;lo+=30){pa=null;for(la=-90;la<=90;la+=4){var w=vec(la,lo);pr(w[0],w[1],w[2]);if(pz>0){if(pa)g.lineTo(cx0+px*R,cy0-py*R);else g.moveTo(cx0+px*R,cy0-py*R);pa=1}else pa=null}}
-    g.stroke();
-  }
-  function draw(now){
-    if(!col.bg||++cc%90===0)cols();
-    cA=Math.cos(G.a);sA=Math.sin(G.a);cT=Math.cos(G.t);sT=Math.sin(G.t);
-    g.clearRect(0,0,gw,gh);
-    var i,j,p,X,Y,a,gr;
-    /* atmosphere glow */
-    /* ocean with lit upper-left and dark limb */
-    gr=g.createRadialGradient(cx0-R*.4,cy0-R*.4,R*.05,cx0,cy0,R);
-    gr.addColorStop(0,col.win);gr.addColorStop(.7,col.bg);gr.addColorStop(1,'#000');
-    g.globalAlpha=1;g.fillStyle=gr;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.fill();
-    g.globalAlpha=.14;g.strokeStyle=col.acc;g.lineWidth=1;grat();
-    /* land body (one path, reused for fill and outline; polygons fully behind the globe are skipped) */
-    g.beginPath();for(i=0;i<SH.length;i++)if(vis(SH[i]))gpath(SH[i]);
-    g.globalAlpha=.16;g.fillStyle=col.rain;g.fill();
-    /* land dot texture, brighter toward the centre */
-    var d=Math.max(1.1,R*.0036);g.fillStyle=col.rain;
-    for(i=0;i<DOTS.length;i++){pr(DOTS[i][0],DOTS[i][1],DOTS[i][2]);if(pz>.04){g.globalAlpha=.12+.6*pz;g.fillRect(cx0+px*R-d/2,cy0-py*R-d/2,d,d)}}
-    /* coastline: soft halo, then crisp line */
-    g.lineJoin='round';g.strokeStyle=col.rain;g.lineWidth=3.2;g.globalAlpha=.12;g.stroke();
-    g.lineWidth=1;g.globalAlpha=1;g.stroke();
-    g.beginPath();for(i=0;i<LK.length;i++)gpath(LK[i]);
-    g.globalAlpha=1;g.fillStyle=col.bg;g.fill();g.globalAlpha=.6;g.stroke();
-    /* rim */
-    g.globalAlpha=.9;g.strokeStyle=col.line;g.lineWidth=1.2;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.stroke();
-    /* specular highlight */
-    gr=g.createRadialGradient(cx0-R*.45,cy0-R*.5,0,cx0-R*.45,cy0-R*.5,R*.7);
-    gr.addColorStop(0,'rgba(255,255,255,.10)');gr.addColorStop(1,'rgba(255,255,255,0)');
-    g.globalAlpha=1;g.fillStyle=gr;g.beginPath();g.arc(cx0,cy0,R,0,6.2832);g.fill();
-    g.font='11px "JetBrains Mono",ui-monospace,monospace';
-    var hp=null,hx=0,hy=0,hd=225;
-    for(i=0;i<peers.length;i++){
-      p=peers[i];pr(p.v[0],p.v[1],p.v[2]);if(pz<=.05)continue;
-      X=cx0+px*R;Y=cy0-py*R;a=Math.min(1,pz*1.6);
-      g.fillStyle=p.me?col.fg:col.acc;
-      g.globalAlpha=a*.22;g.beginPath();g.arc(X,Y,p.me?9:7,0,6.2832);g.fill();
-      g.globalAlpha=a;g.beginPath();g.arc(X,Y,p.me?4.5:3.4,0,6.2832);g.fill();
-      var age=((now||0)-p.born)/1600;
-      if(age>=0&&age<1){g.strokeStyle=col.acc;g.lineWidth=1.2;g.globalAlpha=a*(1-age);g.beginPath();g.arc(X,Y,5+age*18,0,6.2832);g.stroke()}
-      if(p.me){g.globalAlpha=a*.9;g.fillStyle=col.fg;g.fillText('you',X+10,Y+4)}
-      if(hv){var dd=(hv.x-X)*(hv.x-X)+(hv.y-Y)*(hv.y-Y);if(dd<hd){hd=dd;hp=p;hx=X;hy=Y}}
-    }
-    if(hp&&!hp.me){
-      var t=hp.h+(hp.c?', '+hp.c:''),tw=g.measureText(t).width,bx=hx+10;if(bx+tw+14>gw)bx=hx-tw-24;
-      g.globalAlpha=.95;g.fillStyle=col.win;g.fillRect(bx,hy-10,tw+14,20);
-      g.strokeStyle=col.line;g.lineWidth=1;g.strokeRect(bx+.5,hy-9.5,tw+13,19);
-      g.fillStyle=col.fg;g.fillText(t,bx+7,hy+4);
-    }
-    g.globalAlpha=1;
-  }
-  function redraw(){if(reduce&&gw)draw(performance.now())}
-  function frame(now){
-    if(!drag&&!G.go&&now>G.pause)G.a+=.0022;
-    if(G.go){var df=G.go.a-G.a;df=Math.atan2(Math.sin(df),Math.cos(df));G.a+=df*.08;G.t+=(G.go.t-G.t)*.08;if(Math.abs(df)<.003)G.go=null}
-    draw(now);raf=requestAnimationFrame(frame);
-  }
-  function gsize(){
-    var d=Math.min(window.devicePixelRatio||1,2);
-    gw=gc.clientWidth;gh=gc.clientHeight;if(!gw||!gh)return;
-    gc.width=gw*d;gc.height=gh*d;g.setTransform(d,0,0,d,0,0);
-    R=Math.min(gw,gh)*(gw<700?.4:.43);cx0=gw/2;cy0=gh/2;redraw();
-  }
-  window.addEventListener('resize',gsize);
-  if(window.ResizeObserver)new ResizeObserver(function(){gsize()}).observe($('#stage'));
-  gc.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY};gc.setPointerCapture(e.pointerId);gc.style.cursor='grabbing'});
-  function hpos(e){var r=gc.getBoundingClientRect();hv={x:e.clientX-r.left,y:e.clientY-r.top}}
-  gc.addEventListener('pointermove',function(e){hpos(e);if(!drag){redraw();return}G.go=null;G.a+=(e.clientX-drag.x)/R;G.t=Math.max(-1.2,Math.min(1.2,G.t+(e.clientY-drag.y)/R));drag.x=e.clientX;drag.y=e.clientY;redraw()});
-  gc.addEventListener('pointerleave',function(){if(!drag){hv=null;redraw()}});
-  function endDrag(){drag=null;G.pause=performance.now()+3000;gc.style.cursor='grab'}
-  gc.addEventListener('pointerup',endDrag);gc.addEventListener('pointercancel',endDrag);
-
-  function mk(seed){
-    var used=peers.map(function(p){return p.c}),pool=CITIES.filter(function(c){return used.indexOf(c[0])<0});
-    var c=pool[Math.floor(Math.random()*pool.length)];if(!c)return;
-    var la=c[1]+Math.random()*3-1.5,lo=c[2]+Math.random()*3-1.5,v=vec(la,lo);
-    var np={h:WORDS[Math.floor(Math.random()*WORDS.length)]+'_'+(10+Math.floor(Math.random()*90)),c:c[0],lat:la,lon:lo,v:v,ms:Math.round(18+Math.random()*160),born:seed?-Math.random()*3600000:performance.now()};
-    peers.push(np);
-  }
-  function setMe(name){
-    var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
-    me={me:true,name:name,c:'',born:performance.now()};
-    var c=TZ[tz];
-    if(c){me.c=tz.split('/')[1].replace(/_/g,' ');me.lat=c[0];me.lon=c[1];me.v=vec(c[0],c[1]);peers.push(me)}
-  }
   var cur='',cvi=-1,cvT=0,cvLeft=10,scr=0,thrT=0,threats=[];
   var CVES=[
    ["CVE-2008-4250",2008,"Conficker / MS08-067","Windows Server service","critical","Remote code execution through a crafted RPC request. Exploited by the Conficker worm."],
@@ -1027,54 +895,6 @@ textarea{resize:vertical}
   var dTimer=0;
 
     function renderSettings(u,em){$('#sacct').textContent=u.name+' <'+em+'>';palPressed()}
-  /* ---- LIVE CONNECTIONS: plug your API in here ---- */
-  var PEER_FEED={
-    url:'https://slaughter-sec-api.mikemms497.workers.dev/presence/live',
-    headers:{},
-    every:5000,
-    parse:function(raw){return(raw&&raw.users||[]).map(function(u){return{id:u.id,lat:u.lat,lon:u.lon,label:u.label}})}
-  };
-  /* tell the API this page is open (about every 30 s) so the globe can show it. Skipped if the browser sends Do Not Track or Global Privacy Control. */
-  (function(){
-    var dnt=navigator.doNotTrack==='1'||window.doNotTrack==='1'||navigator.globalPrivacyControl===true;
-    if(dnt||!PEER_FEED.url)return;
-    var base=PEER_FEED.url.replace(/\/presence\/live$/,'');
-    function ping(){if(document.visibilityState==='hidden')return;try{fetch(base+'/presence/ping',{method:'POST',keepalive:true}).catch(function(){})}catch(e){}}
-    ping();setInterval(ping,30000);
-    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')ping()});
-  })();
-  function updCount(){
-    var n=peers.filter(function(p){return !p.me}).length+(me&&me.v?1:0);
-    $('#lcount').textContent=n;
-    $('#lstat').title=(PEER_FEED.url?'live connections':'demo data')+' - map: '+geoName;
-  }
-  function tick(){
-    var idx=[];peers.forEach(function(p,i){if(!p.me)idx.push(i)});
-    if(idx.length<7||(idx.length<15&&Math.random()<.6))mk();
-    else peers.splice(idx[Math.floor(Math.random()*idx.length)],1);
-    updCount();redraw();
-  }
-  async function pollPeers(){
-    try{
-      var r=await fetch(PEER_FEED.url,{headers:PEER_FEED.headers}),list=PEER_FEED.parse(await r.json()),old={};
-      peers.forEach(function(p){if(p.id)old[p.id]=p});
-      var next=peers.filter(function(p){return p.me});
-      list.forEach(function(x){
-        var o=old[x.id];
-        next.push(o||{id:x.id,h:x.label||x.id,c:'',lat:x.lat,lon:x.lon,v:vec(x.lat,x.lon),born:performance.now()});
-      });
-      peers=next;
-    }catch(e){}
-    updCount();redraw();
-  }
-  function startSim(u){
-    if(tmr)return;
-    peers=[];if(!PEER_FEED.url)setMe(u.name);
-    if(PEER_FEED.url){pollPeers();tmr=setInterval(pollPeers,PEER_FEED.every)}
-    else{for(var k=0;k<8;k++)mk(true);tmr=setInterval(tick,2400)}
-    updCount();
-  }
-
   var plrN=function(u){$('#plrName').textContent=u.name.split(' ')[0]};
   function menu(id,items,sel,onPick){
     var m=$(id);m.innerHTML='';
@@ -1273,20 +1093,20 @@ textarea{resize:vertical}
     if(e.key==='r'||e.key==='R')nextCve();
   });
 
-  function stopTimers(){clearInterval(ptTimer);cancelAnimationFrame(raf);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
-  function stopSim(){clearInterval(tmr);tmr=0;stopTimers();cur=''}
+  function stopTimers(){clearInterval(ptTimer);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
+  function stopSim(){stopTimers();cur=''}
   function enterApp(v){
     var em=get('session'),u=(get('users')||{})[em];if(!u){location.hash='#/login';return}
-    cur=v;plrN(u);startSim(u);stopTimers();
-    if(v==='home'||v==='threats')ensureGeo();
-    if(v==='home'){gsize();if(!reduce)raf=requestAnimationFrame(frame);startCve()}
+    cur=v;plrN(u);stopTimers();
+    if(v==='threats')ensureGeo();
+    if(v==='home')startCve();
     if(v==='threats'){loadThreats();thrT=setInterval(loadThreats,THREAT_FEED.url?THREAT_FEED.every:2400)}
     if(v==='sltr')slShow();
     if(v==='settings')renderSettings(u,em);
   }
   document.documentElement.setAttribute('data-theme','dark');
   function palPressed(){var t=get('palette')||'amber';document.querySelectorAll('[data-pal]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pal===t)})}
-  function applyPalette(t){document.documentElement.setAttribute('data-palette',t);col={};redraw();if(cur==='threats')drawMap();window.dispatchEvent(new Event('palette'))}
+  function applyPalette(t){document.documentElement.setAttribute('data-palette',t);col={};if(cur==='threats')drawMap();window.dispatchEvent(new Event('palette'))}
   applyPalette(get('palette')||'amber');
   document.querySelectorAll('[data-pal]').forEach(function(b){b.addEventListener('click',function(){set('palette',b.dataset.pal);applyPalette(b.dataset.pal);palPressed()})});
   var dt=0;
