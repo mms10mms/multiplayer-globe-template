@@ -271,6 +271,16 @@ textarea{resize:vertical}
 .lgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .lgrid .ln{border-style:dashed}
 @media (max-width:760px){.lmap{flex-direction:column}.la{flex:0 0 26px}.la::before{left:50%;right:auto;top:3px;bottom:7px;border-top:0;border-left:1px solid var(--acc)}.la::after{left:50%;right:auto;top:auto;bottom:3px;margin:0 0 0 -4px;border:4px solid transparent;border-top:6px solid var(--acc)}.lgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ .topw{border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
+.topw .body{padding:clamp(22px,3vw,34px)}
+.tmeta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:.78rem;color:var(--dim);margin:0 0 12px}
+.tbadge{background:var(--acc);color:var(--on-acc);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.68rem;padding:2px 8px;border-radius:4px}
+.tbadge.alt{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.ttl{font:700 clamp(1.25rem,3vw,1.9rem)/1.25 "JetBrains Mono",ui-monospace,monospace;color:var(--fg);margin:0 0 12px;text-wrap:balance}
+.tsum{color:var(--dim);margin:0 0 14px;max-width:74ch}
+.tnote{color:var(--fg);border-left:2px solid var(--acc);padding:2px 0 2px 12px;margin:0 0 16px;max-width:74ch;font-size:.92rem}
+.tlinks{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.85rem}
+.tlinks a{color:var(--acc)}
 </style>
 </head>
 <body>
@@ -313,6 +323,11 @@ textarea{resize:vertical}
         <a class="btn" href="#/login">Log in</a>
       </div>
     </div>
+  </div>
+
+  <div class="blk" id="top">
+    <h2 id="topH">Top story of the week</h2>
+    <div class="win topw"><div class="body" id="topBody"><p class="sub" style="margin:0">Loading&hellip;</p></div></div>
   </div>
 
   <div class="blk" id="mission">
@@ -392,7 +407,7 @@ textarea{resize:vertical}
 <section class="view site" data-view="about" aria-labelledby="ab">
  <div class="wrap">
   <h1 class="ph" id="ab" tabindex="-1">About Slaughter-Sec</h1>
-  <p class="sub" style="max-width:68ch">Most businesses are told to buy more security tools. What they need first is a clear view of what attackers are doing right now. Slaughter-Sec focuses on exactly that: up-to-date news and information on the latest threats, summarized in plain language and linked to the source, so you do not have to find out the hard way. The goal is twofold: keep you up to date on the cyber world, and be a repository of everything that happens in it.</p>
+  <p class="sub" style="max-width:68ch">Cybersecurity is changing fast. To some people that is scary. To others, like me, it is exciting to watch. Slaughter-Sec is where I keep up with it: the latest threats, AI security research and malware, summarized in plain language and linked to the source. The goal is to keep you up to date on the cyber world, and to build a record of everything that happens in it.</p>
   <div class="blk" style="margin-top:28px">
     <h2>How I work</h2>
     <div class="g3">
@@ -403,7 +418,11 @@ textarea{resize:vertical}
   </div>
   <div class="blk">
     <h2>Who is behind this</h2>
-    <div class="win"><div class="body"><p class="sub" style="margin:0">Slaughter-Sec is a one-person project. I read, review and approve everything published here. Want to know more? <a href="#/contact" style="color:var(--acc)">Get in touch.</a></p></div></div>
+    <div class="win"><div class="body">
+      <p class="sub" style="margin:0 0 14px">I am a college student working full time in IT, with a passion for security. Slaughter-Sec is a one-person project: I read, review and approve everything published here.</p>
+      <p class="sub" style="margin:0 0 20px">As I grow in my career, this site will grow with me. If you are curious and want to see more, create an account to view the homelab and demo projects I am working on.</p>
+      <div class="row"><a class="btn fill" href="#/register">Create an account</a><a class="btn" href="#/contact">Get in touch</a></div>
+    </div></div>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><div class="logo" role="img" aria-label="Slaughter-Sec logo">
@@ -466,7 +485,48 @@ textarea{resize:vertical}
         <p class="err" role="alert" id="lerr"></p>
         <button class="btn fill" type="submit">log in</button>
       </form>
-      <p class="alt">No account? <a href="#/register">register</a> &nbsp; <a href="#/">back</a></p>
+      <p class="alt">No account? <a href="#/register">register</a> &nbsp; <a href="#/forgot">forgot password?</a> &nbsp; <a href="#/">back</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="view" data-view="verify" aria-labelledby="vt">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/verify</span></div>
+    <div class="body">
+      <p class="cmd"><b>$</b> verify --email</p>
+      <h2 id="vt" tabindex="-1">Check your email</h2>
+      <p class="sub" id="vsub">A 6-digit code is on its way. It expires in 15 minutes.</p>
+      <form id="verifyForm" novalidate>
+        <label for="vc">code</label><input id="vc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+        <p class="err" role="alert" id="verr"></p>
+        <button class="btn fill" type="submit">confirm</button>
+      </form>
+      <p class="alt">No email? Check spam, or <a href="#" id="vresend">send a new code</a>. &nbsp; <a href="#/register">start over</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="view" data-view="forgot" aria-labelledby="ft">
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/reset</span></div>
+    <div class="body">
+      <p class="cmd"><b>$</b> passwd --reset</p>
+      <h2 id="ft" tabindex="-1">Reset password</h2>
+      <p class="sub" id="fsub">Enter your email and I will send you a code.</p>
+      <form id="forgotForm" novalidate>
+        <label for="fe">email</label><input id="fe" type="email" autocomplete="email">
+        <p class="err" role="alert" id="ferr"></p>
+        <button class="btn fill" type="submit">send code</button>
+      </form>
+      <form id="resetForm" novalidate hidden>
+        <label for="fc">code</label><input id="fc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+        <label for="fp">new password (8+ characters)</label><input id="fp" type="password" autocomplete="new-password">
+        <label for="fp2">confirm new password</label><input id="fp2" type="password" autocomplete="new-password">
+        <p class="err" role="alert" id="rserr"></p>
+        <button class="btn fill" type="submit">set password</button>
+      </form>
+      <p class="alt"><a href="#/login">back to log in</a></p>
     </div>
   </div>
 </section>
@@ -477,7 +537,7 @@ textarea{resize:vertical}
     <div class="body">
       <p class="cmd"><b>$</b> register</p>
       <h2 id="rt" tabindex="-1">Create account</h2>
-      <p class="sub">Four fields, then you are in.</p>
+      <p class="sub">Four fields, then confirm your email with a 6-digit code.</p>
       <form id="regForm" novalidate>
         <label for="rn">name</label><input id="rn" type="text" autocomplete="name">
         <label for="re">email</label><input id="re" type="email" autocomplete="email">
@@ -600,7 +660,9 @@ textarea{resize:vertical}
         <button class="btn" type="button" data-pal="matrix">matrix</button>
       </div>
       <p class="cmd" style="margin-top:28px"><b>$</b> account --delete</p>
-      <p class="sub">Removes your account from this browser. This cannot be undone.</p>
+      <p class="sub">Permanently deletes your account and its data. This cannot be undone.</p>
+      <label for="dpw">password</label><input id="dpw" type="password" autocomplete="current-password" style="max-width:320px">
+      <p class="err" role="alert" id="derr"></p>
       <button class="btn" id="del" type="button">delete account</button>
     </div>
   </div>
@@ -613,10 +675,20 @@ textarea{resize:vertical}
   function set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
   function del(k){delete mem[k];try{localStorage.removeItem(k)}catch(e){}}
   function $(s){return document.querySelector(s)}
-  async function hash(email,pw){
-    var d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(email+':'+pw));
-    return Array.from(new Uint8Array(d)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+  /* ---- ACCOUNTS: real accounts live on the slaughter-sec-auth Worker ---- */
+  var AUTH_API='https://auth.slaughter-sec.com';
+  var ME=null,meLoaded=false,pendEmail='';
+  del('users');del('session'); /* old browser-only demo accounts */
+  async function api(path,body){
+    try{
+      var r=await fetch(AUTH_API+path,body===undefined?{credentials:'include'}:{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      var d=await r.json().catch(function(){return {}});
+      return {ok:r.ok,status:r.status,data:d||{}};
+    }catch(e){return {ok:false,status:0,data:{error:'could not reach the account server. try again.'}}}
   }
+  function msg(d,fallback){var m=(d&&d.error)||fallback;return m.charAt(0).toLowerCase()+m.slice(1)}
+  async function busy(btn,fn){if(btn.disabled)return;btn.disabled=true;try{await fn()}finally{btn.disabled=false}}
+  async function loadMe(){var r=await api('/me');ME=r.ok&&r.data.user?r.data.user:null;meLoaded=true}
   var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches,typed=false;
 
@@ -631,11 +703,14 @@ textarea{resize:vertical}
 
   var APP=['home','lab','cti','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
   function route(){
-    var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
-    var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
+    if(!meLoaded)return;
+    var h=location.hash.replace('#/',''),all=['login','register','verify','forgot'].concat(APP,PUB.slice(1));
+    var v=all.indexOf(h)>-1?h:'landing',sess=ME,app=APP.indexOf(v)>-1;
     if(v==='sltr'){location.hash='#/home';return}
     if(app&&!sess){location.hash='#/login';return}
-    if((v==='login'||v==='register')&&sess){location.hash='#/home';return}
+    if(['login','register','verify','forgot'].indexOf(v)>-1&&sess){location.hash='#/home';return}
+    if(v==='verify'&&!pendEmail){location.hash='#/register';return}
+    if(v==='forgot'&&h==='forgot')resetForgot();
     document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
     var pub=PUB.indexOf(v)>-1;
     document.body.classList.toggle('app',app);document.body.classList.toggle('pub',pub);document.body.classList.toggle('tm',v==='threats');
@@ -644,7 +719,7 @@ textarea{resize:vertical}
     if(sess){pl.textContent='open app';pl.setAttribute('href','#/home');pr2.hidden=true}else{pl.textContent='log in';pl.setAttribute('href','#/login');pr2.hidden=false}
     document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v||(a.dataset.v==='home'&&['lab','cti'].indexOf(v)>-1))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     if(app)enterApp(v);else stopSim();
-    if(v==='landing')typeQuote();
+    if(v==='landing'){typeQuote();topShow()}
     if(v==='kb')kbShow();
     if(v==='research')aiShow();
     if(v==='malware')mwShow();
@@ -653,29 +728,87 @@ textarea{resize:vertical}
   }
   window.addEventListener('hashchange',route);
 
-  $('#regForm').addEventListener('submit',async function(e){
+  function loggedIn(u){ME=u;pendEmail='';document.querySelectorAll('form').forEach(function(f){f.reset()});location.hash='#/home'}
+
+  $('#regForm').addEventListener('submit',function(e){
     e.preventDefault();
     var n=$('#rn').value.trim(),em=$('#re').value.trim().toLowerCase(),p=$('#rp').value,c=$('#rc').value,err=$('#rerr');
     if(!n)return err.textContent='enter your name.';
     if(!emailOk.test(em))return err.textContent='enter a valid email address.';
     if(p.length<8)return err.textContent='password must be at least 8 characters.';
     if(p!==c)return err.textContent='passwords do not match.';
-    var users=get('users')||{};
-    if(users[em])return err.textContent='an account with this email already exists. log in instead.';
-    users[em]={name:n,hash:await hash(em,p)};
-    set('users',users);set('session',em);err.textContent='';
-    e.target.reset();location.hash='#/home';
+    err.textContent='';
+    busy(e.submitter||e.target.querySelector('button'),async function(){
+      var r=await api('/signup',{name:n,email:em,password:p});
+      if(!r.ok)return err.textContent=msg(r.data,'could not create the account. try again.');
+      e.target.reset();pendEmail=em;
+      $('#vsub').textContent='I sent a 6-digit code to '+em+'. It expires in 15 minutes.';
+      location.hash='#/verify';
+    });
   });
 
-  $('#loginForm').addEventListener('submit',async function(e){
+  $('#verifyForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var c=$('#vc').value.replace(/\D/g,''),err=$('#verr');
+    if(c.length!==6)return err.textContent='enter the 6-digit code from the email.';
+    err.textContent='';
+    busy(e.submitter||e.target.querySelector('button'),async function(){
+      var r=await api('/verify',{email:pendEmail,code:c});
+      if(!r.ok)return err.textContent=msg(r.data,'that code did not work.');
+      loggedIn(r.data.user);
+    });
+  });
+  $('#vresend').addEventListener('click',function(e){
+    e.preventDefault();var err=$('#verr');
+    busy(this,async function(){
+      var r=await api('/resend',{email:pendEmail,purpose:'verify'});
+      err.textContent=r.ok?'':msg(r.data,'could not send a new code.');
+      if(r.ok)$('#vsub').textContent='A new code is on its way to '+pendEmail+'. Only the newest code works.';
+    });
+  });
+
+  $('#loginForm').addEventListener('submit',function(e){
     e.preventDefault();
     var em=$('#le').value.trim().toLowerCase(),p=$('#lp').value,err=$('#lerr');
-    var u=(get('users')||{})[em];
-    if(!u||u.hash!==await hash(em,p))return err.textContent='email or password is incorrect.';
-    set('session',em);err.textContent='';e.target.reset();location.hash='#/home';
+    if(!emailOk.test(em)||!p)return err.textContent='enter your email and password.';
+    err.textContent='';
+    busy(e.submitter||e.target.querySelector('button'),async function(){
+      var r=await api('/login',{email:em,password:p});
+      if(!r.ok)return err.textContent=msg(r.data,'email or password is incorrect.');
+      if(r.data.verify){e.target.reset();pendEmail=em;$('#vsub').textContent='Confirm your email first. I sent a 6-digit code to '+em+'.';location.hash='#/verify';return}
+      loggedIn(r.data.user);
+    });
   });
 
-  $('#out').addEventListener('click',function(){del('session');location.hash='#/'});
+  function resetForgot(){$('#forgotForm').hidden=false;$('#resetForm').hidden=true;$('#fsub').textContent='Enter your email and I will send you a code.';$('#ferr').textContent='';$('#rserr').textContent=''}
+  $('#forgotForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var em=$('#fe').value.trim().toLowerCase(),err=$('#ferr');
+    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
+    err.textContent='';
+    busy(e.submitter||e.target.querySelector('button'),async function(){
+      var r=await api('/forgot',{email:em});
+      if(!r.ok)return err.textContent=msg(r.data,'could not send a code. try again.');
+      pendEmail=em;e.target.hidden=true;$('#resetForm').hidden=false;
+      $('#fsub').textContent='If '+em+' has an account, a 6-digit code is on its way. It expires in 15 minutes.';
+      $('#fc').focus();
+    });
+  });
+  $('#resetForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var c=$('#fc').value.replace(/\D/g,''),p=$('#fp').value,p2=$('#fp2').value,err=$('#rserr');
+    if(c.length!==6)return err.textContent='enter the 6-digit code from the email.';
+    if(p.length<8)return err.textContent='password must be at least 8 characters.';
+    if(p!==p2)return err.textContent='passwords do not match.';
+    err.textContent='';
+    busy(e.submitter||e.target.querySelector('button'),async function(){
+      var r=await api('/reset',{email:pendEmail,code:c,password:p});
+      if(!r.ok)return err.textContent=msg(r.data,'that code did not work.');
+      resetForgot();loggedIn(r.data.user);
+    });
+  });
+
+  $('#out').addEventListener('click',function(){var b=this;busy(b,async function(){await api('/logout',{});ME=null;location.hash='#/'})});
 
   var LAND=[
    // North America
@@ -1023,6 +1156,46 @@ textarea{resize:vertical}
   /* api = your Worker's address. When it answers, each feed is paged and searched on the server (so years of history work).
      If it cannot be reached, the feeds fall back to the ENTRIES list above, so the page never goes blank. */
   var REMOTE={ok:!!ENTRIES_FEED.api};
+  /* ---- TOP STORY OF THE WEEK ----
+     Normally picked on your /admin page: the site reads it from GET /top on your API.
+     Backup: if the API has no pick, you can also fill in TOP_STORY here and set "picked" to today's date.
+     "note" is optional: one line on why you picked it. Leave it as '' to hide it.
+     A pick is shown for 7 days after "picked". If there is no pick, or it is older than 7 days,
+     the section shows the newest TTS story instead and is labelled "Latest story". */
+  var TOP_STORY={picked:'',title:'',date:'',summary:'',tags:[],source:'',url:'',note:''};
+  function topFresh(s){
+    if(!s||!s.picked||!s.title||!s.url)return false;
+    var t=Date.parse(String(s.picked).slice(0,10)+'T00:00:00');return !isNaN(t)&&Date.now()-t<7*864e5&&t<=Date.now()+864e5;
+  }
+  async function getJSON(u){
+    try{var ctl=new AbortController(),to=setTimeout(function(){ctl.abort()},8000);var r=await fetch(u,{signal:ctl.signal});clearTimeout(to);return r.ok?await r.json():null}catch(x){return null}
+  }
+  var topDone=false;
+  async function topShow(){
+    if(topDone)return;
+    var box=$('#topBody'),e=null,pick=false,note='',api=ENTRIES_FEED.api?ENTRIES_FEED.api.replace(/\/+$/,''):'';
+    if(api){var t=await getJSON(api+'/top');if(t&&topFresh(t.story)){e=t.story;pick=true;note=t.story.note||''}}
+    if(!pick&&topFresh(TOP_STORY)){e=TOP_STORY;pick=true;note=TOP_STORY.note||''}
+    if(!pick){
+      if(api){var d=await getJSON(api+'/feed?type=tts&limit=1&offset=0');if(d&&Array.isArray(d.items)&&d.items.length)e=d.items[0]}
+      if(!e)e=ENTRIES.filter(function(x){return x.type==='tts'}).sort(function(a,b){return a.date<b.date?1:-1})[0]||null;
+    }
+    $('#topH').textContent=pick?'Top story of the week':'Latest story';
+    box.innerHTML='';
+    if(!e||!/^https?:\/\//.test(e.url||'')){box.appendChild(kbEl('p','sub','No story yet. Check back soon.'));return}
+    topDone=true;
+    var m=kbEl('div','tmeta');
+    m.appendChild(kbEl('span','tbadge'+(pick?'':' alt'),pick?'top story':'latest'));
+    m.appendChild(kbEl('span','',[e.date,(e.tags||[])[0]].filter(Boolean).join('  ·  ')));
+    box.appendChild(m);
+    box.appendChild(kbEl('h3','ttl',e.title));
+    if(e.summary)box.appendChild(kbEl('p','tsum',e.summary));
+    if(pick&&note)box.appendChild(kbEl('p','tnote',note));
+    var l=kbEl('div','tlinks'),a=document.createElement('a');
+    a.href=e.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Read the source: '+(e.source||'link')+' \u2197';
+    var more=document.createElement('a');more.href='#/kb';more.textContent='More in TTS \u2192';
+    l.appendChild(a);l.appendChild(more);box.appendChild(l);
+  }
   var FEEDS={
     tts:{type:'tts',body:'#kbBody',sub:'#kbSub',updated:'2026-10-08',note:'',ph:'Search TTS',lead:'Newest first. Each item links to its source.'},
     ai:{type:'ai',body:'#aiBody',sub:'#aiSub',updated:'2026-10-08',note:'Findings from me are published here and marked as mine. Until my first write-up, this feed tracks notable public AI security research and incidents. Each item links to its source.',ph:'Search AI security research',lead:'Newest first.'},
@@ -1203,7 +1376,7 @@ textarea{resize:vertical}
   function stopTimers(){clearInterval(ptTimer);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
   function stopSim(){stopTimers();cur=''}
   function enterApp(v){
-    var em=get('session'),u=(get('users')||{})[em];if(!u){location.hash='#/login';return}
+    var u=ME,em=u&&u.email;if(!u){location.hash='#/login';return}
     cur=v;plrN(u);stopTimers();
     if(v==='threats')ensureGeo();
     if(v==='home')startCve();
@@ -1221,7 +1394,13 @@ textarea{resize:vertical}
     var b=this;
     if(!dt){b.textContent='click again to confirm';dt=setTimeout(function(){dt=0;b.textContent='delete account'},4000);return}
     clearTimeout(dt);dt=0;b.textContent='delete account';
-    var em=get('session'),us=get('users')||{};delete us[em];set('users',us);del('session');location.hash='#/';
+    var pw=$('#dpw').value,err=$('#derr');
+    if(!pw){err.textContent='enter your password to delete your account.';return}
+    busy(b,async function(){
+      var r=await api('/delete',{password:pw});
+      if(!r.ok){err.textContent=msg(r.data,'could not delete the account.');return}
+      $('#dpw').value='';err.textContent='';ME=null;location.hash='#/';
+    });
   });
 
   /* put the logo in the footer of every public page */
@@ -1232,7 +1411,7 @@ textarea{resize:vertical}
       f.insertBefore(t.cloneNode(true),f.lastElementChild);
     });
   })();
-  route();
+  loadMe().then(route);
 })();
 (function(){
   var cv=document.getElementById('rain'),cx=cv.getContext('2d'),fs=16,w,h,drops=[],bg,fade,fg,head,n=0;
