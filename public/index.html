@@ -392,7 +392,7 @@ textarea{resize:vertical}
 <section class="view site" data-view="about" aria-labelledby="ab">
  <div class="wrap">
   <h1 class="ph" id="ab" tabindex="-1">About Slaughter-Sec</h1>
-  <p class="sub" style="max-width:68ch">Cybersecurity is changing fast. To some people that is scary. To others, like me, it is exciting to watch. Slaughter-Sec is where I keep up with it: the latest threats, AI security research and malware, summarized in plain language and linked to the source. The goal is to keep you up to date on the cyber world, and to build a record of everything that happens in it.</p>
+  <p class="sub" style="max-width:68ch">Most businesses are told to buy more security tools. What they need first is a clear view of what attackers are doing right now. Slaughter-Sec focuses on exactly that: up-to-date news and information on the latest threats, summarized in plain language and linked to the source, so you do not have to find out the hard way. The goal is twofold: keep you up to date on the cyber world, and be a repository of everything that happens in it.</p>
   <div class="blk" style="margin-top:28px">
     <h2>How I work</h2>
     <div class="g3">
@@ -403,11 +403,7 @@ textarea{resize:vertical}
   </div>
   <div class="blk">
     <h2>Who is behind this</h2>
-    <div class="win"><div class="body">
-      <p class="sub" style="margin:0 0 14px">I am a college student working full time in IT, with a passion for security. Slaughter-Sec is a one-person project: I read, review and approve everything published here.</p>
-      <p class="sub" style="margin:0 0 20px">As I grow in my career, this site will grow with me. If you are curious and want to see more, create an account to view the homelab and demo projects I am working on.</p>
-      <div class="row"><a class="btn fill" href="#/register">Create an account</a><a class="btn" href="#/contact">Get in touch</a></div>
-    </div></div>
+    <div class="win"><div class="body"><p class="sub" style="margin:0">Slaughter-Sec is a one-person project. I read, review and approve everything published here. Want to know more? <a href="#/contact" style="color:var(--acc)">Get in touch.</a></p></div></div>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><div class="logo" role="img" aria-label="Slaughter-Sec logo">
@@ -470,48 +466,7 @@ textarea{resize:vertical}
         <p class="err" role="alert" id="lerr"></p>
         <button class="btn fill" type="submit">log in</button>
       </form>
-      <p class="alt">No account? <a href="#/register">register</a> &nbsp; <a href="#/forgot">forgot password?</a> &nbsp; <a href="#/">back</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="view" data-view="verify" aria-labelledby="vt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/verify</span></div>
-    <div class="body">
-      <p class="cmd"><b>$</b> verify --email</p>
-      <h2 id="vt" tabindex="-1">Check your email</h2>
-      <p class="sub" id="vsub">A 6-digit code is on its way. It expires in 15 minutes.</p>
-      <form id="verifyForm" novalidate>
-        <label for="vc">code</label><input id="vc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-        <p class="err" role="alert" id="verr"></p>
-        <button class="btn fill" type="submit">confirm</button>
-      </form>
-      <p class="alt">No email? Check spam, or <a href="#" id="vresend">send a new code</a>. &nbsp; <a href="#/register">start over</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="view" data-view="forgot" aria-labelledby="ft">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/reset</span></div>
-    <div class="body">
-      <p class="cmd"><b>$</b> passwd --reset</p>
-      <h2 id="ft" tabindex="-1">Reset password</h2>
-      <p class="sub" id="fsub">Enter your email and I will send you a code.</p>
-      <form id="forgotForm" novalidate>
-        <label for="fe">email</label><input id="fe" type="email" autocomplete="email">
-        <p class="err" role="alert" id="ferr"></p>
-        <button class="btn fill" type="submit">send code</button>
-      </form>
-      <form id="resetForm" novalidate hidden>
-        <label for="fc">code</label><input id="fc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-        <label for="fp">new password (8+ characters)</label><input id="fp" type="password" autocomplete="new-password">
-        <label for="fp2">confirm new password</label><input id="fp2" type="password" autocomplete="new-password">
-        <p class="err" role="alert" id="rserr"></p>
-        <button class="btn fill" type="submit">set password</button>
-      </form>
-      <p class="alt"><a href="#/login">back to log in</a></p>
+      <p class="alt">No account? <a href="#/register">register</a> &nbsp; <a href="#/">back</a></p>
     </div>
   </div>
 </section>
@@ -522,7 +477,7 @@ textarea{resize:vertical}
     <div class="body">
       <p class="cmd"><b>$</b> register</p>
       <h2 id="rt" tabindex="-1">Create account</h2>
-      <p class="sub">Four fields, then confirm your email with a 6-digit code.</p>
+      <p class="sub">Four fields, then you are in.</p>
       <form id="regForm" novalidate>
         <label for="rn">name</label><input id="rn" type="text" autocomplete="name">
         <label for="re">email</label><input id="re" type="email" autocomplete="email">
@@ -645,9 +600,7 @@ textarea{resize:vertical}
         <button class="btn" type="button" data-pal="matrix">matrix</button>
       </div>
       <p class="cmd" style="margin-top:28px"><b>$</b> account --delete</p>
-      <p class="sub">Permanently deletes your account and its data. This cannot be undone.</p>
-      <label for="dpw">password</label><input id="dpw" type="password" autocomplete="current-password" style="max-width:320px">
-      <p class="err" role="alert" id="derr"></p>
+      <p class="sub">Removes your account from this browser. This cannot be undone.</p>
       <button class="btn" id="del" type="button">delete account</button>
     </div>
   </div>
@@ -660,20 +613,10 @@ textarea{resize:vertical}
   function set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
   function del(k){delete mem[k];try{localStorage.removeItem(k)}catch(e){}}
   function $(s){return document.querySelector(s)}
-  /* ---- ACCOUNTS: real accounts live on the slaughter-sec-auth Worker ---- */
-  var AUTH_API='https://auth.slaughter-sec.com';
-  var ME=null,meLoaded=false,pendEmail='';
-  del('users');del('session'); /* old browser-only demo accounts */
-  async function api(path,body){
-    try{
-      var r=await fetch(AUTH_API+path,body===undefined?{credentials:'include'}:{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-      var d=await r.json().catch(function(){return {}});
-      return {ok:r.ok,status:r.status,data:d||{}};
-    }catch(e){return {ok:false,status:0,data:{error:'could not reach the account server. try again.'}}}
+  async function hash(email,pw){
+    var d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(email+':'+pw));
+    return Array.from(new Uint8Array(d)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
   }
-  function msg(d,fallback){var m=(d&&d.error)||fallback;return m.charAt(0).toLowerCase()+m.slice(1)}
-  async function busy(btn,fn){if(btn.disabled)return;btn.disabled=true;try{await fn()}finally{btn.disabled=false}}
-  async function loadMe(){var r=await api('/me');ME=r.ok&&r.data.user?r.data.user:null;meLoaded=true}
   var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches,typed=false;
 
@@ -688,14 +631,11 @@ textarea{resize:vertical}
 
   var APP=['home','lab','cti','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
   function route(){
-    if(!meLoaded)return;
-    var h=location.hash.replace('#/',''),all=['login','register','verify','forgot'].concat(APP,PUB.slice(1));
-    var v=all.indexOf(h)>-1?h:'landing',sess=ME,app=APP.indexOf(v)>-1;
+    var h=location.hash.replace('#/',''),all=['login','register'].concat(APP,PUB.slice(1));
+    var v=all.indexOf(h)>-1?h:'landing',sess=get('session'),app=APP.indexOf(v)>-1;
     if(v==='sltr'){location.hash='#/home';return}
     if(app&&!sess){location.hash='#/login';return}
-    if(['login','register','verify','forgot'].indexOf(v)>-1&&sess){location.hash='#/home';return}
-    if(v==='verify'&&!pendEmail){location.hash='#/register';return}
-    if(v==='forgot'&&h==='forgot')resetForgot();
+    if((v==='login'||v==='register')&&sess){location.hash='#/home';return}
     document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
     var pub=PUB.indexOf(v)>-1;
     document.body.classList.toggle('app',app);document.body.classList.toggle('pub',pub);document.body.classList.toggle('tm',v==='threats');
@@ -713,87 +653,29 @@ textarea{resize:vertical}
   }
   window.addEventListener('hashchange',route);
 
-  function loggedIn(u){ME=u;pendEmail='';document.querySelectorAll('form').forEach(function(f){f.reset()});location.hash='#/home'}
-
-  $('#regForm').addEventListener('submit',function(e){
+  $('#regForm').addEventListener('submit',async function(e){
     e.preventDefault();
     var n=$('#rn').value.trim(),em=$('#re').value.trim().toLowerCase(),p=$('#rp').value,c=$('#rc').value,err=$('#rerr');
     if(!n)return err.textContent='enter your name.';
     if(!emailOk.test(em))return err.textContent='enter a valid email address.';
     if(p.length<8)return err.textContent='password must be at least 8 characters.';
     if(p!==c)return err.textContent='passwords do not match.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/signup',{name:n,email:em,password:p});
-      if(!r.ok)return err.textContent=msg(r.data,'could not create the account. try again.');
-      e.target.reset();pendEmail=em;
-      $('#vsub').textContent='I sent a 6-digit code to '+em+'. It expires in 15 minutes.';
-      location.hash='#/verify';
-    });
+    var users=get('users')||{};
+    if(users[em])return err.textContent='an account with this email already exists. log in instead.';
+    users[em]={name:n,hash:await hash(em,p)};
+    set('users',users);set('session',em);err.textContent='';
+    e.target.reset();location.hash='#/home';
   });
 
-  $('#verifyForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var c=$('#vc').value.replace(/\D/g,''),err=$('#verr');
-    if(c.length!==6)return err.textContent='enter the 6-digit code from the email.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/verify',{email:pendEmail,code:c});
-      if(!r.ok)return err.textContent=msg(r.data,'that code did not work.');
-      loggedIn(r.data.user);
-    });
-  });
-  $('#vresend').addEventListener('click',function(e){
-    e.preventDefault();var err=$('#verr');
-    busy(this,async function(){
-      var r=await api('/resend',{email:pendEmail,purpose:'verify'});
-      err.textContent=r.ok?'':msg(r.data,'could not send a new code.');
-      if(r.ok)$('#vsub').textContent='A new code is on its way to '+pendEmail+'. Only the newest code works.';
-    });
-  });
-
-  $('#loginForm').addEventListener('submit',function(e){
+  $('#loginForm').addEventListener('submit',async function(e){
     e.preventDefault();
     var em=$('#le').value.trim().toLowerCase(),p=$('#lp').value,err=$('#lerr');
-    if(!emailOk.test(em)||!p)return err.textContent='enter your email and password.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/login',{email:em,password:p});
-      if(!r.ok)return err.textContent=msg(r.data,'email or password is incorrect.');
-      if(r.data.verify){e.target.reset();pendEmail=em;$('#vsub').textContent='Confirm your email first. I sent a 6-digit code to '+em+'.';location.hash='#/verify';return}
-      loggedIn(r.data.user);
-    });
+    var u=(get('users')||{})[em];
+    if(!u||u.hash!==await hash(em,p))return err.textContent='email or password is incorrect.';
+    set('session',em);err.textContent='';e.target.reset();location.hash='#/home';
   });
 
-  function resetForgot(){$('#forgotForm').hidden=false;$('#resetForm').hidden=true;$('#fsub').textContent='Enter your email and I will send you a code.';$('#ferr').textContent='';$('#rserr').textContent=''}
-  $('#forgotForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var em=$('#fe').value.trim().toLowerCase(),err=$('#ferr');
-    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/forgot',{email:em});
-      if(!r.ok)return err.textContent=msg(r.data,'could not send a code. try again.');
-      pendEmail=em;e.target.hidden=true;$('#resetForm').hidden=false;
-      $('#fsub').textContent='If '+em+' has an account, a 6-digit code is on its way. It expires in 15 minutes.';
-      $('#fc').focus();
-    });
-  });
-  $('#resetForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var c=$('#fc').value.replace(/\D/g,''),p=$('#fp').value,p2=$('#fp2').value,err=$('#rserr');
-    if(c.length!==6)return err.textContent='enter the 6-digit code from the email.';
-    if(p.length<8)return err.textContent='password must be at least 8 characters.';
-    if(p!==p2)return err.textContent='passwords do not match.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/reset',{email:pendEmail,code:c,password:p});
-      if(!r.ok)return err.textContent=msg(r.data,'that code did not work.');
-      resetForgot();loggedIn(r.data.user);
-    });
-  });
-
-  $('#out').addEventListener('click',function(){var b=this;busy(b,async function(){await api('/logout',{});ME=null;location.hash='#/'})});
+  $('#out').addEventListener('click',function(){del('session');location.hash='#/'});
 
   var LAND=[
    // North America
@@ -1321,7 +1203,7 @@ textarea{resize:vertical}
   function stopTimers(){clearInterval(ptTimer);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
   function stopSim(){stopTimers();cur=''}
   function enterApp(v){
-    var u=ME,em=u&&u.email;if(!u){location.hash='#/login';return}
+    var em=get('session'),u=(get('users')||{})[em];if(!u){location.hash='#/login';return}
     cur=v;plrN(u);stopTimers();
     if(v==='threats')ensureGeo();
     if(v==='home')startCve();
@@ -1339,13 +1221,7 @@ textarea{resize:vertical}
     var b=this;
     if(!dt){b.textContent='click again to confirm';dt=setTimeout(function(){dt=0;b.textContent='delete account'},4000);return}
     clearTimeout(dt);dt=0;b.textContent='delete account';
-    var pw=$('#dpw').value,err=$('#derr');
-    if(!pw){err.textContent='enter your password to delete your account.';return}
-    busy(b,async function(){
-      var r=await api('/delete',{password:pw});
-      if(!r.ok){err.textContent=msg(r.data,'could not delete the account.');return}
-      $('#dpw').value='';err.textContent='';ME=null;location.hash='#/';
-    });
+    var em=get('session'),us=get('users')||{};delete us[em];set('users',us);del('session');location.hash='#/';
   });
 
   /* put the logo in the footer of every public page */
@@ -1356,7 +1232,7 @@ textarea{resize:vertical}
       f.insertBefore(t.cloneNode(true),f.lastElementChild);
     });
   })();
-  loadMe().then(route);
+  route();
 })();
 (function(){
   var cv=document.getElementById('rain'),cx=cv.getContext('2d'),fs=16,w,h,drops=[],bg,fade,fg,head,n=0;
