@@ -1,96 +1,107 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Slaughter-Sec — Redline</title>
+<title>Slaughter-Sec — Field Manual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&amp;family=Barlow:wght@400;500;600&amp;family=Overpass+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#0a0a0a}
-a{color:#f5f5f5}a:hover{color:#ff5c5c}
+body{margin:0;background:#0f110c}
+a{color:#ff7a1a}a:hover{color:#ffab6b}
 </style>
 </head>
 <body>
-<div style="min-height: 100vh; background: #0a0a0a; color: #f5f5f5; font-family: 'Space Grotesk', system-ui, sans-serif">
+<div style="min-height: 100vh; background: #0f110c; color: #e7e3d3; font-family: Barlow, system-ui, sans-serif">
 
-<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; padding: 20px clamp(16px, 4vw, 56px); border-bottom: 1px solid #262626">
-<a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 700; font-size: 20px; letter-spacing: -0.02em">
-<span style="display: grid; place-items: center; width: 36px; height: 36px; background: #ff2d2d">
-<svg width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="m4"><rect width="64" height="64" fill="#fff"></rect><path d="M37 35 L28 53" stroke="#000" stroke-width="5.5" stroke-linecap="round"></path></mask></defs><path d="M20 29 V21 A12 12 0 0 1 44 21 V29" fill="none" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"></path><rect mask="url(#m4)" x="11" y="28" width="42" height="31" rx="5" fill="#0a0a0a"></rect></svg>
-</span>SLAUGHTER-SEC</a>
-<div style="display: flex; flex-wrap: wrap; gap: 6px 28px; flex: 1 1 auto; font: 700 13px 'Space Mono', monospace; letter-spacing: 0.06em">
-<a href="#" style="text-decoration: none">TTS</a><a href="#" style="text-decoration: none">AI RESEARCH</a><a href="#" style="text-decoration: none">MALWARE</a><a href="#" style="text-decoration: none">ABOUT</a><a href="#" style="text-decoration: none">CONTACT</a>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; padding: 8px clamp(16px, 4vw, 48px); background: #ff7a1a; color: #140b02; font: 600 12px 'Overpass Mono', monospace; letter-spacing: 0.08em">
+<span>DOC REF SS-2026-43</span><span>DISTRIBUTION: PUBLIC</span><span>REVIEWED BY HAND</span>
 </div>
-<div style="display: flex; gap: 10px; font: 700 13px 'Space Mono', monospace">
-<a href="#" style="padding: 11px 18px; border: 2px solid #f5f5f5; text-decoration: none">LOG IN</a>
-<a href="#" style="padding: 11px 18px; background: #ff2d2d; color: #0a0a0a; border: 2px solid #ff2d2d; text-decoration: none">REGISTER</a>
+
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; padding: 18px clamp(16px, 4vw, 48px); border-bottom: 2px solid #33382a">
+<a href="#" style="display: flex; align-items: center; gap: 12px; color: #e7e3d3; text-decoration: none; font: 800 26px 'Barlow Condensed', sans-serif; letter-spacing: 0.06em; text-transform: uppercase">
+<svg width="24" height="24" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="m10"><rect width="64" height="64" fill="#fff"></rect><path d="M37 35 L28 53" stroke="#000" stroke-width="5.5" stroke-linecap="round"></path></mask></defs><path d="M20 29 V21 A12 12 0 0 1 44 21 V29" fill="none" stroke="#e7e3d3" stroke-width="5" stroke-linecap="butt"></path><rect mask="url(#m10)" x="11" y="28" width="42" height="31" rx="1" fill="#e7e3d3"></rect></svg>
+Slaughter-Sec</a>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 26px; flex: 1 1 auto; font: 600 17px 'Barlow Condensed', sans-serif; letter-spacing: 0.08em; text-transform: uppercase">
+<a href="#" style="color: #e7e3d3; text-decoration: none">Threat Summary</a><a href="#" style="color: #e7e3d3; text-decoration: none">AI Research</a><a href="#" style="color: #e7e3d3; text-decoration: none">Malware</a><a href="#" style="color: #e7e3d3; text-decoration: none">About</a>
+</div>
+<div style="display: flex; gap: 10px; font: 700 16px 'Barlow Condensed', sans-serif; letter-spacing: 0.08em; text-transform: uppercase">
+<a href="#" style="padding: 10px 18px; border: 2px solid #e7e3d3; color: #e7e3d3; text-decoration: none">Log in</a>
+<a href="#" style="padding: 10px 18px; background: #ff7a1a; border: 2px solid #ff7a1a; color: #140b02; text-decoration: none">Enlist</a>
 </div>
 </nav>
 
-<section style="padding: clamp(48px, 8vw, 120px) clamp(16px, 4vw, 56px) clamp(40px, 6vw, 80px); display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end">
-<div style="flex: 999 1 640px; min-width: 0">
-<p style="margin: 0 0 22px; font: 700 13px 'Space Mono', monospace; letter-spacing: 0.2em; color: #ff2d2d">/// DAILY THREAT NEWS</p>
-<h1 style="margin: 0; font-size: clamp(56px, 10vw, 152px); line-height: 0.88; font-weight: 700; letter-spacing: -0.05em; text-transform: uppercase">Stay<br>current<span style="color: #ff2d2d">.</span></h1>
-<div style="height: 10px; width: min(560px, 80%); background: #ff2d2d; margin: 28px 0 0"></div>
-</div>
-<div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 22px">
-<p style="margin: 0; font-size: 19px; line-height: 1.55; color: #cfcfcf">The latest vulnerabilities, attacks, breaches and malware. Short, plain-language summaries, each linked to its source, each read by me before it goes live.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 12px; font: 700 14px 'Space Mono', monospace">
-<a href="#" style="padding: 16px 22px; background: #ff2d2d; color: #0a0a0a; text-decoration: none">READ TODAY →</a>
-<a href="#" style="padding: 16px 22px; border: 2px solid #f5f5f5; text-decoration: none">REGISTER</a>
-</div>
-</div>
-</section>
+<main style="max-width: 1240px; margin: 0 auto; padding: 48px clamp(16px, 4vw, 48px) 72px; display: flex; flex-direction: column; gap: 52px">
 
-<div aria-hidden="true" style="height: 18px; background: repeating-linear-gradient(-45deg, #ff2d2d 0 14px, #0a0a0a 14px 28px)"></div>
-
-<section aria-labelledby="r1" style="background: #ff2d2d; color: #0a0a0a; padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 56px); display: flex; flex-wrap: wrap; gap: 24px 48px">
-<div style="flex: 1 1 220px">
-<h2 id="r1" style="margin: 0 0 8px; font: 700 13px 'Space Mono', monospace; letter-spacing: 0.2em">TOP STORY / WEEK 43</h2>
-<p style="margin: 0; font: 400 13px 'Space Mono', monospace">2026-10-08<br>THREAT ACTOR<br>THE HACKER NEWS</p>
-</div>
+<section style="display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-end">
 <div style="flex: 999 1 600px; min-width: 0">
-<h3 style="margin: 0 0 16px; font-size: clamp(30px, 4vw, 54px); line-height: 1; font-weight: 700; letter-spacing: -0.03em">US offers up to $10 million for information on HAFNIUM suspect Zhang Yu</h3>
-<p style="margin: 0 0 20px; font-size: 18px; line-height: 1.5; max-width: 70ch">The State Department’s Rewards for Justice program is offering up to $10 million for information on Zhang Yu, a Chinese national charged over the 2021 Microsoft Exchange Server attacks. He remains at large and the charges have not been tested in court.</p>
-<a href="#" style="color: #0a0a0a; font: 700 14px 'Space Mono', monospace">READ THE SOURCE ↗</a>
+<p style="margin: 0 0 14px; font: 600 13px 'Overpass Mono', monospace; letter-spacing: 0.12em; color: #b0a982">SECTION 0 · PURPOSE</p>
+<h1 style="margin: 0; font: 800 clamp(60px, 9vw, 136px)/0.86 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: -0.01em">Stay current on the <span style="color: #ff7a1a">latest</span> cyber threats.</h1>
+</div>
+<div style="flex: 1 1 320px; border: 2px solid #33382a; padding: 22px; position: relative">
+<span style="position: absolute; top: -2px; left: -2px; width: 18px; height: 18px; border-top: 2px solid #ff7a1a; border-left: 2px solid #ff7a1a"></span>
+<span style="position: absolute; bottom: -2px; right: -2px; width: 18px; height: 18px; border-bottom: 2px solid #ff7a1a; border-right: 2px solid #ff7a1a"></span>
+<p style="margin: 0 0 20px; font-size: 17px; line-height: 1.6; color: #d4cfba">Daily briefings on new vulnerabilities, attacks, breaches and malware. Plain language. Every item sourced. Every item reviewed by hand before release.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; font: 700 17px 'Barlow Condensed', sans-serif; letter-spacing: 0.08em; text-transform: uppercase">
+<a href="#" style="padding: 13px 20px; background: #ff7a1a; color: #140b02; text-decoration: none">Today’s briefing</a>
+<a href="#" style="padding: 13px 20px; border: 2px solid #e7e3d3; color: #e7e3d3; text-decoration: none">Register</a>
+</div>
 </div>
 </section>
 
-<section aria-label="Feeds" style="padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; border-bottom: 1px solid #262626">
-<a href="#" style="display: block; padding: 28px 28px 28px 0; border-top: 2px solid #f5f5f5; text-decoration: none">
-<p style="margin: 0 0 30px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">01</p>
-<h2 style="margin: 0 0 12px; font-size: 40px; font-weight: 700; letter-spacing: -0.03em">TTS</h2>
-<p style="margin: 0 0 22px; color: #a3a3a3; line-height: 1.55">Today’s Threat Summary: exploited flaws, active campaigns, breaches and attacker activity.</p>
-<p style="margin: 0; font-size: 15px; line-height: 1.45">→ Attackers hijack three country registries to get certificates for Google domains</p>
-</a>
-<a href="#" style="display: block; padding: 28px; border-top: 2px solid #f5f5f5; text-decoration: none">
-<p style="margin: 0 0 30px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">02</p>
-<h2 style="margin: 0 0 12px; font-size: 40px; font-weight: 700; letter-spacing: -0.03em">AI Research</h2>
-<p style="margin: 0 0 22px; color: #a3a3a3; line-height: 1.55">How AI systems and agents are attacked, and how attackers are starting to use AI.</p>
-<p style="margin: 0; font-size: 15px; line-height: 1.45">→ Critical LMCache flaw allows unauthenticated remote code execution</p>
-</a>
-<a href="#" style="display: block; padding: 28px 0 28px 28px; border-top: 2px solid #f5f5f5; text-decoration: none">
-<p style="margin: 0 0 30px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">03</p>
-<h2 style="margin: 0 0 12px; font-size: 40px; font-weight: 700; letter-spacing: -0.03em">Malware</h2>
-<p style="margin: 0 0 22px; color: #a3a3a3; line-height: 1.55">New malware, botnets, ransomware and infostealers, explained plainly.</p>
-<p style="margin: 0; font-size: 15px; line-height: 1.45">→ ASHVEIN RAT hides commands in invisible HTML</p>
-</a>
-</section>
-
-<section aria-labelledby="r2" style="padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 56px)">
-<h2 id="r2" style="margin: 0 0 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase">Read by a human.<br><span style="color: #6b6b6b">Every time.</span></h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px">
-<div><p style="margin: 0 0 10px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">[1] COLLECT</p><p style="margin: 0; color: #a3a3a3; line-height: 1.6">New stories pulled every morning from trusted security sources.</p></div>
-<div><p style="margin: 0 0 10px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">[2] SUMMARIZE</p><p style="margin: 0; color: #a3a3a3; line-height: 1.6">A short draft, using only what the source says.</p></div>
-<div><p style="margin: 0 0 10px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">[3] REVIEW</p><p style="margin: 0; color: #a3a3a3; line-height: 1.6">I read every item, fix it or reject it.</p></div>
-<div><p style="margin: 0 0 10px; font: 700 13px 'Space Mono', monospace; color: #ff2d2d">[4] PUBLISH</p><p style="margin: 0; color: #a3a3a3; line-height: 1.6">Approved items go live, linked to the source.</p></div>
+<section aria-labelledby="f1" style="background: #161911; border: 2px solid #33382a">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; padding: 12px 22px; border-bottom: 2px solid #33382a; font: 600 12px 'Overpass Mono', monospace; letter-spacing: 0.1em; color: #b0a982">
+<h2 id="f1" style="margin: 0; font: 600 12px 'Overpass Mono', monospace; color: #ff7a1a">BRIEFING 001 · TOP STORY OF THE WEEK</h2><span>FILED 2026-10-08</span>
+</div>
+<div style="display: flex; flex-wrap: wrap">
+<dl style="flex: 1 1 240px; margin: 0; padding: 22px; border-right: 2px solid #33382a; display: grid; gap: 14px; align-content: start; font: 400 13px 'Overpass Mono', monospace">
+<div><dt style="color: #b0a982; margin-bottom: 2px">CATEGORY</dt><dd style="margin: 0">Threat actor</dd></div>
+<div><dt style="color: #b0a982; margin-bottom: 2px">SOURCE</dt><dd style="margin: 0"><a href="#">The Hacker News ↗</a></dd></div>
+<div><dt style="color: #b0a982; margin-bottom: 2px">STATUS</dt><dd style="margin: 0">Reviewed · published</dd></div>
+</dl>
+<div style="flex: 999 1 560px; min-width: 0; padding: clamp(22px, 3vw, 34px)">
+<h3 style="margin: 0 0 14px; font: 700 clamp(30px, 3.4vw, 44px)/1.02 'Barlow Condensed', sans-serif; text-transform: uppercase">US offers up to $10 million for information on HAFNIUM suspect Zhang Yu</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.65; color: #d4cfba; max-width: 72ch">The State Department’s Rewards for Justice program is offering up to $10 million for information on Zhang Yu, a Chinese national charged over the 2021 Microsoft Exchange Server attacks. He remains at large and the charges have not been tested in court.</p>
+</div>
 </div>
 </section>
 
-<footer style="border-top: 1px solid #262626; padding: 26px clamp(16px, 4vw, 56px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font: 400 13px 'Space Mono', monospace; color: #a3a3a3">
-<span>© 2026 SLAUGHTER-SEC</span><a href="#" style="color: #a3a3a3">contact@slaughter-sec.com</a>
+<section aria-label="Sections" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px">
+<a href="#" style="display: block; border: 2px solid #33382a; padding: 24px; text-decoration: none; color: #e7e3d3">
+<p style="margin: 0 0 18px; font: 600 12px 'Overpass Mono', monospace; letter-spacing: 0.12em; color: #ff7a1a">SECTION A</p>
+<h2 style="margin: 0 0 10px; font: 700 32px/1 'Barlow Condensed', sans-serif; text-transform: uppercase">Threat Summary</h2>
+<p style="margin: 0 0 18px; color: #c4bea6; line-height: 1.6">Exploited flaws, active campaigns, breaches, attacker activity.</p>
+<p style="margin: 0; padding-top: 14px; border-top: 2px dotted #33382a; font-size: 15px; line-height: 1.5">Attackers hijack three country registries to get certificates for Google domains</p>
+</a>
+<a href="#" style="display: block; border: 2px solid #33382a; padding: 24px; text-decoration: none; color: #e7e3d3">
+<p style="margin: 0 0 18px; font: 600 12px 'Overpass Mono', monospace; letter-spacing: 0.12em; color: #ff7a1a">SECTION B</p>
+<h2 style="margin: 0 0 10px; font: 700 32px/1 'Barlow Condensed', sans-serif; text-transform: uppercase">AI Research</h2>
+<p style="margin: 0 0 18px; color: #c4bea6; line-height: 1.6">Attacks on AI systems and agents, and attackers using AI.</p>
+<p style="margin: 0; padding-top: 14px; border-top: 2px dotted #33382a; font-size: 15px; line-height: 1.5">Critical LMCache flaw allows unauthenticated remote code execution</p>
+</a>
+<a href="#" style="display: block; border: 2px solid #33382a; padding: 24px; text-decoration: none; color: #e7e3d3">
+<p style="margin: 0 0 18px; font: 600 12px 'Overpass Mono', monospace; letter-spacing: 0.12em; color: #ff7a1a">SECTION C</p>
+<h2 style="margin: 0 0 10px; font: 700 32px/1 'Barlow Condensed', sans-serif; text-transform: uppercase">Malware Analysis</h2>
+<p style="margin: 0 0 18px; color: #c4bea6; line-height: 1.6">Malware, botnets, ransomware and infostealers, explained.</p>
+<p style="margin: 0; padding-top: 14px; border-top: 2px dotted #33382a; font-size: 15px; line-height: 1.5">ASHVEIN RAT hides commands in invisible HTML</p>
+</a>
+</section>
+
+<section aria-labelledby="f2">
+<h2 id="f2" style="margin: 0 0 20px; font: 800 44px/1 'Barlow Condensed', sans-serif; text-transform: uppercase">Standard procedure</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border: 2px solid #33382a">
+<li style="padding: 22px; border-right: 2px solid #33382a"><p style="margin: 0 0 8px; font: 700 22px 'Barlow Condensed', sans-serif; text-transform: uppercase"><span style="color: #ff7a1a">1.</span> Collect</p><p style="margin: 0; color: #c4bea6; line-height: 1.55">New stories each morning from trusted sources.</p></li>
+<li style="padding: 22px; border-right: 2px solid #33382a"><p style="margin: 0 0 8px; font: 700 22px 'Barlow Condensed', sans-serif; text-transform: uppercase"><span style="color: #ff7a1a">2.</span> Summarize</p><p style="margin: 0; color: #c4bea6; line-height: 1.55">A short draft, from the source only.</p></li>
+<li style="padding: 22px; border-right: 2px solid #33382a"><p style="margin: 0 0 8px; font: 700 22px 'Barlow Condensed', sans-serif; text-transform: uppercase"><span style="color: #ff7a1a">3.</span> Review</p><p style="margin: 0; color: #c4bea6; line-height: 1.55">Every item checked, fixed or rejected by hand.</p></li>
+<li style="padding: 22px"><p style="margin: 0 0 8px; font: 700 22px 'Barlow Condensed', sans-serif; text-transform: uppercase"><span style="color: #ff7a1a">4.</span> Publish</p><p style="margin: 0; color: #c4bea6; line-height: 1.55">Released with a link to the source.</p></li>
+</ol>
+</section>
+</main>
+
+<footer style="border-top: 2px solid #33382a; padding: 22px clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font: 400 13px 'Overpass Mono', monospace; color: #b0a982">
+<span>© 2026 SLAUGHTER-SEC · END OF DOCUMENT</span><a href="#" style="color: #b0a982">contact@slaughter-sec.com</a>
 </footer>
 </div>
 </body>
