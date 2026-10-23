@@ -473,6 +473,59 @@ body.lab #rain{display:block;opacity:.14}
 .ed-pick .tlinks a{color:var(--acc)}
 .ed-pick.picked{border-left-color:var(--acc)}
 .ed-pick.picked #topH{color:var(--acc)}
+/* ---- section pages: lead story, featured grid, archive ---- */
+.fx-sec{margin:0 0 4px;font:700 .72rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+h1.ph+.sub+.fsub{margin-top:-18px}
+.fsub{margin:0 0 26px;font-size:.8rem;color:var(--dim);letter-spacing:.02em}
+.fnote{margin:0 0 22px;font:italic 400 1rem/1.5 var(--serif);color:var(--dim);max-width:72ch;border-left:2px solid var(--line);padding-left:12px}
+.fx-front{border-top:3px double var(--rule2);padding-top:26px;margin-bottom:8px}
+.fx-front[hidden]{display:none}
+.fx-k{display:block;margin:0 0 8px;font:700 .68rem var(--sans);letter-spacing:.13em;text-transform:uppercase}
+.fx-m{margin:10px 0 0;font-size:.76rem;color:var(--dim)}
+.fx-m b{color:var(--fg);font-weight:600}
+.fx-x{color:#cfc9bf;margin:0}
+.fx-front article{position:relative}
+.fx-front h3 a,.fx-row h3 a{color:var(--fg);text-decoration:none}
+.fx-front h3 a::after,.fx-row h3 a::after{content:"";position:absolute;inset:0}
+.fx-front article:hover h3 a,.fx-row:hover h3 a{color:var(--acc)}
+.fx-front h3 a:focus-visible,.fx-row h3 a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.fx-top{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);border-bottom:1px solid var(--line);padding-bottom:28px}
+.fx-lead{padding-right:34px;border-right:1px solid var(--line)}
+.fx-lead h3{margin:0 0 16px;font:800 clamp(2rem,4.2vw,3.3rem)/1.04 var(--serif);letter-spacing:-.025em;text-wrap:balance}
+.fx-lead .fx-x{font:400 1.22rem/1.6 var(--serif);max-width:60ch}
+.fx-side{padding-left:28px;display:flex;flex-direction:column}
+.fx-s{padding:0 0 18px;margin:0 0 18px;border-bottom:1px solid var(--line)}
+.fx-s:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.fx-s h3{margin:0 0 8px;font:700 1.32rem/1.25 var(--serif)}
+.fx-s .fx-x,.fx-card .fx-x{font-size:.92rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.fx-grid:empty{display:none}
+.fx-card{padding:22px 22px 24px;border-right:1px solid var(--line)}
+.fx-card:first-child{padding-left:0}
+.fx-card:last-child{border-right:0;padding-right:0}
+.fx-card h3{margin:0 0 8px;font:700 1.18rem/1.3 var(--serif)}
+.fx-ah{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin:34px 0 14px}
+.fx-ah h2{margin:0;font-size:1.7rem}
+.fx-ah p{margin:0;font-size:.8rem;color:var(--dim)}
+.fx-row{position:relative;display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:4px 22px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.fx-row .fx-d{font-size:.76rem;color:var(--dim);letter-spacing:.03em}
+.fx-row h3{margin:0 0 4px;font:600 1.15rem/1.3 var(--serif)}
+.fx-row .fx-x{font-size:.88rem;line-height:1.5;color:var(--dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fx-row .fx-k{margin:0;white-space:nowrap}
+.fx-row:hover{background:color-mix(in srgb,var(--win) 70%,transparent)}
+.fx-topics{margin-top:56px}
+.fx-topics>h2{font-size:1.5rem}
+@media (max-width:860px){
+ .fx-top{grid-template-columns:1fr}
+ .fx-lead{padding-right:0;border-right:0;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:22px}
+ .fx-side{padding-left:0}
+ .fx-grid{grid-template-columns:1fr}
+ .fx-card{padding:20px 0;border-right:0;border-bottom:1px solid var(--line)}
+ .fx-card:last-child{border-bottom:0}
+ .fx-row{grid-template-columns:1fr}
+ .fx-row .fx-k{order:-1}
+ .fx-lead .fx-x{font-size:1.05rem}
+}
 </style>
 </head>
 <body>
@@ -578,18 +631,19 @@ body.lab #rain{display:block;opacity:.14}
 
 <section class="view site" data-view="research" aria-labelledby="rs">
  <div class="wrap">
+  <p class="fx-sec">Section &middot; AI security</p>
   <h1 class="ph" id="rs" tabindex="-1">AI security research</h1>
-  <p class="sub">I study how AI systems fail under attack and share what I learn, so businesses can defend themselves.</p>
-  <div class="g2 blk">
-    <div class="win card"><div class="body"><h3>Prompt injection</h3><p>Instructions hidden in emails, web pages or documents that make an AI assistant act against its owner.</p></div></div>
-    <div class="win card"><div class="body"><h3>Data leakage</h3><p>How models and connected tools can reveal private information they were never meant to share.</p></div></div>
-    <div class="win card"><div class="body"><h3>Agent permissions</h3><p>What happens when an AI agent can send email, run code or touch your files, and how to limit the damage.</p></div></div>
-    <div class="win card"><div class="body"><h3>Supply chain</h3><p>Risks in the models, plug-ins and datasets a business pulls in from outside.</p></div></div>
-  </div>
-  <div class="blk">
-    <h2>Latest findings</h2>
-    <p class="sub" id="aiSub" style="margin:0 0 8px"></p>
-    <div id="aiBody"></div>
+  <p class="sub">How AI systems and agents are being attacked, and how attackers are starting to use AI themselves.</p>
+  <p class="fsub" id="aiSub"></p>
+  <div id="aiBody" class="blk"></div>
+  <div class="blk fx-topics">
+    <h2>What this section covers</h2>
+    <div class="g2">
+      <div class="win card"><div class="body"><h3>Prompt injection</h3><p>Instructions hidden in emails, web pages or documents that make an AI assistant act against its owner.</p></div></div>
+      <div class="win card"><div class="body"><h3>Data leakage</h3><p>How models and connected tools can reveal private information they were never meant to share.</p></div></div>
+      <div class="win card"><div class="body"><h3>Agent permissions</h3><p>What happens when an AI agent can send email, run code or touch your files, and how to limit the damage.</p></div></div>
+      <div class="win card"><div class="body"><h3>Supply chain</h3><p>Risks in the models, plug-ins and datasets a business pulls in from outside.</p></div></div>
+    </div>
   </div>
   <div class="row blk"><a class="btn fill" href="#/contact">Ask about my research</a></div>
  </div>
@@ -636,20 +690,21 @@ body.lab #rain{display:block;opacity:.14}
 
 <section class="view site" data-view="malware" aria-labelledby="mw">
  <div class="wrap">
+  <p class="fx-sec">Section &middot; Malware</p>
   <h1 class="ph" id="mw" tabindex="-1">Malware analysis</h1>
-  <p class="sub" style="max-width:68ch">What malicious software does, how it spreads and how to spot it. I follow worms, ransomware, infostealers and other malware, and explain each in plain language.</p>
-  <div class="g3 blk">
-    <div class="win card"><div class="body"><h3>Ransomware</h3><p>Malware that locks or steals data and demands payment, and the groups that run it.</p></div></div>
-    <div class="win card"><div class="body"><h3>Worms</h3><p>Malware that spreads from system to system on its own, with no one clicking anything.</p></div></div>
-    <div class="win card"><div class="body"><h3>Infostealers</h3><p>Malware that takes passwords, browser data, keys and tokens, which are then sold or reused.</p></div></div>
-    <div class="win card"><div class="body"><h3>Trojans and loaders</h3><p>Programs that look harmless, or quietly download something worse once inside.</p></div></div>
-    <div class="win card"><div class="body"><h3>Botnets</h3><p>Networks of infected devices controlled by an attacker, used for attacks and spam.</p></div></div>
-    <div class="win card"><div class="body"><h3>Supply chain malware</h3><p>Malicious code hidden in trusted software, updates and developer tools.</p></div></div>
-  </div>
-  <div class="blk">
-    <h2>Latest analyses</h2>
-    <p class="sub" id="mwSub" style="margin:0 0 8px"></p>
-    <div id="mwBody"></div>
+  <p class="sub">What malicious software does, how it spreads and how to spot it: worms, ransomware, infostealers and more, explained in plain language.</p>
+  <p class="fsub" id="mwSub"></p>
+  <div id="mwBody" class="blk"></div>
+  <div class="blk fx-topics">
+    <h2>What this section covers</h2>
+    <div class="g3">
+      <div class="win card"><div class="body"><h3>Ransomware</h3><p>Malware that locks or steals data and demands payment, and the groups that run it.</p></div></div>
+      <div class="win card"><div class="body"><h3>Worms</h3><p>Malware that spreads from system to system on its own, with no one clicking anything.</p></div></div>
+      <div class="win card"><div class="body"><h3>Infostealers</h3><p>Malware that takes passwords, browser data, keys and tokens, which are then sold or reused.</p></div></div>
+      <div class="win card"><div class="body"><h3>Trojans and loaders</h3><p>Programs that look harmless, or quietly download something worse once inside.</p></div></div>
+      <div class="win card"><div class="body"><h3>Botnets</h3><p>Networks of infected devices controlled by an attacker, used for attacks and spam.</p></div></div>
+      <div class="win card"><div class="body"><h3>Supply chain malware</h3><p>Malicious code hidden in trusted software, updates and developer tools.</p></div></div>
+    </div>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
@@ -657,8 +712,10 @@ body.lab #rain{display:block;opacity:.14}
 
 <section class="view site" data-view="kb" aria-labelledby="kbT">
  <div class="wrap">
-  <h1 class="ph" id="kbT" tabindex="-1">TTS: Today's Threat Summary</h1>
-  <p class="sub" id="kbSub" style="max-width:74ch"></p>
+  <p class="fx-sec">Section &middot; Updated daily</p>
+  <h1 class="ph" id="kbT" tabindex="-1">Today&rsquo;s Threat Summary</h1>
+  <p class="sub">The newest exploited vulnerabilities, active campaigns, breaches and attacker activity, in plain language and linked to the source.</p>
+  <p class="fsub" id="kbSub"></p>
   <div id="kbBody" class="blk"></div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
@@ -1295,7 +1352,7 @@ body.lab #rain{display:block;opacity:.14}
     });
   }
   var FEEDS={
-    tts:{type:'tts',body:'#kbBody',sub:'#kbSub',updated:'2026-10-08',note:'',ph:'Search TTS',lead:'Newest first. Each item links to its source.'},
+    tts:{type:'tts',body:'#kbBody',sub:'#kbSub',updated:'2026-10-08',note:'',ph:'Search the Threat Summary',lead:'Newest first. Every item links to its source.'},
     ai:{type:'ai',body:'#aiBody',sub:'#aiSub',updated:'2026-10-08',note:'Findings from me are published here and marked as mine. Until my first write-up, this feed tracks notable public AI security research and incidents. Each item links to its source.',ph:'Search AI security research',lead:'Newest first.'},
     malware:{type:'malware',body:'#mwBody',sub:'#mwSub',updated:'2026-10-08',note:'My own malware write-ups will be published here and marked as mine. Until my first one, this feed collects notable public analyses. Each item links to its source.',ph:'Search malware analysis',lead:'Newest first.'}
   };
@@ -1310,18 +1367,53 @@ body.lab #rain{display:block;opacity:.14}
     var l=document.createElement('a');l.href=n.u;l.target='_blank';l.rel='noopener noreferrer';l.textContent='Source: '+n.s;l.style.cssText='color:var(--acc);font-size:.82rem';d.appendChild(l);
     box.appendChild(d);
   }
+  var TAGHUE={'Zero-day':'#ff5a36','Exploited':'#ff5a36','Vulnerability':'#ff8a5c','Breach':'#f0b44c','Phishing':'#6fb3ff','Supply chain':'#b48cff','Ransomware':'#ff7a9a','Malware':'#ff7a9a','Infostealer':'#ff7a9a','Botnet':'#ff7a9a','Backdoor':'#ff7a9a','Worm':'#ff7a9a','RAT':'#ff7a9a','Threat actor':'#f0b44c','Research':'#5fd3b4','AI agents':'#5fd3b4','Prompt injection':'#5fd3b4','AI infrastructure':'#5fd3b4','Coding agents':'#5fd3b4'};
+  function tagHue(t){return TAGHUE[t]||'#a39e94'}
+  function dayLabel(d){var t=localDay(),y=localDay(new Date(Date.now()-864e5));return d===t?'Today':d===y?'Yesterday':niceDay(d)}
+  function fxKick(e){var t=(e.tags||[])[0]||'';var k=kbEl('span','fx-k',t||'News');k.style.color=tagHue(t);return k}
+  function fxTitle(e,tag){var h=kbEl(tag||'h3','');var a=kbEl('a','',e.title);if(/^https?:\/\//.test(e.url||'')){a.href=e.url;a.target='_blank';a.rel='noopener noreferrer'}h.appendChild(a);return h}
+  function fxMeta(e){var m=kbEl('p','fx-m');m.appendChild(kbEl('b','',dayLabel(e.date)));m.appendChild(document.createTextNode('  ·  '+(e.source||'')+'  ↗'));return m}
+  /* page 1 with no search: lead story, two beside it, three in a row, then the archive list */
+  function feedPaint(k,items,front){
+    var fr=$('#'+k+'Front'),list=$('#'+k+'List'),ah=$('#'+k+'AH');fr.innerHTML='';list.innerHTML='';
+    var rest=items;
+    if(front&&items.length){
+      fr.hidden=false;ah.textContent='The archive';
+      var top=kbEl('div','fx-top'),lead=kbEl('article','fx-lead');
+      lead.appendChild(fxKick(items[0]));lead.appendChild(fxTitle(items[0]));
+      if(items[0].summary)lead.appendChild(kbEl('p','fx-x',items[0].summary));lead.appendChild(fxMeta(items[0]));top.appendChild(lead);
+      var side=kbEl('div','fx-side');
+      items.slice(1,3).forEach(function(e){var a=kbEl('article','fx-s');a.appendChild(fxKick(e));a.appendChild(fxTitle(e));if(e.summary)a.appendChild(kbEl('p','fx-x',e.summary));a.appendChild(fxMeta(e));side.appendChild(a)});
+      if(side.children.length)top.appendChild(side);else{top.style.gridTemplateColumns='1fr';lead.style.borderRight='0'}
+      fr.appendChild(top);
+      var grid=kbEl('div','fx-grid');
+      items.slice(3,6).forEach(function(e){var a=kbEl('article','fx-card');a.appendChild(fxKick(e));a.appendChild(fxTitle(e));if(e.summary)a.appendChild(kbEl('p','fx-x',e.summary));a.appendChild(fxMeta(e));grid.appendChild(a)});
+      fr.appendChild(grid);
+      rest=items.slice(6);
+    }else{fr.hidden=true;ah.textContent=front?'The archive':'Results'}
+    rest.forEach(function(e){
+      var r=kbEl('article','fx-row');
+      r.appendChild(kbEl('span','fx-d',dayLabel(e.date)));
+      var mid=kbEl('div','');mid.appendChild(fxTitle(e));if(e.summary)mid.appendChild(kbEl('p','fx-x',e.summary));
+      var src=kbEl('p','fx-m',(e.source||'')+'  ↗');src.style.margin='4px 0 0';mid.appendChild(src);r.appendChild(mid);
+      r.appendChild(fxKick(e));
+      list.appendChild(r);
+    });
+  }
   function feedMount(k){
     var cfg=FEEDS[k],box=$(cfg.body);if(!box)return;
     var st=fstate[k]=fstate[k]||{q:'',tag:'',page:0};st.q='';st.tag='';st.page=0;st.month='';st.lastQ='';st.loaded=false;
     box.innerHTML='';
-    if(cfg.note){var note=kbEl('p','sub',cfg.note);note.style.maxWidth='74ch';box.appendChild(note)}
+    if(cfg.note)box.appendChild(kbEl('p','fnote',cfg.note));
+    var fr=kbEl('div','fx-front');fr.id=k+'Front';box.appendChild(fr);
+    var ahd=kbEl('div','fx-ah');var ah2=kbEl('h2','','The archive');ah2.id=k+'AH';ahd.appendChild(ah2);
+    var cnt=kbEl('p','');cnt.id=k+'Count';ahd.appendChild(cnt);box.appendChild(ahd);
     var q=document.createElement('input');q.type='search';q.placeholder=cfg.ph;q.setAttribute('aria-label',cfg.ph);
     q.style.cssText='width:100%;box-sizing:border-box;padding:10px 12px;margin:0 0 12px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;font:inherit';
     q.oninput=function(){st.q=q.value;st.page=0;feedRender(k)};
     box.appendChild(q);
     var mrow=kbEl('div','');mrow.id=k+'Months';mrow.hidden=true;mrow.style.margin='0 0 10px';box.appendChild(mrow);
     var chips=kbEl('div','chips');chips.id=k+'Chips';box.appendChild(chips);
-    var cnt=kbEl('p','sub','');cnt.id=k+'Count';cnt.style.margin='0 0 4px';box.appendChild(cnt);
     var list=kbEl('div','');list.id=k+'List';box.appendChild(list);
     var pg=kbEl('div','row');pg.id=k+'Pager';pg.style.cssText='margin-top:18px;align-items:center';box.appendChild(pg);
     feedRender(k);
@@ -1374,12 +1466,12 @@ body.lab #rain{display:block;opacity:.14}
       $(cfg.sub).textContent=(filtered?'Filtered results. ':(data.latest?'Updated '+data.latest+'. ':''))+cfg.lead;
       $('#'+k+'Count').textContent=filtered?data.total+' matching entries':data.total+' entries';
       var list=$('#'+k+'List');list.innerHTML='';
-      data.items.forEach(function(e){kbNews({d:e.date,tag:(e.tags||[])[0]||'',t:e.title,x:e.summary,s:e.source,u:e.url},list)});
+      feedPaint(k,data.items,!filtered&&st.page===0);
       if(!data.items.length)list.appendChild(kbEl('p','sub','Nothing matched. Try a shorter word or clear the filter.'));
       var pgr=$('#'+k+'Pager');pgr.innerHTML='';
       if(pages>1){
-        var prev=kbEl('button','btn','newer');prev.type='button';prev.disabled=st.page===0;prev.onclick=function(){st.page--;feedRender(k);window.scrollTo(0,0)};
-        var nxt=kbEl('button','btn','older');nxt.type='button';nxt.disabled=st.page>=pages-1;nxt.onclick=function(){st.page++;feedRender(k);window.scrollTo(0,0)};
+        var prev=kbEl('button','btn','newer');prev.type='button';prev.disabled=st.page===0;prev.onclick=function(){st.page--;feedRender(k);var h=$('#'+k+'AH');if(h)h.scrollIntoView()};
+        var nxt=kbEl('button','btn','older');nxt.type='button';nxt.disabled=st.page>=pages-1;nxt.onclick=function(){st.page++;feedRender(k);var h=$('#'+k+'AH');if(h)h.scrollIntoView()};
         pgr.appendChild(prev);pgr.appendChild(kbEl('span','sub','page '+(st.page+1)+' of '+pages)).style.margin='0 12px';pgr.appendChild(nxt);
       }
     }
@@ -1406,7 +1498,7 @@ body.lab #rain{display:block;opacity:.14}
     $(cfg.sub).textContent=(qq||st.tag?'Filtered results. ':'Updated '+cfg.updated+'. ')+cfg.lead;
     $('#'+k+'Count').textContent=rows.length+' of '+all.length+' entries';
     var list=$('#'+k+'List');list.innerHTML='';
-    rows.slice(st.page*PAGE,st.page*PAGE+PAGE).forEach(function(e){kbNews({d:e.date,tag:(e.tags||[])[0]||'',t:e.title,x:e.summary,s:e.source,u:e.url},list)});
+    feedPaint(k,rows.slice(st.page*PAGE,st.page*PAGE+PAGE),!(qq||st.tag)&&st.page===0);
     if(!rows.length)list.appendChild(kbEl('p','sub','Nothing matched. Try a shorter word or clear the filter.'));
     var pgr=$('#'+k+'Pager');pgr.innerHTML='';
     if(pages>1){
