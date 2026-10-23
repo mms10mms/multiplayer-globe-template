@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Slaughter-Sec — latest threat news</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23ff5a36%22/%3E%3Cpath%20d%3D%22M14%2020%20L28%2032%20L14%2044%22%20fill%3D%22none%22%20stroke%3D%22%23111110%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M32%2046%20H52%22%20stroke%3D%22%23111110%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,800;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -311,7 +312,7 @@ body.pub .pubnav,body.acct .pubnav{display:block;position:static;max-width:1272p
 .ed-top #pReg{color:var(--acc);font-weight:700}
 .ed-head{text-align:center;border-bottom:3px double var(--rule2);padding:18px 0 14px}
 .ed-mast{display:inline-flex;align-items:center;gap:.22em;font:800 clamp(2.4rem,6vw,4rem)/.95 var(--serif);letter-spacing:-.03em;color:var(--fg);text-decoration:none}
-.ed-mast svg{width:.62em;height:.62em;color:var(--acc);flex:none}
+.ed-mast svg{width:.7em;height:.7em;color:var(--acc);flex:none}
 body.front .ed-mast{font-size:clamp(3rem,9.5vw,7.4rem)}
 body.front .ed-head{padding:28px 0 18px}
 .ed-tag{margin:10px 0 0;font:italic 400 1.1rem/1.4 var(--serif);color:var(--dim)}
@@ -429,35 +430,45 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
 .stat,.demo,.tleg{border-radius:0}
 .dhead h1{font-family:var(--serif)}
 .mi{font-family:var(--sans)}
+/* ---- the Lab (public) ---- */
+.labnav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 22px;margin:0 0 20px;padding:0 0 12px;border-bottom:1px solid var(--line);font:600 .74rem var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.labnav a{color:var(--dim);text-decoration:none;padding:4px 0}
+.labnav a:hover{color:var(--fg)}
+.labnav a[aria-current=page]{color:var(--acc);box-shadow:inset 0 -2px 0 var(--acc)}
+.labnav .soon{color:var(--dim);opacity:.55}
+.labhub{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:0 0 44px}
+@media (max-width:900px){.labhub{grid-template-columns:1fr}}
+.labhub .panel{min-height:300px;background:color-mix(in srgb,var(--win) 88%,transparent)}
+@media (max-width:900px){.labhub .panel{min-height:0}}
+body.lab #rain{display:block;opacity:.14}
+.lzt{background:var(--bg)}
+.labul{margin:0;padding-left:20px;list-style:disc}
+.labul li{display:list-item;border:0;padding:0;margin:0 0 8px;color:#cfc9bf;line-height:1.6}
+.wrap .flow div{background:var(--win)}
+.wrap .dock{border:1px solid var(--line);border-top:3px solid var(--acc);background:var(--win)}
+.wrap .dock .dk{padding:16px 20px}
+.dock h3{margin:0 0 2px;font:700 1rem var(--mono);color:var(--acc)}
+.mapbox{position:relative;height:clamp(380px,62vh,680px);border:1px solid var(--line);overflow:hidden;margin:0 0 44px}
 </style>
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas>
 
-<nav class="nav" id="nav" aria-label="Main">
-  <span class="brand">Slaughter-Sec</span>
-  <div class="tabs">
-    <a href="#/home" data-v="home"><span>Home</span></a>
-    <a href="#/threats" data-v="threats"><span>Threat map</span></a>
-    <a class="soon" aria-disabled="true" tabindex="-1" title="Coming soon" data-v="sltr"><span>SLTR framework</span></a>
-    <a href="#/settings" data-v="settings"><span>Settings</span></a>
-  </div>
-  <div class="plr"><div><b id="plrName">Player</b><small>online</small></div><button class="btn" id="out" type="button">exit</button></div>
-</nav>
 
 <header class="pubnav" id="pubnav">
   <div class="ed-top">
     <span id="edDate"></span>
-    <div class="acts"><a id="pLogin" href="#/login">log in</a><a id="pReg" href="#/register">register</a></div>
+    <div class="acts"><a href="mailto:contact@slaughter-sec.com">contact@slaughter-sec.com</a></div>
   </div>
   <div class="ed-head">
-    <a class="ed-mast" href="#/"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><defs><mask id="plm"><rect width="64" height="64" fill="#fff"/><path d="M37 35 L28 53" stroke="#000" stroke-width="5.5" stroke-linecap="round"/></mask></defs><path d="M20 29 V21 A12 12 0 0 1 44 21 V29" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><rect mask="url(#plm)" x="11" y="28" width="42" height="31" rx="5.5" fill="currentColor"/></svg>Slaughter-Sec</a>
+    <a class="ed-mast" href="#/"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="5" y="10" width="54" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="5"/><path d="M16 24 L25 32 L16 40" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 41 H46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg>Slaughter-Sec</a>
     <p class="ed-tag">The daily record of the cyber world, read and checked by a person.</p>
   </div>
   <nav class="ed-nav" aria-label="Sections">
     <a href="#/kb" data-v="kb">Threat Summary</a>
     <a href="#/research" data-v="research">AI Research</a>
     <a href="#/malware" data-v="malware">Malware</a>
+    <a href="#/lab" data-v="lab">Lab</a>
     <a href="#/about" data-v="about">About</a>
     <a href="#/contact" data-v="contact">Contact</a>
   </nav>
@@ -508,9 +519,10 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
       <blockquote><p>&ldquo;Plans are nothing, planning is everything.&rdquo;</p><p class="qby">Dwight D. Eisenhower</p></blockquote>
     </section>
     <aside class="ed-join" aria-labelledby="joinH">
-      <h2 id="joinH">See more with an account</h2>
-      <p>Create a free account to view the homelab and demo projects I am working on.</p>
-      <div class="row"><a class="btn fill" href="#/register">Create an account</a><a class="btn" href="#/login">Log in</a></div>
+      <p class="ed-kick" style="margin-bottom:8px">From the lab</p>
+      <h2 id="joinH">Two honeypots, six nodes, and the pipeline behind this site</h2>
+      <p>See the homelab I build and run, how news reaches these pages, and real attacks on my honeypots.</p>
+      <div class="row"><a class="btn fill" href="#/lab">Visit the Lab</a><a class="btn" href="#/threats">Threat map</a></div>
     </aside>
   </div>
 
@@ -536,7 +548,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     </div>
   </section>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="research" aria-labelledby="rs">
@@ -556,7 +568,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
   </div>
   <div class="row blk"><a class="btn fill" href="#/contact">Ask about my research</a></div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="about" aria-labelledby="ab">
@@ -575,15 +587,15 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     <h2>Who is behind this</h2>
     <div class="win"><div class="body">
       <p class="sub" style="margin:0 0 14px">I am a college student working full time in IT, with a passion for security. Slaughter-Sec is a one-person project: I read, review and approve everything published here.</p>
-      <p class="sub" style="margin:0 0 20px">As I grow in my career, this site will grow with me. If you are curious and want to see more, create an account to view the homelab and demo projects I am working on.</p>
-      <div class="row"><a class="btn fill" href="#/register">Create an account</a><a class="btn" href="#/contact">Get in touch</a></div>
+      <p class="sub" style="margin:0 0 20px">As I grow in my career, this site will grow with me. If you are curious and want to see more, visit the Lab to see the homelab and demo projects I am working on.</p>
+      <div class="row"><a class="btn fill" href="#/lab">Visit the Lab</a><a class="btn" href="#/contact">Get in touch</a></div>
     </div></div>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><div class="logo" role="img" aria-label="Slaughter-Sec logo">
-      <svg viewBox="0 0 64 64" width="76" height="76" aria-hidden="true" focusable="false"><defs><mask id="plf"><rect width="64" height="64" fill="#fff"/><path d="M37 35 L28 53" stroke="#000" stroke-width="5.5" stroke-linecap="round"/></mask></defs><path d="M20 29 V21 A12 12 0 0 1 44 21 V29" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><rect mask="url(#plf)" x="11" y="28" width="42" height="31" rx="5.5" fill="currentColor"/></svg>
+      <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false"><rect x="5" y="10" width="54" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="5"/><path d="M16 24 L25 32 L16 40" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 41 H46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg>
       <span class="lw">slaughter-sec</span>
-    </div><span><a href="#/contact">Contact</a></span></footer>
+    </div><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="contact" aria-labelledby="ct2">
@@ -594,7 +606,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     <p style="font-size:1.25rem;margin:0"><a href="mailto:contact@slaughter-sec.com" style="color:var(--acc)">contact@slaughter-sec.com</a></p>
   </div></div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="malware" aria-labelledby="mw">
@@ -615,7 +627,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     <div id="mwBody"></div>
   </div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
 <section class="view site" data-view="kb" aria-labelledby="kbT">
@@ -624,118 +636,39 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
   <p class="sub" id="kbSub" style="max-width:74ch"></p>
   <div id="kbBody" class="blk"></div>
  </div>
-  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/contact">Contact</a></span></footer>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
-<section class="view" data-view="login" aria-labelledby="lt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/login</span></div>
-    <div class="body">
-      <h2 id="lt" tabindex="-1">Log in</h2>
-      <p class="sub">Enter your credentials to continue.</p>
-      <form id="loginForm" novalidate>
-        <label for="le">email</label><input id="le" type="email" autocomplete="email">
-        <label for="lp">password</label><input id="lp" type="password" autocomplete="current-password">
-        <p class="err" role="alert" id="lerr"></p>
-        <button class="btn fill" type="submit">log in</button>
-      </form>
-      <p class="alt">No account? <a href="#/register">register</a> &nbsp; <a href="#/forgot">forgot password?</a> &nbsp; <a href="#/">back</a></p>
-    </div>
-  </div>
-</section>
 
-<section class="view" data-view="verify" aria-labelledby="vt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/verify</span></div>
-    <div class="body">
-      <h2 id="vt" tabindex="-1">Check your email</h2>
-      <p class="sub" id="vsub">A 6-digit code is on its way. It expires in 15 minutes.</p>
-      <form id="verifyForm" novalidate>
-        <label for="vc">code</label><input id="vc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-        <p class="err" role="alert" id="verr"></p>
-        <button class="btn fill" type="submit">confirm</button>
-      </form>
-      <p class="alt">No email? Check spam, or <a href="#" id="vresend">send a new code</a>. &nbsp; <a href="#/register">start over</a></p>
-    </div>
-  </div>
-</section>
 
-<section class="view" data-view="forgot" aria-labelledby="ft">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/reset</span></div>
-    <div class="body">
-      <h2 id="ft" tabindex="-1">Reset password</h2>
-      <p class="sub" id="fsub">Enter your email and I will send you a code.</p>
-      <form id="forgotForm" novalidate>
-        <label for="fe">email</label><input id="fe" type="email" autocomplete="email">
-        <p class="err" role="alert" id="ferr"></p>
-        <button class="btn fill" type="submit">send code</button>
-      </form>
-      <form id="resetForm" novalidate hidden>
-        <label for="fc">code</label><input id="fc" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-        <label for="fp">new password (8+ characters)</label><input id="fp" type="password" autocomplete="new-password">
-        <label for="fp2">confirm new password</label><input id="fp2" type="password" autocomplete="new-password">
-        <p class="err" role="alert" id="rserr"></p>
-        <button class="btn fill" type="submit">set password</button>
-      </form>
-      <p class="alt"><a href="#/login">back to log in</a></p>
-    </div>
-  </div>
-</section>
 
-<section class="view" data-view="register" aria-labelledby="rt">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>guest@slaughter-sec:~/register</span></div>
-    <div class="body">
-      <h2 id="rt" tabindex="-1">Create account</h2>
-      <p class="sub">Four fields, then confirm your email with a 6-digit code.</p>
-      <form id="regForm" novalidate>
-        <label for="rn">name</label><input id="rn" type="text" autocomplete="name">
-        <label for="re">email</label><input id="re" type="email" autocomplete="email">
-        <label for="rp">password (8+ characters)</label><input id="rp" type="password" autocomplete="new-password">
-        <label for="rc">confirm password</label><input id="rc" type="password" autocomplete="new-password">
-        <p class="err" role="alert" id="rerr"></p>
-        <button class="btn fill" type="submit">register</button>
-      </form>
-      <p class="alt">Have an account? <a href="#/login">log in</a> &nbsp; <a href="#/">back</a></p>
-    </div>
-  </div>
-</section>
 
-<section class="view globe" data-view="home" aria-labelledby="ht">
-  <div class="lobby">
-    <div class="stage" id="stage">
-      <nav class="hub" aria-label="Projects">
-        <a class="panel" href="#/lab"><div class="pb"><span class="pn">01 / HOMELAB</span><h2>The <span>Lab</span></h2><p>My home setup: two honeypots and a cluster of six nodes, and how data from it reaches this site.</p><div class="pf"><span class="st wip">in setup</span><span class="go">open &rarr;</span></div></div></a>
-        <a class="panel" href="#/cti"><div class="pb"><span class="pn">02 / THREAT INTEL</span><h2><span>CTI</span> pipeline</h2><p>How news and threat data are collected, reviewed by me and published to the feeds every day.</p><div class="pf"><span class="st wip">in progress</span><span class="go">open &rarr;</span></div></div></a>
-        <div class="panel soon" aria-disabled="true"><div class="pb"><span class="pn">03 / NEXT</span><h2>Coming <span>soon</span></h2><p>The next part of Slaughter-Sec is in the works. Check back for updates.</p><div class="pf"><span class="st">coming soon</span></div></div></div>
-      </nav>
-    </div>
-  </div>
-  <div class="dock" aria-label="Random CVE">
-    <div class="prog" aria-hidden="true"><i id="cbar"></i></div>
-    <div class="dk">
-      <div class="dh"><h2 id="ht" tabindex="-1">CVE-2021-44228</h2><p class="meta"><span id="csev"></span> <span id="cprod"></span></p></div>
-      <p class="ctext" id="ctext"></p>
-      <div class="foot"><span>next in <b id="cleft">10s</b></span><button class="btn" id="cnext" type="button">shuffle</button></div>
-    </div>
-  </div>
-</section>
 
-<section class="view globe" data-view="threats" aria-labelledby="mt">
-  <div class="stage tstage">
-    <canvas id="tmap" aria-label="World map of threat activity"></canvas>
-    <div class="stat tstat"><span class="k" id="mt" tabindex="-1">Live threat map</span><b id="tcount">0</b></div>
-    <div class="demo" role="note"><b>wip</b>Honeypot still in the works. Real attacks will appear here once it is connected. <span id="mstat"></span></div>
-  </div>
-</section>
 
-<section class="view page lp" data-view="lab" aria-labelledby="labT">
-  <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/lab</span></div><div class="body">
-    <a class="back" href="#/home">&larr; home</a>
-    <h1 id="labT" tabindex="-1">The <span>Lab</span></h1>
-    <p>My homelab is the hardware I build and run myself. It is still being set up, and this page will grow as each part comes online.</p>
-    <h3>Data flow</h3>
+
+
+
+
+
+<section class="view site" data-view="lab" aria-labelledby="labT">
+ <div class="wrap">
+  <nav class="labnav" aria-label="Lab">
+    <a href="#/lab" data-l="lab">Overview</a>
+    <a href="#/cti" data-l="cti">CTI pipeline</a>
+    <a href="#/threats" data-l="threats">Threat map</a>
+    <span class="soon" title="Coming soon">SLTR framework &middot; soon</span>
+  </nav>
+  <h1 class="ph" id="labT" tabindex="-1">The Lab</h1>
+  <p class="sub">My homelab is the hardware I build and run myself. It is where the tools behind Slaughter-Sec live and where I practice. It is still being set up, and this section grows as each part comes online.</p>
+
+  <div class="labhub">
+    <a class="panel" href="#/cti"><div class="pb"><span class="pn">01 / THREAT INTEL</span><h2><span>CTI</span> pipeline</h2><p>How news and threat data are collected, reviewed by me and published to the feeds every day.</p><div class="pf"><span class="st wip">in progress</span><span class="go">open &rarr;</span></div></div></a>
+    <a class="panel" href="#/threats"><div class="pb"><span class="pn">02 / HONEYPOTS</span><h2>Threat <span>map</span></h2><p>Attacks on my honeypots, plotted as they happen. No attacker IP addresses are published.</p><div class="pf"><span class="st wip">connecting</span><span class="go">open &rarr;</span></div></div></a>
+    <div class="panel soon" aria-disabled="true"><div class="pb"><span class="pn">03 / METHOD</span><h2>SLTR <span>framework</span></h2><p>My own security methodology: study, stalk, strategize, strike. Coming soon.</p><div class="pf"><span class="st">coming soon</span></div></div></div>
+  </div>
+
+  <div class="blk">
+    <h2>Data flow</h2>
     <div class="lmap" role="img" aria-label="Data flow: attackers on the internet hit two honeypots. A shipper sends trimmed events out to a Cloudflare Worker, which stores them in a database and feeds the Threat map on this site. Six Dell OptiPlex nodes are being set up separately.">
       <div class="lz lz-net"><span class="lzt">internet</span><div class="ln">Attackers<small>bots and scanners</small></div></div>
       <div class="la" aria-hidden="true"></div>
@@ -751,73 +684,82 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
         <div class="ln">OptiPlex 4<small>role tbd</small></div><div class="ln">OptiPlex 5<small>role tbd</small></div><div class="ln">OptiPlex 6<small>role tbd</small></div>
       </div>
     </div>
-    <h3>What is in it</h3>
-    <ul>
+  </div>
+
+  <div class="blk">
+    <h2>What is in it</h2>
+    <ul class="labul">
       <li><b>2 honeypots</b>: decoy services that attract real attacks from the internet. Their hits feed the Threat map.</li>
-      <li><b>6 Dell OptiPlex nodes</b>: being set up. Each one's role will be listed here when it is running.</li>
+      <li><b>6 Dell OptiPlex nodes</b>: being set up. Each one&rsquo;s role will be listed here when it is running.</li>
     </ul>
-    <p>Data only flows out of the lab. Nothing on the internet connects into my home network, and no attacker IP addresses are published.</p>
-  </div></div>
+    <p class="sub" style="margin:14px 0 0">Data only flows out of the lab. Nothing on the internet connects into my home network, and no attacker IP addresses are published.</p>
+  </div>
+
+  <div class="blk">
+    <h2>CVE flashback</h2>
+    <p class="sub" style="margin:0 0 14px">A notable vulnerability from the past, a new one every 10 seconds. Press R to shuffle.</p>
+    <div class="dock" aria-label="Random CVE">
+      <div class="prog" aria-hidden="true"><i id="cbar"></i></div>
+      <div class="dk">
+        <div class="dh"><h3 id="ht">CVE-2021-44228</h3><p class="meta"><span id="csev"></span> <span id="cprod"></span></p></div>
+        <p class="ctext" id="ctext"></p>
+        <div class="foot"><span>next in <b id="cleft">10s</b></span><button class="btn" id="cnext" type="button">shuffle</button></div>
+      </div>
+    </div>
+  </div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
-<section class="view page lp" data-view="cti" aria-labelledby="ctiT">
-  <div class="win"><div class="bar"><i></i><i></i><i></i><span>~/cti-pipeline</span></div><div class="body">
-    <a class="back" href="#/home">&larr; home</a>
-    <h1 id="ctiT" tabindex="-1"><span>CTI</span> pipeline</h1>
-    <p>Cyber threat intelligence (CTI) is the work of collecting reports on threats and turning them into something useful. My pipeline feeds the TTS, AI research and malware analysis pages.</p>
-    <h3>How an item gets published</h3>
+<section class="view site" data-view="cti" aria-labelledby="ctiT">
+ <div class="wrap">
+  <nav class="labnav" aria-label="Lab">
+    <a href="#/lab" data-l="lab">Overview</a>
+    <a href="#/cti" data-l="cti">CTI pipeline</a>
+    <a href="#/threats" data-l="threats">Threat map</a>
+    <span class="soon" title="Coming soon">SLTR framework &middot; soon</span>
+  </nav>
+  <h1 class="ph" id="ctiT" tabindex="-1">CTI pipeline</h1>
+  <p class="sub">Cyber threat intelligence (CTI) is the work of collecting reports on threats and turning them into something useful. My pipeline feeds the Threat Summary, AI Research and Malware pages.</p>
+  <div class="blk">
+    <h2>How an item gets published</h2>
     <div class="flow">
       <div>Collect<small>Workers pull new articles from security sources</small></div>
       <div>Draft<small>a short summary is drafted automatically</small></div>
       <div>Review<small>I check every item against its source</small></div>
       <div>Publish<small>approved items go live and are archived</small></div>
     </div>
-    <p>Nothing is published without my review. Accuracy comes first, speed second.</p>
-    <h3>What is next</h3>
-    <ul>
+    <p class="sub" style="margin:14px 0 0">Nothing is published without my review. Accuracy comes first, speed second.</p>
+  </div>
+  <div class="blk">
+    <h2>What is next</h2>
+    <ul class="labul">
       <li>Keep threat tracking running all the time, not just on a schedule.</li>
       <li>Connect the parts that run in my homelab, which are not finished yet.</li>
       <li>Go beyond what happened and track the reasoning behind threats.</li>
     </ul>
-  </div></div>
+  </div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
-
-<section class="view page" data-view="sltr" aria-label="SLTR framework">
-  <div class="split">
-    <div class="menu" id="slMenu" role="group" aria-label="SLTR stages"></div>
-    <div class="detail">
-      <div class="dhead"><h1 id="slt" tabindex="-1">SLTR framework</h1><p id="slSub"></p></div>
-      <div class="dbody" id="slBody"></div>
-    </div>
+<section class="view site" data-view="threats" aria-labelledby="mt">
+ <div class="wrap">
+  <nav class="labnav" aria-label="Lab">
+    <a href="#/lab" data-l="lab">Overview</a>
+    <a href="#/cti" data-l="cti">CTI pipeline</a>
+    <a href="#/threats" data-l="threats">Threat map</a>
+    <span class="soon" title="Coming soon">SLTR framework &middot; soon</span>
+  </nav>
+  <h1 class="ph" id="mt" tabindex="-1">Threat map</h1>
+  <p class="sub">Real attacks on my honeypots, plotted as they happen. Points show an approximate area only; no attacker IP addresses are published.</p>
+  <div class="stage tstage mapbox">
+    <canvas id="tmap" aria-label="World map of honeypot attacks"></canvas>
+    <div class="stat tstat"><span class="k">Live attacks</span><b id="tcount">0</b></div>
+    <div class="demo" role="note"><b>wip</b>Honeypot still in the works. Real attacks will appear here once it is connected. <span id="mstat"></span></div>
   </div>
-</section>
-
-<section class="view page" data-view="settings" aria-labelledby="st">
-  <div class="win">
-    <div class="bar"><i></i><i></i><i></i><span>cat ~/.config</span></div>
-    <div class="body">
-      <h2 id="st" tabindex="-1">Settings</h2>
-      <p class="set-k">Account</p>
-      <p id="sacct" style="margin:0 0 24px"></p>
-      <p class="set-k">Color scheme</p>
-      <div class="row">
-        <button class="btn" type="button" data-pal="night">night edition</button>
-        <button class="btn" type="button" data-pal="amber">amber</button>
-        <button class="btn" type="button" data-pal="violet">violet</button>
-        <button class="btn" type="button" data-pal="mint">mint</button>
-        <button class="btn" type="button" data-pal="crimson">crimson</button>
-        <button class="btn" type="button" data-pal="cyber">cyber</button>
-        <button class="btn" type="button" data-pal="ice">ice</button>
-        <button class="btn" type="button" data-pal="matrix">matrix</button>
-      </div>
-      <p class="set-k">Delete account</p>
-      <p class="sub">Permanently deletes your account and its data. This cannot be undone.</p>
-      <label for="dpw">password</label><input id="dpw" type="password" autocomplete="current-password" style="max-width:320px">
-      <p class="err" role="alert" id="derr"></p>
-      <button class="btn" id="del" type="button">delete account</button>
-    </div>
-  </div>
+ </div>
+  <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
 </section>
 
 <script>
@@ -827,20 +769,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
   function set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
   function del(k){delete mem[k];try{localStorage.removeItem(k)}catch(e){}}
   function $(s){return document.querySelector(s)}
-  /* ---- ACCOUNTS: real accounts live on the slaughter-sec-auth Worker ---- */
-  var AUTH_API='https://auth.slaughter-sec.com';
-  var ME=null,meLoaded=false,pendEmail='';
   del('users');del('session'); /* old browser-only demo accounts */
-  async function api(path,body){
-    try{
-      var r=await fetch(AUTH_API+path,body===undefined?{credentials:'include'}:{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-      var d=await r.json().catch(function(){return {}});
-      return {ok:r.ok,status:r.status,data:d||{}};
-    }catch(e){return {ok:false,status:0,data:{error:'could not reach the account server. try again.'}}}
-  }
-  function msg(d,fallback){var m=(d&&d.error)||fallback;return m.charAt(0).toLowerCase()+m.slice(1)}
-  async function busy(btn,fn){if(btn.disabled)return;btn.disabled=true;try{await fn()}finally{btn.disabled=false}}
-  async function loadMe(){var r=await api('/me');ME=r.ok&&r.data.user?r.data.user:null;meLoaded=true}
   var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches,typed=false;
 
@@ -853,24 +782,16 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     (function step(){h.textContent=full.slice(0,++i);if(i<full.length)setTimeout(step,48)})();
   }
 
-  var APP=['home','lab','cti','threats','sltr','settings'],PUB=['landing','research','malware','kb','about','contact'];
+  var LAB=['lab','cti','threats'],PUB=['landing','research','malware','kb','about','contact'].concat(LAB);
   function route(){
-    if(!meLoaded)return;
-    var h=location.hash.replace('#/',''),all=['login','register','verify','forgot'].concat(APP,PUB.slice(1));
-    var v=all.indexOf(h)>-1?h:'landing',sess=ME,app=APP.indexOf(v)>-1;
-    if(v==='sltr'){location.hash='#/home';return}
-    if(app&&!sess){location.hash='#/login';return}
-    if(['login','register','verify','forgot'].indexOf(v)>-1&&sess){location.hash='#/home';return}
-    if(v==='verify'&&!pendEmail){location.hash='#/register';return}
-    if(v==='forgot'&&h==='forgot')resetForgot();
+    var h=location.hash.replace('#/','');
+    if(h==='home'){location.hash='#/lab';return}
+    var v=PUB.indexOf(h)>0?h:'landing',lab=LAB.indexOf(v)>-1;
     document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.dataset.view===v)});
-    var pub=PUB.indexOf(v)>-1;
-    document.body.classList.toggle('app',app);document.body.classList.toggle('pub',pub);document.body.classList.toggle('front',v==='landing');document.body.classList.toggle('acct',['login','register','verify','forgot'].indexOf(v)>-1);document.body.classList.toggle('tm',v==='threats');
-    document.querySelectorAll('#pubnav a[data-v]').forEach(function(a){if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-    var pl=$('#pLogin'),pr2=$('#pReg');
-    if(sess){pl.textContent='open app';pl.setAttribute('href','#/home');pr2.hidden=true}else{pl.textContent='log in';pl.setAttribute('href','#/login');pr2.hidden=false}
-    document.querySelectorAll('#nav a[data-v]').forEach(function(a){if(a.dataset.v===v||(a.dataset.v==='home'&&['lab','cti'].indexOf(v)>-1))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-    if(app)enterApp(v);else stopSim();
+    document.body.classList.add('pub');document.body.classList.toggle('front',v==='landing');document.body.classList.toggle('lab',v==='lab'||v==='cti');
+    document.querySelectorAll('#pubnav a[data-v]').forEach(function(a){if(a.dataset.v===v||(a.dataset.v==='lab'&&lab))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    document.querySelectorAll('.labnav a[data-l]').forEach(function(a){if(a.dataset.l===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    if(lab)enterLab(v);else stopSim();
     if(v==='landing')frontShow();
     if(v==='kb')kbShow();
     if(v==='research')aiShow();
@@ -880,87 +801,6 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
   }
   window.addEventListener('hashchange',route);
 
-  function loggedIn(u){ME=u;pendEmail='';document.querySelectorAll('form').forEach(function(f){f.reset()});location.hash='#/home'}
-
-  $('#regForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var n=$('#rn').value.trim(),em=$('#re').value.trim().toLowerCase(),p=$('#rp').value,c=$('#rc').value,err=$('#rerr');
-    if(!n)return err.textContent='enter your name.';
-    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
-    if(p.length<8)return err.textContent='password must be at least 8 characters.';
-    if(p!==c)return err.textContent='passwords do not match.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/signup',{name:n,email:em,password:p});
-      if(!r.ok)return err.textContent=msg(r.data,'could not create the account. try again.');
-      e.target.reset();pendEmail=em;
-      $('#vsub').textContent='I sent a 6-digit code to '+em+'. It expires in 15 minutes.';
-      location.hash='#/verify';
-    });
-  });
-
-  $('#verifyForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var c=$('#vc').value.replace(/\D/g,''),err=$('#verr');
-    if(c.length!==6)return err.textContent='enter the 6-digit code from the email.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/verify',{email:pendEmail,code:c});
-      if(!r.ok)return err.textContent=msg(r.data,'that code did not work.');
-      loggedIn(r.data.user);
-    });
-  });
-  $('#vresend').addEventListener('click',function(e){
-    e.preventDefault();var err=$('#verr');
-    busy(this,async function(){
-      var r=await api('/resend',{email:pendEmail,purpose:'verify'});
-      err.textContent=r.ok?'':msg(r.data,'could not send a new code.');
-      if(r.ok)$('#vsub').textContent='A new code is on its way to '+pendEmail+'. Only the newest code works.';
-    });
-  });
-
-  $('#loginForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var em=$('#le').value.trim().toLowerCase(),p=$('#lp').value,err=$('#lerr');
-    if(!emailOk.test(em)||!p)return err.textContent='enter your email and password.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/login',{email:em,password:p});
-      if(!r.ok)return err.textContent=msg(r.data,'email or password is incorrect.');
-      if(r.data.verify){e.target.reset();pendEmail=em;$('#vsub').textContent='Confirm your email first. I sent a 6-digit code to '+em+'.';location.hash='#/verify';return}
-      loggedIn(r.data.user);
-    });
-  });
-
-  function resetForgot(){$('#forgotForm').hidden=false;$('#resetForm').hidden=true;$('#fsub').textContent='Enter your email and I will send you a code.';$('#ferr').textContent='';$('#rserr').textContent=''}
-  $('#forgotForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var em=$('#fe').value.trim().toLowerCase(),err=$('#ferr');
-    if(!emailOk.test(em))return err.textContent='enter a valid email address.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/forgot',{email:em});
-      if(!r.ok)return err.textContent=msg(r.data,'could not send a code. try again.');
-      pendEmail=em;e.target.hidden=true;$('#resetForm').hidden=false;
-      $('#fsub').textContent='If '+em+' has an account, a 6-digit code is on its way. It expires in 15 minutes.';
-      $('#fc').focus();
-    });
-  });
-  $('#resetForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var c=$('#fc').value.replace(/\D/g,''),p=$('#fp').value,p2=$('#fp2').value,err=$('#rserr');
-    if(c.length!==6)return err.textContent='enter the 6-digit code from the email.';
-    if(p.length<8)return err.textContent='password must be at least 8 characters.';
-    if(p!==p2)return err.textContent='passwords do not match.';
-    err.textContent='';
-    busy(e.submitter||e.target.querySelector('button'),async function(){
-      var r=await api('/reset',{email:pendEmail,code:c,password:p});
-      if(!r.ok)return err.textContent=msg(r.data,'that code did not work.');
-      resetForgot();loggedIn(r.data.user);
-    });
-  });
-
-  $('#out').addEventListener('click',function(){var b=this;busy(b,async function(){await api('/logout',{});ME=null;location.hash='#/'})});
 
   var LAND=[
    // North America
@@ -1551,40 +1391,21 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     });
   }
   document.addEventListener('keydown',function(e){
-    if(cur!=='home'||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(cur!=='lab'||e.metaKey||e.ctrlKey||e.altKey)return;
     var tg=document.activeElement&&document.activeElement.tagName;if(tg==='INPUT'||tg==='TEXTAREA'||tg==='SELECT')return;
     if(e.key==='r'||e.key==='R')nextCve();
   });
 
   function stopTimers(){clearInterval(ptTimer);clearInterval(cvT);clearInterval(scr);clearInterval(thrT);clearInterval(dTimer)}
   function stopSim(){stopTimers();cur=''}
-  function enterApp(v){
-    var u=ME,em=u&&u.email;if(!u){location.hash='#/login';return}
-    cur=v;plrN(u);stopTimers();
-    if(v==='threats')ensureGeo();
-    if(v==='home')startCve();
-    if(v==='threats'){loadThreats();thrT=setInterval(loadThreats,THREAT_FEED.url?THREAT_FEED.every:2400)}
-    if(v==='sltr')slShow();
-    if(v==='settings')renderSettings(u,em);
+  function enterLab(v){
+    cur=v;stopTimers();
+    if(v==='lab')startCve();
+    if(v==='threats'){ensureGeo();loadThreats();thrT=setInterval(loadThreats,THREAT_FEED.url?THREAT_FEED.every:2400)}
   }
   document.documentElement.setAttribute('data-theme','dark');
-  function palPressed(){var t=get('pal')||'night';document.querySelectorAll('[data-pal]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pal===t)})}
   function applyPalette(t){document.documentElement.setAttribute('data-palette',t);col={};if(cur==='threats')drawMap();window.dispatchEvent(new Event('palette'))}
-  applyPalette(get('pal')||'night');
-  document.querySelectorAll('[data-pal]').forEach(function(b){b.addEventListener('click',function(){set('pal',b.dataset.pal);applyPalette(b.dataset.pal);palPressed()})});
-  var dt=0;
-  $('#del').addEventListener('click',function(){
-    var b=this;
-    if(!dt){b.textContent='click again to confirm';dt=setTimeout(function(){dt=0;b.textContent='delete account'},4000);return}
-    clearTimeout(dt);dt=0;b.textContent='delete account';
-    var pw=$('#dpw').value,err=$('#derr');
-    if(!pw){err.textContent='enter your password to delete your account.';return}
-    busy(b,async function(){
-      var r=await api('/delete',{password:pw});
-      if(!r.ok){err.textContent=msg(r.data,'could not delete the account.');return}
-      $('#dpw').value='';err.textContent='';ME=null;location.hash='#/';
-    });
-  });
+  applyPalette('night');
 
   /* put the logo in the footer of every public page */
   (function(){
@@ -1594,7 +1415,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
       f.insertBefore(t.cloneNode(true),f.lastElementChild);
     });
   })();
-  loadMe().then(route);
+  route();
 })();
 (function(){
   var cv=document.getElementById('rain'),cx=cv.getContext('2d'),fs=16,w,h,drops=[],bg,fade,fg,head,n=0;
@@ -1626,7 +1447,7 @@ body.acct .view h2{font-size:2.2rem;margin:0 0 6px}
     }
   }
   var last=0;
-  function loop(t){if(t-last>55){last=t;if(document.body.classList.contains('app'))step()}requestAnimationFrame(loop)}
+  function loop(t){if(t-last>55){last=t;if(document.body.classList.contains('lab'))step()}requestAnimationFrame(loop)}
   size();
   window.addEventListener('resize',size);
   window.addEventListener('palette',colors);
