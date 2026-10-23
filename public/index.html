@@ -449,6 +449,14 @@ body.lab #rain{display:block;opacity:.14}
 .wrap .dock .dk{padding:16px 20px}
 .dock h3{margin:0 0 2px;font:700 1rem var(--mono);color:var(--acc)}
 .mapbox{position:relative;height:clamp(380px,62vh,680px);border:1px solid var(--line);overflow:hidden;margin:0 0 44px}
+/* ---- masthead typing effect ---- */
+.ed-type{display:inline-block;white-space:nowrap}
+.ed-type .ch{position:relative}
+.ed-type.typing .ch{visibility:hidden}
+.ed-type.typing .ch.on{visibility:visible}
+.ed-type .cur::after,.ed-type .cur0::before{content:"";visibility:visible;position:absolute;top:.2em;bottom:.06em;width:.4em;background:var(--acc);animation:blink 1s steps(1) infinite}
+.ed-type .cur::after{left:calc(100% + .05em)}
+.ed-type .cur0::before{left:0}
 </style>
 </head>
 <body>
@@ -461,7 +469,7 @@ body.lab #rain{display:block;opacity:.14}
     <div class="acts"><a href="mailto:contact@slaughter-sec.com">contact@slaughter-sec.com</a></div>
   </div>
   <div class="ed-head">
-    <a class="ed-mast" href="#/"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="5" y="10" width="54" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="5"/><path d="M16 24 L25 32 L16 40" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 41 H46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg>Slaughter-Sec</a>
+    <a class="ed-mast" href="#/"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="5" y="10" width="54" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="5"/><path d="M16 24 L25 32 L16 40" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 41 H46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg><span class="ed-type">Slaughter-Sec</span></a>
     <p class="ed-tag">The daily record of the cyber world, read and checked by a person.</p>
   </div>
   <nav class="ed-nav" aria-label="Sections">
@@ -520,8 +528,8 @@ body.lab #rain{display:block;opacity:.14}
     </section>
     <aside class="ed-join" aria-labelledby="joinH">
       <p class="ed-kick" style="margin-bottom:8px">From the lab</p>
-      <h2 id="joinH">Two honeypots, six nodes, and the pipeline behind this site</h2>
-      <p>See the homelab I build and run, how news reaches these pages, and real attacks on my honeypots.</p>
+      <h2 id="joinH">Two honeypots, six nodes, and the projects I am building</h2>
+      <p>See the homelab I build and run, my threat intelligence project in progress, and real attacks on my honeypots.</p>
       <div class="row"><a class="btn fill" href="#/lab">Visit the Lab</a><a class="btn" href="#/threats">Threat map</a></div>
     </aside>
   </div>
@@ -541,7 +549,7 @@ body.lab #rain{display:block;opacity:.14}
     <h2 id="soonH">Coming up</h2>
     <p class="lede">What you see today is the start. Here is what I am building next, and I will share what I learn as I go.</p>
     <div class="g2">
-      <div class="win card"><div class="body"><h3>Automated CTI pipelines</h3><p>CTI is cyber threat intelligence. I am building automated pipelines that watch for new threats around the clock, so the feeds can keep up with attackers instead of waiting for the next daily roundup. The goal is not just to collect threats, but to understand the reasoning behind them: why an attack works, what made a target vulnerable, and how a campaign connects to others.</p></div></div>
+      <div class="win card"><div class="body"><h3>Automated CTI pipelines</h3><p>CTI is cyber threat intelligence. I am building pipelines in my homelab that keep threat tracking running around the clock, for my own research and write-ups. The goal is not just to collect threats, but to understand the reasoning behind them: why an attack works, what made a target vulnerable, and how a campaign connects to others.</p></div></div>
       <div class="win card"><div class="body"><h3>An AI-assisted SIEM experiment</h3><p>A SIEM is a tool that collects security logs and flags suspicious activity. I want to experiment with building an automated, or at least assisted, SIEM that uses AI agents to help sort alerts, spot patterns and explain what they found. This is an experiment, not a product.</p></div></div>
       <div class="win card"><div class="body"><h3>Original research and analysis</h3><p>My own write-ups, clearly marked as mine, alongside the news I summarize from other sources.</p></div></div>
       <div class="win card"><div class="body"><h3>A searchable archive</h3><p>Every past item kept and searchable by date, topic and tag, going back years.</p></div></div>
@@ -659,10 +667,10 @@ body.lab #rain{display:block;opacity:.14}
     <span class="soon" title="Coming soon">SLTR framework &middot; soon</span>
   </nav>
   <h1 class="ph" id="labT" tabindex="-1">The Lab</h1>
-  <p class="sub">My homelab is the hardware I build and run myself. It is where the tools behind Slaughter-Sec live and where I practice. It is still being set up, and this section grows as each part comes online.</p>
+  <p class="sub">My homelab is the hardware I build and run myself. It is where I build, test and practice. It is still being set up, and this section grows as each part comes online.</p>
 
   <div class="labhub">
-    <a class="panel" href="#/cti"><div class="pb"><span class="pn">01 / THREAT INTEL</span><h2><span>CTI</span> pipeline</h2><p>How news and threat data are collected, reviewed by me and published to the feeds every day.</p><div class="pf"><span class="st wip">in progress</span><span class="go">open &rarr;</span></div></div></a>
+    <a class="panel" href="#/cti"><div class="pb"><span class="pn">01 / THREAT INTEL</span><h2><span>CTI</span> pipeline</h2><p>My threat intelligence project: collecting and analyzing threat data in the homelab for research. Separate from the news feeds.</p><div class="pf"><span class="st wip">in progress</span><span class="go">open &rarr;</span></div></div></a>
     <a class="panel" href="#/threats"><div class="pb"><span class="pn">02 / HONEYPOTS</span><h2>Threat <span>map</span></h2><p>Attacks on my honeypots, plotted as they happen. No attacker IP addresses are published.</p><div class="pf"><span class="st wip">connecting</span><span class="go">open &rarr;</span></div></div></a>
     <div class="panel soon" aria-disabled="true"><div class="pb"><span class="pn">03 / METHOD</span><h2>SLTR <span>framework</span></h2><p>My own security methodology: study, stalk, strategize, strike. Coming soon.</p><div class="pf"><span class="st">coming soon</span></div></div></div>
   </div>
@@ -720,24 +728,23 @@ body.lab #rain{display:block;opacity:.14}
     <span class="soon" title="Coming soon">SLTR framework &middot; soon</span>
   </nav>
   <h1 class="ph" id="ctiT" tabindex="-1">CTI pipeline</h1>
-  <p class="sub">Cyber threat intelligence (CTI) is the work of collecting reports on threats and turning them into something useful. My pipeline feeds the Threat Summary, AI Research and Malware pages.</p>
+  <p class="sub">Cyber threat intelligence (CTI) is the work of collecting data about threats and turning it into something useful. This is my own CTI project, built in my homelab for research. It is still in progress.</p>
   <div class="blk">
-    <h2>How an item gets published</h2>
-    <div class="flow">
-      <div>Collect<small>Workers pull new articles from security sources</small></div>
-      <div>Draft<small>a short summary is drafted automatically</small></div>
-      <div>Review<small>I check every item against its source</small></div>
-      <div>Publish<small>approved items go live and are archived</small></div>
-    </div>
-    <p class="sub" style="margin:14px 0 0">Nothing is published without my review. Accuracy comes first, speed second.</p>
+    <h2>What it is for</h2>
+    <ul class="labul">
+      <li>Collecting threat data in one place, including what my honeypots see.</li>
+      <li>Keeping threat tracking running all the time, not just once a day.</li>
+      <li>Going beyond what happened to understand why: why an attack works, what made a target vulnerable, and how campaigns connect.</li>
+      <li>Feeding my own research and write-ups.</li>
+    </ul>
   </div>
   <div class="blk">
-    <h2>What is next</h2>
-    <ul class="labul">
-      <li>Keep threat tracking running all the time, not just on a schedule.</li>
-      <li>Connect the parts that run in my homelab, which are not finished yet.</li>
-      <li>Go beyond what happened and track the reasoning behind threats.</li>
-    </ul>
+    <h2>What it is not</h2>
+    <p class="sub" style="margin:0;max-width:70ch">It does not produce the stories on this site. The Threat Summary, AI Research and Malware feeds come from a separate news collector: software gathers articles from trusted security sources, AI drafts a short summary, and I review every item before it is published. The CTI pipeline is a research project that runs alongside that, in the lab.</p>
+  </div>
+  <div class="blk">
+    <h2>Where it stands</h2>
+    <p class="sub" style="margin:0;max-width:70ch">Being built. Parts of it run in my homelab, which is not finished yet. I will post what it does and what I learn here as it comes together.</p>
   </div>
  </div>
   <footer class="sfoot"><span>© 2026 Slaughter-Sec</span><span><a href="#/lab">The Lab</a> &nbsp; <a href="#/contact">Contact</a></span></footer>
@@ -1414,6 +1421,23 @@ body.lab #rain{display:block;opacity:.14}
       if(f.querySelector('.logo'))return;
       f.insertBefore(t.cloneNode(true),f.lastElementChild);
     });
+  })();
+  /* type the masthead out once per visit, like a command at the prompt */
+  (function(){
+    var el=document.querySelector('.ed-type');if(!el)return;
+    var seen=false;try{seen=sessionStorage.getItem('mastTyped')==='1';sessionStorage.setItem('mastTyped','1')}catch(e){}
+    if(seen||reduce)return;
+    var text=el.textContent;el.parentNode.setAttribute('aria-label',text);el.setAttribute('aria-hidden','true');el.textContent='';
+    var cs=text.split('').map(function(c){var s=document.createElement('span');s.className='ch';s.textContent=c;el.appendChild(s);return s});
+    el.classList.add('typing');cs[0].classList.add('cur0');
+    var i=0;
+    function step(){
+      cs[0].classList.remove('cur0');if(i>0)cs[i-1].classList.remove('cur');
+      cs[i].classList.add('on','cur');i++;
+      if(i<cs.length)setTimeout(step,65+Math.random()*55);
+      else setTimeout(function(){cs[i-1].classList.remove('cur');el.classList.remove('typing')},2600);
+    }
+    setTimeout(step,650);
   })();
   route();
 })();
