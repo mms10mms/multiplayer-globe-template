@@ -457,6 +457,22 @@ body.lab #rain{display:block;opacity:.14}
 .ed-type .cur::after,.ed-type .cur0::before{content:"";visibility:visible;position:absolute;top:.2em;bottom:.06em;width:.4em;background:var(--acc);animation:blink 1s steps(1) infinite}
 .ed-type .cur::after{left:calc(100% + .05em)}
 .ed-type .cur0::before{left:0}
+/* ---- front page: Latest leads, Top story of the week on the side ---- */
+.ed-main .tmeta .fd{color:var(--acc);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+.ed-also{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:30px;border-top:1px solid var(--line)}
+.ed-also:empty{display:none}
+.ed-also .bi{padding:16px 20px 0 0;border:0;border-right:1px solid var(--line);margin-right:20px}
+.ed-also .bi:last-child{border-right:0;margin-right:0;padding-right:0}
+.ed-also .bi .h{font-size:1.12rem}
+@media (max-width:760px){.ed-also{grid-template-columns:1fr}.ed-also .bi{border-right:0;margin-right:0;padding-right:0;border-bottom:1px solid var(--line);padding-bottom:14px}.ed-also .bi:last-child{border-bottom:0}}
+.ed-pick .ttl{font:700 1.65rem/1.2 var(--serif);letter-spacing:-.01em;margin:6px 0 12px}
+.ed-pick .tsum{font:400 1.05rem/1.6 var(--serif);color:#cfc9bf;margin:0 0 14px}
+.ed-pick .tnote{font:italic 400 1.02rem/1.5 var(--serif);color:var(--fg);border-left:3px solid var(--acc);padding:2px 0 2px 12px;margin:0 0 14px}
+.ed-pick .tmeta{font-size:.76rem;color:var(--dim);margin:12px 0 0}
+.ed-pick .tlinks{display:flex;flex-direction:column;gap:6px;font-size:.84rem}
+.ed-pick .tlinks a{color:var(--acc)}
+.ed-pick.picked{border-left-color:var(--acc)}
+.ed-pick.picked #topH{color:var(--acc)}
 </style>
 </head>
 <body>
@@ -487,14 +503,14 @@ body.lab #rain{display:block;opacity:.14}
   <h1 class="sr" id="frontH" tabindex="-1">Slaughter-Sec front page</h1>
 
   <div class="ed-lead">
-    <article class="ed-main" id="top" aria-labelledby="topH">
-      <h2 class="ed-kick" id="topH">Top story of the week</h2>
-      <div id="topBody"><p class="sub" style="margin:0">Loading&hellip;</p></div>
-    </article>
-    <aside class="ed-brief" aria-labelledby="briefH">
-      <h2 class="ed-label" id="briefH">In brief</h2>
-      <div id="briefList"><p class="sub" style="margin:12px 0 0">Loading&hellip;</p></div>
-      <a class="ed-more" href="#/kb">All of today&rsquo;s threat summary &rarr;</a>
+    <section class="ed-main" id="latest" aria-labelledby="latestH">
+      <h2 class="ed-kick" id="latestH">Latest</h2>
+      <div id="latestBody"><p class="sub" style="margin:0">Loading&hellip;</p></div>
+      <div class="ed-also" id="alsoList"></div>
+    </section>
+    <aside class="ed-brief ed-pick" id="top" aria-labelledby="topH">
+      <h2 class="ed-label" id="topH">Top story of the week</h2>
+      <div id="topBody"><p class="sub" style="margin:12px 0 0">Loading&hellip;</p></div>
     </aside>
   </div>
 
@@ -1206,21 +1222,72 @@ body.lab #rain{display:block;opacity:.14}
   }
   function srcLink(e,cls,txt){var a=kbEl('a',cls,txt);if(/^https?:\/\//.test(e.url||'')){a.href=e.url;a.target='_blank';a.rel='noopener noreferrer'}return a}
   var frontDone=false;
+  var FEEDNAME={tts:'Threat Summary',ai:'AI Research',malware:'Malware'};
+  function localDay(d){var x=d||new Date();return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
+  function niceDay(iso){var t=Date.parse(iso+'T12:00:00');if(isNaN(t))return iso;return new Date(t).toLocaleDateString('en-US',{month:'long',day:'numeric'})}
+  async function topPick(){
+    var api=ENTRIES_FEED.api?ENTRIES_FEED.api.replace(/\/+$/,''):'';
+    if(api){var t=await getJSON(api+'/top');if(t&&topFresh(t.story))return t.story}
+    return topFresh(TOP_STORY)?TOP_STORY:null;
+  }
   async function frontShow(){
-    await topShow();
     if(frontDone)return;frontDone=true;
-    var box=$('#briefList'),items=(await latest('tts',5)).filter(function(e){return e.url!==topUrl}).slice(0,4);
-    box.innerHTML='';
-    if(!items.length)box.appendChild(kbEl('p','sub','Nothing yet today. Check back soon.'));
-    items.forEach(function(e){
-      var d=kbEl('div','bi');
-      d.appendChild(kbEl('p','k',(e.tags||[])[0]||'Threat'));
-      d.appendChild(srcLink(e,'h',e.title));
-      d.appendChild(kbEl('p','m',[e.date,e.source].filter(Boolean).join('  ·  ')));
-      box.appendChild(d);
-    });
-    [['tts','#secTts'],['ai','#secAi'],['malware','#secMw']].forEach(async function(p){
-      var el=$(p[1]),e=(await latest(p[0],2)).filter(function(x){return x.url!==topUrl})[0];
+    var got=await Promise.all([latest('tts',6),latest('ai',4),latest('malware',4),topPick()]);
+    var pick=got[3],rank={tts:0,ai:1,malware:2},all=[];
+    ['tts','ai','malware'].forEach(function(t,k){(got[k]||[]).forEach(function(e,n){all.push({e:e,t:e.type||t,n:n})})});
+    all.sort(function(a,b){return a.e.date<b.e.date?1:a.e.date>b.e.date?-1:(a.n-b.n)||(rank[a.t]-rank[b.t])});
+    var seen={},pool=[];
+    all.forEach(function(x){var u=x.e.url;if(!u||seen[u]||(pick&&u===pick.url))return;seen[u]=1;x.e.type=x.t;pool.push(x.e)});
+    var today=localDay(),yest=localDay(new Date(Date.now()-864e5));
+
+    /* Latest: the newest story leads, the next three sit under it */
+    var lead=pool[0],box=$('#latestBody'),also=$('#alsoList');box.innerHTML='';also.innerHTML='';
+    if(!lead){$('#latestH').textContent='Latest';box.appendChild(kbEl('p','sub','No stories yet. Check back soon.'))}
+    else{
+      $('#latestH').textContent='Latest · '+(lead.date===today?'Today, '+niceDay(lead.date):lead.date===yest?'Yesterday, '+niceDay(lead.date):niceDay(lead.date));
+      var m=kbEl('div','tmeta');m.appendChild(kbEl('span','fd',FEEDNAME[lead.type]||''));
+      if((lead.tags||[])[0])m.appendChild(kbEl('span','',lead.tags[0]));
+      box.appendChild(m);
+      box.appendChild(kbEl('h3','ttl',lead.title));
+      if(lead.summary)box.appendChild(kbEl('p','tsum',lead.summary));
+      var l=kbEl('div','tlinks');l.appendChild(srcLink(lead,'','Read the source: '+(lead.source||'link')+' ↗'));
+      var more=document.createElement('a');more.href=lead.type==='ai'?'#/research':lead.type==='malware'?'#/malware':'#/kb';more.textContent='More in '+(FEEDNAME[lead.type]||'the feed')+' →';
+      l.appendChild(more);box.appendChild(l);
+      pool.slice(1,4).forEach(function(e){
+        var d=kbEl('div','bi');
+        d.appendChild(kbEl('p','k',FEEDNAME[e.type]+((e.tags||[])[0]?' · '+e.tags[0]:'')));
+        d.appendChild(srcLink(e,'h',e.title));
+        d.appendChild(kbEl('p','m',[e.date===today?'Today':e.date===yest?'Yesterday':e.date,e.source].filter(Boolean).join('  ·  ')));
+        also.appendChild(d);
+      });
+    }
+
+    /* Side: the week's top story, or In brief when none is picked */
+    var side=$('#topBody'),wrap=$('#top');side.innerHTML='';
+    if(pick&&/^https?:\/\//.test(pick.url||'')){
+      wrap.classList.add('picked');$('#topH').textContent='Top story of the week';
+      side.appendChild(kbEl('h3','ttl',pick.title));
+      if(pick.summary)side.appendChild(kbEl('p','tsum',pick.summary));
+      if(pick.note)side.appendChild(kbEl('p','tnote',pick.note));
+      var tl=kbEl('div','tlinks');tl.appendChild(srcLink(pick,'','Read the source: '+(pick.source||'link')+' ↗'));side.appendChild(tl);
+      side.appendChild(kbEl('p','tmeta',[pick.date,(pick.tags||[])[0]].filter(Boolean).join('  ·  ')));
+    }else{
+      wrap.classList.remove('picked');$('#topH').textContent='In brief';
+      var rest=pool.slice(4,8);
+      if(!rest.length)side.appendChild(kbEl('p','sub','More stories soon.'));
+      rest.forEach(function(e){
+        var d=kbEl('div','bi');
+        d.appendChild(kbEl('p','k',FEEDNAME[e.type]+((e.tags||[])[0]?' · '+e.tags[0]:'')));
+        d.appendChild(srcLink(e,'h',e.title));
+        d.appendChild(kbEl('p','m',[e.date,e.source].filter(Boolean).join('  ·  ')));
+        side.appendChild(d);
+      });
+    }
+
+    /* Section columns: newest item in each feed that is not already on the page */
+    var shown={};pool.slice(0,8).forEach(function(e){shown[e.url]=1});if(pick)shown[pick.url]=1;
+    [['tts','#secTts',0],['ai','#secAi',1],['malware','#secMw',2]].forEach(function(p){
+      var el=$(p[1]),list=got[p[2]]||[],e=list.filter(function(x){return !shown[x.url]})[0]||list[0];
       el.innerHTML='';
       if(!e){el.appendChild(kbEl('p','k','Nothing new yet'));return}
       el.appendChild(kbEl('p','k','Latest · '+e.date));
